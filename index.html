@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado AZ-204</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Simulado AZ-204</h1>
+        <div id="status-bar" class="hidden">
+            <span id="progress">Questão: 0/0</span>
+            <span class="score-pill correct">Acertos: <span id="score-correct">0</span></span>
+            <span class="score-pill wrong">Erros: <span id="score-wrong">0</span></span>
+            <button id="exit-btn" class="secondary-btn">Sair</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hub Section -->
+        <section id="hub-section">
+            <h2>Selecione um Tópico</h2>
+            <div id="category-grid" class="grid-container">
+                <!-- Categories will be injected here -->
+            </div>
+            <div class="general-section">
+                <button id="start-general-btn" class="primary-btn large">Simulado Geral (Todos os Tópicos)</button>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz-section" class="hidden">
+            <div id="question-container" class="card">
+                <div class="question-header">
+                    <span id="question-category" class="badge">Categoria</span>
+                    <span id="question-difficulty" class="badge">Dificuldade</span>
+                </div>
+                
+                <div id="question-content">
+                    <!-- Question statement and options injected here -->
+                </div>
+
+                <div id="feedback-area" class="hidden">
+                    <div id="feedback-message"></div>
+                    <div id="explanation-text"></div>
+                    <a id="doc-link" href="#" target="_blank">Documentação Oficial</a>
+                </div>
+
+                <div class="controls">
+                    <button id="submit-btn" class="primary-btn">Confirmar Resposta</button>
+                    <button id="next-btn" class="secondary-btn hidden">Próxima Questão</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="result-section" class="hidden">
+            <div class="card result-card">
+                <h2>Simulado Finalizado!</h2>
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="final-score">0</span>
+                        <span class="stat-label">Acertos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="final-mistakes">0</span>
+                        <span class="stat-label">Erros</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="final-percentage">0%</span>
+                        <span class="stat-label">Aproveitamento</span>
+                    </div>
+                </div>
+                <button id="restart-btn" class="primary-btn">Voltar ao Início</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

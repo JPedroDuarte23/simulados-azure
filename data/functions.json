@@ -1,0 +1,20 @@
+[
+    {
+      "id": "Q-103",
+      "type": "no_return_series",
+      "category": "Azure Functions",
+      "difficulty": "Medium",
+      "allow_backtrack": false,
+      "content": {
+        "scenario": "Você tem uma Azure Function que processa mensagens de uma fila. O tempo de execução varia entre 15 e 20 minutos.",
+        "statement": "Solução: Você configura a Function no Plano de Consumo (Consumption Plan). Isso atende ao objetivo?",
+        "options": [
+          { "id": "yes", "text": "Sim" },
+          { "id": "no", "text": "Não" }
+        ]
+      },
+      "correct_answer": ["no"],
+      "explanation": "O Plano de Consumo tem um timeout padrão de 5 minutos (max 10). Para execuções de 20 minutos, seria necessário o plano Premium ou Dedicated.",
+      "official_doc_link": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-scale"
+    }
+]

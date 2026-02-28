@@ -1,0 +1,21 @@
+[
+    {
+      "id": "Q-101",
+      "type": "multiple_choice",
+      "category": "Azure App Service",
+      "difficulty": "Medium",
+      "allow_backtrack": true,
+      "content": {
+        "statement": "Você está desenvolvendo um App Service que precisa acessar o Azure Key Vault sem armazenar credenciais no código. O que deve ser configurado?",
+        "options": [
+          { "id": "a", "text": "Managed Identity" },
+          { "id": "b", "text": "Service Principal com Client Secret" },
+          { "id": "c", "text": "App Settings com conexão direta" },
+          { "id": "d", "text": "Certificado Auto-assinado" }
+        ]
+      },
+      "correct_answer": ["a"],
+      "explanation": "Managed Identity permite que o recurso do Azure se autentique em outros serviços sem a necessidade de gerenciar segredos manualmente.",
+      "official_doc_link": "https://learn.microsoft.com/en-us/azure/app-service/overview-managed-identity"
+    }
+]

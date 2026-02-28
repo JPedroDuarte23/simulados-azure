@@ -1,0 +1,61 @@
+{
+  "exam_id": "AZ-204-2026",
+  "questions": [
+    {
+      "id": "Q-101",
+      "type": "multiple_choice",
+      "category": "Azure App Service",
+      "difficulty": "Medium",
+      "allow_backtrack": true,
+      "content": {
+        "statement": "Você está desenvolvendo um App Service que precisa acessar o Azure Key Vault sem armazenar credenciais no código. O que deve ser configurado?",
+        "options": [
+          { "id": "a", "text": "Managed Identity" },
+          { "id": "b", "text": "Service Principal com Client Secret" },
+          { "id": "c", "text": "App Settings com conexão direta" },
+          { "id": "d", "text": "Certificado Auto-assinado" }
+        ]
+      },
+      "correct_answer": ["a"],
+      "explanation": "Managed Identity permite que o recurso do Azure se autentique em outros serviços sem a necessidade de gerenciar segredos manualmente.",
+      "official_doc_link": "https://learn.microsoft.com/en-us/azure/app-service/overview-managed-identity"
+    },
+    {
+      "id": "Q-102",
+      "type": "drag_and_drop",
+      "category": "Azure CLI / Docker",
+      "difficulty": "High",
+      "allow_backtrack": true,
+      "content": {
+        "statement": "Ordene os comandos da Azure CLI para realizar o push de uma imagem para o Azure Container Registry (ACR).",
+        "items_to_drag": [
+          { "id": "1", "text": "az acr login --name <registry>" },
+          { "id": "2", "text": "docker tag my-image <registry>.azurecr.io/my-image:v1" },
+          { "id": "3", "text": "docker push <registry>.azurecr.io/my-image:v1" }
+        ]
+      },
+      "correct_answer": ["1", "2", "3"], 
+      "order_matters": true,
+      "explanation": "Primeiro é necessário autenticar no registro, depois taguear a imagem local e, por fim, realizar o push.",
+      "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli"
+    },
+    {
+      "id": "Q-103",
+      "type": "no_return_series",
+      "category": "Azure Functions",
+      "difficulty": "Medium",
+      "allow_backtrack": false,
+      "content": {
+        "scenario": "Você tem uma Azure Function que processa mensagens de uma fila. O tempo de execução varia entre 15 e 20 minutos.",
+        "statement": "Solução: Você configura a Function no Plano de Consumo (Consumption Plan). Isso atende ao objetivo?",
+        "options": [
+          { "id": "yes", "text": "Sim" },
+          { "id": "no", "text": "Não" }
+        ]
+      },
+      "correct_answer": ["no"],
+      "explanation": "O Plano de Consumo tem um timeout padrão de 5 minutos (max 10). Para execuções de 20 minutos, seria necessário o plano Premium ou Dedicated.",
+      "official_doc_link": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-scale"
+    }
+  ]
+}

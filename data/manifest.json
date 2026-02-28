@@ -1,0 +1,35 @@
+{
+    "exam_id": "AZ-204-2026",
+    "categories": [
+        {
+            "id": "app-service",
+            "name": "Azure App Service",
+            "file": "data/app-service.json",
+            "count": 1
+        },
+        {
+            "id": "containers",
+            "name": "Azure CLI / Docker",
+            "file": "data/containers.json",
+            "count": 1
+        },
+        {
+            "id": "functions",
+            "name": "Azure Functions",
+            "file": "data/functions.json",
+            "count": 1
+        },
+        {
+            "id": "aks",
+            "name": "AKS / Dropdowns",
+            "file": "data/aks-dropdown.json",
+            "count": 1
+        },
+        {
+            "id": "casestudy",
+            "name": "Case Study: Contoso",
+            "file": "data/casestudy-contoso.json",
+            "count": 2
+        }
+    ]
+}

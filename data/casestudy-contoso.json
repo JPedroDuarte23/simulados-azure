@@ -1,0 +1,74 @@
+[
+  {
+    "id": "CS-101-Q1",
+    "type": "case_study",
+    "category": "Estudo de Caso 1: Contoso",
+    "difficulty": "High",
+    "allow_backtrack": false,
+    "content": {
+      "tabs": [
+        {
+          "id": "tab1",
+          "title": "Cenário Atual",
+          "content": "A Contoso migrou recentemente para a nuvem. Ela possui uma aplicação monolítica em .NET Framework rodando em VMs e deseja modernizar para containers."
+        },
+        {
+          "id": "tab2",
+          "title": "Requisitos de Negócio",
+          "content": "- Reduzir custos operacionais de manutenção de SO.\n- Alta disponibilidade com failover regional.\n- Escalonamento automático baseado em CPU e métricas de fila."
+        },
+        {
+          "id": "tab3",
+          "title": "Requisitos de Segurança",
+          "content": "- Todas as imagens de container devem ser escaneadas por vulnerabilidades.\n- O acesso ao cluster deve ser integrado ao Azure AD."
+        }
+      ],
+      "statement": "Qual serviço de computação atende melhor aos requisitos de modernização e escalabilidade automática?",
+      "options": [
+        { "id": "a", "text": "Azure App Service (Web App for Containers)" },
+        { "id": "b", "text": "Azure Kubernetes Service (AKS)" },
+        { "id": "c", "text": "Azure Container Instances (ACI)" },
+        { "id": "d", "text": "Azure Service Fabric" }
+      ]
+    },
+    "correct_answer": ["b"],
+    "explanation": "AKS é a escolha ideal para orquestração complexa, escalonamento avançado e requisitos de integração de segurança corporativa como Azure AD e scan de imagens.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/aks/intro-kubernetes"
+  },
+  {
+    "id": "CS-101-Q2",
+    "type": "case_study",
+    "category": "Estudo de Caso 1: Contoso",
+    "difficulty": "High",
+    "allow_backtrack": false,
+    "content": {
+      "tabs": [
+        {
+          "id": "tab1",
+          "title": "Cenário Atual",
+          "content": "A Contoso migrou recentemente para a nuvem. Ela possui uma aplicação monolítica em .NET Framework rodando em VMs e deseja modernizar para containers."
+        },
+        {
+          "id": "tab2",
+          "title": "Requisitos de Negócio",
+          "content": "- Reduzir custos operacionais de manutenção de SO.\n- Alta disponibilidade com failover regional.\n- Escalonamento automático baseado em CPU e métricas de fila."
+        },
+        {
+          "id": "tab3",
+          "title": "Requisitos de Segurança",
+          "content": "- Todas as imagens de container devem ser escaneadas por vulnerabilidades.\n- O acesso ao cluster deve ser integrado ao Azure AD."
+        }
+      ],
+      "statement": "Para atender ao requisito de segurança de varredura de imagens, qual serviço deve ser usado em conjunto com o AKS?",
+      "options": [
+        { "id": "a", "text": "Azure Key Vault" },
+        { "id": "b", "text": "Azure Monitor" },
+        { "id": "c", "text": "Defender for Cloud (com integração ACR)" },
+        { "id": "d", "text": "Azure Sentinel" }
+      ]
+    },
+    "correct_answer": ["c"],
+    "explanation": "Microsoft Defender for Cloud pode ser integrado ao Azure Container Registry para escanear imagens em busca de vulnerabilidades.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-introduction"
+  }
+]

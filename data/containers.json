@@ -1,0 +1,21 @@
+[
+    {
+      "id": "Q-102",
+      "type": "drag_and_drop",
+      "category": "Azure CLI / Docker",
+      "difficulty": "High",
+      "allow_backtrack": true,
+      "content": {
+        "statement": "Ordene os comandos da Azure CLI para realizar o push de uma imagem para o Azure Container Registry (ACR).",
+        "items_to_drag": [
+          { "id": "1", "text": "az acr login --name <registry>" },
+          { "id": "2", "text": "docker tag my-image <registry>.azurecr.io/my-image:v1" },
+          { "id": "3", "text": "docker push <registry>.azurecr.io/my-image:v1" }
+        ]
+      },
+      "correct_answer": ["1", "2", "3"], 
+      "order_matters": true,
+      "explanation": "Primeiro é necessário autenticar no registro, depois taguear a imagem local e, por fim, realizar o push.",
+      "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli"
+    }
+]
