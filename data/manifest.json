@@ -1,35 +1,84 @@
 {
     "exam_id": "AZ-204-2026",
-    "categories": [
+    "main_topics": [
         {
-            "id": "app-service",
-            "name": "Azure App Service",
-            "file": "data/app-service.json",
-            "count": 1
+            "title": "1. Soluções de Computação",
+            "categories": [
+                {
+                    "id": "app-service",
+                    "name": "Azure App Service",
+                    "file": "data/app-service.json",
+                    "count": 37
+                },
+                {
+                    "id": "functions",
+                    "name": "Azure Functions",
+                    "file": "data/functions.json",
+                    "count": 31
+                },
+                {
+                    "id": "acr",
+                    "name": "Azure Container Registry (ACR)",
+                    "file": "data/container-registry.json",
+                    "count": 31
+                },
+                {
+                    "id": "aks",
+                    "name": "Azure Kubernetes Service",
+                    "file": "data/aks-dropdown.json",
+                    "count": 1
+                }
+            ]
         },
         {
-            "id": "containers",
-            "name": "Azure CLI / Docker",
-            "file": "data/containers.json",
-            "count": 1
+            "title": "4. Integração: Mensageria e Eventos",
+            "categories": [
+                {
+                    "id": "service-bus",
+                    "name": "Azure Service Bus",
+                    "file": "data/service-bus.json",
+                    "count": 2
+                }
+            ]
         },
         {
-            "id": "functions",
-            "name": "Azure Functions",
-            "file": "data/functions.json",
-            "count": 1
+            "title": "5. Integração: APIs",
+            "categories": [
+                {
+                    "id": "api-management",
+                    "name": "Azure API Management (APIM)",
+                    "file": "data/api-management.json",
+                    "count": 2
+                }
+            ]
         },
         {
-            "id": "aks",
-            "name": "AKS / Dropdowns",
-            "file": "data/aks-dropdown.json",
-            "count": 1
+            "title": "6. Monitoramento e Otimização",
+            "categories": [
+                {
+                    "id": "cache-redis",
+                    "name": "Azure Cache for Redis",
+                    "file": "data/cache-redis.json",
+                    "count": 3
+                },
+                {
+                    "id": "cdn",
+                    "name": "Azure CDN",
+                    "file": "data/cdn.json",
+                    "count": 1
+                }
+            ]
         },
         {
-            "id": "casestudy",
-            "name": "Case Study: Contoso",
-            "file": "data/casestudy-contoso.json",
-            "count": 2
+            "title": "Estudos de Caso",
+            "categories": [
+                {
+                    "id": "casestudy",
+                    "name": "Estudos de Caso",
+                    "file": "data/casestudys.json",
+                    "count": 20
+                }
+            ]
         }
     ]
 }

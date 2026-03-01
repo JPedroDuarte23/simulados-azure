@@ -404,3 +404,36 @@ h1 {
     border-color: var(--error-color);
     background-color: #fde7e9;
 }
+
+.main-topic-title {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+#hub-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.main-topic-section {
+    flex: 1 1 400px;
+    max-width: 48%;
+    padding: 15px;
+    border: 1px solid #e1dfdd;
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    box-shadow: var(--shadow);
+}
+
+.main-topic-title {
+    margin-top: 0;
+}
+
+#hub-content > .grid-container {
+    margin-bottom: 20px;
+}

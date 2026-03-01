@@ -1,0 +1,17 @@
+[
+    {
+      "id": "Q-CDN-01",
+      "type": "multiple_choice",
+      "category": "Azure CDN",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Streaming de vídeo, alta disponibilidade e mídia próxima ao usuário geograficamente.\n\nSolução Proposta: Incluir o uso da Rede de Distribuição de Conteúdo do Azure (Azure CDN) na arquitetura.\n\nPergunta: A solução atende ao objetivo?",
+        "options": [
+          { "id": "A", "text": "Sim" },
+          { "id": "B", "text": "Não" }
+        ]
+      },
+      "correct_answer": ["A"],
+      "explanation": "A Azure CDN armazena conteúdo estático (como vídeos) em servidores de borda (PoPs) espalhados globalmente. Isso garante que o usuário baixe o conteúdo do ponto geográfico mais próximo, reduzindo a latência e aumentando a disponibilidade."
+    }
+]

@@ -1,0 +1,47 @@
+[
+    {
+      "id": "Q-REDIS-01",
+      "type": "multiple_choice",
+      "category": "Azure Cache for Redis",
+      "difficulty": "Fácil",
+      "content": {
+        "statement": "Cenário: Compartilhar estado de sessão unificado, suporte a concorrência e salvar respostas HTTP completas.\n\nSolução Proposta: Implantar e configurar uma instância do Cache do Azure para Redis (Azure Cache for Redis) e atualizar o código dos aplicativos.\n\nPergunta: A solução atende ao objetivo?",
+        "options": [
+          { "id": "A", "text": "Sim" },
+          { "id": "B", "text": "Não" }
+        ]
+      },
+      "correct_answer": ["A"],
+      "explanation": "O Redis é a solução definitiva para este cenário. Ele atua como um armazenamento out-of-process, permitindo que múltiplas instâncias de diferentes apps acessem a mesma sessão e servindo como um cache de saída de alta performance."
+    },
+    {
+      "id": "Q-REDIS-02",
+      "type": "multiple_choice",
+      "category": "Azure Cache for Redis",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você configura um App Service para streaming de vídeo com CI/CD. Precisa de alta disponibilidade e que os dados de mídia estejam o mais próximo possível do usuário geograficamente.\n\nSolução Proposta: Incluir o uso do Azure Cache for Redis na arquitetura.\n\nPergunta: A solução atende ao objetivo?",
+        "options": [
+          { "id": "A", "text": "Sim" },
+          { "id": "B", "text": "Não" }
+        ]
+      },
+      "correct_answer": ["B"],
+      "explanation": "Embora o Redis melhore a performance de dados em memória, ele não é uma solução de distribuição geográfica de arquivos de mídia. O requisito de 'localização geográfica mais próxima do usuário' para arquivos pesados de streaming é resolvido por uma CDN."
+    },
+    {
+      "id": "Q-REDIS-03",
+      "type": "multiple_choice",
+      "category": "Azure Cache for Redis",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Compartilhar sessão entre apps ASP.NET, suporte a leitura/escrita simultânea e cache de HTML completo.\n\nSolução Proposta: Implantar um Azure Database for PostgreSQL e utilizá-lo como provedor de estado de sessão.\n\nPergunta: A solução atende ao objetivo?",
+        "options": [
+          { "id": "A", "text": "Sim" },
+          { "id": "B", "text": "Não" }
+        ]
+      },
+      "correct_answer": ["B"],
+      "explanation": "Bancos de dados relacionais (como PostgreSQL) não são a solução ideal para 'estado de sessão e cache de saída' em larga escala devido à latência de disco e overhead de conexão. O requisito técnico de 'acesso controlado e simultâneo' para este tipo de dado é a especialidade do Azure Cache for Redis."
+    }
+]

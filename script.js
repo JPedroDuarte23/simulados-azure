@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizSection = document.getElementById('quiz-section');
     const resultSection = document.getElementById('result-section');
     const statusBar = document.getElementById('status-bar');
-    const categoryGrid = document.getElementById('category-grid');
+    const hubContent = document.getElementById('hub-content');
     const questionContainer = document.getElementById('question-content');
     const feedbackArea = document.getElementById('feedback-area');
     const nextBtn = document.getElementById('next-btn');
@@ -32,17 +32,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- HUB FUNCTIONS ---
     function renderHub() {
-        categoryGrid.innerHTML = '';
+        hubContent.innerHTML = '';
         
-        manifestData.categories.forEach(cat => {
-            const btn = document.createElement('button');
-            btn.className = 'category-btn';
-            btn.innerHTML = `
-                <span class="cat-name">${cat.name}</span>
-                <span class="cat-count">${cat.count} questões</span>
-            `;
-            btn.onclick = () => startQuiz(cat.id);
-            categoryGrid.appendChild(btn);
+        manifestData.main_topics.forEach(topic => {
+            const topicSection = document.createElement('div');
+            topicSection.className = 'main-topic-section';
+
+            const topicTitle = document.createElement('h3');
+            topicTitle.className = 'main-topic-title';
+            topicTitle.textContent = topic.title;
+            topicSection.appendChild(topicTitle);
+
+            const grid = document.createElement('div');
+            grid.className = 'grid-container';
+
+            topic.categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn';
+                btn.innerHTML = `
+                    <span class="cat-name">${cat.name}</span>
+                    <span class="cat-count">${cat.count} questões</span>
+                `;
+                btn.onclick = () => startQuiz(cat.id);
+                grid.appendChild(btn);
+            });
+            topicSection.appendChild(grid);
+            hubContent.appendChild(topicSection);
         });
 
         document.getElementById('start-general-btn').onclick = () => startQuiz('all');
@@ -60,15 +75,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             if (categoryId === 'all') {
-                // Load all categories in parallel
-                const promises = manifestData.categories.map(cat => 
+                // Flatten all categories from all main topics
+                const allCategories = manifestData.main_topics.flatMap(topic => topic.categories);
+                const promises = allCategories.map(cat => 
                     fetch(cat.file).then(r => r.json())
                 );
                 const results = await Promise.all(promises);
                 currentQuestions = results.flat();
             } else {
-                // Load specific category
-                const category = manifestData.categories.find(c => c.id === categoryId);
+                // Find the category across all main topics
+                let category = null;
+                for (const topic of manifestData.main_topics) {
+                    const foundCat = topic.categories.find(c => c.id === categoryId);
+                    if (foundCat) {
+                        category = foundCat;
+                        break;
+                    }
+                }
+                
                 if (category) {
                     const response = await fetch(category.file);
                     currentQuestions = await response.json();

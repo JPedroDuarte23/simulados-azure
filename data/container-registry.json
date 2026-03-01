@@ -1,0 +1,692 @@
+[
+    {
+      "id": "Q-102",
+      "type": "drag_and_drop",
+      "category": "Azure CLI / Docker",
+      "difficulty": "High",
+      "allow_backtrack": true,
+      "content": {
+        "statement": "Ordene os comandos da Azure CLI para realizar o push de uma imagem para o Azure Container Registry (ACR).",
+        "items_to_drag": [
+          { "id": "1", "text": "az acr login --name <registry>" },
+          { "id": "2", "text": "docker tag my-image <registry>.azurecr.io/my-image:v1" },
+          { "id": "3", "text": "docker push <registry>.azurecr.io/my-image:v1" }
+        ]
+      },
+      "correct_answer": ["1", "2", "3"], 
+      "order_matters": true,
+      "explanation": "Primeiro é necessário autenticar no registro, depois taguear a imagem local e, por fim, realizar o push.",
+      "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli"
+    },
+    {
+      "id": "Q-ACR-01",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / Segurança",
+      "difficulty": "Alta",
+      "explanation": "Para autenticação autônoma e seguindo o princípio do menor privilégio, um `Service principal` é o método ideal. A função `AcrPush` permite apenas as operações de push (envio) e pull (extração), limitando o acesso desnecessário.",
+      "content": {
+        "statement": "Você desenvolve um aplicativo em contêiner. Você planeja implantar o aplicativo em uma nova Instância de Contêiner do Azure (ACI) a partir de um Azure Container Registry (ACR) usando um utilitário de integração e entrega contínuas (CI/CD) de terceiros (third-party). A implantação deve ser autônoma (unattended) e incluir todos os ativos do aplicativo. O utilitário de terceiros deve ser capaz apenas de enviar (push) e extrair (pull) imagens do registro. A autenticação deve ser gerenciada pelo Microsoft Entra ID (Azure AD). A solução deve usar o princípio do menor privilégio.\nComo você deve configurar a autenticação e a permissão? (Escolha a opção correta para cada lacuna)",
+        "text": "Método de autenticação do registro: {{0}}\nFunção RBAC (Role): {{1}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "Service principal" },
+              { "id": "B", "text": "Repository-scoped access token" },
+              { "id": "C", "text": "User-assigned managed identity" },
+              { "id": "D", "text": "System-assigned managed identity" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "Reader" },
+              { "id": "B", "text": "AcrPush" },
+              { "id": "C", "text": "AcrPull" },
+              { "id": "D", "text": "Contributor" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["A", "B"]
+    },
+    {
+      "id": "Q-ACR-02",
+      "type": "drag_and_drop",
+      "category": "Azure Container Registry / Docker CLI",
+      "difficulty": "Média",
+      "explanation": "A sequência correta para implantar uma nova versão de imagem no ACR é: 1. Construir a imagem localmente (E). 2. Criar um alias (tag) da imagem com o caminho completo do ACR (D). 3. Fazer login no ACR e enviar a imagem (B).",
+      "content": {
+        "statement": "Você atualizou o código do seu aplicativo e precisa implantar a nova versão do aplicativo LabelMaker no seu Azure Container Registry (ACR). Você está usando as ferramentas nativas do Docker na sua linha de comando.\nQuais três ações você deve executar em sequência para concluir esse processo? (Escolha 3 opções da lista abaixo e ordene-as de 1 a 3)",
+        "items_to_drag": [
+          { "id": "A", "text": "Baixar a imagem para o seu computador local (Download the image to your local computer)." },
+          { "id": "B", "text": "Fazer login no registro e enviar a imagem (Log in to the registry and push image)." },
+          { "id": "C", "text": "Criar um alias da imagem com um novo número de build (Create an alias of the image with a new build number)." },
+          { "id": "D", "text": "Criar um alias da imagem com o caminho totalmente qualificado para o registro (Create an alias of the image with the fully qualified path to the registry)." },
+          { "id": "E", "text": "Construir uma nova imagem de aplicativo usando um dockerfile (Build a new application image by using dockerfile)." }
+        ]
+      },
+      "correct_answer": ["E", "D", "B"]
+    },
+    {
+      "id": "Q-ACR-03",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / Nomenclatura",
+      "difficulty": "Fácil",
+      "explanation": "A sintaxe correta para baixar uma imagem de um namespace específico em um ACR é `docker pull <registro>.azurecr.io/<namespace>/<nome-da-imagem>`. Portanto, `scrumtuous.azurecr.io/marketing/website` é a opção correta.",
+      "content": {
+        "statement": "Sua equipe de desenvolvimento usa um Azure Container Registry chamado scrumtuous.azurecr.io. Para manter o registro organizado, você separou os repositórios em namespaces lógicos para sales (vendas), marketing, technology (tecnologia) e customerservice (atendimento ao cliente). O projeto do site da empresa (website) está armazenado dentro do namespace marketing.\nQual comando do Docker você deve executar no seu terminal para baixar a imagem do website a partir desse registro?",
+        "options": [
+          { "id": "A", "text": "docker pull marketing.scrumtuous.azurecr.io/website" },
+          { "id": "B", "text": "docker pull scrumtuous.azurecr.io -location marketing/website" },
+          { "id": "C", "text": "docker pull scrumtuous.azurecr.io/marketing/website" },
+          { "id": "D", "text": "docker pull scrumtuous.azurecr.io -path marketing -project website" }
+        ]
+      },
+      "correct_answer": ["C"]
+    },
+    {
+      "id": "Q-ACR-04",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / Event Grid",
+      "difficulty": "Média",
+      "explanation": "O `eventType` para uma imagem enviada (pushed) para o ACR é `Microsoft.ContainerRegistry.ImagePushed`. O nome do repositório específico que recebeu a imagem é referenciado em `data.target.repository`.",
+      "content": {
+        "statement": "Você está desenvolvendo um fluxo automatizado que usa o Azure Event Grid para escutar eventos do seu Azure Container Registry. Você precisa configurar o esquema do evento (Event Schema) para disparar ações sempre que uma nova imagem for enviada (pushed) ao registro. O JSON deve capturar o nome do repositório específico que recebeu a imagem.\nComo você deve completar as propriedades no esquema JSON capturado pelo Event Grid? (Escolha a opção correta para cada lacuna)",
+        "text": "[{\n  \"topic\": \"/subscriptions/.../providers/Microsoft.ContainerRegistry/registries/myRegistry\",\n  \"eventType\": \"{{0}}\",\n  \"data\": {\n    \"target\": {\n      \"{{1}}\": \"my-repository\"\n    }\n  }\n}]",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "Microsoft.ContainerRegistry.ImagePushed" },
+              { "id": "B", "text": "Microsoft.ContainerRegistry.ImageCreated" },
+              { "id": "C", "text": "Microsoft.ContainerRegistry.Push" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "repository" },
+              { "id": "B", "text": "service" },
+              { "id": "C", "text": "tag" },
+              { "id": "D", "text": "registry" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["A", "A"]
+    },
+    {
+      "id": "Q-ACR-05",
+      "type": "drag_and_drop",
+      "category": "Azure Container Registry / ACR Tasks",
+      "difficulty": "Alta",
+      "explanation": "A ordem correta é: 1. `Construir inicialmente a imagem do aplicativo` (D). 2. `Criar a tarefa no ACR` (B). 3. `Adicionar credenciais à tarefa` (C) para que a tarefa possa puxar a imagem base de outro registro. 4. `Criar uma atribuição de função (Role Assignment)` para a identidade gerenciada da tarefa (E). 5. `Executar manualmente a tarefa` para validar (A).",
+      "content": {
+        "statement": "Sua empresa possui duas instâncias do Azure Container Registry: ACR01 e ACR02... Você precisa automatizar a reconstrução da imagem... Em qual ordem você deve executar as cinco ações da CLI do Azure abaixo para criar essa automação com o recurso ACR Tasks? (Ordene as opções de A a E do 1º ao 5º passo)",
+        "items_to_drag": [
+          { "id": "A", "text": "Executar manualmente a tarefa criada para validar o fluxo (az acr task run)." },
+          { "id": "B", "text": "Criar a tarefa no ACR (az acr task create)." },
+          { "id": "C", "text": "Adicionar credenciais à tarefa do ACR para permitir que o ACR01 faça o pull do ACR02 (az acr task credential add)." },
+          { "id": "D", "text": "Construir inicialmente a imagem do aplicativo (az acr build)." },
+          { "id": "E", "text": "Criar uma atribuição de função (Role Assignment) para a identidade gerenciada da tarefa (az role assignment create)." }
+        ]
+      },
+      "correct_answer": ["D", "B", "C", "E", "A"]
+    },
+    {
+      "id": "Q-ACR-06",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / Governança",
+      "difficulty": "Média",
+      "explanation": "`Criar uma regra de alerta do Activity Log` (B) é a abordagem mais eficiente e recomendada para receber notificações sobre a criação/atualização de recursos do Azure, como ACRs. Você anexa um `Action Group` para enviar e-mails, sem a necessidade de código ou polling.",
+      "content": {
+        "statement": "Sua equipe de engenharia de nuvem deseja receber uma notificação por e-mail toda vez que uma nova instância do Azure Container Registry (ACR) for criada ou atualizada dentro da assinatura (Subscription) da empresa, visando manter a governança.\nQual abordagem nativa do Azure produzirá essa notificação da forma mais eficiente e recomendada, sem a necessidade de escrever código personalizado ou scripts de sondagem (polling)?",
+        "options": [
+          { "id": "A", "text": "Configurar uma assinatura do Azure Event Grid no escopo da Subscription, filtrando por registros Microsoft.ContainerRegistry, e invocar uma Azure Function para enviar o e-mail." },
+          { "id": "B", "text": "Criar uma regra de alerta do Activity Log (Log de Atividades) no Azure Monitor para a operação \"Create or Update Container Registry\" e anexar um Action Group (Grupo de Ações) que envia um e-mail." },
+          { "id": "C", "text": "Implantar um Runbook do Azure Automation que consulte a assinatura a cada 10 minutos procurando por novos recursos e envie um e-mail à equipe." },
+          { "id": "D", "text": "Configurar o Azure Service Health para monitorar o locatário e alertar quando novos recursos de armazenamento de contêineres forem adicionados." }
+        ]
+      },
+      "correct_answer": ["B"]
+    },
+    {
+      "id": "Q-ACR-07",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / AKS / Segurança",
+      "difficulty": "Alta",
+      "explanation": "Para integração segura entre AKS e ACR com o menor privilégio, o método ideal é a `Identidade Gerenciada Atribuída pelo Sistema` do AKS (`System-assigned managed identity`), que é automaticamente provisionada com o cluster. A função RBAC de `AcrPull` é suficiente para extrair imagens do registro, sem conceder permissões excessivas.",
+      "content": {
+        "statement": "Você desenvolve um aplicativo em contêiner. O aplicativo deve ser implantado em um cluster existente do Azure Kubernetes Service (AKS) a partir de uma instância do Azure Container Registry (ACR).\nExistem os seguintes requisitos rigorosos de arquitetura e segurança:\nAs imagens devem ser extraídas (pulled) do registro para o cluster AKS.\nA identidade deve ser capaz de visualizar (listar) todos os registros dentro da assinatura atual do Azure.\nA autenticação deve ser totalmente gerenciada pelo Microsoft Entra ID e as credenciais devem ser removidas automaticamente quando o registro (ou o recurso vinculado) for excluído.\nA solução deve usar o princípio do menor privilégio (Principle of least privilege).\nComo você deve configurar a autenticação do registro? (Escolha a opção correta para cada lacuna)",
+        "text": "Método de autenticação do registro: {{0}}\nFunção RBAC (Role) atribuída: {{1}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "Service principal" },
+              { "id": "B", "text": "Repository-scoped access token" },
+              { "id": "C", "text": "User-assigned managed identity" },
+              { "id": "D", "text": "System-assigned managed identity" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "Reader" },
+              { "id": "B", "text": "AcrPull" },
+              { "id": "C", "text": "AcrPush" },
+              { "id": "D", "text": "Contributor" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["D", "B"]
+    },
+    {
+      "id": "Q-ACR-08",
+      "type": "drag_and_drop",
+      "category": "Azure Container Registry / Premium Features",
+      "difficulty": "Alta",
+      "explanation": "A `Geo-replication` (D) permite manter o registro em múltiplas regiões. `Webhooks` (B) disparam notificações HTTP POST em eventos. `Private Link / Network Rules` (A) restringem o acesso ao registro via VNet.",
+      "content": {
+        "statement": "Você está projetando a arquitetura de implantação de contêineres para uma corporação global. A empresa decidiu utilizar a camada Premium do Azure Container Registry para aproveitar recursos avançados de nível corporativo.\nAssocie o recurso exato do ACR Premium que atende a cada requisito descrito abaixo. (Escolha uma opção da lista para cada requisito de I a III).\nI. Manter a presença do registro de contêineres em várias regiões do Azure, fornecendo acesso local e rápido de pull para nós do AKS em continentes diferentes, com sincronização gerenciada pelo Azure -> [ ? ]\nII. Acionar automaticamente uma notificação HTTP POST (como uma chamada para uma API de auditoria interna) sempre que uma nova imagem for enviada (pushed) ou excluída do registro -> [ ? ]\nIII. Restringir o acesso ao registro de contêineres para que ele não seja acessível pela internet pública, permitindo o tráfego apenas a partir de uma sub-rede específica de uma Rede Virtual do Azure (VNet) -> [ ? ]",
+        "items_to_drag": [
+          { "id": "A", "text": "Private Link / Network Rules (Regras de Rede)" },
+          { "id": "B", "text": "Webhooks" },
+          { "id": "C", "text": "Azure Monitor Metrics" },
+          { "id": "D", "text": "Geo-replication (Replicação geográfica)" }
+        ]
+      },
+      "correct_answer": ["D", "B", "A"]
+    },
+    {
+      "id": "Q-ACR-09",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / ACR Tasks",
+      "difficulty": "Média",
+      "explanation": "O ACR Tasks possui a funcionalidade de detecção de atualização de imagem base. Quando uma imagem base é atualizada em qualquer registro (público ou privado), o ACR Tasks pode disparar automaticamente uma reconstrução da imagem downstream (dependente) sem a necessidade de intervenção manual ou commits de código.",
+      "content": {
+        "statement": "Sua equipe utiliza o ACR Tasks (Tarefas do ACR) no Azure para automatizar o fluxo de construção e implantação de imagens. A imagem do seu aplicativo web (AppImage) é construída a partir de uma imagem base de framework público (Node.js BaseImage).\nDe acordo com as capacidades nativas do ACR Tasks, o que acontece quando o fabricante do Node.js atualiza a BaseImage contendo correções de segurança de sistema operacional e de framework, e ela é atualizada no registro?",
+        "options": [
+          { "id": "A", "text": "O ACR bloqueia a execução da AppImage até que o desenvolvedor realize um commit manual do código-fonte para forçar a atualização." },
+          { "id": "B", "text": "O ACR Tasks detecta automaticamente a atualização na imagem base (BaseImage) e dispara dinamicamente uma reconstrução (rebuild) da imagem do seu aplicativo (AppImage)." },
+          { "id": "C", "text": "Uma mensagem de erro de \"imagem obsoleta\" é colocada em uma fila do Azure Storage, exigindo que uma Azure Function faça o pull manual da imagem." },
+          { "id": "D", "text": "A imagem do aplicativo (AppImage) herda imediatamente os patches de segurança sem precisar ser reconstruída, graças ao recurso de camadas isoladas do Azure." }
+        ]
+      },
+      "correct_answer": ["B"]
+    },
+    {
+      "id": "Q-ACR-10",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / App Service / CLI",
+      "difficulty": "Alta",
+      "explanation": "Para um Web App for Containers Linux, o SKU deve ser `--is-linux`. Para garantir a imutabilidade, a tag da imagem deve ser específica (`v1.0.0`) e não `latest`. A URL do servidor de registro deve ser o endpoint raiz, não incluindo o nome do repositório (`https://images.azurecr.io`).",
+      "content": {
+        "statement": "Você está preparando a implantação de um site em Python utilizando o recurso de Web App for Containers (Azure App Service). A imagem Docker está hospedada em um Azure Container Registry privado. Você precisa criar a infraestrutura via linha de comando (az cli).\nO aplicativo Web deve sempre rodar a mesma versão do site, ignorando construções (builds) futuras. Como você deve completar os comandos no terminal? (Escolha a opção correta para cada lacuna)",
+        "text": "Passo 1: az appservice plan create --name websitePlan {{0}}\nPasso 2: az webapp create --plan websitePlan {{1}}\nPasso 3: az webapp config container set {{2}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "--sku B1 --hyper-v" },
+              { "id": "B", "text": "--sku B1 --is-linux" },
+              { "id": "C", "text": "--sku SHARED" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "--deployment-container-image-name images.azurecr.io/website:latest" },
+              { "id": "B", "text": "--deployment-container-image-name images.azurecr.io/website:v1.0.0" }
+            ]
+          },
+          {
+            "index": 2,
+            "options": [
+              { "id": "A", "text": "--docker-registry-server-url https://images.azurecr.io -u admin -p admin" },
+              { "id": "B", "text": "--docker-registry-server-url https://images.azurecr.io/website -u admin -p admin" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["B", "B", "A"]
+    },
+    {
+      "id": "Q-ACR-11",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / App Service",
+      "difficulty": "Fácil",
+      "explanation": "Para que o Azure Web App for Containers possa extrair (pull) uma imagem Docker nativamente, de forma segura e suportando Continuous Deployment via Webhooks, a imagem deve ser armazenada no Azure Container Registry (ACR).",
+      "content": {
+        "statement": "Você planeja criar um recurso do tipo Azure Web App for Containers chamado WebAppContainer que executará uma imagem Docker personalizada chamada Image1. Você precisa fazer o upload da Image1 para o Azure. A solução deve garantir que o WebAppContainer possa extrair (pull) a imagem nativamente e de forma segura, suportando também a configuração de implantação contínua (Continuous Deployment via Webhooks).\nPara qual tipo de armazenamento do Azure você deve fazer o upload da Image1?",
+        "options": [
+          { "id": "A", "text": "Uma conta do Azure Storage contendo um contêiner de Blob." },
+          { "id": "B", "text": "Azure Container Registry (ACR)." },
+          { "id": "C", "text": "Uma conta do Azure Storage contendo um File Share premium." },
+          { "id": "D", "text": "Azure Container Instances (ACI)." }
+        ]
+      },
+      "correct_answer": ["B"]
+    },
+    {
+      "id": "Q-ACR-12",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure App Service / Troubleshooting / Logs",
+      "difficulty": "Média",
+      "explanation": "Para habilitar o log do sistema de arquivos para um Web App on Linux, usa-se `az webapp log config`. Para iniciar a transmissão dos logs em tempo real do contêiner, o comando é `az webapp log tail`.",
+      "content": {
+        "statement": "Você planeja implantar um aplicativo web no Azure App Service on Linux utilizando uma imagem personalizada do Docker... Você precisa acessar os logs de console gerados de dentro do contêiner em tempo real usando a Azure CLI.\nComo você deve completar os comandos da Azure CLI? (Escolha a opção correta para cada lacuna)",
+        "text": "Passo 1 (Habilitar o log no sistema de arquivos): az webapp log {{0}} --name ContosoWeb --resource-group ContosoRG --docker-container-logging filesystem\nPasso 2 (Iniciar a transmissão dos logs em tempo real): az webapp log {{1}} --name ContosoWeb --resource-group ContosoRG",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "config" },
+              { "id": "B", "text": "download" },
+              { "id": "C", "text": "show" },
+              { "id": "D", "text": "tail" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "config" },
+              { "id": "B", "text": "download" },
+              { "id": "C", "text": "show" },
+              { "id": "D", "text": "tail" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["A", "D"]
+    },
+    {
+      "id": "Q-ACR-13",
+      "type": "drag_and_drop",
+      "category": "Docker / Dockerfile",
+      "difficulty": "Média",
+      "explanation": "A ordem correta é: 1. `FROM` (C) define a imagem base. 2. `WORKDIR` (E) define o diretório de trabalho. 3. `COPY` (A) copia os arquivos. 4. `RUN` (D) executa comandos durante o build. 5. `CMD` (B) define o comando de execução.",
+      "content": {
+        "statement": "Você planeja criar uma imagem Docker que executa uma aplicação ASP.NET Core chamada ContosoApp... Você precisa construir o Dockerfile atendendo a dois requisitos: Chamar o setupScript.ps1 durante a construção (build) do contêiner. Executar o ContosoApp.dll quando o contêiner for iniciado (run). Em qual ordem você deve dispor as 5 instruções dentro do Dockerfile?",
+        "items_to_drag": [
+          { "id": "A", "text": "COPY ./ ." },
+          { "id": "B", "text": "CMD [\"dotnet\", \"ContosoApp.dll\"]" },
+          { "id": "C", "text": "FROM microsoft/aspnetcore:latest" },
+          { "id": "D", "text": "RUN powershell ./setupScript.ps1" },
+          { "id": "E", "text": "WORKDIR /apps/ContosoApp" }
+        ]
+      },
+      "correct_answer": ["C", "E", "A", "D", "B"]
+    },
+    {
+      "id": "Q-ACR-14",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / ACR Build",
+      "difficulty": "Média",
+      "explanation": "O comando `az acr build` (A) permite construir e enviar uma imagem Docker para o ACR usando os recursos de computação do Azure, sem a necessidade de ter o Docker daemon instalado localmente. O `.` no final indica que o contexto do build é o diretório atual.",
+      "content": {
+        "statement": "Sua equipe desenvolveu um aplicativo Node.js. Você possui o código-fonte e um Dockerfile válidos no seu diretório de trabalho local. No entanto, a sua máquina de desenvolvimento corporativa não possui o Docker daemon (mecanismo do Docker) instalado localmente devido a rigorosas políticas de segurança da empresa.\nVocê precisa obrigatoriamente construir (build) a imagem do contêiner a partir do seu código-fonte local e enviá-la (push) diretamente para um Azure Container Registry chamado mycompanyacr.\nQual comando permite que você atenda a esse objetivo utilizando os recursos de computação do próprio Azure na nuvem, sem precisar do Docker local?",
+        "options": [
+          { "id": "A", "text": "az acr build --image sample/hello-world:v1 --registry mycompanyacr ." },
+          { "id": "B", "text": "az container create --image sample/hello-world:v1 --registry mycompanyacr ." },
+          { "id": "C", "text": "az acr task run --name buildTask --registry mycompanyacr" },
+          { "id": "D", "text": "docker build -t mycompanyacr.azurecr.io/sample/hello-world:v1 ." }
+        ]
+      },
+      "correct_answer": ["A"]
+    },
+    {
+      "id": "Q-ACR-15",
+      "type": "multiple_choice",
+      "category": "Azure Container Instances / ACR",
+      "difficulty": "Média",
+      "explanation": "Ao implantar um ACI a partir de um ACR privado usando a conta de administrador, os parâmetros obrigatórios são `--registry-login-server` (o nome completo do seu ACR), `--registry-username` e `--registry-password` (o usuário e a senha da conta de administrador do ACR).",
+      "content": {
+        "statement": "Você possui uma imagem de aplicativo armazenada em um Azure Container Registry (ACR) privado. A conta de administrador (Admin User) do ACR está habilitada no portal. Você precisa implantar uma instância rápida dessa imagem utilizando o Azure Container Instances (ACI) via linha de comando (az container create).\nVisto que o registro é privado, quais parâmetros da Azure CLI você deve obrigatoriamente incluir no comando para fornecer as credenciais necessárias e permitir que o ACI faça o pull da imagem?",
+        "options": [
+          { "id": "A", "text": "--vnet, --subnet e --registry-token" },
+          { "id": "B", "text": "--registry-login-server, --registry-username e --registry-password" },
+          { "id": "C", "text": "--connection-string, --access-key e --tenant-id" },
+          { "id": "D", "text": "--acr-identity, --assign-identity e --scope" }
+        ]
+      },
+      "correct_answer": ["B"]
+    },
+    {
+      "id": "Q-ACR-16",
+      "type": "drag_and_drop",
+      "category": "Azure Container Registry / App Service / Segurança",
+      "difficulty": "Alta",
+      "explanation": "A ordem correta é: 1. Habilitar a Identidade Gerenciada atribuída ao sistema (B). 2. Recuperar o Principal ID da identidade (D). 3. Conceder a função AcrPull (A). 4. Configurar o Web App para usar a Identidade Gerenciada (E).",
+      "content": {
+        "statement": "Você está implantando um aplicativo web usando o recurso Azure Web App for Containers. A imagem Docker do aplicativo está armazenada em um Azure Container Registry (ACR) privado chamado meuacr. A política de segurança da sua empresa proíbe o uso de senhas de administrador (Admin User) no ACR. O aplicativo web deve ser capaz de fazer o pull da imagem de forma segura e autônoma, gerenciada inteiramente pelo Azure.\nEm qual ordem você deve executar as quatro ações abaixo para configurar esse acesso utilizando o princípio do menor privilégio?",
+        "items_to_drag": [
+          { "id": "A", "text": "Conceder a função AcrPull (RBAC) ao ID do Principal no escopo do Azure Container Registry." },
+          { "id": "B", "text": "Habilitar a Identidade Gerenciada atribuída ao sistema (System-assigned Managed Identity) no Azure Web App." },
+          { "id": "C", "text": "Habilitar a conta de administrador (Admin user) nas configurações de acesso do ACR." },
+          { "id": "D", "text": "Recuperar o Principal ID (ID do Objeto) da identidade gerenciada do Web App." },
+          { "id": "E", "text": "Configurar o Azure Web App para extrair a imagem usando a Identidade Gerenciada (az webapp config container set --docker-registry-server-url...)." }
+        ]
+      },
+      "correct_answer": ["B", "D", "A", "E"]
+    },
+    {
+      "id": "Q-ACR-17",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / Webhooks",
+      "difficulty": "Média",
+      "explanation": "Para acionar um Webhook quando uma imagem é excluída do ACR, a ação deve ser `delete`. A URI para a qual o webhook enviará a notificação é a URL da Azure Function (`https://minhafuncao.azurewebsites.net/api/alerta...`).",
+      "content": {
+        "statement": "Sua equipe de operações exige que um endpoint personalizado (uma Azure Function) seja acionado por uma notificação HTTP POST sempre que uma imagem específica for excluída acidentalmente ou propositalmente do Azure Container Registry (ACR). Você decide configurar um Webhook no ACR via linha de comando (az cli). Como você deve preencher os parâmetros do comando?",
+        "text": "`az acr webhook create \\\n  --registry meuacr \\\n  --name meualertaWebhook \\\n  --actions {{0}} \\\n  --uri {{1}}`",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "push" },
+              { "id": "B", "text": "delete" },
+              { "id": "C", "text": "quarantine" },
+              { "id": "D", "text": "chart_delete" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "http://meuacr.azurecr.io/webhook" },
+              { "id": "B", "text": "https://minhafuncao.azurewebsites.net/api/alerta..." },
+              { "id": "C", "text": "Microsoft.ContainerRegistry.ImageDeleted" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["B", "B"]
+    },
+    {
+      "id": "Q-ACR-18",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / Políticas",
+      "difficulty": "Média",
+      "explanation": "A Política de Retenção nativa do ACR (Retention Policy) é o recurso projetado para excluir automaticamente manifestos sem tag (imagens \"órfãs\") após um período definido, otimizando os custos de armazenamento sem a necessidade de scripts.",
+      "content": {
+        "statement": "Sua organização possui um Azure Container Registry (ACR) na camada Premium. Durante uma auditoria, constatou-se que os custos de armazenamento do registro estão aumentando drasticamente porque imagens antigas que perdem suas tags (tags substituídas e transformadas em manifestos \"órfãos\" / untagged) não estão sendo excluídas.\nVocê precisa implementar uma solução automatizada para excluir esses manifestos órfãos e sem tag que sejam mais velhos que 30 dias, sem a necessidade de manter scripts personalizados ou serviços de computação extras. Qual recurso nativo você deve configurar?",
+        "options": [
+          { "id": "A", "text": "Criar um Azure Logic App acionado por um Azure Event Grid filtrando o evento ImageUntagged." },
+          { "id": "B", "text": "Habilitar a Política de Retenção (Retention Policy) nativa do ACR e definir o período para 30 dias." },
+          { "id": "C", "text": "Configurar uma regra de Gerenciamento de Ciclo de Vida do Azure Blob Storage (Lifecycle Management) no contêiner de armazenamento oculto do ACR." },
+          { "id": "D", "text": "Executar uma Tarefa do ACR (ACR Task) acionada por cronômetro para rodar o comando az acr repository delete." }
+        ]
+      },
+      "correct_answer": ["B"]
+    },
+    {
+      "id": "Q-ACR-19",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / Segurança",
+      "difficulty": "Alta",
+      "explanation": "O comando `az acr repository update` com `--delete-enabled false --write-enabled false` na imagem específica `core-app:v1.0.0` é a maneira correta de bloquear a exclusão e a sobrescrita, enquanto permite o pull (`read-enabled` é true por padrão).",
+      "content": {
+        "statement": "Você tem uma imagem de aplicativo crítica no seu ACR identificada como core-app:v1.0.0 no registro contosoacr. O departamento de compliance exige que essa imagem específica nunca seja sobrescrita ou excluída, mas os clusters do Azure Kubernetes Service (AKS) ainda devem ter permissão total para ler (fazer o pull) dessa imagem para novas implantações.\nQual comando da Azure CLI aplica o bloqueio correto a essa imagem garantindo os requisitos?",
+        "options": [
+          { "id": "A", "text": "az acr repository update --name contosoacr --image core-app:v1.0.0 --delete-enabled false --write-enabled false" },
+          { "id": "B", "text": "az acr repository update --name contosoacr --image core-app:v1.0.0 --read-enabled false --write-enabled false" },
+          { "id": "C", "text": "az acr repository show --name contosoacr --image core-app:v1.0.0 --lock true" },
+          { "id": "D", "text": "az resource lock create --name imageLock --resource-type Microsoft.ContainerRegistry/registries/repositories --lock-type ReadOnly" }
+        ]
+      },
+      "correct_answer": ["A"]
+    },
+    {
+      "id": "Q-ACR-20",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / ACR Tasks",
+      "difficulty": "Média",
+      "explanation": "O `--name` da tarefa deve ser um identificador único, como `buildTask`. O `--context` para um repositório GitHub privado é a URL `.git` do repositório (`https://github.com/minhaorg/meurepo.git`).",
+      "content": {
+        "statement": "Você deseja automatizar a construção de imagens de contêiner. O código do seu aplicativo e o respectivo Dockerfile estão hospedados em um repositório privado no GitHub. Sempre que um desenvolvedor fizer um commit (Push) na branch principal (main) do repositório no GitHub, você quer que o Azure Container Registry compile a nova imagem automaticamente.\nComo você preenche o comando para criar a tarefa no ACR? (Escolha a opção correta para cada lacuna)",
+        "text": "`az acr task create \\\n  --registry meuacr \\\n  --name {{0}} \\\n  --image appimage:latest \\\n  --context {{1}} \\\n  --file Dockerfile \\\n  --git-access-token <Token_do_GitHub>`",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "buildTask" },
+              { "id": "B", "text": "Microsoft.ContainerRegistry.Task" },
+              { "id": "C", "text": "ImagePushed" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "https://github.com/minhaorg/meurepo.git" },
+              { "id": "B", "text": "meuacr.azurecr.io/meurepo" },
+              { "id": "C", "text": "/home/site/wwwroot" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["A", "A"]
+    },
+    {
+      "id": "Q-ACR-21",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / Geo-replication",
+      "difficulty": "Alta",
+      "explanation": "A `Replicação Geográfica (Geo-replication)` é o recurso da camada Premium do ACR que permite manter cópias do registro em múltiplas regiões. Isso resolve o problema de latência de pull de imagens para clusters AKS em diferentes continentes sem alterar as URLs dos registros nos manifestos.",
+      "content": {
+        "statement": "Você implanta um aplicativo em contêiner usando o Azure Kubernetes Service (AKS) em duas regiões diferentes do globo... Você precisa resolver o problema de latência na Europa sem alterar a URL do servidor de login do registro (meuacr.azurecr.io) nos manifestos YAML do Kubernetes. O que você deve fazer?",
+        "options": [
+          { "id": "A", "text": "Criar um novo ACR na região West Europe e usar o Azure Traffic Manager para rotear os pulls de imagem com base na localização geográfica." },
+          { "id": "B", "text": "Alterar a camada de preço (SKU) do ACR atual para Premium e habilitar o recurso de Replicação Geográfica (Geo-replication) adicionando a região West Europe." },
+          { "id": "C", "text": "Configurar uma regra de Emparelhamento de Rede Virtual (VNet Peering) entre a rede do AKS no West Europe e a rede do ACR no East US." },
+          { "id": "D", "text": "Habilitar a configuração de Distribuição de Conteúdo (Azure CDN) diretamente sobre o Azure Container Registry." }
+        ]
+      },
+      "correct_answer": ["B"]
+    },
+    {
+      "id": "Q-ACR-22",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / Importação",
+      "difficulty": "Média",
+      "explanation": "O comando `az acr import` (A) permite importar imagens de outros registros para o ACR diretamente no Azure, sem necessidade de Docker local. O `--source` deve ser a imagem completa no Docker Hub (`docker.io/library/nginx:latest`).",
+      "content": {
+        "statement": "Você precisa copiar uma imagem pública de um proxy reverso a partir do Docker Hub (ex: nginx:latest) para o seu Azure Container Registry (ACR) privado chamado meuacr... Como você deve preencher o comando da Azure CLI para importar a imagem executando a cópia diretamente dentro da infraestrutura do Azure, sem a necessidade de comandos locais de pull/push?",
+        "text": "`az acr {{0}} \\\n  --name meuacr \\\n  --source {{1}} \\\n  --image nginx:latest`",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "build" },
+              { "id": "B", "text": "import" },
+              { "id": "C", "text": "pull" },
+              { "id": "D", "text": "copy" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "https://hub.docker.com" },
+              { "id": "B", "text": "docker.io/library/nginx:latest" },
+              { "id": "C", "text": "mcr.microsoft.com/nginx:latest" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["B", "B"]
+    },
+    {
+      "id": "Q-ACR-23",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / App Service / CI/CD",
+      "difficulty": "Média",
+      "explanation": "Para que um Azure Web App for Containers atualize a imagem automaticamente após um push para o ACR, você deve habilitar a opção `Continuous Deployment` nas configurações de Container do Web App. Isso cria um webhook no ACR que notifica o Web App sobre novas imagens.",
+      "content": {
+        "statement": "Você configurou um recurso do tipo Azure Web App for Containers para executar um aplicativo hospedado no seu Azure Container Registry (ACR). Você percebe que, toda vez que a equipe de desenvolvimento envia (push) uma nova versão da imagem para o ACR com a tag :latest, o Web App continua rodando a versão antiga. O Web App só atualiza a imagem em execução quando você reinicia o serviço manualmente no portal.\nVocê precisa garantir que o Web App seja atualizado automaticamente assim que a nova imagem for enviada ao ACR. Qual configuração você deve aplicar no recurso Web App?",
+        "options": [
+          { "id": "A", "text": "Habilitar a opção Continuous Deployment (Implantação contínua) nas configurações de Container do Web App para gerar um Webhook no ACR." },
+          { "id": "B", "text": "Habilitar a Identidade Gerenciada (Managed Identity) atribuída ao sistema no Web App e conceder a permissão AcrPush." },
+          { "id": "C", "text": "Ativar a configuração de escala automática (Autoscale rules) baseada no uso de memória do App Service Plan." },
+          { "id": "D", "text": "Modificar a propriedade Container restart policy para Always no arquivo function.json." }
+        ]
+      },
+      "correct_answer": ["A"]
+    },
+    {
+      "id": "Q-ACR-24",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / Segurança / Melhores Práticas",
+      "difficulty": "Alta",
+      "explanation": "**Não**. Habilitar a Conta de Administrador (Admin User) e compartilhar suas credenciais em ambientes de produção viola o Princípio do Menor Privilégio e é uma prática de segurança muito ruim. O Admin User é destinado apenas a cenários de desenvolvimento ou teste isolados. Em produção, deve-se usar Managed Identities ou Service Principals com permissões RBAC específicas (como AcrPull) para cada serviço.",
+      "content": {
+        "statement": "Sua equipe está projetando uma arquitetura de microsserviços... Solução Proposta: Para simplificar a manutenção da autenticação de todos esses serviços da forma mais rápida possível, o arquiteto chefe decide habilitar a Conta de Administrador (Admin User) nas chaves de acesso do ACR e compartilhar esse único Nome de Usuário e Senha com os manifestos de todos os clusters em produção.\nConsiderando o Princípio do Menor Privilégio (Least Privilege) e as diretrizes recomendadas pela Microsoft para cenários de produção, essa solução atende aos objetivos de segurança?",
+        "options": [
+          { "id": "A", "text": "Sim (A solução está correta e é altamente recomendada)." },
+          { "id": "B", "text": "Não (A solução não atende aos objetivos; o Admin User foi projetado apenas para desenvolvimento isolado ou testes rápidos)." }
+        ]
+      },
+      "correct_answer": ["B"]
+    },
+    {
+      "id": "Q-ACR-25",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / ACR Tasks / Limpeza",
+      "difficulty": "Média",
+      "explanation": "Para agendar uma tarefa no ACR, usa-se o parâmetro `--schedule`. O valor `\"0 0 * * 0\"` é uma expressão cron que significa 'à meia-noite de domingo' (dia 0 da semana).",
+      "content": {
+        "statement": "O seu ACR na camada Premium está consumindo grandes quantidades de armazenamento porque imagens antigas de ambientes de homologação (dev-tags) e manifestos \"órfãos\" estão se acumulando. Você deseja agendar uma tarefa nativa (ACR Task) que rode automaticamente todo domingo à meia-noite e exclua as imagens antigas de desenvolvimento usando o comando interno acr purge.\nComo você deve preencher os parâmetros do comando da Azure CLI para definir esse agendamento com sucesso? (Escolha a opção correta para cada lacuna)",
+        "text": "`az acr task create \\\n  --name purgeDevTask \\\n  --registry meuacr \\\n  --cmd \"acr purge --filter 'myapp:dev-*' --ago 7d\" \\\n  {{0}} {{1}} \\\n  --context /dev/null`",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "--timer" },
+              { "id": "B", "text": "--trigger" },
+              { "id": "C", "text": "--schedule" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "\"0 0 * * 0\"" },
+              { "id": "B", "text": "\"Sunday\"" },
+              { "id": "C", "text": "\"Weekly\"" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["C", "A"]
+    },
+    {
+      "id": "Q-ACR-26",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / Logs / Auditoria",
+      "difficulty": "Média",
+      "explanation": "As categorias de log para eventos de envio e extração de imagens são `ContainerRegistryRepositoryEvents`. Para eventos de autenticação, é `ContainerRegistryLoginEvents`.",
+      "content": {
+        "statement": "O departamento de conformidade da sua empresa exige uma auditoria detalhada de quem está acessando o Azure Container Registry (ACR) privado da organização e quais imagens estão sendo baixadas (pulled) ou enviadas (pushed). Você decide configurar as Configurações de Diagnóstico (Diagnostic Settings) do ACR para enviar esses logs para um workspace do Azure Log Analytics.\nVocê usará a Azure CLI para habilitar o envio dessas duas categorias de logs principais. Como você deve preencher os nomes das categorias no comando JSON? (Escolha a opção correta para cada lacuna)",
+        "text": "`az monitor diagnostic-settings create \\\n  --name acr-diagnostics \\\n  --resource $ACR_ID \\\n  --workspace $WORKSPACE_ID \\\n  --logs '[\n    {\"category\": \"{{0}}\", \"enabled\": true},\n    {\"category\": \"{{1}}\", \"enabled\": true}\n  ]'`",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "ContainerRegistryRepositoryEvents" },
+              { "id": "B", "text": "ContainerRegistryPushPullEvents" },
+              { "id": "C", "text": "ContainerRegistryImageEvents" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "ContainerRegistryAuthEvents" },
+              { "id": "B", "text": "ContainerRegistryLoginEvents" },
+              { "id": "C", "text": "ContainerRegistryTokenEvents" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["A", "B"]
+    },
+    {
+      "id": "Q-ACR-27",
+      "type": "drag_and_drop",
+      "category": "Azure Container Registry / Managed Identity / Segurança",
+      "difficulty": "Alta",
+      "explanation": "A ordem correta para configurar uma Managed Identity atribuída ao usuário é: 1. Criar a User-Assigned Managed Identity (D). 2. Atribuir a função AcrPull (A). 3. Associar essa identidade ao Web App (B). 4. Configurar o Web App para usar o Client ID da identidade (F).",
+      "content": {
+        "statement": "Você está configurando um aplicativo no Azure Web App for Containers para fazer o pull de uma imagem de um ACR privado. Devido a uma nova política de governança, você está migrando da \"Identidade Gerenciada atribuída ao sistema\" (System-assigned) para uma Identidade Gerenciada atribuída ao usuário (User-assigned).\nEm qual ordem você deve executar as quatro ações abaixo para configurar o Web App para puxar a imagem do ACR usando essa identidade recém-criada?",
+        "items_to_drag": [
+          { "id": "A", "text": "Atribuir a função AcrPull (RBAC) para a identidade gerenciada no escopo do ACR." },
+          { "id": "B", "text": "Associar a identidade gerenciada atribuída ao usuário ao Azure Web App." },
+          { "id": "C", "text": "Habilitar a configuração de Admin User (Usuário Administrador) nas chaves de acesso do ACR." },
+          { "id": "D", "text": "Criar o recurso de Identidade Gerenciada atribuída ao usuário (User-Assigned Managed Identity) no Azure." },
+          { "id": "E", "text": "Obter a senha principal do ACR e salvá-la no Azure Key Vault." },
+          { "id": "F", "text": "Configurar o Web App para usar o Client ID da identidade para extrair a imagem (az webapp config container set --user-assigned-identity-client-id...)." }
+        ]
+      },
+      "correct_answer": ["D", "A", "B", "F"]
+    },
+    {
+      "id": "Q-ACR-28",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / Segurança de Rede / Private Link",
+      "difficulty": "Alta",
+      "explanation": "A abordagem recomendada é configurar um `Private Endpoint` (B) para o ACR dentro da VNet-Core e desabilitar o acesso à rede pública. Isso garante que o tráfego permaneça na rede privada do Azure, sem passar pela internet pública.",
+      "content": {
+        "statement": "Você gerencia um Azure Container Registry (ACR) na camada Premium... Qual é a abordagem recomendada e nativa do Azure para implementar esse isolamento de rede para o ACR?",
+        "options": [
+          { "id": "A", "text": "Criar um Azure Front Door na frente do ACR e configurar políticas do Web Application Firewall (WAF) bloqueando IPs externos." },
+          { "id": "B", "text": "Configurar um Private Endpoint (Link Privado) para o ACR dentro da VNet-Core e desabilitar o acesso à rede pública nas configurações do ACR." },
+          { "id": "C", "text": "Habilitar o Admin User, gerar um token de escopo de repositório (Repository-scoped access token) e injetá-lo nas VMs da VNet-Core." },
+          { "id": "D", "text": "Criar uma regra de Network Security Group (NSG) na sub-rede das VMs permitindo a tag de serviço AzureContainerRegistry e bloquear o restante." }
+        ]
+      },
+      "correct_answer": ["B"]
+    },
+    {
+      "id": "Q-ACR-29",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Container Registry / Criptografia / CMK",
+      "difficulty": "Alta",
+      "explanation": "Para habilitar a criptografia CMK, o `--key-encryption-key` deve receber a URI completa da chave no Key Vault. O `--identity` deve receber o `Client ID` da identidade gerenciada que tem permissão para acessar essa chave no Key Vault.",
+      "content": {
+        "statement": "O seu ACR está no nível Premium e você precisa criptografar o armazenamento do registro utilizando Chaves Gerenciadas pelo Cliente (Customer-Managed Keys), armazenadas no Azure Key Vault... Como você deve preencher os parâmetros obrigatórios do comando?",
+        "text": "`az acr encryption enable \\\n  --name meuregistroacr \\\n  --key-encryption-key {{0}} \\\n  --identity {{1}}`",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "O nome simples da chave (ex: minhaChave)" },
+              { "id": "B", "text": "A URI completa da chave no Key Vault (ex: https://meukv.vault.azure.net/keys/minhachave)" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "O Tenant ID do Azure AD" },
+              { "id": "B", "text": "O Client ID da identidade gerenciada associada" },
+              { "id": "C", "text": "O Object ID da identidade gerenciada associada" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["B", "B"]
+    },
+    {
+      "id": "Q-ACR-30",
+      "type": "multiple_choice",
+      "category": "Azure Container Registry / Proteção de Imagens",
+      "difficulty": "Alta",
+      "explanation": "O comando `az acr repository update --image myrepo:release-stable --write-enabled false --delete-enabled false` (B) é a forma correta de bloquear a sobrescrita e a exclusão de uma imagem específica no ACR. Isso impede que a tarefa de expurgo ou usuários a deletem, mas permite que o AKS continue fazendo o pull normalmente (leitura não é afetada).",
+      "content": {
+        "statement": "Você configurou uma tarefa (ACR Task) programada para executar o comando acr purge semanalmente... Como você pode garantir de forma absoluta que qualquer imagem com a tag release-stable no repositório nunca seja excluída (nem pela tarefa de expurgo, nem manualmente), mas ainda permitir que o cluster AKS faça o pull dela normalmente?",
+        "options": [
+          { "id": "A", "text": "Alterar a tarefa acr purge para rodar sob o contexto de uma Identidade com a função AcrPull, impedindo que ela tenha permissão de deletar." },
+          { "id": "B", "text": "Executar o comando az acr repository update --image myrepo:release-stable --write-enabled false --delete-enabled false." },
+          { "id": "C", "text": "Mover as imagens com a tag release-stable para uma camada \"Archive\" oculta (Cold Storage) usando regras de ciclo de vida de blob." },
+          { "id": "D", "text": "Adicionar o IP do cluster AKS à lista de permissões do firewall do ACR e bloquear todas as outras operações de exclusão." }
+        ]
+      },
+      "correct_answer": ["B"]
+    }
+]

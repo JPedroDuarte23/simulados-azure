@@ -1,0 +1,682 @@
+[
+  {
+    "id": "CS-CPL-01",
+    "type": "case_study",
+    "category": "Estudo de Caso: City Power & Light",
+    "difficulty": "Alta",
+    "explanation": "O Azure CDN é a solução projetada especificamente para reduzir a latência na entrega de conteúdo estático globalmente, armazenando cópias em cache em locais de borda próximos aos usuários, o que atende diretamente aos requisitos de negócio.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio",
+          "title": "Requisitos de Negócio",
+          "content": "Latência: Reduzir latência no carregamento de conteúdo estático para clientes globais.\nCusto: Minimizar custos operacionais garantindo escalabilidade apenas sob demanda.\nDisponibilidade: Garantir alta disponibilidade do portal com monitoramento proativo."
+        },
+        {
+          "id": "tab-tecnico",
+          "title": "Requisitos Técnicos",
+          "content": "Segurança: Senhas e strings de conexão (PostgreSQL) devem ser armazenadas de forma segura. Proibido texto simples no código-fonte.\nHospedagem: Azure App Service for Linux usando contêineres com escalonamento automático.\nMonitoramento: Coletar logs e exceções no Application Insights. Requisito crítico: Descartar ações não iniciadas por usuários (non-user actions) para economizar custos de ingestão.\nArmazenamento: Uso de Azure Blob Storage. Arquivos não modificados há mais de 180 dias devem ir para a camada Archive automaticamente."
+        },
+        {
+          "id": "tab-ambiente",
+          "title": "Ambiente Atual",
+          "content": "Monólito on-premises (Windows Server 2016).\nBanco de Dados PostgreSQL local.\nConteúdo estático servido pelo IIS, causando lentidão em picos (fechamento de faturas).\nAusência de CI/CD e recuperação automatizada."
+        }
+      ],
+      "statement": "Com base no contexto, você precisa otimizar a entrega de conteúdo estático (manuais em PDF e imagens) para os clientes globais, atendendo aos requisitos de latência e custo. Qual abordagem você deve adotar?",
+      "options": [
+        { "id": "A", "text": "Configurar o Azure App Service Local Cache definindo a variável `WEBSITE_LOCAL_CACHE_SIZEINMB`." },
+        { "id": "B", "text": "Armazenar o conteúdo no Azure Blob Storage e habilitar um perfil e endpoint do Azure Content Delivery Network (CDN) apontando para a conta de armazenamento." },
+        { "id": "C", "text": "Criar um perfil do Azure Traffic Manager e rotear o tráfego para instâncias dedicadas do App Service." },
+        { "id": "D", "text": "Provisionar um cluster do Azure Cache for Redis e atualizar o app para fazer cache das imagens em memória." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "CS-CPL-02",
+    "type": "case_study",
+    "category": "Estudo de Caso: City Power & Light",
+    "difficulty": "Alta",
+    "explanation": "A combinação de Managed Identity para o App Service e Azure Key Vault é a prática recomendada pela Microsoft ('passwordless') para gerenciar segredos e strings de conexão de forma segura, atendendo ao requisito de não ter texto simples no código.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio",
+          "title": "Requisitos de Negócio",
+          "content": "Latência: Reduzir latência no carregamento de conteúdo estático para clientes globais.\nCusto: Minimizar custos operacionais garantindo escalabilidade apenas sob demanda.\nDisponibilidade: Garantir alta disponibilidade do portal com monitoramento proativo."
+        },
+        {
+          "id": "tab-tecnico",
+          "title": "Requisitos Técnicos",
+          "content": "Segurança: Senhas e strings de conexão (PostgreSQL) devem ser armazenadas de forma segura. Proibido texto simples no código-fonte.\nHospedagem: Azure App Service for Linux usando contêineres com escalonamento automático.\nMonitoramento: Coletar logs e exceções no Application Insights. Requisito crítico: Descartar ações não iniciadas por usuários (non-user actions) para economizar custos de ingestão.\nArmazenamento: Uso de Azure Blob Storage. Arquivos não modificados há mais de 180 dias devem ir para a camada Archive automaticamente."
+        },
+        {
+          "id": "tab-ambiente",
+          "title": "Ambiente Atual",
+          "content": "Monólito on-premises (Windows Server 2016).\nBanco de Dados PostgreSQL local.\nConteúdo estático servido pelo IIS, causando lentidão em picos (fechamento de faturas).\nAusência de CI/CD e recuperação automatizada."
+        }
+      ],
+      "statement": "Para atender ao requisito de segurança na conexão com o Azure Database for PostgreSQL sem expor credenciais no código, o que deve ser implementado?",
+      "options": [
+        { "id": "A", "text": "Salvar a string criptografada no `appsettings.json` e usar um token SAS." },
+        { "id": "B", "text": "Injetar as senhas no Azure App Service usando chaves de registro do Windows." },
+        { "id": "C", "text": "Atribuir uma Identidade Gerenciada (Managed Identity) ao Web App e conceder a ela permissão de leitura aos segredos do Azure Key Vault." },
+        { "id": "D", "text": "Usar o Azure Active Directory B2C para rotear a conexão através de contas de convidados." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "CS-CPL-03",
+    "type": "case_study",
+    "category": "Estudo de Caso: City Power & Light",
+    "difficulty": "Alta",
+    "explanation": "O Gerenciamento de Ciclo de Vida do Azure Blob Storage é o recurso nativo e automatizado para mover dados entre camadas (Hot, Cool, Archive) com base em regras, como a idade do blob, atendendo perfeitamente ao requisito de 180 dias.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio",
+          "title": "Requisitos de Negócio",
+          "content": "Latência: Reduzir latência no carregamento de conteúdo estático para clientes globais.\nCusto: Minimizar custos operacionais garantindo escalabilidade apenas sob demanda.\nDisponibilidade: Garantir alta disponibilidade do portal com monitoramento proativo."
+        },
+        {
+          "id": "tab-tecnico",
+          "title": "Requisitos Técnicos",
+          "content": "Segurança: Senhas e strings de conexão (PostgreSQL) devem ser armazenadas de forma segura. Proibido texto simples no código-fonte.\nHospedagem: Azure App Service for Linux usando contêineres com escalonamento automático.\nMonitoramento: Coletar logs e exceções no Application Insights. Requisito crítico: Descartar ações não iniciadas por usuários (non-user actions) para economizar custos de ingestão.\nArmazenamento: Uso de Azure Blob Storage. Arquivos não modificados há mais de 180 dias devem ir para a camada Archive automaticamente."
+        },
+        {
+          "id": "tab-ambiente",
+          "title": "Ambiente Atual",
+          "content": "Monólito on-premises (Windows Server 2016).\nBanco de Dados PostgreSQL local.\nConteúdo estático servido pelo IIS, causando lentidão em picos (fechamento de faturas).\nAusência de CI/CD e recuperação automatizada."
+        }
+      ],
+      "statement": "Arquivos não modificados por mais de 180 dias devem ser movidos para uma camada econômica. Como configurar essa automação?",
+      "options": [
+        { "id": "A", "text": "Usar uma política de Soft Delete (Exclusão Temporária)." },
+        { "id": "B", "text": "Criar uma política de Gerenciamento de Ciclo de Vida (Lifecycle Management) com regra para mover blobs para a camada Archive." },
+        { "id": "C", "text": "Implementar Azure Event Grid para disparar uma Azure Function que altera a camada do blob." },
+        { "id": "D", "text": "Ativar o recurso Azure Blob Change Feed para sobrescrever os arquivos a cada 180 dias." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "CS-CPL-04",
+    "type": "case_study",
+    "category": "Estudo de Caso: City Power & Light",
+    "difficulty": "Alta",
+    "explanation": "Para filtragem customizada de telemetria no Application Insights via código, é necessário criar um processador de telemetria customizado implementando ITelemetryProcessor (A) e, dentro dele, adicionar a lógica para inspecionar e descartar itens específicos (D).",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio",
+          "title": "Requisitos de Negócio",
+          "content": "Latência: Reduzir latência no carregamento de conteúdo estático para clientes globais.\nCusto: Minimizar custos operacionais garantindo escalabilidade apenas sob demanda.\nDisponibilidade: Garantir alta disponibilidade do portal com monitoramento proativo."
+        },
+        {
+          "id": "tab-tecnico",
+          "title": "Requisitos Técnicos",
+          "content": "Segurança: Senhas e strings de conexão (PostgreSQL) devem ser armazenadas de forma segura. Proibido texto simples no código-fonte.\nHospedagem: Azure App Service for Linux usando contêineres com escalonamento automático.\nMonitoramento: Coletar logs e exceções no Application Insights. Requisito crítico: Descartar ações não iniciadas por usuários (non-user actions) para economizar custos de ingestão.\nArmazenamento: Uso de Azure Blob Storage. Arquivos não modificados há mais de 180 dias devem ir para a camada Archive automaticamente."
+        },
+        {
+          "id": "tab-ambiente",
+          "title": "Ambiente Atual",
+          "content": "Monólito on-premises (Windows Server 2016).\nBanco de Dados PostgreSQL local.\nConteúdo estático servido pelo IIS, causando lentidão em picos (fechamento de faturas).\nAusência de CI/CD e recuperação automatizada."
+        }
+      ],
+      "statement": "Selecione as duas etapas para coletar telemetria no Application Insights, mas descartando ações que não sejam iniciadas por usuários.",
+      "options": [
+        { "id": "A", "text": "Implementar a interface ITelemetryProcessor em uma classe personalizada." },
+        { "id": "B", "text": "Habilitar a funcionalidade de Amostragem Adaptativa (Adaptive Sampling)." },
+        { "id": "C", "text": "Usar a ferramenta Application Insights Profiler diretamente no portal do Azure." },
+        { "id": "D", "text": "Escrever uma lógica no método Process da classe personalizada que determine a origem e, se não for usuário, retorne sem chamar o próximo processador." }
+      ]
+    },
+    "correct_answer": ["A", "D"]
+  },
+  {
+    "id": "CS-CPL-05",
+    "type": "case_study",
+    "category": "Estudo de Caso: City Power & Light",
+    "difficulty": "Alta",
+    "explanation": "Para lidar com picos de tráfego de forma econômica e automatizada, a melhor opção é usar uma camada que suporte Autoscaling, como a Standard (S1) ou superior, e configurar regras baseadas em métricas como CPU para adicionar ou remover instâncias conforme a necessidade.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio",
+          "title": "Requisitos de Negócio",
+          "content": "Latência: Reduzir latência no carregamento de conteúdo estático para clientes globais.\nCusto: Minimizar custos operacionais garantindo escalabilidade apenas sob demanda.\nDisponibilidade: Garantir alta disponibilidade do portal com monitoramento proativo."
+        },
+        {
+          "id": "tab-tecnico",
+          "title": "Requisitos Técnicos",
+          "content": "Segurança: Senhas e strings de conexão (PostgreSQL) devem ser armazenadas de forma segura. Proibido texto simples no código-fonte.\nHospedagem: Azure App Service for Linux usando contêineres com escalonamento automático.\nMonitoramento: Coletar logs e exceções no Application Insights. Requisito crítico: Descartar ações não iniciadas por usuários (non-user actions) para economizar custos de ingestão.\nArmazenamento: Uso de Azure Blob Storage. Arquivos não modificados há mais de 180 dias devem ir para a camada Archive automaticamente."
+        },
+        {
+          "id": "tab-ambiente",
+          "title": "Ambiente Atual",
+          "content": "Monólito on-premises (Windows Server 2016).\nBanco de Dados PostgreSQL local.\nConteúdo estático servido pelo IIS, causando lentidão em picos (fechamento de faturas).\nAusência de CI/CD e recuperação automatizada."
+        }
+      ],
+      "statement": "Qual estratégia de dimensionamento escolher para substituir o IIS e lidar com o pico de fechamento mensal?",
+      "options": [
+        { "id": "A", "text": "Camada Shared (D1) com Auto-swap de slot." },
+        { "id": "B", "text": "Camada Basic (B1) com Application Request Routing." },
+        { "id": "C", "text": "Camada Standard (S1) ou superior e configurar regra de Autoscaling baseada em métrica de CPU." },
+        { "id": "D", "text": "Provisionar Azure Container Instances faturados por consumo." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "CS-CON-01",
+    "type": "case_study",
+    "category": "Estudo de Caso: Contoso, Ltd",
+    "difficulty": "Alta",
+    "explanation": "No manifesto de um App Registration no Entra ID, o campo `allowedMemberTypes` dentro de uma definição de `appRoles` determina quem pode assumir aquela Role. O valor `[\"User\"]` permite que tanto usuários quanto grupos sejam atribuídos à função, garantindo que a claim de 'roles' seja incluída no token JWT.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-con",
+          "title": "Requisitos de Negócio",
+          "content": "Disponibilidade: Site de alta disponibilidade com processamento ágil de conteúdo do usuário.\nModeração: Avaliação automática de postagens contra políticas de conteúdo; requer revisão humana para níveis de alerta altos.\nEficiência de Custo: Priorizar computação Serverless e Contêineres."
+        },
+        {
+          "id": "tab-tecnico-con",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura: SPA em React (Blob Storage) + API `ContentUploadService`.\nProcessamento: `ContentAnalysisService` rodando em Azure Container Instances (ACI) com 8 núcleos de CPU. Imagens originadas de um Azure Container Registry (ACR) privado (`contosoimages`).\nServerless: Azure Function `CheckUserContent` para verificações iniciais.\nSegurança: Revisores humanos devem usar Microsoft Entra ID e pertencer obrigatoriamente à App Role `ContentReviewer`."
+        },
+        {
+          "id": "tab-ambiente-con",
+          "title": "Ambiente Atual",
+          "content": "Lentidão no carregamento de imagens de perfil (Blob Storage).\nErros intermitentes HTTP 502 Bad Gateway no `ContentUploadService` (ACI) durante uploads grandes.\nAplicação em contêiner sem acesso ao banco de segredos, impactando o fluxo."
+        }
+      ],
+      "statement": "Para garantir que a função `ContentReviewer` possa ser atribuída aos funcionários e apareça no token de autenticação, como você deve modificar o Manifesto do Aplicativo no Microsoft Entra ID?",
+      "options": [
+        { "id": "A", "text": "Definir a propriedade `allowedMemberTypes` na definição da App Role para o valor `[\"User\"]`." },
+        { "id": "B", "text": "Adicionar a política customizada em `groupMembershipClaims` definindo como `\"All\"`." },
+        { "id": "C", "text": "Mudar o atributo `oauth2AllowImplicitFlow` para `false`." },
+        { "id": "D", "text": "Alterar a chave de configuração `preAuthorizedApplications` para incluir a role `ContentReviewer`." }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "CS-CON-02",
+    "type": "case_study",
+    "category": "Estudo de Caso: Contoso, Ltd",
+    "difficulty": "Média",
+    "explanation": "O comando `az container attach` é a ferramenta específica da Azure CLI para 'atachar' o console local à saída padrão (stdout) e de erro (stderr) de um contêiner ou grupo de contêineres no ACI, permitindo a visualização de logs em tempo real.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-con",
+          "title": "Requisitos de Negócio",
+          "content": "Disponibilidade: Site de alta disponibilidade com processamento ágil de conteúdo do usuário.\nModeração: Avaliação automática de postagens contra políticas de conteúdo; requer revisão humana para níveis de alerta altos.\nEficiência de Custo: Priorizar computação Serverless e Contêineres."
+        },
+        {
+          "id": "tab-tecnico-con",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura: SPA em React (Blob Storage) + API `ContentUploadService`.\nProcessamento: `ContentAnalysisService` rodando em Azure Container Instances (ACI) com 8 núcleos de CPU. Imagens originadas de um Azure Container Registry (ACR) privado (`contosoimages`).\nServerless: Azure Function `CheckUserContent` para verificações iniciais.\nSegurança: Revisores humanos devem usar Microsoft Entra ID e pertencer obrigatoriamente à App Role `ContentReviewer`."
+        },
+        {
+          "id": "tab-ambiente-con",
+          "title": "Ambiente Atual",
+          "content": "Lentidão no carregamento de imagens de perfil (Blob Storage).\nErros intermitentes HTTP 502 Bad Gateway no `ContentUploadService` (ACI) durante uploads grandes.\nAplicação em contêiner sem acesso ao banco de segredos, impactando o fluxo."
+        }
+      ],
+      "statement": "A equipe precisa diagnosticar a causa raiz dos erros HTTP 502 no `ContentUploadService` em tempo real. Qual comando da Azure CLI fornece o fluxo de stdout e stderr diretamente do contêiner?",
+      "options": [
+        { "id": "A", "text": "az webapp log tail" },
+        { "id": "B", "text": "az monitor metrics alert create" },
+        { "id": "C", "text": "az container attach" },
+        { "id": "D", "text": "az container exec" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "CS-CON-03",
+    "type": "case_study",
+    "category": "Estudo de Caso: Contoso, Ltd",
+    "difficulty": "Alta",
+    "explanation": "Para montar segredos (como chaves de acesso) em um contêiner ACI a partir do Azure Key Vault, a sintaxe YAML/ARM exige a definição de um objeto na coleção `volumes` do tipo `secret` e, em seguida, a referência a esse volume na coleção `volumeMounts` do contêiner específico.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-con",
+          "title": "Requisitos de Negócio",
+          "content": "Disponibilidade: Site de alta disponibilidade com processamento ágil de conteúdo do usuário.\nModeração: Avaliação automática de postagens contra políticas de conteúdo; requer revisão humana para níveis de alerta altos.\nEficiência de Custo: Priorizar computação Serverless e Contêineres."
+        },
+        {
+          "id": "tab-tecnico-con",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura: SPA em React (Blob Storage) + API `ContentUploadService`.\nProcessamento: `ContentAnalysisService` rodando em Azure Container Instances (ACI) com 8 núcleos de CPU. Imagens originadas de um Azure Container Registry (ACR) privado (`contosoimages`).\nServerless: Azure Function `CheckUserContent` para verificações iniciais.\nSegurança: Revisores humanos devem usar Microsoft Entra ID e pertencer obrigatoriamente à App Role `ContentReviewer`."
+        },
+        {
+          "id": "tab-ambiente-con",
+          "title": "Ambiente Atual",
+          "content": "Lentidão no carregamento de imagens de perfil (Blob Storage).\nErros intermitentes HTTP 502 Bad Gateway no `ContentUploadService` (ACI) durante uploads grandes.\nAplicação em contêiner sem acesso ao banco de segredos, impactando o fluxo."
+        }
+      ],
+      "statement": "Você precisa permitir que o `ContentUploadService` acesse a chave do Blob Storage de forma segura, montando-a como um volume secreto. Quais propriedades YAML do Azure Resource Manager (ARM) são necessárias?",
+      "options": [
+        { "id": "A", "text": "configMap, secretRef e mountPath." },
+        { "id": "B", "text": "volumeMounts, volumes e secret." },
+        { "id": "C", "text": "env, secureValue e volumes." },
+        { "id": "D", "text": "azureFile, shareName e storageAccountName." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "CS-CON-04",
+    "type": "case_study",
+    "category": "Estudo de Caso: Contoso, Ltd",
+    "difficulty": "Média",
+    "explanation": "O `[BlobTrigger]` é o gatilho (trigger) correto para iniciar uma Azure Function assim que um novo blob é criado ou atualizado em um contêiner. O `[Blob]` é um binding de entrada/saída que permite à função ler ou gravar em outros blobs de forma declarativa, sem a necessidade de usar o SDK do Storage no código.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-con",
+          "title": "Requisitos de Negócio",
+          "content": "Disponibilidade: Site de alta disponibilidade com processamento ágil de conteúdo do usuário.\nModeração: Avaliação automática de postagens contra políticas de conteúdo; requer revisão humana para níveis de alerta altos.\nEficiência de Custo: Priorizar computação Serverless e Contêineres."
+        },
+        {
+          "id": "tab-tecnico-con",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura: SPA em React (Blob Storage) + API `ContentUploadService`.\nProcessamento: `ContentAnalysisService` rodando em Azure Container Instances (ACI) com 8 núcleos de CPU. Imagens originadas de um Azure Container Registry (ACR) privado (`contosoimages`).\nServerless: Azure Function `CheckUserContent` para verificações iniciais.\nSegurança: Revisores humanos devem usar Microsoft Entra ID e pertencer obrigatoriamente à App Role `ContentReviewer`."
+        },
+        {
+          "id": "tab-ambiente-con",
+          "title": "Ambiente Atual",
+          "content": "Lentidão no carregamento de imagens de perfil (Blob Storage).\nErros intermitentes HTTP 502 Bad Gateway no `ContentUploadService` (ACI) durante uploads grandes.\nAplicação em contêiner sem acesso ao banco de segredos, impactando o fluxo."
+        }
+      ],
+      "statement": "Quais dois atributos de ligação (bindings) em C# são necessários na Azure Function `CheckUserContent` para reagir a novos uploads e interagir com outros containers de armazenamento?",
+      "options": [
+        { "id": "A", "text": "[CosmosDBTrigger] para reagir ao upload." },
+        { "id": "B", "text": "[BlobTrigger] para acionar o processo automaticamente na chegada de novos arquivos." },
+        { "id": "C", "text": "[EventGridTrigger] para capturar conteúdo do front-end." },
+        { "id": "D", "text": "[Blob] atuando como Input/Output binding para interação com outros dados." }
+      ]
+    },
+    "correct_answer": ["B", "D"]
+  },
+  {
+    "id": "CS-CON-05",
+    "type": "case_study",
+    "category": "Estudo de Caso: Contoso, Ltd",
+    "difficulty": "Alta",
+    "explanation": "O uso de Managed Identity é a prática recomendada pela Microsoft para autenticação entre serviços do Azure ('service-to-service'). Ao atribuir a role `AcrPull` à identidade gerenciada do ACI, o Azure gerencia a rotação de tokens e a autenticação com o ACR de forma segura e automática.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-con",
+          "title": "Requisitos de Negócio",
+          "content": "Disponibilidade: Site de alta disponibilidade com processamento ágil de conteúdo do usuário.\nModeração: Avaliação automática de postagens contra políticas de conteúdo; requer revisão humana para níveis de alerta altos.\nEficiência de Custo: Priorizar computação Serverless e Contêineres."
+        },
+        {
+          "id": "tab-tecnico-con",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura: SPA em React (Blob Storage) + API `ContentUploadService`.\nProcessamento: `ContentAnalysisService` rodando em Azure Container Instances (ACI) com 8 núcleos de CPU. Imagens originadas de um Azure Container Registry (ACR) privado (`contosoimages`).\nServerless: Azure Function `CheckUserContent` para verificações iniciais.\nSegurança: Revisores humanos devem usar Microsoft Entra ID e pertencer obrigatoriamente à App Role `ContentReviewer`."
+        },
+        {
+          "id": "tab-ambiente-con",
+          "title": "Ambiente Atual",
+          "content": "Lentidão no carregamento de imagens de perfil (Blob Storage).\nErros intermitentes HTTP 502 Bad Gateway no `ContentUploadService` (ACI) durante uploads grandes.\nAplicação em contêiner sem acesso ao banco de segredos, impactando o fluxo."
+        }
+      ],
+      "statement": "Qual o método ideal para que o Azure Container Instances (ACI) faça o download da imagem do registro privado (`contosoimages`) sem gerenciar senhas ou expor credenciais?",
+      "options": [
+        { "id": "A", "text": "Criar um token SAS de longa duração e injetá-lo no Docker Compose." },
+        { "id": "B", "text": "Habilitar o acesso anônimo no ACR." },
+        { "id": "C", "text": "Criar uma Identidade Gerenciada Atribuída pelo Sistema (Managed Identity) e conceder a permissão AcrPull via RBAC." },
+        { "id": "D", "text": "Configurar regras de firewall no ACR para confiar no IP do SPA." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-LIT-01",
+    "type": "case_study",
+    "category": "Estudo de Caso: Litware Inc.",
+    "difficulty": "Média",
+    "explanation": "As políticas de gerenciamento de ciclo de vida (Lifecycle Management) do Azure Blob Storage permitem criar regras baseadas em regras para fazer a transição automática de blobs para camadas de acesso mais frias (como Cool ou Archive) com base no tempo em que foram criados ou modificados pela última vez. Isso atende perfeitamente à exigência de mover documentos não modificados há 180 dias para a camada Archive, minimizando os custos sem necessidade de escrever código personalizado.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-litware",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade e Escalabilidade: Garantir que o sistema de comércio eletrônico suporte picos intensos de tráfego durante datas sazonais de vendas, sem apresentar lentidão ou queda de serviço.\nRedução de Custos Operacionais: Minimizar os custos de armazenamento de dados inativos a longo prazo e adotar um modelo de nuvem otimizado financeiramente.\nConfiabilidade de Processamento: Assegurar que nenhum pedido de cliente seja perdido, mesmo se o sistema de faturamento de backend estiver temporariamente indisponível."
+        },
+        {
+          "id": "tab-tecnico-litware",
+          "title": "Requisitos Técnicos",
+          "content": "Hospedagem e Arquitetura: Migrar o aplicativo web frontend para o Azure App Service. A arquitetura deve ser desacoplada, separando o recebimento de pedidos do processamento de faturamento.\nSegurança e Gestão de Segredos: As strings de conexão de banco de dados e as chaves de API não devem, sob nenhuma hipótese, ser armazenadas em texto simples no código-fonte ou em arquivos de configuração da aplicação.\nArmazenamento de Dados: Documentos de pedidos gerados em PDF devem ser salvos no Azure Blob Storage. Documentos com mais de 180 dias sem modificação devem ser movidos automaticamente para a camada de acesso \"Archive\" (Arquivo).\nMonitoramento e Telemetria: O aplicativo deve registrar métricas personalizadas e eventos de negócios críticos no Application Insights sempre que um pedido for processado com sucesso."
+        },
+        {
+          "id": "tab-ambiente-litware",
+          "title": "Ambiente Atual",
+          "content": "A Litware Inc. possui uma aplicação web monolítica desenvolvida em ASP.NET Core rodando em um único servidor Windows Server 2019 on-premises. Atualmente, quando um cliente faz um pedido, o site aguarda o processamento síncrono do faturamento. Durante picos de vendas, o servidor consome 100% de CPU, gerando erros de timeout (tempo limite excedido) e perda de pedidos. Os arquivos PDF dos pedidos antigos estão consumindo um volume massivo de discos caros (SAN) no datacenter local."
+        }
+      ],
+      "statement": "De acordo com os Requisitos Técnicos para o armazenamento de dados, você precisa garantir que os documentos em PDF dos pedidos com mais de 180 dias sejam movidos automaticamente para a camada Archive. O que você deve configurar no Azure Blob Storage?",
+      "options": [
+        { "id": "A", "text": "Uma política de gerenciamento de ciclo de vida (Lifecycle Management)." },
+        { "id": "B", "text": "O recurso Soft Delete (Exclusão reversível) com retenção de 180 dias." },
+        { "id": "C", "text": "Um runbook do Azure Automation executado diariamente." },
+        { "id": "D", "text": "Uma assinatura do Azure Event Grid acionando uma Azure Function." }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-LIT-02",
+    "type": "case_study",
+    "category": "Estudo de Caso: Litware Inc.",
+    "difficulty": "Alta",
+    "explanation": "O Azure Key Vault (B) é o serviço ideal para armazenar com segurança segredos, chaves e certificados. Para que o Azure App Service acesse o Key Vault de forma nativa e segura, sem precisar manter nenhuma credencial de aplicativo no código, deve-se habilitar uma Identidade Gerenciada (Managed Identity) (C). Dessa forma, a própria identidade do serviço recebe permissões de acesso ao cofre de chaves.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-litware",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade e Escalabilidade: Garantir que o sistema de comércio eletrônico suporte picos intensos de tráfego durante datas sazonais de vendas, sem apresentar lentidão ou queda de serviço.\nRedução de Custos Operacionais: Minimizar os custos de armazenamento de dados inativos a longo prazo e adotar um modelo de nuvem otimizado financeiramente.\nConfiabilidade de Processamento: Assegurar que nenhum pedido de cliente seja perdido, mesmo se o sistema de faturamento de backend estiver temporariamente indisponível."
+        },
+        {
+          "id": "tab-tecnico-litware",
+          "title": "Requisitos Técnicos",
+          "content": "Hospedagem e Arquitetura: Migrar o aplicativo web frontend para o Azure App Service. A arquitetura deve ser desacoplada, separando o recebimento de pedidos do processamento de faturamento.\nSegurança e Gestão de Segredos: As strings de conexão de banco de dados e as chaves de API não devem, sob nenhuma hipótese, ser armazenadas em texto simples no código-fonte ou em arquivos de configuração da aplicação.\nArmazenamento de Dados: Documentos de pedidos gerados em PDF devem ser salvos no Azure Blob Storage. Documentos com mais de 180 dias sem modificação devem ser movidos automaticamente para a camada de acesso \"Archive\" (Arquivo).\nMonitoramento e Telemetria: O aplicativo deve registrar métricas personalizadas e eventos de negócios críticos no Application Insights sempre que um pedido for processado com sucesso."
+        },
+        {
+          "id": "tab-ambiente-litware",
+          "title": "Ambiente Atual",
+          "content": "A Litware Inc. possui uma aplicação web monolítica desenvolvida em ASP.NET Core rodando em um único servidor Windows Server 2019 on-premises. Atualmente, quando um cliente faz um pedido, o site aguarda o processamento síncrono do faturamento. Durante picos de vendas, o servidor consome 100% de CPU, gerando erros de timeout (tempo limite excedido) e perda de pedidos. Os arquivos PDF dos pedidos antigos estão consumindo um volume massivo de discos caros (SAN) no datacenter local."
+        }
+      ],
+      "statement": "Para atender aos Requisitos Técnicos de Segurança e Gestão de Segredos, a equipe de engenharia decidiu remover todas as strings de conexão do código. Selecione duas tecnologias do Azure que, usadas em conjunto, atendem a esse requisito de forma segura para um aplicativo hospedado no Azure App Service.",
+      "options": [
+        { "id": "A", "text": "Azure App Configuration na camada gratuita (Free Tier)." },
+        { "id": "B", "text": "Azure Key Vault." },
+        { "id": "C", "text": "Identidade Gerenciada (Managed Identity) atribuída ao sistema." },
+        { "id": "D", "text": "Azure Blob Storage com criptografia em repouso." }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-LIT-03",
+    "type": "case_study",
+    "category": "Estudo de Caso: Litware Inc.",
+    "difficulty": "Média",
+    "explanation": "O padrão de Nivelamento de Carga baseado em Fila (Queue-Based Load Leveling) utilizando o Azure Service Bus atende diretamente aos requisitos. Ele permite que o aplicativo web envie o pedido para uma fila rapidamente e responda ao cliente, enquanto um serviço de backend processa as mensagens da fila no seu próprio ritmo. Isso resolve o problema de timeout síncrono e garante alta confiabilidade para não perder pedidos corporativos durante picos intensos.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-litware",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade e Escalabilidade: Garantir que o sistema de comércio eletrônico suporte picos intensos de tráfego durante datas sazonais de vendas, sem apresentar lentidão ou queda de serviço.\nRedução de Custos Operacionais: Minimizar os custos de armazenamento de dados inativos a longo prazo e adotar um modelo de nuvem otimizado financeiramente.\nConfiabilidade de Processamento: Assegurar que nenhum pedido de cliente seja perdido, mesmo se o sistema de faturamento de backend estiver temporariamente indisponível."
+        },
+        {
+          "id": "tab-tecnico-litware",
+          "title": "Requisitos Técnicos",
+          "content": "Hospedagem e Arquitetura: Migrar o aplicativo web frontend para o Azure App Service. A arquitetura deve ser desacoplada, separando o recebimento de pedidos do processamento de faturamento.\nSegurança e Gestão de Segredos: As strings de conexão de banco de dados e as chaves de API não devem, sob nenhuma hipótese, ser armazenadas em texto simples no código-fonte ou em arquivos de configuração da aplicação.\nArmazenamento de Dados: Documentos de pedidos gerados em PDF devem ser salvos no Azure Blob Storage. Documentos com mais de 180 dias sem modificação devem ser movidos automaticamente para a camada de acesso \"Archive\" (Arquivo).\nMonitoramento e Telemetria: O aplicativo deve registrar métricas personalizadas e eventos de negócios críticos no Application Insights sempre que um pedido for processado com sucesso."
+        },
+        {
+          "id": "tab-ambiente-litware",
+          "title": "Ambiente Atual",
+          "content": "A Litware Inc. possui uma aplicação web monolítica desenvolvida em ASP.NET Core rodando em um único servidor Windows Server 2019 on-premises. Atualmente, quando um cliente faz um pedido, o site aguarda o processamento síncrono do faturamento. Durante picos de vendas, o servidor consome 100% de CPU, gerando erros de timeout (tempo limite excedido) e perda de pedidos. Os arquivos PDF dos pedidos antigos estão consumindo um volume massivo de discos caros (SAN) no datacenter local."
+        }
+      ],
+      "statement": "Você precisa resolver os problemas relatados no Ambiente Atual, onde o processamento síncrono causa erros de timeout e perda de pedidos durante picos de carga. Considerando os Requisitos de Negócio e Técnicos, qual padrão arquitetural e serviço do Azure você deve implementar para desacoplar a ingestão de pedidos do processamento?",
+      "options": [
+        { "id": "A", "text": "Implementar o padrão Publisher/Subscriber usando o Azure Event Grid." },
+        { "id": "B", "text": "Implementar o padrão Queue-Based Load Leveling usando o Azure Service Bus." },
+        { "id": "C", "text": "Implementar replicação de banco de dados usando o Azure Cosmos DB." },
+        { "id": "D", "text": "Implementar o Cache-Aside pattern usando o Azure Cache for Redis." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-LIT-04",
+    "type": "case_study",
+    "category": "Estudo de Caso: Litware Inc.",
+    "difficulty": "Média",
+    "explanation": "O dimensionamento automático (Autoscale / Scale out) permite que o Azure App Service adicione ou remova instâncias de máquina virtual dinamicamente com base na carga do sistema (como uso de CPU ou memória). Isso aborda diretamente o problema descrito no ambiente atual (servidor atingindo 100% de CPU em picos) e atende à necessidade de escalar automaticamente para manter a alta disponibilidade.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-litware",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade e Escalabilidade: Garantir que o sistema de comércio eletrônico suporte picos intensos de tráfego durante datas sazonais de vendas, sem apresentar lentidão ou queda de serviço.\nRedução de Custos Operacionais: Minimizar os custos de armazenamento de dados inativos a longo prazo e adotar um modelo de nuvem otimizado financeiramente.\nConfiabilidade de Processamento: Assegurar que nenhum pedido de cliente seja perdido, mesmo se o sistema de faturamento de backend estiver temporariamente indisponível."
+        },
+        {
+          "id": "tab-tecnico-litware",
+          "title": "Requisitos Técnicos",
+          "content": "Hospedagem e Arquitetura: Migrar o aplicativo web frontend para o Azure App Service. A arquitetura deve ser desacoplada, separando o recebimento de pedidos do processamento de faturamento.\nSegurança e Gestão de Segredos: As strings de conexão de banco de dados e as chaves de API não devem, sob nenhuma hipótese, ser armazenadas em texto simples no código-fonte ou em arquivos de configuração da aplicação.\nArmazenamento de Dados: Documentos de pedidos gerados em PDF devem ser salvos no Azure Blob Storage. Documentos com mais de 180 dias sem modificação devem ser movidos automaticamente para a camada de acesso \"Archive\" (Arquivo).\nMonitoramento e Telemetria: O aplicativo deve registrar métricas personalizadas e eventos de negócios críticos no Application Insights sempre que um pedido for processado com sucesso."
+        },
+        {
+          "id": "tab-ambiente-litware",
+          "title": "Ambiente Atual",
+          "content": "A Litware Inc. possui uma aplicação web monolítica desenvolvida em ASP.NET Core rodando em um único servidor Windows Server 2019 on-premises. Atualmente, quando um cliente faz um pedido, o site aguarda o processamento síncrono do faturamento. Durante picos de vendas, o servidor consome 100% de CPU, gerando erros de timeout (tempo limite excedido) e perda de pedidos. Os arquivos PDF dos pedidos antigos estão consumindo um volume massivo de discos caros (SAN) no datacenter local."
+        }
+      ],
+      "statement": "Para suportar os Requisitos de Negócio de \"Alta Disponibilidade e Escalabilidade\" para o aplicativo frontend da Litware Inc., qual configuração primária você deve habilitar no Azure App Service para lidar dinamicamente com os picos sazonais de tráfego do site?",
+      "options": [
+        { "id": "A", "text": "Realizar Scale Up alterando a camada de hospedagem para a série Premium V3." },
+        { "id": "B", "text": "Habilitar a configuração de Autoscale (Scale out) com regras baseadas na utilização da CPU." },
+        { "id": "C", "text": "Ativar slots de implantação (Deployment Slots) e configurar um balanceamento de tráfego 50/50." },
+        { "id": "D", "text": "Habilitar a funcionalidade Always On (Sempre Ativo) no portal do Azure." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-LIT-05",
+    "type": "case_study",
+    "category": "Estudo de Caso: Litware Inc.",
+    "difficulty": "Média",
+    "explanation": "O método TrackEvent() do SDK do Application Insights é utilizado para rastrear eventos de usuário ou ações críticas de negócios (como a conclusão bem-sucedida de um fluxo de pedido). Isso permite que a empresa avalie com que frequência o recurso é usado e gere métricas comportamentais ou estatísticas analíticas de eventos personalizados.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-litware",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade e Escalabilidade: Garantir que o sistema de comércio eletrônico suporte picos intensos de tráfego durante datas sazonais de vendas, sem apresentar lentidão ou queda de serviço.\nRedução de Custos Operacionais: Minimizar os custos de armazenamento de dados inativos a longo prazo e adotar um modelo de nuvem otimizado financeiramente.\nConfiabilidade de Processamento: Assegurar que nenhum pedido de cliente seja perdido, mesmo se o sistema de faturamento de backend estiver temporariamente indisponível."
+        },
+        {
+          "id": "tab-tecnico-litware",
+          "title": "Requisitos Técnicos",
+          "content": "Hospedagem e Arquitetura: Migrar o aplicativo web frontend para o Azure App Service. A arquitetura deve ser desacoplada, separando o recebimento de pedidos do processamento de faturamento.\nSegurança e Gestão de Segredos: As strings de conexão de banco de dados e as chaves de API não devem, sob nenhuma hipótese, ser armazenadas em texto simples no código-fonte ou em arquivos de configuração locais.\nArmazenamento de Dados: Documentos de pedidos gerados em PDF devem ser salvos no Azure Blob Storage. Documentos com mais de 180 dias sem modificação devem ser movidos automaticamente para a camada de acesso \"Archive\" (Arquivo).\nMonitoramento e Telemetria: O aplicativo deve registrar métricas personalizadas e eventos de negócios críticos no Application Insights sempre que um pedido for processado com sucesso."
+        },
+        {
+          "id": "tab-ambiente-litware",
+          "title": "Ambiente Atual",
+          "content": "A Litware Inc. possui uma aplicação web monolítica desenvolvida em ASP.NET Core rodando em um único servidor Windows Server 2019 on-premises. Atualmente, quando um cliente faz um pedido, o site aguarda o processamento síncrono do faturamento. Durante picos de vendas, o servidor consome 100% de CPU, gerando erros de timeout (tempo limite excedido) e perda de pedidos. Os arquivos PDF dos pedidos antigos estão consumindo um volume massivo de discos caros (SAN) no datacenter local."
+        }
+      ],
+      "statement": "De acordo com os Requisitos Técnicos de Monitoramento e Telemetria, você precisa adicionar código ao aplicativo frontend para enviar informações de uso customizadas de negócios para o Azure Application Insights sempre que um pedido for processado. Qual método do objeto TelemetryClient você deve utilizar no código C#?",
+      "options": [
+        { "id": "A", "text": "TrackException()" },
+        { "id": "B", "text": "TrackTrace()" },
+        { "id": "C", "text": "TrackEvent()" },
+        { "id": "D", "text": "TrackRequest()" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-NWT-01",
+    "type": "case_study",
+    "category": "Estudo de Caso: Northwind Traders",
+    "difficulty": "Média",
+    "explanation": "Os Requisitos Técnicos estipulam que imagens com mais de 6 meses devem ser movidas 'automaticamente para a camada de armazenamento mais barata disponível'. O Azure Blob Storage Lifecycle Management oferece uma maneira baseada em regras (políticas) para fazer a transição de blobs para a camada Archive (a mais barata) quando eles não são modificados por um número específico de dias, sem a necessidade de escrever código customizado ou usar serviços adicionais.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-northwind",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade Global: Garantir que o sistema de rastreamento de pacotes esteja disponível 99,95% do tempo e suporte motoristas e clientes em múltiplas regiões geográficas sem degradação de performance.\nOtimização de Custos: Reduzir os custos operacionais com infraestrutura ociosa e minimizar os gastos com armazenamento de dados históricos e comprovantes de entrega antigos.\nConfiabilidade de Mensageria: O sistema deve garantir que nenhuma atualização de status de entrega seja perdida durante picos de tráfego, processando as mensagens estritamente na ordem exata em que foram geradas (First-In, First-Out)."
+        },
+        {
+          "id": "tab-tecnico-northwind",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura Serverless e Compute: Migrar a lógica de processamento de rastreamento para o Azure Functions. Os custos devem ser minimizados, cobrando apenas pelo tempo de execução.\nArmazenamento de Dados: Os comprovantes de entrega (imagens) devem ser armazenados no Azure Blob Storage. Imagens que não forem acessadas ou modificadas há mais de 6 meses (180 dias) devem ser movidas automaticamente para a camada de armazenamento mais barata disponível.\nSegurança de Credenciais: A aplicação utilizará o Azure Cosmos DB (API NoSQL) para armazenar os dados de rastreamento. É expressamente proibido armazenar credenciais, chaves de acesso ou strings de conexão no código-fonte ou em arquivos de configuração locais.\nIntegração e Mensageria: O componente de recebimento de pacotes precisa enviar mensagens transacionais para o componente de processamento. A solução deve suportar processamento assíncrono e garantir a ordem das mensagens (FIFO)."
+        },
+        {
+          "id": "tab-ambiente-northwind",
+          "title": "Ambiente Atual",
+          "content": "A Northwind Traders opera um sistema logístico monolítico legado construído em .NET Framework 4.8. Atualmente, a aplicação web e a API rodam em um único servidor Windows Server 2016 on-premises. O banco de dados é um SQL Server local que sofre com gargalos de I/O de disco durante horários de pico (manhã e final da tarde). Todos os comprovantes de entrega em formato de imagem estão salvos em um disco de rede (SAN) que está atingindo sua capacidade máxima e gerando altos custos de manutenção."
+        }
+      ],
+      "statement": "De acordo com os Requisitos Técnicos para o Armazenamento de Dados, você precisa automatizar a movimentação das imagens dos comprovantes de entrega com mais de 180 dias para a camada de acesso mais econômica. Qual recurso do Azure Blob Storage você deve configurar?",
+      "options": [
+        { "id": "A", "text": "Uma política de gerenciamento de ciclo de vida (Lifecycle Management) para mover os blobs para a camada Archive." },
+        { "id": "B", "text": "Uma subscrição do Azure Event Grid para acionar um Azure Logic App que arquiva os blobs." },
+        { "id": "C", "text": "O recurso de Soft Delete (exclusão reversível) com um período de retenção de 180 dias." },
+        { "id": "D", "text": "Um Azure Time Trigger Function que executa um script PowerShell diariamente." }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-NWT-02",
+    "type": "case_study",
+    "category": "Estudo de Caso: Northwind Traders",
+    "difficulty": "Alta",
+    "explanation": "Para atender ao requisito de não manter credenciais em código ou arquivos locais, você deve armazenar a string de conexão do Azure Cosmos DB no Azure Key Vault (C). Para que o Azure Functions consiga ler esse segredo do Key Vault de maneira totalmente segura e nativa (sem senhas), o Azure Functions deve ter uma Identidade Gerenciada (Managed Identity) habilitada (B) que possua uma política de acesso de leitura (GET) concedida no Key Vault.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-northwind",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade Global: Garantir que o sistema de rastreamento de pacotes esteja disponível 99,95% do tempo e suporte motoristas e clientes em múltiplas regiões geográficas sem degradação de performance.\nOtimização de Custos: Reduzir os custos operacionais com infraestrutura ociosa e minimizar os gastos com armazenamento de dados históricos e comprovantes de entrega antigos.\nConfiabilidade de Mensageria: O sistema deve garantir que nenhuma atualização de status de entrega seja perdida durante picos de tráfego, processando as mensagens estritamente na ordem exata em que foram geradas (First-In, First-Out)."
+        },
+        {
+          "id": "tab-tecnico-northwind",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura Serverless e Compute: Migrar a lógica de processamento de rastreamento para o Azure Functions. Os custos devem ser minimizados, cobrando apenas pelo tempo de execução.\nArmazenamento de Dados: Os comprovantes de entrega (imagens) devem ser armazenados no Azure Blob Storage. Imagens que não forem acessadas ou modificadas há mais de 6 meses (180 dias) devem ser movidas automaticamente para a camada de armazenamento mais barata disponível.\nSegurança de Credenciais: A aplicação utilizará o Azure Cosmos DB (API NoSQL) para armazenar os dados de rastreamento. É expressamente proibido armazenar credenciais, chaves de acesso ou strings de conexão no código-fonte ou em arquivos de configuração locais.\nIntegração e Mensageria: O componente de recebimento de pacotes precisa enviar mensagens transacionais para o componente de processamento. A solução deve suportar processamento assíncrono e garantir a ordem das mensagens (FIFO)."
+        },
+        {
+          "id": "tab-ambiente-northwind",
+          "title": "Ambiente Atual",
+          "content": "A Northwind Traders opera um sistema logístico monolítico legado construído em .NET Framework 4.8. Atualmente, a aplicação web e a API rodam em um único servidor Windows Server 2016 on-premises. O banco de dados é um SQL Server local que sofre com gargalos de I/O de disco durante horários de pico (manhã e final da tarde). Todos os comprovantes de entrega em formato de imagem estão salvos em um disco de rede (SAN) que está atingindo sua capacidade máxima e gerando altos custos de manutenção."
+        }
+      ],
+      "statement": "A equipe de segurança exige que o novo sistema atenda rigorosamente ao requisito de não armazenar credenciais ou chaves de acesso no código-fonte ao se conectar ao Azure Cosmos DB. Quais duas tecnologias do Azure você deve utilizar em conjunto para implementar essa arquitetura de forma segura?",
+      "options": [
+        { "id": "A", "text": "Azure App Configuration (Camada Free)" },
+        { "id": "B", "text": "Identidade Gerenciada (Managed Identity) atribuída ao sistema" },
+        { "id": "C", "text": "Azure Key Vault" },
+        { "id": "D", "text": "Azure Application Gateway" }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-NWT-03",
+    "type": "case_study",
+    "category": "Estudo de Caso: Northwind Traders",
+    "difficulty": "Alta",
+    "explanation": "O cenário exige explicitamente que o sistema processe mensagens \"estritamente na ordem exata em que foram geradas (First-In, First-Out)\". O Azure Service Bus é o serviço de mensageria corporativa do Azure que oferece suporte a garantias FIFO por meio do uso de Sessões de Mensagens (Message Sessions). O Azure Storage Queues, embora lide com mensagens, não garante a ordem FIFO estrita.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-northwind",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade Global: Garantir que o sistema de rastreamento de pacotes esteja disponível 99,95% do tempo e suporte motoristas e clientes em múltiplas regiões geográficas sem degradação de performance.\nOtimização de Custos: Reduzir os custos operacionais com infraestrutura ociosa e minimizar os gastos com armazenamento de dados históricos e comprovantes de entrega antigos.\nConfiabilidade de Mensageria: O sistema deve garantir que nenhuma atualização de status de entrega seja perdida durante picos de tráfego, processando as mensagens estritamente na ordem exata em que foram geradas (First-In, First-Out)."
+        },
+        {
+          "id": "tab-tecnico-northwind",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura Serverless e Compute: Migrar a lógica de processamento de rastreamento para o Azure Functions. Os custos devem ser minimizados, cobrando apenas pelo tempo de execução.\nArmazenamento de Dados: Os comprovantes de entrega (imagens) devem ser armazenados no Azure Blob Storage. Imagens que não forem acessadas ou modificadas há mais de 6 meses (180 dias) devem ser movidas automaticamente para a camada de armazenamento mais barata disponível.\nSegurança de Credenciais: A aplicação utilizará o Azure Cosmos DB (API NoSQL) para armazenar os dados de rastreamento. É expressamente proibido armazenar credenciais, chaves de acesso ou strings de conexão no código-fonte ou em arquivos de configuração locais.\nIntegração e Mensageria: O componente de recebimento de pacotes precisa enviar mensagens transacionais para o componente de processamento. A solução deve suportar processamento assíncrono e garantir a ordem das mensagens (FIFO)."
+        },
+        {
+          "id": "tab-ambiente-northwind",
+          "title": "Ambiente Atual",
+          "content": "A Northwind Traders opera um sistema logístico monolítico legado construído em .NET Framework 4.8. Atualmente, a aplicação web e a API rodam em um único servidor Windows Server 2016 on-premises. O banco de dados é um SQL Server local que sofre com gargalos de I/O de disco durante horários de pico (manhã e final da tarde). Todos os comprovantes de entrega em formato de imagem estão salvos em um disco de rede (SAN) que está atingindo sua capacidade máxima e gerando altos custos de manutenção."
+        }
+      ],
+      "statement": "Você precisa escolher o serviço de mensageria correto para conectar o componente de recebimento de pacotes ao componente de processamento. Considerando os Requisitos de Negócio e Técnicos de processamento assíncrono e garantia estrita de ordem das mensagens (First-In, First-Out), qual serviço você deve implementar?",
+      "options": [
+        { "id": "A", "text": "Azure Event Grid" },
+        { "id": "B", "text": "Azure Storage Queues" },
+        { "id": "C", "text": "Azure Service Bus queues com Sessões ativadas" },
+        { "id": "D", "text": "Azure Notification Hubs" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-NWT-04",
+    "type": "case_study",
+    "category": "Estudo de Caso: Northwind Traders",
+    "difficulty": "Média",
+    "explanation": "O Plano de Consumo (Consumption plan) cobra recursos de computação apenas quando as funções estão em execução, o que atende perfeitamente ao requisito técnico de cobrar apenas pelo tempo de processamento e minimizar custos. O Plano Premium ou Dedicado geraria cobranças contínuas, independentemente de a função estar ativamente processando eventos ou não.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-northwind",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade Global: Garantir que o sistema de rastreamento de pacotes esteja disponível 99,95% do tempo e suporte motoristas e clientes em múltiplas regiões geográficas sem degradação de performance.\nOtimização de Custos: Reduzir os custos operacionais com infraestrutura ociosa e minimizar os gastos com armazenamento de dados históricos e comprovantes de entrega antigos.\nConfiabilidade de Mensageria: O sistema deve garantir que nenhuma atualização de status de entrega seja perdida durante picos de tráfego, processando as mensagens estritamente na ordem exata em que foram geradas (First-In, First-Out)."
+        },
+        {
+          "id": "tab-tecnico-northwind",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura Serverless e Compute: Migrar a lógica de processamento de rastreamento para o Azure Functions. Os custos devem ser minimizados, cobrando apenas pelo tempo de execução.\nArmazenamento de Dados: Os comprovantes de entrega (imagens) devem ser armazenados no Azure Blob Storage. Imagens que não forem acessadas ou modificadas há mais de 6 meses (180 dias) devem ser movidas automaticamente para a camada de armazenamento mais barata disponível.\nSegurança de Credenciais: A aplicação utilizará o Azure Cosmos DB (API NoSQL) para armazenar os dados de rastreamento. É expressamente proibido armazenar credenciais, chaves de acesso ou strings de conexão no código-fonte ou em arquivos de configuração locais.\nIntegração e Mensageria: O componente de recebimento de pacotes precisa enviar mensagens transacionais para o componente de processamento. A solução deve suportar processamento assíncrono e garantir a ordem das mensagens (FIFO)."
+        },
+        {
+          "id": "tab-ambiente-northwind",
+          "title": "Ambiente Atual",
+          "content": "A Northwind Traders opera um sistema logístico monolítico legado construído em .NET Framework 4.8. Atualmente, a aplicação web e a API rodam em um único servidor Windows Server 2016 on-premises. O banco de dados é um SQL Server local que sofre com gargalos de I/O de disco durante horários de pico (manhã e final da tarde). Todos os comprovantes de entrega em formato de imagem estão salvos em um disco de rede (SAN) que está atingindo sua capacidade máxima e gerando altos custos de manutenção."
+        }
+      ],
+      "statement": "Para atender ao requisito de migrar a lógica de rastreamento para o Azure Functions e, simultaneamente, satisfazer o requisito de \"custos devem ser minimizados, cobrando apenas pelo tempo de execução\", qual plano de hospedagem você deve selecionar para o Azure Functions?",
+      "options": [
+        { "id": "A", "text": "Plano Premium (Premium Plan)" },
+        { "id": "B", "text": "Plano Dedicado / App Service (Dedicated Plan)" },
+        { "id": "C", "text": "Plano de Consumo (Consumption Plan)" },
+        { "id": "D", "text": "Azure App Service Environment (ASE)" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-NWT-05",
+    "type": "case_study",
+    "category": "Estudo de Caso: Northwind Traders",
+    "difficulty": "Alta",
+    "explanation": "O nível de consistência de Sessão (Session consistency) é o padrão e o mais recomendado para a maioria das aplicações, como a do contexto da Northwind Traders. Ele garante leitura das próprias gravações (Read-Your-Own-Writes) em uma única sessão de usuário (como o motorista atualizando o status e o aplicativo lendo em seguida), oferecendo excelente desempenho e disponibilidade global sem os atrasos de latência encontrados no nível Strong, e sem a inconsistência inicial do nível Eventual.",
+    "content": {
+      "tabs": [
+        {
+          "id": "tab-negocio-northwind",
+          "title": "Requisitos de Negócio",
+          "content": "Alta Disponibilidade Global: Garantir que o sistema de rastreamento de pacotes esteja disponível 99,95% do tempo e suporte motoristas e clientes em múltiplas regiões geográficas sem degradação de performance.\nOtimização de Custos: Reduzir os custos operacionais com infraestrutura ociosa e minimizar os gastos com armazenamento de dados históricos e comprovantes de entrega antigos.\nConfiabilidade de Mensageria: O sistema deve garantir que nenhuma atualização de status de entrega seja perdida durante picos de tráfego, processando as mensagens estritamente na ordem exata em que foram geradas (First-In, First-Out)."
+        },
+        {
+          "id": "tab-tecnico-northwind",
+          "title": "Requisitos Técnicos",
+          "content": "Arquitetura Serverless e Compute: Migrar a lógica de processamento de rastreamento para o Azure Functions. Os custos devem ser minimizados, cobrando apenas pelo tempo de execução.\nArmazenamento de Dados: Os comprovantes de entrega (imagens) devem ser armazenados no Azure Blob Storage. Imagens que não forem acessadas ou modificadas há mais de 6 meses (180 dias) devem ser movidas automaticamente para a camada de armazenamento mais barata disponível.\nSegurança de Credenciais: A aplicação utilizará o Azure Cosmos DB (API NoSQL) para armazenar os dados de rastreamento. É expressamente proibido armazenar credenciais, chaves de acesso ou strings de conexão no código-fonte ou em arquivos de configuração locais.\nIntegração e Mensageria: O componente de recebimento de pacotes precisa enviar mensagens transacionais para o componente de processamento. A solução deve suportar processamento assíncrono e garantir a ordem das mensagens (FIFO)."
+        },
+        {
+          "id": "tab-ambiente-northwind",
+          "title": "Ambiente Atual",
+          "content": "A Northwind Traders opera um sistema logístico monolítico legado construído em .NET Framework 4.8. Atualmente, a aplicação web e a API rodam em um único servidor Windows Server 2016 on-premises. O banco de dados é um SQL Server local que sofre com gargalos de I/O de disco durante horários de pico (manhã e final da tarde). Todos os comprovantes de entrega em formato de imagem estão salvos em um disco de rede (SAN) que está atingindo sua capacidade máxima e gerando altos custos de manutenção."
+        }
+      ],
+      "statement": "O sistema atual, hospedado on-premises em um servidor Windows Server 2016, sofre com degradação de performance durante picos de tráfego. Você provisiona o Azure Cosmos DB (API NoSQL) para armazenar os dados de rastreamento. Considerando o requisito de \"Alta Disponibilidade Global\" e a necessidade de leitura rápida para os clientes que acabaram de atualizar seu status, qual nível de consistência (Consistency Level) padrão do Cosmos DB oferece o melhor equilíbrio entre desempenho, disponibilidade e a garantia de que o usuário sempre lerá a sua própria gravação?",
+      "options": [
+        { "id": "A", "text": "Strong (Forte)" },
+        { "id": "B", "text": "Session (Sessão)" },
+        { "id": "C", "text": "Eventual" },
+        { "id": "D", "text": "Bounded Staleness (Desatualização Limitada)" }
+      ]
+    },
+    "correct_answer": ["B"]
+  }
+]

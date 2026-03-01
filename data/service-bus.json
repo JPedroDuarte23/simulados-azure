@@ -1,0 +1,36 @@
+[
+    {
+        "id": "Q-SB-01",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você precisa resolver os problemas relatados no Ambiente Atual, onde o processamento síncrono causa erros de timeout e perda de pedidos durante picos de carga. Considerando os Requisitos de Negócio e Técnicos, qual padrão arquitetural e serviço do Azure você deve implementar para desacoplar a ingestão de pedidos do processamento?",
+            "options": [
+                { "id": "A", "text": "Implementar o padrão Publisher/Subscriber usando o Azure Event Grid." },
+                { "id": "B", "text": "Implementar o padrão Queue-Based Load Leveling usando o Azure Service Bus." },
+                { "id": "C", "text": "Implementar replicação de banco de dados usando o Azure Cosmos DB." },
+                { "id": "D", "text": "Implementar o Cache-Aside pattern usando o Azure Cache for Redis." }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "O padrão de Nivelamento de Carga baseado em Fila (Queue-Based Load Leveling) utilizando o Azure Service Bus atende diretamente aos requisitos. Ele permite que o aplicativo web envie o pedido para uma fila rapidamente e responda ao cliente, enquanto um serviço de backend processa as mensagens da fila no seu próprio ritmo. Isso resolve o problema de timeout síncrono e garante alta confiabilidade para não perder pedidos corporativos durante picos intensos."
+    },
+    {
+        "id": "Q-SB-02",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Alta",
+        "content": {
+            "statement": "Você precisa escolher o serviço de mensageria correto para conectar o componente de recebimento de pacotes ao componente de processamento. Considerando os Requisitos de Negócio e Técnicos de processamento assíncrono e garantia estrita de ordem das mensagens (First-In, First-Out), qual serviço você deve implementar?",
+            "options": [
+                { "id": "A", "text": "Azure Event Grid" },
+                { "id": "B", "text": "Azure Storage Queues" },
+                { "id": "C", "text": "Azure Service Bus queues com Sessões ativadas" },
+                { "id": "D", "text": "Azure Notification Hubs" }
+            ]
+        },
+        "correct_answer": ["C"],
+        "explanation": "O cenário exige explicitamente que o sistema processe mensagens 'estritamente na ordem exata em que foram geradas (First-In, First-Out)'. O Azure Service Bus é o serviço de mensageria corporativa do Azure que oferece suporte a garantias FIFO por meio do uso de Sessões de Mensagens (Message Sessions). O Azure Storage Queues, embora lide com mensagens, não garante a ordem FIFO estrita."
+    }
+]

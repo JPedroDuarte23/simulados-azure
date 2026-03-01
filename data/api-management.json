@@ -1,0 +1,32 @@
+[
+    {
+      "id": "Q-APIM-01",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você tem um back-end RESTful no App Service e precisa configurar a autenticação de back-end dentro do serviço do Azure API Management (APIM).\n\nSolução Proposta: Configurar as credenciais de gateway para utilizar o método de Certificado de Cliente (Client cert) para o endpoint HTTP(s).\n\nPergunta: A solução atende ao objetivo?",
+        "options": [
+          { "id": "A", "text": "Sim" },
+          { "id": "B", "text": "Não" }
+        ]
+      },
+      "correct_answer": ["A"],
+      "explanation": "O APIM permite configurar a autenticação mútua (Mutual TLS) com o back-end usando certificados de cliente. Esta é uma das formas válidas e seguras de garantir que o back-end só aceite requisições vindas do gateway do APIM."
+    },
+    {
+      "id": "Q-APIM-02",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: API pública no APIM com back-end no App Service. Você precisa configurar a autenticação de back-end de forma segura.\n\nSolução Proposta: Configurar credenciais de gateway para utilizar Autenticação Básica (usuário e senha) para o endpoint do App Service.\n\nPergunta: A solução atende ao objetivo?",
+        "options": [
+          { "id": "A", "text": "Sim" },
+          { "id": "B", "text": "Não" }
+        ]
+      },
+      "correct_answer": ["B"],
+      "explanation": "Embora funcione, a autenticação básica não é considerada o método 'mais seguro' para integração de back-end no APIM. A recomendação da prova AZ-204 geralmente foca em Certificados de Cliente (Mutual TLS) ou Identidades Gerenciadas/OAuth2, que oferecem maior proteção do que credenciais estáticas de usuário/senha."
+    }
+]
