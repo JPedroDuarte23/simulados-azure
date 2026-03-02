@@ -1,0 +1,128 @@
+[
+  {
+    "id": "Q-ACA-01",
+    "type": "drag_and_drop",
+    "category": "Azure Container Apps / Armazenamento",
+    "difficulty": "Alta",
+    "explanation": "No Container Apps: I. `Container file system` (D) é efêmero e restrito ao host. II. `Ephemeral volume` (C) persiste durante a vida da réplica e é compartilhável entre contêineres na mesma réplica. III. `Azure Blob Storage` (A) persiste além da réplica via API nativa.",
+    "content": {
+      "statement": "Associe o tipo de armazenamento correto a cada microsserviço no Container Apps.",
+      "items_to_drag": [
+        { "id": "A", "text": "Azure Blob Storage" },
+        { "id": "C", "text": "Ephemeral volume (Volume efêmero)" },
+        { "id": "D", "text": "Container file system (Sistema de arquivos do contêiner)" }
+      ]
+    },
+    "correct_answer": ["D", "C", "A"]
+  },
+  {
+    "id": "Q-ACA-16",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps / Observabilidade",
+    "difficulty": "Média",
+    "explanation": "O `Log streaming` permite visualizar logs em tempo real. O `Container console` permite acesso interativo ao terminal de um contêiner rodando no ACA.",
+    "content": {
+      "statement": "Quais recursos nativos da aba Observability do Container Apps você deve usar?",
+      "text": "Visualizar logs quase em tempo real: {{0}}\nConectar-se e depurar interativamente: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Log streaming" },
+            { "id": "B", "text": "Container console" },
+            { "id": "C", "text": "Azure Monitor metrics" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Log streaming" },
+            { "id": "B", "text": "Container console" },
+            { "id": "C", "text": "Azure Monitor metrics" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-ACA-17",
+    "type": "multiple_choice",
+    "category": "Azure Container Apps / Scaling",
+    "difficulty": "Alta",
+    "explanation": "Para regras de escala customizadas baseadas no KEDA, os campos obrigatórios são `type` (para identificar o scaler, ex: azure-eventhub) e `metadata` (para as propriedades da métrica).",
+    "content": {
+      "statement": "Ao definir a regra de escala personalizada KEDA, quais dois campos você deve obrigatoriamente fornecer?",
+      "options": [
+        { "id": "A", "text": "metadata" },
+        { "id": "B", "text": "metricType" },
+        { "id": "C", "text": "authenticationRef" },
+        { "id": "D", "text": "type" },
+        { "id": "E", "text": "name" }
+      ]
+    },
+    "correct_answer": ["A", "D"]
+  },
+  {
+    "id": "Q-ACA-22",
+    "type": "multiple_choice",
+    "category": "Azure Container Apps / Deployment",
+    "difficulty": "Média",
+    "explanation": "O `Multiple revision mode` (B) permite que múltiplas versões do app rodem simultaneamente e que o tráfego seja dividido gradualmente, suportando Blue-Green e Canary deployments nativamente no ACA.",
+    "content": {
+      "statement": "Qual abordagem do ACA utilizar para Zero-downtime deployment com transferência gradual?",
+      "options": [
+        { "id": "A", "text": "Utilizar Deployment Slots e fazer Swap." },
+        { "id": "B", "text": "Habilitar o modo de revisão múltipla (Multiple revision mode)." },
+        { "id": "C", "text": "Habilitar o modo de revisão única (Single revision mode)." },
+        { "id": "D", "text": "Criar um Azure Traffic Manager acima do ACA." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-ACA-25",
+    "type": "multiple_choice",
+    "category": "Azure Container Apps / Scaling",
+    "difficulty": "Alta",
+    "explanation": "Sim. Regras de escala baseadas em eventos (como KEDA) funcionam independentemente da entrada de tráfego HTTP. O Azure monitora o scaler e 'acorda' o contêiner se houver trabalho a ser feito, mesmo com Ingress desabilitado.",
+    "content": {
+      "statement": "Uma regra personalizada KEDA baseada no Service Bus pode acordar um aplicativo do zero mesmo sem Ingress HTTP?",
+      "options": [
+        { "id": "A", "text": "Sim (Yes)" },
+        { "id": "B", "text": "Não (No)" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-ACA-28",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps / Arquitetura",
+    "difficulty": "Alta",
+    "explanation": "KEDA é a tecnologia integrada para escalonamento baseado em eventos. Dapr (Distributed Application Runtime) é o runtime que fornece sidecars para abstração de comunicação, estado e mensageria.",
+    "content": {
+      "statement": "Quais recursos nativos do Container Apps implementar para os requisitos inovadores?",
+      "text": "1. Escalonamento baseado em métricas do Service Bus: {{0}}\n2. Comunicação via sidecar e gerenciamento de estado: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "KEDA" },
+            { "id": "B", "text": "Dapr" },
+            { "id": "C", "text": "Envoy Proxy" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "KEDA" },
+            { "id": "B", "text": "Dapr" },
+            { "id": "C", "text": "Envoy Proxy" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  }
+]

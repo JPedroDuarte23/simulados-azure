@@ -667,5 +667,106 @@
       },
       "correct_answer": ["B"],
       "explanation": "Embora o nível Premium V2 suporte Autoscale, a solução falha no requisito de 'minimizar custos'. O nível Standard (S1) é o nível de entrada que já oferece suporte ao Autoscale agendado por um preço significativamente menor que o Premium."
+    },
+    {
+      "id": "Q-AS-C-10",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure App Service / Containers",
+      "difficulty": "Alta",
+      "explanation": "Para Web Apps on Linux, a flag `--is-linux` é obrigatória. Para imutabilidade, usa-se a tag fixa `v1.0.0`. No Passo 3, o login server do ACR deve incluir as credenciais admin.",
+      "content": {
+        "statement": "Complete os comandos para provisionar um Web App for Containers com imagem fixa de um ACR privado.",
+        "text": "Passo 1: az appservice plan create --name websitePlan {{0}}\nPasso 2: az webapp create --plan websitePlan {{1}} --name meussite\nPasso 3: az webapp config container set {{2}} --name meussite",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "--sku B1 --hyper-v" },
+              { "id": "B", "text": "--sku B1 --is-linux" },
+              { "id": "C", "text": "--sku SHARED" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "--deployment-container-image-name images.azurecr.io/website:latest" },
+              { "id": "B", "text": "--deployment-container-image-name images.azurecr.io/website:v1.0.0" }
+            ]
+          },
+          {
+            "index": 2,
+            "options": [
+              { "id": "A", "text": "--docker-registry-server-url https://images.azurecr.io -u admin -p admin" },
+              { "id": "B", "text": "--docker-registry-server-url https://images.azurecr.io/website -u admin -p admin" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["B", "B", "A"]
+    },
+    {
+      "id": "Q-AS-C-20",
+      "type": "drag_and_drop",
+      "category": "Azure App Service / Containers",
+      "difficulty": "Média",
+      "explanation": "A ordem correta é: 1. Shebang e variáveis (D). 2. Criar o Web App (C). 3. Configurar a imagem (B). 4. Mapear o domínio (A), que depende do Web App já existir e estar configurado.",
+      "content": {
+        "statement": "Ordene os comandos da CLI do Azure para provisionar o Web App e mapear o domínio.",
+        "items_to_drag": [
+          { "id": "A", "text": "az webapp config hostname add --webapp-name $appName --resource-group $rg --hostname $fqdn" },
+          { "id": "B", "text": "az webapp config container set --docker-custom-image-name $dockerHubContainerPath --name $appName --resource-group $rg" },
+          { "id": "C", "text": "az webapp create --name $appName --plan AppServiceLinuxDockerPlan --resource-group $rg" },
+          { "id": "D", "text": "#!/bin/bash (e variáveis)" }
+        ]
+      },
+      "correct_answer": ["D", "C", "B", "A"]
+    },
+    {
+      "id": "Q-AS-C-24",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure App Service / Containers",
+      "difficulty": "Média",
+      "explanation": "Ao habilitar a `Continuous Deployment` (Implantação contínua) no App Service, o Azure cria automaticamente um `Webhook` no ACR para notificar o App Service sempre que houver um novo push.",
+      "content": {
+        "statement": "Qual recurso ativar no App Service para atualização automática e o que ele cria no ACR?",
+        "text": "Configuração no App Service: {{0}}\nMecanismo no ACR: {{1}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              { "id": "A", "text": "Always On (Sempre Ativado)" },
+              { "id": "B", "text": "Continuous Deployment (Implantação contínua)" },
+              { "id": "C", "text": "Deployment Slots (Slots de implantação)" }
+            ]
+          },
+          {
+            "index": 1,
+            "options": [
+              { "id": "A", "text": "Azure Event Grid topic" },
+              { "id": "B", "text": "Azure Service Bus queue" },
+              { "id": "C", "text": "Webhook" }
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["B", "C"]
+    },
+    {
+      "id": "Q-AS-C-29",
+      "type": "drag_and_drop",
+      "category": "Azure App Service / Containers",
+      "difficulty": "Alta",
+      "explanation": "O fluxo nativo é: 1. Habilitar CD no Web App (A). 2. Azure cria o Webhook no ACR (E). 3. Push da imagem (B). 4. ACR notifica o Web App via Webhook (D). 5. Web App faz pull e reinicia (C).",
+      "content": {
+        "statement": "Ordene os eventos do fluxo de Implantação Contínua entre Web App e ACR.",
+        "items_to_drag": [
+          { "id": "A", "text": "Habilitar a opção \"Continuous Deployment\" no Web App." },
+          { "id": "B", "text": "O desenvolvedor executa o comando docker push." },
+          { "id": "C", "text": "O Web App faz o docker pull da nova imagem e reinicia." },
+          { "id": "D", "text": "O ACR dispara uma notificação (Webhook) para o Web App." },
+          { "id": "E", "text": "O Azure cria automaticamente um Webhook no ACR." }
+        ]
+      },
+      "correct_answer": ["A", "E", "B", "D", "C"]
     }
 ]

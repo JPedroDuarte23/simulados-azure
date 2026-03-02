@@ -8,13 +8,13 @@
                     "id": "app-service",
                     "name": "Azure App Service",
                     "file": "data/app-service.json",
-                    "count": 37
+                    "count": 39
                 },
                 {
                     "id": "functions",
                     "name": "Azure Functions",
                     "file": "data/functions.json",
-                    "count": 31
+                    "count": 36
                 },
                 {
                     "id": "acr",
@@ -23,10 +23,16 @@
                     "count": 31
                 },
                 {
-                    "id": "aks",
-                    "name": "Azure Kubernetes Service",
-                    "file": "data/aks-dropdown.json",
-                    "count": 1
+                    "id": "aci",
+                    "name": "Azure Container Intances (ACI)",
+                    "file": "data/container-instances.json",
+                    "count": 15
+                },
+                                {
+                    "id": "aca",
+                    "name": "Azure Container Apps (ACA)",
+                    "file": "data/container-apps.json",
+                    "count": 6
                 }
             ]
         },

@@ -1,0 +1,369 @@
+[
+  {
+    "id": "Q-ACI-01",
+    "type": "drag_and_drop",
+    "category": "Azure Container Instances / Docker",
+    "difficulty": "Média",
+    "explanation": "A ordem correta do Dockerfile é: 1. Definir a imagem base (D). 2. Definir o diretório de trabalho (B). 3. Copiar os arquivos locais (E). 4. Executar scripts de build (C). 5. Definir o comando de inicialização (A).",
+    "content": {
+      "statement": "Você precisa criar o documento Dockerfile para o ContosoApp. Em qual ordem você deve organizar os 5 comandos abaixo?",
+      "items_to_drag": [
+        { "id": "A", "text": "CMD [\"dotnet\", \"ContosoApp.dll\"]" },
+        { "id": "B", "text": "WORKDIR /apps/ContosoApp" },
+        { "id": "C", "text": "RUN powershell ./setupScript.ps1" },
+        { "id": "D", "text": "FROM microsoft/aspnetcore:latest" },
+        { "id": "E", "text": "COPY ./ ." }
+      ]
+    },
+    "correct_answer": ["D", "B", "E", "C", "A"]
+  },
+  {
+    "id": "Q-ACI-02",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances / YAML",
+    "difficulty": "Alta",
+    "explanation": "O `Container group` é o recurso do ACI que fornece o ciclo de vida compartilhado para múltiplos contêineres. Para persistência de dados em caso de crashes ou reinicializações, o `Azure file share` é o volume recomendado.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo com dois contêineres para o ACI. Quais valores de configuração você deve usar no YAML?",
+      "text": "Shared lifecycle (Ciclo de vida compartilhado): {{0}}\nStorage volume (Volume de armazenamento): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Container group" },
+            { "id": "B", "text": "Container image" },
+            { "id": "C", "text": "Service endpoint" },
+            { "id": "D", "text": "Resource group" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure file share" },
+            { "id": "B", "text": "Secret" },
+            { "id": "C", "text": "Empty directory (emptyDir)" },
+            { "id": "D", "text": "Cloned Git repo" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-ACI-03",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "O protocolo SMB é suportado no ACI através da montagem de um `Azure file share`. Para tarefas que devem rodar apenas uma vez (como scripts de processamento), a política de reinicialização deve ser `Never`.",
+    "content": {
+      "statement": "Como você deve configurar o ACI para acessar dados via SMB e garantir que os scripts rodem apenas uma vez?",
+      "text": "External data volume (Volume de dados externo): {{0}}\nContainer restart policy (Política de reinicialização): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Secret" },
+            { "id": "B", "text": "Empty directory" },
+            { "id": "C", "text": "Cloned git repo" },
+            { "id": "D", "text": "Azure file share" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Never" },
+            { "id": "B", "text": "Always" },
+            { "id": "C", "text": "OnFailure" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "A"]
+  },
+  {
+    "id": "Q-ACI-04",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances / Troubleshooting",
+    "difficulty": "Média",
+    "explanation": "O comando `az container attach` fornece o fluxo local de logs standard out e standard error de um contêiner em tempo real, sendo a primeira ferramenta para diagnosticar erros HTTP 502/Gateway.",
+    "content": {
+      "statement": "Você precisa investigar a saída do log do servidor HTTP em tempo real em um ACI. Qual comando da CLI do Azure você deve usar PRIMEIRO?",
+      "options": [
+        { "id": "A", "text": "az webapp log" },
+        { "id": "B", "text": "az ams live-output" },
+        { "id": "C", "text": "az monitor activity-log" },
+        { "id": "D", "text": "az container attach" }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-ACI-05",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances / Segurança",
+    "difficulty": "Média",
+    "explanation": "No ACI, você pode passar segredos usando variáveis de ambiente seguras (A), que ocultam o valor na visualização do portal/CLI, ou através de um Volume do tipo Secret (D), que monta os valores como arquivos no sistema de arquivos do contêiner.",
+    "content": {
+      "statement": "Quais duas abordagens nativas você pode utilizar para passar esse valor secreto com segurança para o ACI?",
+      "options": [
+        { "id": "A", "text": "Definir uma variável de ambiente segura (Secure Environment Variable)." },
+        { "id": "B", "text": "Utilizar um Azure Key Vault associado a um Service Principal." },
+        { "id": "C", "text": "Definir um Volume do tipo Azure File Share criptografado." },
+        { "id": "D", "text": "Definir um Volume do tipo Secret (Secret Volume) montado no contêiner." }
+      ]
+    },
+    "correct_answer": ["A", "D"]
+  },
+  {
+    "id": "Q-ACI-06",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances / GPU",
+    "difficulty": "Alta",
+    "explanation": "O `Azure Container Instances` é o alvo de computação que suporta o uso isolado de GPUs com custo faturado por segundo. A `Restart policy` definida como Never ou OnFailure garante que o contêiner seja interrompido após o término do script.",
+    "content": {
+      "statement": "Você precisa de recursos de GPU e minimizar custos para renderização. Como preencher os parâmetros?",
+      "text": "Compute target (Alvo de computação): {{0}}\nContainer termination (Configuração de encerramento): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Container Instances" },
+            { "id": "B", "text": "Azure Kubernetes Service" },
+            { "id": "C", "text": "Azure Container Apps" },
+            { "id": "D", "text": "Azure App Service" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Restart policy" },
+            { "id": "B", "text": "Environment variable" },
+            { "id": "C", "text": "System-assigned Managed identity" },
+            { "id": "D", "text": "User-assigned Managed identity" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-ACI-07",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances / Monitoramento",
+    "difficulty": "Média",
+    "explanation": "O ACI relata o uso da CPU em millicores (onde 1 núcleo = 1000 millicores). Portanto, 80% de um núcleo ou da capacidade total é representado como 800.",
+    "content": {
+      "statement": "Você deseja disparar um alerta se o serviço utilizar mais de 80% dos núcleos de CPU. Qual condição especificar?",
+      "options": [
+        { "id": "A", "text": "--condition \"avg Percentage CPU > 80\"" },
+        { "id": "B", "text": "--condition \"CPU Usage > 800\"" },
+        { "id": "C", "text": "--condition \"avg Percentage CPU > 800\"" },
+        { "id": "D", "text": "--condition \"CPU Usage > 80\"" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-ACI-08",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances / Rede",
+    "difficulty": "Alta",
+    "explanation": "A implantação de ACI em uma Rede Virtual (VNet) exige o `osType` como `Linux`. Na propriedade `ipAddress`, o `type` deve ser definido como `Private` para receber o IP da sub-rede interna.",
+    "content": {
+      "statement": "Como configurar o YAML para implantar o ACI dentro de uma VNet privada?",
+      "text": "osType (Sistema operacional): {{0}}\ntype (Tipo de IP sob a propriedade ipAddress): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Linux" },
+            { "id": "B", "text": "Windows" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Private" },
+            { "id": "B", "text": "Public" },
+            { "id": "C", "text": "Dynamic" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-ACI-18",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances / DNS",
+    "difficulty": "Fácil",
+    "explanation": "A estrutura padrão de um FQDN no ACI é `<label>.<region>.azurecontainer.io`. Com o label 'appinstance' na região 'westus2', o FQDN será `appinstance.westus2.azurecontainer.io`.",
+    "content": {
+      "statement": "Qual será a estrutura do Nome de Domínio Totalmente Qualificado (FQDN) gerado pelo Azure?",
+      "options": [
+        { "id": "A", "text": "appinstance.azurecontainer.io" },
+        { "id": "B", "text": "appinstance.westus2.azurecontainer.io" },
+        { "id": "C", "text": "westus2.appinstance.azurecontainer.io" },
+        { "id": "D", "text": "azurecontainer.westus2.com/appinstance" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-ACI-19",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances / Segurança",
+    "difficulty": "Alta",
+    "explanation": "Para variáveis de ambiente sensíveis no YAML, usa-se a propriedade `secureValue`. O valor passado nela ficará oculto em comandos de inspeção (como az container show).",
+    "content": {
+      "statement": "Como declarar a variável de ambiente no YAML para que o valor fique oculto na inspeção?",
+      "text": "environmentVariables:\n  - name: \"API_KEY\"\n    {{0}}: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "value" },
+            { "id": "B", "text": "secureValue" },
+            { "id": "C", "text": "secret" },
+            { "id": "D", "text": "protectedValue" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "true" },
+            { "id": "B", "text": "false" },
+            { "id": "C", "text": "\"Sua_Chave_Aqui\"" },
+            { "id": "D", "text": "\"@Microsoft.KeyVault(...)\"" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-ACI-21",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances / Segurança",
+    "difficulty": "Alta",
+    "explanation": "Para injetar arquivos confidenciais, usa-se `volumeMounts` no contêiner para definir o caminho e `volumes` no grupo para definir o tipo do volume como `secret`.",
+    "content": {
+      "statement": "Como preencher o manifesto YAML para montar um volume secreto?",
+      "text": "containers:\n- name: mycontainer\n  properties:\n    {{0}}:\n    - name: secretvolume\n      mountPath: /mnt/secrets\n{{1}}:\n- name: secretvolume\n  {{2}}:\n    mysecretkey: <base64-encoded-secret>",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "volumeMounts" },
+            { "id": "B", "text": "volumes" },
+            { "id": "C", "text": "secrets" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "volumeMounts" },
+            { "id": "B", "text": "volumes" },
+            { "id": "C", "text": "secrets" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "volumeMount" },
+            { "id": "B", "text": "volume" },
+            { "id": "C", "text": "secret" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-ACI-23",
+    "type": "drag_and_drop",
+    "category": "Azure Container Instances / Troubleshooting",
+    "difficulty": "Média",
+    "explanation": "A ordem para investigar o travamento na inicialização é: 1. `az container logs` (C) para ver o que já aconteceu. 2. `az container attach` (A) para monitorar em tempo real.",
+    "content": {
+      "statement": "Você precisa investigar um travamento na inicialização do ACI. Em qual ordem executar os comandos?",
+      "items_to_drag": [
+        { "id": "A", "text": "az container attach --resource-group RG1 --name mycontainer" },
+        { "id": "C", "text": "az container logs --resource-group RG1 --name mycontainer" }
+      ]
+    },
+    "correct_answer": ["C", "A"]
+  },
+  {
+    "id": "Q-ACI-26",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances / Troubleshooting",
+    "difficulty": "Média",
+    "explanation": "O comando `az container exec` permite executar um comando interativo em um contêiner. O parâmetro `--name` refere-se ao nome do grupo de contêineres e `--exec-command` ao comando do shell (ex: `/bin/bash`).",
+    "content": {
+      "statement": "Você precisa abrir uma sessão de shell interativa. Como completar o comando?",
+      "text": "az container {{0}} \\\n  --resource-group RG-Producao \\\n  --name {{1}} \\\n  --container-name app-web \\\n  --exec-command {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "attach" },
+            { "id": "B", "text": "exec" },
+            { "id": "C", "text": "logs" },
+            { "id": "D", "text": "shell" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "meu-grupo-app" },
+            { "id": "B", "text": "app-web" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "\"/bin/bash\"" },
+            { "id": "B", "text": "\"cmd.exe\"" },
+            { "id": "C", "text": "\"start-process\"" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A", "A"]
+  },
+  {
+    "id": "Q-ACI-27",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances / Segurança",
+    "difficulty": "Alta",
+    "explanation": "A `System-assigned Managed Identity` é a escolha correta, pois seu ciclo de vida está vinculado ao recurso do ACI; quando o ACI é deletado, a identidade e suas permissões são automaticamente removidas.",
+    "content": {
+      "statement": "O que você deve configurar no recurso do ACI para acessar o Storage de forma segura e atender ao requisito de ciclo de vida?",
+      "options": [
+        { "id": "A", "text": "Uma User-assigned Managed Identity (Identidade gerenciada atribuída ao usuário)." },
+        { "id": "B", "text": "Uma System-assigned Managed Identity (Identidade gerenciada atribuída ao sistema)." },
+        { "id": "C", "text": "Uma política de acesso de Shared Access Signature (SAS)." },
+        { "id": "D", "text": "Um Volume do tipo Secret mapeando para o Azure Key Vault." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-ACI-30",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances / Armazenamento",
+    "difficulty": "Alta",
+    "explanation": "O volume do tipo `Azure file share` é o único que suporta o protocolo SMB nativamente e persiste os dados independentemente do ciclo de vida (paradas/crashes) do contêiner.",
+    "content": {
+      "statement": "Qual tipo de volume você deve declarar no arquivo de implantação YAML do ACI?",
+      "options": [
+        { "id": "A", "text": "Um volume do tipo emptyDir." },
+        { "id": "B", "text": "Um volume do tipo Azure file share." },
+        { "id": "C", "text": "Um volume do tipo cloned Git repo." },
+        { "id": "D", "text": "O sistema de arquivos nativo isolado do contêiner." }
+      ]
+    },
+    "correct_answer": ["B"]
+  }
+]
