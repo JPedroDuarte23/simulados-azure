@@ -1,0 +1,712 @@
+[
+  {
+    "id": "Q-CDB-01",
+    "type": "drag_and_drop",
+    "category": "Azure Cosmos DB / Change Feed Processor",
+    "difficulty": "Média",
+    "explanation": "O Change Feed Processor possui 4 componentes principais: (1) Monitored container - armazena os dados e contém o feed de alterações; (2) Lease container - coordena o processamento entre múltiplos workers através de leases (concessões); (3) Delegate - função de callback que processa cada lote de alterações; (4) Host - inicia e gerencia o processador. Compreender esses componentes é essencial para implementar processamento escalável de alterações no Cosmos DB.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/change-feed-processor",
+    "content": {
+      "statement": "Você desenvolve uma solução no Azure que usa o Cosmos DB. O contêiner Cosmos DB atual deve ser replicado e deve usar uma chave de partição que seja otimizada para consultas. Você precisa implementar uma solução usando o Change Feed Processor.\n\nRelacione os componentes do processador do change feed com os seus respectivos requisitos:\nComponentes Disponíveis: [A] Host [B] Delegate [C] Lease container [D] Monitored container\n\nRequisitos (Indique a letra do componente correspondente para cada número):\n1. Armazenar os dados a partir dos quais o feed de alterações (change feed) é gerado.\n2. Coordenar o processamento do feed de alterações entre vários workers (trabalhadores).\n3. Usar o change feed processor para escutar e monitorar as alterações.\n4. Lidar com cada lote de alterações processadas.",
+      "items_to_drag": [
+        { "id": "A", "text": "Host" },
+        { "id": "B", "text": "Delegate" },
+        { "id": "C", "text": "Lease container" },
+        { "id": "D", "text": "Monitored container" }
+      ]
+    },
+    "correct_answer": ["D", "C", "A", "B"]
+  },
+  {
+    "id": "Q-CDB-02",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Partition Keys",
+    "difficulty": "Média",
+    "explanation": "Uma boa estratégia de chave de partição deve distribuir dados uniformemente. A opção C (chave composta com sufixo aleatório) e E (sufixo de hash) são as melhores escolhas pois aumentam a cardinality e a entropia, evitando hot partitions. A opção A é ineficaz porque valores que se repetem causam concentração de dados. A opção B não faz sentido (nome do contêiner é estático). A opção D com dados em subconjunto criaria partições vazias.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/partitioning-overview",
+    "content": {
+      "statement": "Uma equipe de desenvolvimento está projetando uma solução do Azure Cosmos DB com a API Core (SQL) para um serviço de insights de varejo. O conjunto de dados contém vários milhões de documentos JSON e cada documento pode incluir centenas de atributos. Nenhum atributo único fornece valores suficientemente distintos para o particionamento.\n\nOs contêineres devem ser capazes de escalar de forma independente para que o aplicativo possa manter uma distribuição uniforme da carga de trabalho entre as partições ao longo do tempo.\n\nQuais DUAS estratégias de chave de partição (Partition Key) satisfariam esse requisito? (Escolha 2)",
+      "options": [
+        { "id": "A", "text": "Uma propriedade única cujos valores se repetem frequentemente entre os documentos." },
+        { "id": "B", "text": "Um campo que armazena o nome do contêiner para cada documento." },
+        { "id": "C", "text": "Uma chave composta (composite key) formada pela concatenação de vários valores de atributos com um sufixo aleatório anexado." },
+        { "id": "D", "text": "Um único atributo que está presente apenas em um pequeno subconjunto de documentos." },
+        { "id": "E", "text": "A anexação de um sufixo de hash (hash suffix) a um valor de propriedade para aumentar a entropia." }
+      ]
+    },
+    "correct_answer": ["C", "E"]
+  },
+  {
+    "id": "Q-CDB-03",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / SDK .NET",
+    "difficulty": "Fácil",
+    "explanation": "A classe CosmosClient é a forma correta de instanciar um cliente para o Azure Cosmos DB SDK v3 para .NET. DocumentClient é da versão anterior (v2), Container e Database são objetos que representam recursos específicos, mas não são usados para a conexão inicial. CosmosClient é o ponto de entrada para todas as operações com Cosmos DB.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/sql-api-sdk-dotnet-best-practices",
+    "content": {
+      "statement": "Você está construindo soluções no Azure para uma startup de comércio eletrônico global e deve se conectar a um banco de dados NoSQL distribuído globalmente (Azure Cosmos DB) utilizando o SDK .NET.\n\nVocê precisa instanciar um objeto que irá configurar as opções do cliente e enviar solicitações ao banco de dados.\n\nQual dos seguintes trechos de código você deve usar para instanciar a conexão corretamente?",
+      "options": [
+        { "id": "A", "text": "new DocumentClient(serviceEndpoint, authKey)" },
+        { "id": "B", "text": "new Container(serviceEndpoint, authKey)" },
+        { "id": "C", "text": "new CosmosClient(serviceEndpoint, authKey)" },
+        { "id": "D", "text": "new Database(serviceEndpoint, authKey)" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-CDB-04",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Multi-region Writes",
+    "difficulty": "Média",
+    "explanation": "Para suportar multi-region writes no Azure Cosmos DB com SDK .NET, você precisa: (1) Atualizar ConnectionPolicy com UseMultipleWriteLocations=true (opção C) para habilitar gravações em múltiplas regiões; (2) Opcionalmente, usar PreferredLocations (opção A) para indicar preferência por regiões próximas. As opções B e E não ajudam (mudança de consistência global ou use de SessionToken). A opção D (custom conflict resolution) é necessária apenas se diferentes regras de conflito forem requeridas.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/sql-api-sdk-dotnet-best-practices",
+    "content": {
+      "statement": "Você está desenvolvendo uma aplicação web em .NET que armazena dados no Azure Cosmos DB. A aplicação deve usar a API Core (SQL) e permitir milhões de leituras e gravações.\n\nA conta do Azure Cosmos DB foi criada com gravação em múltiplas regiões (multiple write regions) habilitada. A aplicação foi implantada nas regiões East US 2 e Central US. Você precisa atualizar a aplicação .NET para dar suporte a multi-region writes.\n\nQuais DUAS ações você deve realizar no código da aplicação? (Escolha 2)",
+      "options": [
+        { "id": "A", "text": "Atualizar a classe ConnectionPolicy para o cliente Cosmos e preencher a propriedade PreferredLocations com base na proximidade geográfica da aplicação." },
+        { "id": "B", "text": "Atualizar o Azure Cosmos DB para usar o nível de consistência Forte (Strong) e adicionar propriedades indexadas ao contêiner." },
+        { "id": "C", "text": "Atualizar a classe ConnectionPolicy para o cliente Cosmos e definir a propriedade UseMultipleWriteLocations como true." },
+        { "id": "D", "text": "Criar e implantar uma política de resolução de conflitos personalizada (custom conflict resolution policy)." },
+        { "id": "E", "text": "Atualizar o Azure Cosmos DB para o nível de consistência Session e enviar o valor SessionToken através de um cookie." }
+      ]
+    },
+    "correct_answer": ["A", "C"]
+  },
+  {
+    "id": "Q-CDB-05",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Cosmos DB / Configuração",
+    "difficulty": "Fácil",
+    "explanation": "Para este cenário de coleta de telemetria de motoristas (dados estruturados em JSON, múltiplos atributos), você deve: (1) Usar a API Core (SQL) que é ideal para dados JSON e documentos com multiple attributes; (2) Usar ID do item (item id) como Partition Key pois cada motorista/entrega terá um ID único, proporcionando distribuição uniforme e escalabilidade para consultas pontuais. As outras opções levariam a hot partitions ou distribuição desigual.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/partitioning-overview",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo para coletar os seguintes dados de telemetria de motoristas de entrega: primeiro nome, sobrenome, contagem de pacotes, ID do item e coordenadas de localização atual. O aplicativo armazenará os dados nativamente no Azure Cosmos DB no formato de documento e precisa recuperar atualizações de forma nativa.\n\nVocê precisa configurar os parâmetros primários do Azure Cosmos DB para este cenário buscando escalabilidade para consultas de itens pontuais.\n\nQuais valores você deve selecionar?",
+      "text": "5.1 - Qual API do Azure Cosmos DB utilizar? {{0}}\n5.2 - Qual Propriedade usar como Partition Key? {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Gremlin" },
+            { "id": "B", "text": "Table API" },
+            { "id": "C", "text": "Core (SQL)" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "D", "text": "Primeiro nome (first name)" },
+            { "id": "E", "text": "Sobrenome (last name)" },
+            { "id": "F", "text": "Contagem de pacotes (package count)" },
+            { "id": "G", "text": "ID do item (item id)" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "G"]
+  },
+  {
+    "id": "Q-CDB-06",
+    "type": "drag_and_drop",
+    "category": "Azure Cosmos DB / Consistency Levels",
+    "difficulty": "Média",
+    "explanation": "Os níveis de consistência devem ser escolhidos conforme o caso de uso: (1) Retornar status MAIS RECENTE mesmo com atualizações concorrentes = Strong (máxima garantia); (2) Dados de monitoramento com pequeno atraso permitido (versão atual ou anterior) = Bounded Staleness (permite pequena defasagem controlada); (3) Dados de faturamento final com foco em disponibilidade e baixa latência, sem exigência de ordem temporal = Eventual (máxima performance, mínima latência). Strong deveria ser sobrescrito por Bounded Staleness ou Eventual nos dropdowns SDK para otimizar custo/latência.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução para um hospital, apoiada pelo Azure Cosmos DB (API for NoSQL), para suportar os seguintes casos de uso:\n\n- Os detalhes mais recentes do status do paciente devem ser recuperados, mesmo se vários usuários em locais diferentes tiverem atualizado o registro simultaneamente.\n- Os dados de monitoramento de saúde do paciente recuperados podem ter um pequeno atraso, devendo ser a versão atual ou, no máximo, a versão imediatamente anterior.\n- Após a alta do paciente e a avaliação de todas as despesas, o registro de faturamento do paciente precisa ser recuperado com as cobranças finais (a ordem exata das atualizações ao longo do tempo não é crítica, desde que reflita os dados finais consolidados).\n\nVocê provisionou a conta do Cosmos DB definindo o nível de consistência padrão global como Strong. Para minimizar a latência e o custo (RUs), você deve substituir o nível de consistência diretamente no nível das consultas (SDK) quando possível.\n\nRelacione o nível de consistência apropriado para cada requisito:\nOpções de Consistência: [A] Strong [B] Bounded Staleness [C] Eventual [D] Consistent Prefix\n\nRequisitos (Indique a letra da consistência correspondente para cada número):\n1. Retornar o status mais recente do paciente.\n2. Retornar os dados de monitoramento de saúde com no mínimo uma versão de defasagem permitida.\n3. Recuperar os dados de faturamento corretos com as cobranças finais (foco em disponibilidade e menor latência, sem exigência de ordem temporal estrita).",
+      "items_to_drag": [
+        { "id": "A", "text": "Strong" },
+        { "id": "B", "text": "Bounded Staleness" },
+        { "id": "C", "text": "Eventual" },
+        { "id": "D", "text": "Consistent Prefix" }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-CDB-07",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Document Size Limits",
+    "difficulty": "Fácil",
+    "explanation": "O Azure Cosmos DB tem um limite de tamanho máximo de 2 MB por documento. File1 a File3 (1MB, 2MB, 3MB) podem ser carregados individualmente, mas File3 ficaria muito próximo ou excederia o limite. Na prática, apenas File1 (1MB) e File2 (2MB) são seguros. Como o erro é '413 Entity too large' ao carregar como itens individuais, apenas os arquivos menores que 2 MB conseguem passar. File3 (3MB) já excede o limite.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/concepts-limits",
+    "content": {
+      "statement": "Você cria um banco de dados do Azure Cosmos DB for NoSQL para armazenar documentos JSON. Você planeja usar a API v3 do SDK do .NET para fazer upload dos seguintes arquivos para um contêiner:\n\nFile1.json: 1 MB\nFile2.json: 2 MB\nFile3.json: 3 MB\nFile4.json: 4 MB\nFile5.json: 5 MB\n\nDurante os testes, você recebe a seguinte mensagem de erro ao tentar realizar a inserção como itens individuais: \"413 Entity too large\".\n\nQuais arquivos você conseguirá carregar com sucesso no Azure Cosmos DB for NoSQL como itens únicos?",
+      "options": [
+        { "id": "A", "text": "File1, File2, File3, File4 e File5" },
+        { "id": "B", "text": "Apenas File1 e File2" },
+        { "id": "C", "text": "Apenas File1, File2 e File3" },
+        { "id": "D", "text": "Apenas File1" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-CDB-08",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Cosmos DB / Integrated Cache",
+    "difficulty": "Média",
+    "explanation": "O Integrated Cache do Azure Cosmos DB é um cache em memória que reside no gateway e otimiza leituras repetidas. Para usar o Integrated Cache: (1) Modo de conectividade = Gateway mode with dedicated gateway (opção C, necessário para acessar o cache integrado); (2) Nível máximo de consistência suportado = Session (opção B, pois Integrated Cache requer Session ou consistência mais fraca; Strong não é suportado). O Direct mode não funciona com Integrated Cache.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/integrated-cache",
+    "content": {
+      "statement": "Você possui uma conta da API do Azure Cosmos DB for NoSQL chamada account1. Múltiplas instâncias de um aplicativo local chamado app1 leem dados massivamente desta conta, consumindo muitas Unidades de Solicitação (RUs).\n\nVocê decide implementar o Integrated Cache (cache integrado) para otimizar os custos e a latência das conexões de leitura provenientes do app1.\n\nVocê precisa configurar o modo de conectividade no SDK do aplicativo e também garantir que as consultas estejam operando em um nível de consistência compatível com o uso do Integrated Cache.\n\nQuais valores você deve selecionar?",
+      "text": "8.1 - Qual Modo de Conectividade (Connectivity Mode) usar? {{0}}\n8.2 - Qual o Nível Máximo de Consistência suportado para utilizar este cache? {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Direct mode" },
+            { "id": "B", "text": "Gateway mode using standard gateway" },
+            { "id": "C", "text": "Gateway mode using dedicated gateway" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "D", "text": "Strong" },
+            { "id": "E", "text": "Session" },
+            { "id": "F", "text": "Bounded Staleness" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "E"]
+  },
+  {
+    "id": "Q-CDB-09",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Change Feed Processing",
+    "difficulty": "Média",
+    "explanation": "Para processar alterações do Cosmos DB de forma escalável entre múltiplas instâncias, as melhores abordagens são: (1) Opção C - Azure Function com Cosmos DB Trigger (serverless, escalável automaticamente); (2) Opção D - FeedIterator com FeedRange para paralelizar manualmente em worker processes (oferece mais controle). A opção A com Change Feed Estimator não é a forma recomendada de processar. A opção B (polling por data) é ineficiente comparada ao Change Feed nativo.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/change-feed-processor",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução que usará um banco de dados do Azure Cosmos DB com múltiplas partições lógicas e físicas. A solução deve atender aos seguintes requisitos de negócio:\n\n- Processar as alterações (inserts/updates) feitas em todas as partições quase imediatamente.\n- Permitir a paralelização do processamento destas alterações entre múltiplas instâncias de computação.\n\nVocê precisa processar essas operações do Cosmos DB. Quais são as DUAS maneiras recomendadas de atingir esse objetivo através de código? (Escolha 2)",
+      "options": [
+        { "id": "A", "text": "Criar uma API do Azure App Service e implementar o recurso Change Feed Estimator do SDK, escalando a API entre múltiplas instâncias do App Service." },
+        { "id": "B", "text": "Criar um background job no Azure Kubernetes Service (AKS) para consultar periodicamente o contêiner por novos documentos filtrando por data de modificação." },
+        { "id": "C", "text": "Criar uma Azure Function configurada com um gatilho (Trigger) para Azure Cosmos DB." },
+        { "id": "D", "text": "Criar uma Azure Function (ou worker process) que use um objeto FeedIterator para processar o Change Feed através do modelo Pull. Utilizar o objeto FeedRange para paralelizar a leitura entre várias instâncias." }
+      ]
+    },
+    "correct_answer": ["C", "D"]
+  },
+  {
+    "id": "Q-CDB-10",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Consistency Levels",
+    "difficulty": "Difícil",
+    "explanation": "Para uma solução global que exige: (1) sempre retornar a versão CONFIRMADA (committed) MAIS RECENTE do item (linearizabilidade nas leituras); (2) garantias estritas de ordenação linearizável nas gravações. Apenas o nível Strong (opção E) fornece essas garantias. Strong oferece a máxima consistência: todas as leituras retornam o write mais recente confirmado, e todas as gravações são ordenadas de forma linear. Outros níveis (Session, Eventual, Bounded Staleness, Consistent Prefix) não garantem linearizabilidade total.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução global de rastreamento de estoque e controle logístico. O processamento depende de um Azure Function app que interage nativamente com o Azure Cosmos DB. A solução será implantada em várias regiões geográficas do Azure simultaneamente.\n\nOs requisitos de engenharia de dados estipulam que:\n\n- Os resultados da leitura do Azure Cosmos DB devem sempre retornar a versão confirmada mais recente do item, não importando a região da qual a consulta parta.\n- Os itens gravados no banco devem fornecer garantias estritas de ordenação linearizável (ordering guarantees).\n\nQual nível de consistência você DEVE configurar para atender a essa obrigatoriedade de arquitetura?",
+      "options": [
+        { "id": "A", "text": "Session" },
+        { "id": "B", "text": "Eventual" },
+        { "id": "C", "text": "Bounded Staleness" },
+        { "id": "D", "text": "Consistent Prefix" },
+        { "id": "E", "text": "Strong" }
+      ]
+    },
+    "correct_answer": ["E"]
+  },
+  {
+    "id": "Q-CDB-11",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Performance",
+    "difficulty": "Difícil",
+    "explanation": "Para reduzir a latência de leitura em cenários de alto uso de RUs e itens grandes, as abordagens corretas são otimizar as consultas e a camada de rede. Criar um índice composto (`composite index`) atende diretamente à necessidade de otimizar consultas complexas, reduzindo o consumo de RUs e o tempo de resposta. Provisionar um gateway dedicado (`dedicated gateway`) oferece um endpoint de front-end do lado do servidor exclusivo para a conta, o que pode resultar em menor latência e maior consistência de performance para um grande volume de solicitações.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/dedicated-gateway",
+    "content": {
+      "statement": "Você possui um aplicativo no Azure Functions que realiza consultas no Azure Cosmos DB. As consultas do Azure Cosmos DB feitas pelo Azure Function exibem um alto uso de Unidades de Solicitação (RUs) e contêm consultas múltiplas e complexas. Conforme o aplicativo é dimensionado (scaling), nota-se uma alta latência nas leituras pontuais de itens grandes.\nVocê precisa reduzir a latência de leitura para esta solução. Quais DUAS abordagens possíveis você deve realizar? (Escolha 2)",
+      "options": [
+        { "id": "A", "text": "Criar um novo índice composto (composite index) para as consultas de dados no Azure Cosmos DB. Modificar as consultas para suportar SQL parametrizado e atualizar o Azure Function app para chamar as novas consultas." },
+        { "id": "B", "text": "Configurar a consistência do Azure Cosmos DB para o nível Session. Fazer o cache dos tokens de sessão (session tokens) em uma nova instância do Azure Cache for Redis após cada gravação e atualizar as leituras para usar esse token." },
+        { "id": "C", "text": "Configurar a consistência do Azure Cosmos DB para o nível Forte (Strong). Aumentar as RUs para o contêiner que suporta os dados." },
+        { "id": "D", "text": "Provisionar um gateway dedicado (dedicated gateway) do Azure Cosmos DB. Atualizar a string de conexão do Azure Function app para usar o endpoint do novo gateway dedicado." },
+        { "id": "E", "text": "Provisionar um gateway dedicado do Azure Cosmos DB. Atualizar o armazenamento de Blobs (Blob storage) para usar o endpoint do novo gateway dedicado." }
+      ]
+    },
+    "correct_answer": ["A", "D"]
+  },
+  {
+    "id": "Q-CDB-12",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Security",
+    "difficulty": "Média",
+    "explanation": "Para configurar o Always Encrypted do lado do cliente, o pré-requisito fundamental é ter a chave de criptografia. O primeiro passo é sempre criar uma chave gerenciada pelo cliente (CMK) e armazená-la de forma segura em um Azure Key Vault. Somente após a criação e o armazenamento da chave é que se pode prosseguir para a definição de uma política de criptografia no contêiner do Cosmos DB que utilizará essa chave.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/how-to-always-encrypted",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo em Java que será implantado no Azure. O aplicativo armazena dados confidenciais nativamente no Azure Cosmos DB.\nVocê precisa configurar o recurso de Always Encrypted (Sempre Criptografado) para criptografar os dados confidenciais internamente no próprio aplicativo (client-side).\nO que você deve fazer PRIMEIRO?",
+      "options": [
+        { "id": "A", "text": "Criar um novo contêiner no Cosmos DB para incluir uma política de criptografia com as propriedades JSON a serem criptografadas." },
+        { "id": "B", "text": "Habilitar a Transparent Data Encryption (TDE) diretamente nas configurações de segurança da conta do Cosmos DB." },
+        { "id": "C", "text": "Gerar um token SAS com permissões de leitura/gravação em nível de conta para habilitar o cofre de chaves." },
+        { "id": "D", "text": "Criar uma chave gerenciada pelo cliente (customer-managed key - CMK) e armazenar a chave em uma nova instância do Azure Key Vault." }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-CDB-13",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Consistency",
+    "difficulty": "Média",
+    "explanation": "O requisito de que as leituras de qualquer região devem sempre retornar a versão confirmada mais recente de um item descreve o nível de consistência 'Forte' (Strong). Para garantir esse comportamento em toda a conta e em todas as regiões, o nível de consistência padrão da própria conta do Cosmos DB deve ser alterado para 'Forte'. Tentar forçar a consistência via SDK em cada leitura não garante essa consistência global entre as réplicas.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/consistency-levels",
+    "content": {
+      "statement": "Uma empresa possui uma conta do Azure Cosmos DB for NoSQL. A conta está configurada por padrão com consistência de Sessão (Session). Os dados são gravados em uma única região do Azure e podem ser lidos a partir de três regiões do Azure.\nUm aplicativo que acessará os dados possui o requisito de que as leituras devem sempre retornar a versão confirmada mais recente de um item a partir de qualquer região do Azure.\nComo você deve implementar essa alteração?",
+      "options": [
+        { "id": "A", "text": "Alterar o nível de consistência usando o SDK." },
+        { "id": "B", "text": "Alterar o nível de consistência padrão diretamente na conta do Cosmos DB." },
+        { "id": "C", "text": "Configurar o Integrated Cache (cache integrado) na conta." },
+        { "id": "D", "text": "Configurar a conta para gravar dados em múltiplas regiões (multi-region writes)." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-CDB-14",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / TTL",
+    "difficulty": "Fácil",
+    "explanation": "Para garantir que os itens nunca expirem, a propriedade Time to Live (TTL) nos próprios itens deve ser definida como -1. Este valor desativa explicitamente a expiração para o item, mesmo que o contêiner tenha um TTL padrão configurado. Definir TTL como 0 faria com que o item expirasse imediatamente (se TTL estiver ativo no contêiner), e um bloqueio de recurso (Resource Lock) protege o recurso de infraestrutura (a conta ou o contêiner) de ser modificado ou excluído, mas não protege os dados dentro dele.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/time-to-live",
+    "content": {
+      "statement": "Uma empresa possui uma conta do Azure Cosmos DB for NoSQL. A conta está configurada por padrão com consistência de Sessão (Session). Os dados são gravados em uma única região do Azure e podem ser lidos a partir de três regiões do Azure.\nUm aplicativo que acessará os dados possui o requisito de que os itens do contêiner não devem ser excluídos automaticamente com o tempo.\nComo você deve implementar essa alteração?",
+      "options": [
+        { "id": "A", "text": "Configurar um Resource Lock (bloqueio de recurso) no contêiner." },
+        { "id": "B", "text": "Alterar a propriedade Time to Live (TTL) nos itens para 0." },
+        { "id": "C", "text": "Configurar um Resource Lock (bloqueio de recurso) na conta." },
+        { "id": "D", "text": "Alterar a propriedade Time to Live (TTL) nos itens para -1." }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-CDB-15",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Cosmos DB / Indexing Policy",
+    "difficulty": "Média",
+    "explanation": "Para otimizar uma consulta SQL com uma cláusula ORDER BY em múltiplos campos (com ordens mistas como ASC e DESC), é necessário um índice composto ('compositeIndexes'). A estrutura do índice composto deve espelhar a ordem da consulta. Para 'ORDER BY p.name, p.city DESC', o caminho '/name' deve ter a ordem 'ascending' (padrão) e o caminho '/city' deve ter a ordem 'descending'.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/index-policy#composite-indexes",
+    "content": {
+      "statement": "Você está desenvolvendo uma nova página para um site que usa o Azure Cosmos DB (API for NoSQL). Você deve exibir os dados para a nova página em uma ordem específica. Você cria a seguinte consulta SQL:\n`SELECT * FROM People p ORDER BY p.name, p.city DESC`\nVocê precisa configurar a Indexing Policy do Cosmos DB para dar suporte a esta consulta. Preencha a estrutura JSON.",
+      "text": "\"excludedPaths\": [],\n\"{{0}}\": [\n    [\n        {\"path\": \"/name\", \"order\": \"{{1}}\"},\n        {\"path\": \"/city\", \"order\": \"{{2}}\"}\n    ]\n]",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "compositeIndexes" },
+            { "id": "B", "text": "orderBy" },
+            { "id": "C", "text": "sortOrder" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "D", "text": "ascending" },
+            { "id": "E", "text": "descending" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "F", "text": "descending" },
+            { "id": "G", "text": "ascending" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "D", "F"]
+  },
+  {
+    "id": "Q-CDB-16",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / RBAC",
+    "difficulty": "Média",
+    "explanation": "A função RBAC 'Cosmos DB Operator' concede permissões para gerenciar os recursos do Azure Cosmos DB (plano de controle), como criar contas, bancos de dados e contêineres, mas não concede permissões para acessar os dados (plano de dados), o que inclui ler/gravar dados e acessar as chaves de acesso. Isso atende perfeitamente ao requisito de permitir a criação de infraestrutura sem dar acesso aos dados.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/role-based-access-control#built-in-roles",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo que usa a Cassandra API do Azure Cosmos DB. Para facilitar o processo de infraestrutura, você cria um grupo no Microsoft Entra ID chamado 'Cosmos DB Creators' para permitir que os membros provisionem novas contas, bancos de dados e contêineres. No entanto, o grupo NÃO deve ter permissão para acessar as chaves que permitem ler ou gravar os dados no banco de dados.\nQual função de RBAC integrada do Azure você deve atribuir a este grupo?",
+      "options": [
+        { "id": "A", "text": "Cosmos DB Operator" },
+        { "id": "B", "text": "Cosmos DB Account Reader" },
+        { "id": "C", "text": "DocumentDB Accounts Contributor" },
+        { "id": "D", "text": "Cosmos Backup Operator" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-CDB-17",
+    "type": "drag_and_drop",
+    "category": "Azure Cosmos DB / Change Feed",
+    "difficulty": "Média",
+    "explanation": "O modelo Pull do Change Feed é gerenciado pelo cliente, que utiliza um 'Continuation token' para salvar e retomar seu progresso. O modelo Push, que usa a biblioteca Change Feed Processor (CFP), automatiza o gerenciamento de estado e a distribuição de trabalho entre múltiplos 'workers' usando um 'Lease container' para coordenar o processamento.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/change-feed-pull-model-vs-processor",
+    "content": {
+      "statement": "Você planeja usar a funcionalidade Change Feed do Azure Cosmos DB com dois aplicativos. App1 usará o modelo Pull, e App2 usará o modelo Push (Change Feed Processor). Associe o componente correto para gerenciar o estado em cada aplicativo.",
+      "items_to_drag": [
+        { "id": "C", "text": "Continuation token" },
+        { "id": "A", "text": "Lease container" }
+      ]
+    },
+    "correct_answer": ["C", "A"]
+  },
+  {
+    "id": "Q-CDB-18",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Migration",
+    "difficulty": "Fácil",
+    "explanation": "A ferramenta `mongorestore` é o utilitário de linha de comando nativo do MongoDB para restaurar um banco de dados a partir de um dump BSON. Como a API do Azure Cosmos DB para MongoDB é compatível com o protocolo de fio do MongoDB, `mongorestore` pode ser usado diretamente para migrar dados de uma instância MongoDB local para o Cosmos DB.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/mongodb/tutorial-mongotools-restore",
+    "content": {
+      "statement": "A sua empresa possui uma implantação local do banco de dados MongoDB e uma nova conta do Azure Cosmos DB provisionada para utilizar a API do MongoDB.\nVocê precisa migrar os dados do MongoDB local para o Cosmos DB via linha de comando usando um arquivo de dump (BSON).\nQual ferramenta nativa você deve utilizar?",
+      "options": [
+        { "id": "A", "text": "Data Management Gateway" },
+        { "id": "B", "text": "Azure Storage Explorer" },
+        { "id": "C", "text": "mongorestore" },
+        { "id": "D", "text": "AzCopy" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-CDB-19",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / SDK",
+    "difficulty": "Difícil",
+    "explanation": "Para manter a consistência de sessão (garantindo 'read-your-own-writes') em um aplicativo distribuído com múltiplas instâncias, o token de sessão ('Session Token') precisa ser capturado de uma resposta e passado para as próximas requisições. No SDK do Cosmos DB, o objeto `RequestOptions` (ou `ItemRequestOptions` no SDK v3) é usado para passar o token de sessão em cada nova solicitação, garantindo que a requisição seja roteada para uma réplica que tenha a gravação anterior.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/nosql/how-to-manage-consistency#session-consistency",
+    "content": {
+      "statement": "Você gerencia uma conta da API for NoSQL do Azure Cosmos DB com consistência de Sessão. Seu serviço de pedidos executa em múltiplas instâncias e é exigido que todas participem da mesma sessão para garantir 'read-your-own-writes' em todo o cluster.\nQual objeto do SDK você deve utilizar para recuperar e compartilhar o token de sessão entre os nós?",
+      "options": [
+        { "id": "A", "text": "Feed options" },
+        { "id": "B", "text": "Document response" },
+        { "id": "C", "text": "Connection policy" },
+        { "id": "D", "text": "Request options" }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-CDB-20",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Transactions",
+    "difficulty": "Difícil",
+    "explanation": "As transações ACID de múltiplos documentos no Azure Cosmos DB são um recurso suportado pela API para MongoDB. Para executar uma transação em vários documentos, eles devem residir na mesma partição lógica (ou seja, ter o mesmo valor de chave de partição). Portanto, as duas ações necessárias são: configurar a conta para usar a API do MongoDB e garantir que os documentos a serem transacionados sejam armazenados juntos, o que pode ser feito em uma coleção fragmentada ('sharded') usando o 'username' como a chave de partição.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/mongodb/transactions",
+    "content": {
+      "statement": "Você está atualizando um aplicativo que armazena vários documentos por 'username' no Cosmos DB. É um requisito que o aplicativo possa atualizar vários documentos para o mesmo 'username' em uma única operação ACID (transação multi-documento).\nQuais 2 ações formam a solução completa?",
+      "options": [
+        { "id": "A", "text": "Criar uma coleção fragmentada (sharded collection) baseada na chave username para armazenar os documentos." },
+        { "id": "B", "text": "Configurar a conta do Azure Cosmos DB para usar a API do MongoDB." },
+        { "id": "C", "text": "Criar uma coleção não fragmentada (unsharded collection) para armazenar os documentos." },
+        { "id": "D", "text": "Configurar a conta do Azure Cosmos DB para usar a API for Table." },
+        { "id": "E", "text": "Configurar a conta do Azure Cosmos DB para usar a API Gremlin." }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-CDB-21",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Consistency",
+    "difficulty": "Difícil",
+    "explanation": "Ao substituir a consistência por solicitação, o nível efetivo para operações de LEITURA é o mais fraco entre o padrão da conta e o solicitado. No entanto, o SDK gerencia um token de sessão para garantir 'read-your-own-writes'. Mesmo que você solicite 'ConsistentPrefix' (que é mais fraco que 'Session'), se o cliente já realizou uma gravação, o SDK usará o token de sessão para garantir que a leitura veja essa gravação, resultando em uma consistência efetiva de 'Session'.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/nosql/how-to-manage-consistency#override-the-default-consistency-level",
+    "content": {
+      "statement": "Você provisionou uma conta do Cosmos DB (API for NoSQL) com consistência padrão 'Session'. No código do seu aplicativo, via SDK, você substitui o nível de consistência por solicitação para 'ConsistentPrefix' para as operações de Leitura e Gravação.\nQual será o nível de consistência resultante para as operações de Leitura (Read operations)?",
+      "options": [
+        { "id": "A", "text": "Strong" },
+        { "id": "B", "text": "Session" },
+        { "id": "C", "text": "Consistent Prefix" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-CDB-22",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Consistency",
+    "difficulty": "Difícil",
+    "explanation": "Para operações de GRAVAÇÃO, o nível de consistência efetivo é sempre o nível padrão da conta. Não é possível diminuir o nível de consistência para gravações em uma base por solicitação. Como a conta foi configurada com consistência 'Session', todas as operações de gravação serão executadas com a consistência de 'Session', independentemente de ter sido solicitado um nível mais fraco como 'ConsistentPrefix'.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/nosql/how-to-manage-consistency#override-the-default-consistency-level",
+    "content": {
+      "statement": "Você provisionou uma conta do Cosmos DB (API for NoSQL) com consistência padrão 'Session'. No código do seu aplicativo, via SDK, você substitui o nível de consistência por solicitação para 'ConsistentPrefix' para as operações de Leitura e Gravação.\nQual será o nível de consistência resultante para as operações de Gravação (Write operations)?",
+      "options": [
+        { "id": "A", "text": "Strong" },
+        { "id": "B", "text": "Session" },
+        { "id": "C", "text": "Consistent Prefix" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-CDB-23",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Consistency",
+    "difficulty": "Média",
+    "explanation": "O nível de consistência 'Consistent Prefix' garante que as leituras nunca verão gravações fora de ordem (out-of-order writes). Ele oferece garantias de ordem, mas com maior disponibilidade e menor latência do que 'Session' ou 'Strong', maximizando a concorrência e tolerando um pequeno atraso, o que se encaixa perfeitamente nos requisitos.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/consistency-levels",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução do Azure Cosmos DB que será implantada em várias regiões do Azure simultaneamente.\nA sua arquitetura deve atender aos seguintes requisitos obrigatórios:\n- As operações de leitura nunca devem receber operações de gravação fora de ordem (out of order).\n- Deve-se maximizar a simultaneidade (concurrency) das operações de leitura em todas as regiões, tolerando um pequeno atraso, mas com garantias de ordem.\nQual nível de consistência você deve usar na configuração da conta do Cosmos DB?",
+      "options": [
+        { "id": "A", "text": "Session" },
+        { "id": "B", "text": "Eventual" },
+        { "id": "C", "text": "Bounded Staleness" },
+        { "id": "D", "text": "Consistent Prefix" }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-CDB-24",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / SDK",
+    "difficulty": "Difícil",
+    "explanation": "A afirmação é falsa. A linha `CreateDatabaseIfNotExistsAsync` garante que o banco de dados 'SalesOrders' exista. As linhas seguintes criam dois contêineres físicos ('Container1' e 'Container2'). Contêineres lógicos são uma abstração dentro de um contêiner físico, definidos pela chave de partição, e não são criados dessa forma. Portanto, o código cria dois contêineres físicos, não lógicos.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/partitioning-overview#logical-partitions",
+    "content": {
+      "statement": "Você avalia o seguinte trecho de código:\n`21 using (await client.GetDatabase(\"SalesOrders\").DeleteAsync()) { }`\n`22 database = await client.CreateDatabaseIfNotExistsAsync(\"SalesOrders\");`\n`23 Container container1 = await database.CreateContainerAsync(id: \"Container1\", partitionKeyPath: \"/AccountNumber\");`\n`24 Container container2 = await database.CreateContainerAsync(id: \"Container2\", partitionKeyPath: \"/AccountNumber\");`\n`25-30 ...`\n\nAfirmação: O código criará com sucesso um banco de dados chamado SalesOrders e ele incluirá dois contêineres lógicos. A afirmação é verdadeira?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-CDB-25",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / SDK",
+    "difficulty": "Fácil",
+    "explanation": "A afirmação é verdadeira. As linhas 26 e 28 executam a operação `CreateItemAsync` duas vezes no objeto `container1`, inserindo os itens `salesOrder1` e `salesOrder2`. Portanto, ao final da execução, o 'Container1' conterá exatamente dois itens.",
+    "official_doc_link": "https://learn.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.createitemasync",
+    "content": {
+      "statement": "Você avalia o seguinte trecho de código:\n`...`\n`25 SalesOrder salesOrder1 = new SalesOrder() { AccountNumber = \"123456\" };`\n`26 await container1.CreateItemAsync(salesOrder1, new PartitionKey(salesOrder1.AccountNumber));`\n`27 SalesOrder salesOrder2 = new SalesOrder() { AccountNumber = \"654321\" };`\n`28 await container1.CreateItemAsync(salesOrder2, new PartitionKey(salesOrder2.AccountNumber));`\n`...`\n\nAfirmação: O Container1 conterá dois itens no final da execução. A afirmação é verdadeira?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-CDB-26",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / SDK",
+    "difficulty": "Fácil",
+    "explanation": "A afirmação é verdadeira. A linha 30 executa a operação `CreateItemAsync` uma vez no objeto `container2`, inserindo o item `salesOrder3`. Portanto, ao final da execução, o 'Container2' conterá exatamente um item.",
+    "official_doc_link": "https://learn.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.createitemasync",
+    "content": {
+      "statement": "Você avalia o seguinte trecho de código:\n`...`\n`29 SalesOrder salesOrder3 = new SalesOrder() { AccountNumber = \"109876\" };`\n`30 await container2.CreateItemAsync(salesOrder3, new PartitionKey(salesOrder3.AccountNumber));`\n\nAfirmação: O Container2 conterá um item no final da execução. A afirmação é verdadeira?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-CDB-27",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Cosmos DB / Azure CLI",
+    "difficulty": "Média",
+    "explanation": "Para atender aos requisitos: (1) consistência que mantém a ordem com uma janela de defasagem de 5 segundos é 'BoundedStaleness'; (2) o intervalo máximo para essa defasagem é de '5' segundos; (3) para aceitar reservas durante interrupções, o failover automático deve estar ativado ('true').",
+    "official_doc_link": "https://learn.microsoft.com/cli/azure/cosmosdb?view=azure-cli-latest#az-cosmosdb-create",
+    "content": {
+      "statement": "Você precisa provisionar uma conta do Cosmos DB via Azure CLI que aceite reservas durante falhas (failover) e permita leituras com uma defasagem máxima de 5 segundos, mantendo a ordem. Preencha as lacunas do comando.",
+      "text": "az cosmosdb create \\\n  --name $accountName \\\n  --resource-group airlineResourceGroup \\\n  --default-consistency-level {{0}} \\\n  --max-interval {{1}} \\\n  --enable-automatic-failover {{2}} \\\n  --locations \"South Central US\"=0",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "BoundedStaleness" },
+            { "id": "B", "text": "Eventual" },
+            { "id": "C", "text": "Strong" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "D", "text": "5" },
+            { "id": "E", "text": "100" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "F", "text": "true" },
+            { "id": "G", "text": "false" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "D", "F"]
+  },
+  {
+    "id": "Q-CDB-28",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / API",
+    "difficulty": "Fácil",
+    "explanation": "A API Core (SQL) é a API nativa e recomendada para novos projetos que trabalham com documentos JSON no Cosmos DB. Ela oferece uma sintaxe de consulta rica e familiar (semelhante ao SQL), indexação automática de todas as propriedades e a maior flexibilidade para consultas complexas sobre dados JSON.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/nosql/query/select",
+    "content": {
+      "statement": "Você está migrando um aplicativo que precisa processar grandes lotes de dados transacionais e usar uma linguagem de consulta com sintaxe semelhante a comandos relacionais tradicionais (SELECT, WHERE, etc.) sobre documentos JSON. Qual API do Cosmos DB você DEVE usar?",
+      "options": [
+        { "id": "A", "text": "MongoDB API" },
+        { "id": "B", "text": "Table API" },
+        { "id": "C", "text": "Core (SQL) API" },
+        { "id": "D", "text": "Cassandra API" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-CDB-29",
+    "type": "drag_and_drop",
+    "category": "Azure Cosmos DB / Change Feed",
+    "difficulty": "Difícil",
+    "explanation": "Para lidar com erros no Change Feed Processor: (1) Para salvar um documento que falhou e impedir que o processador fique preso, você deve implementar uma 'Dead-letter queue (fila de mensagens mortas)'. O processador pode ser configurado para enviar itens problemáticos para essa fila e continuar com o lote. (2) Para detectar falhas na própria instância que hospeda o processador, você pode usar 'Life-cycle notifications (notificações de ciclo de vida)' para registrar um manipulador que é notificado sobre a aquisição e liberação de concessões (leases), o que pode indicar problemas no host.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/nosql/change-feed-processor-resilience",
+    "content": {
+      "statement": "Um lote grande de documentos no seu Change Feed Processor falha repetidamente devido a um documento corrompido, paralisando o feed. Associe os recursos do SDK aos requisitos para contornar esses erros.",
+      "items_to_drag": [
+        { "id": "A", "text": "Dead-letter queue" },
+        { "id": "B", "text": "Life-cycle notifications" }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-CDB-30",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Indexing",
+    "difficulty": "Média",
+    "explanation": "O modo de indexação 'Consistent' garante que o índice seja atualizado de forma síncrona com as operações de gravação (criação, atualização, exclusão). Isso significa que, ao final de uma operação de gravação, qualquer consulta subsequente terá a garantia de refletir essa alteração no índice, atendendo ao requisito de 'leituras sempre refletirem as gravações mais recentes'. 'Lazy' atualiza o índice de forma assíncrona, e 'None' desativa a indexação.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/index-policy#indexing-mode",
+    "content": {
+      "statement": "Você gerencia um banco de dados do Azure Cosmos DB for NoSQL com alto volume de leituras e gravações. É exigido que todas as consultas sempre reflitam as gravações mais recentes sem nenhum atraso nos índices. Qual configuração de Indexing Mode você deve definir?",
+      "options": [
+        { "id": "A", "text": "Lazy" },
+        { "id": "B", "text": "None" },
+        { "id": "C", "text": "Consistent" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-CDB-31",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Table API",
+    "difficulty": "Média",
+    "explanation": "A afirmação é verdadeira. O SDK `Microsoft.Azure.Cosmos.Table` (agora legado) era compatível tanto com o Azure Table Storage quanto com a API de Tabela do Azure Cosmos DB. O código que usa `CloudTableClient` e `CloudStorageAccount.Parse` com uma connection string do Cosmos DB (Table API) funcionará corretamente para se conectar e inserir dados.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/table/how-to-use-dotnet-sdk",
+    "content": {
+      "statement": "Você desenvolve um método em C# usando o SDK legado (`Microsoft.Azure.Cosmos.Table`) para salvar pontuações na Table API do Cosmos DB. Afirmação: Este código (usando `CloudTableClient`) funcionará corretamente e será capaz de se conectar e inserir dados em uma conta do Azure Cosmos DB (Table API). A afirmação é verdadeira?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-CDB-32",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Table API",
+    "difficulty": "Média",
+    "explanation": "A afirmação é falsa. A operação `TableOperation.Insert` falhará se uma entidade com a mesma PartitionKey e RowKey já existir na tabela. Para atualizar um registro existente (ou inseri-lo se não existir), a operação correta a ser usada seria `TableOperation.InsertOrReplace`.",
+    "official_doc_link": "https://learn.microsoft.com/dotnet/api/microsoft.azure.cosmos.table.tableoperation.insert",
+    "content": {
+      "statement": "Você desenvolve um método em C# usando o SDK legado (`Microsoft.Azure.Cosmos.Table`) para salvar pontuações. Afirmação: O método `SaveScore`, da forma como foi escrito com `TableOperation.Insert`, atualizará e substituirá um registro caso ele já exista. A afirmação é verdadeira?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-CDB-33",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Table API",
+    "difficulty": "Fácil",
+    "explanation": "A afirmação é verdadeira. A classe `PlayerScore` provavelmente herda de `TableEntity`, que mapeia as propriedades para a tabela. O construtor `new PlayerScore(gameId, playerId, score, timePlayed)` irá atribuir `gameId` à PartitionKey e `playerId` à RowKey (uma prática comum de design para a Table API), e as outras propriedades serão colunas. A operação de inserção armazenará esses valores com sucesso.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/table/how-to-use-dotnet-sdk#add-an-entity-to-a-table",
+    "content": {
+      "statement": "Você desenvolve um método em C# usando o SDK legado (`Microsoft.Azure.Cosmos.Table`) para salvar pontuações. Afirmação: A execução deste método armazenará com sucesso os valores dos parâmetros fornecidos (gameId e playerId) dentro do Cosmos DB. A afirmação é verdadeira?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-CDB-34",
+    "type": "multiple_choice",
+    "category": "Azure Functions / Bindings",
+    "difficulty": "Média",
+    "explanation": "Para atender aos requisitos: (1) O Trigger (gatilho) deve ser 'HTTP' para ser acionado por um WebHook. (2) A associação de Entrada (Input binding) deve ser 'Blob Storage' para ler o conteúdo da imagem. (3) A associação de Saída (Output binding) deve ser 'Azure Cosmos DB' para criar o novo documento JSON.",
+    "official_doc_link": "https://learn.microsoft.com/azure/azure-functions/functions-triggers-bindings",
+    "content": {
+      "statement": "Você planeja implementar um aplicativo do Azure Functions. Requisitos: ser acionado por WebHook, ler uma imagem do Blob Storage e criar um documento no Cosmos DB. Selecione a configuração correta para os Bindings.",
+      "options": [
+        { "id": "A", "text": "Trigger: HTTP, Input: Blob Storage, Output: Azure Cosmos DB" },
+        { "id": "B", "text": "Trigger: Blob Storage, Input: HTTP, Output: Azure Cosmos DB" },
+        { "id": "C", "text": "Trigger: HTTP, Input: Azure Cosmos DB, Output: Blob Storage" },
+        { "id": "D", "text": "Trigger: Timer, Input: Blob Storage, Output: Azure Cosmos DB" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-CDB-35",
+    "type": "multiple_choice",
+    "category": "Azure Cosmos DB / Performance",
+    "difficulty": "Difícil",
+    "explanation": "Para reduzir o consumo de RUs e a latência em consultas complexas, as duas melhores abordagens são: (B) Provisionar um 'Dedicated Gateway' para se beneficiar do cache integrado, que reduz drasticamente as RUs para leituras repetidas; e (C) Criar um 'índice composto' (composite index) que otimiza a performance de consultas com filtros e ordenações específicas, diminuindo o trabalho que o motor do banco de dados precisa fazer e, consequentemente, o consumo de RUs.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/integrated-cache",
+    "content": {
+      "statement": "Sua Azure Function está com uso excessivo de RUs e alta latência devido a consultas complexas no Cosmos DB. Você precisa solucionar o problema. Quais são as DUAS abordagens recomendadas? (Escolha 2)",
+      "options": [
+        { "id": "A", "text": "Configurar o Cosmos DB para o nível de consistência Strong (Forte) para garantir que a leitura ocorra sem atrasos, o que naturalmente reduzirá a complexidade das rotinas internas do SDK." },
+        { "id": "B", "text": "Provisionar um Dedicated Gateway (Gateway Dedicado) para a conta do Azure Cosmos DB. Atualizar a string de conexão da Azure Function para usar o endpoint deste novo gateway para se beneficiar do cache integrado (Integrated Cache)." },
+        { "id": "C", "text": "Criar um novo índice composto (composite index) no Azure Cosmos DB, cobrindo as propriedades filtradas com frequência. Modificar o código para suportar consultas SQL parametrizadas." },
+        { "id": "D", "text": "Converter as chamadas nativas do Cosmos DB for NoSQL em invocações através da Table API, que possui menor latência intrínseca para buscas de chave-valor." }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-CDB-36",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Cosmos DB / SQL Query",
+    "difficulty": "Média",
+    "explanation": "Para agrupar e contar vendas em janelas de tempo, o Cosmos DB oferece a função `DateTimeBin`. (1) Para contar o número de vendas, usa-se a função de agregação `COUNT(c.whenFinished)`. (2) Para agrupar em janelas de 2 dias, usa-se `DateTimeBin(c.whenFinished, 'day', 2)`, que trunca a data para o início do intervalo de 2 dias mais próximo.",
+    "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/nosql/query/datetimebin",
+    "content": {
+      "statement": "Você precisa escrever uma consulta SQL no Cosmos DB que conte o número de vendas e as agrupe em janelas exatas de 2 dias, usando a propriedade `whenFinished`. Preencha as lacunas da consulta.",
+      "text": "SELECT\n    {{0}}\nFROM c\nGROUP BY\n    {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "count(c.whenFinished)" },
+            { "id": "B", "text": "sum(c.whenFinished)" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "C", "text": "DateTimeBin(c.whenFinished, 'day', 2)" },
+            { "id": "D", "text": "DateTimePart(c.whenFinished, 'day', 2)" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "C"]
+  }
+]

@@ -151,25 +151,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (q.type === 'no_return_series') {
             const scenario = document.createElement('div');
             scenario.className = 'scenario-box';
-            scenario.innerHTML = `<strong>Cenário:</strong> ${q.content.scenario}`;
+            scenario.innerHTML = `<strong>Cenário:</strong> ${formatCodeBlocks(q.content.scenario)}`;
             questionContainer.appendChild(scenario);
             
             const statement = document.createElement('p');
-            statement.innerHTML = `<strong>Pergunta:</strong> ${q.content.statement}`;
+            statement.innerHTML = `<strong>Pergunta:</strong> ${formatCodeBlocks(q.content.statement)}`;
             questionContainer.appendChild(statement);
         } else if (q.type === 'case_study') {
             renderCaseStudyTabs(q);
             const statement = document.createElement('p');
-            statement.innerHTML = `<strong>Pergunta:</strong> ${q.content.statement}`;
+            statement.innerHTML = `<strong>Pergunta:</strong> ${formatCodeBlocks(q.content.statement)}`;
             questionContainer.appendChild(statement);
-        } else if (q.type === 'dropdown_fill_in_blank') {
-             // Statement handled inside renderer or just print it here
-             const statement = document.createElement('p');
-             statement.textContent = q.content.statement;
-             questionContainer.appendChild(statement);
         } else {
             const statement = document.createElement('p');
-            statement.textContent = q.content.statement;
+            statement.innerHTML = formatCodeBlocks(q.content.statement); // Use innerHTML for formatted code
             questionContainer.appendChild(statement);
         }
 
@@ -214,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const pane = document.createElement('div');
             pane.id = `tab-${tab.id}`;
             pane.className = `cs-tab-pane ${index === 0 ? 'active' : ''}`;
-            pane.innerHTML = tab.content.replace(/\n/g, '<br>');
+            pane.innerHTML = formatCodeBlocks(tab.content.replace(/\n/g, '<br>'));
             tabContent.appendChild(pane);
         });
 
@@ -227,10 +222,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.createElement('div');
         container.className = 'dropdown-text-container';
         
-        // Replace {{index}} with <select>
-        let textHtml = q.content.text;
+        // Format code blocks first, then handle dropdowns
+        let textHtml = formatCodeBlocks(q.content.text);
         
-        // Find all placeholders {{0}}, {{1}}, etc.
         const regex = /\{\{(\d+)\}\}/g;
         textHtml = textHtml.replace(regex, (match, index) => {
             const dropdownIndex = parseInt(index);
@@ -340,13 +334,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- DRAG & DROP HELPERS ---
-    function handleDragStart(e) {
-        e.target.classList.add('dragging');
-    }
-
-    function handleDragEnd(e) {
-        e.target.classList.remove('dragging');
-    }
+    function handleDragStart(e) { e.target.classList.add('dragging'); }
+    function handleDragEnd(e) { e.target.classList.remove('dragging'); }
 
     function getDragAfterElement(container, y) {
         const draggableElements = [...container.querySelectorAll('.draggable-item:not(.dragging)')];
@@ -384,8 +373,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         } else if (q.type === 'drag_and_drop') {
-            document.querySelectorAll('#target-col .draggable-item').forEach(item => {
-                item.classList.add(isOverallCorrect ? 'correct' : 'wrong');
+            document.querySelectorAll('#target-col .draggable-item').forEach((item, index) => {
+                // Check if the item at this position is the correct one
+                if (q.correct_answer[index] === item.dataset.id) {
+                    item.classList.add('correct');
+                } else {
+                    item.classList.add('wrong');
+                }
             });
         } else if (q.type === 'dropdown_fill_in_blank') {
             document.querySelectorAll('.inline-dropdown').forEach((sel, index) => {
@@ -434,11 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const items = [...targetCol.querySelectorAll('.draggable-item')];
             const userOrder = items.map(i => i.dataset.id);
             
-            if (userOrder.length !== q.content.items_to_drag.length) {
-                return alert('Arraste todos os itens para a coluna da direita!');
-            }
-            
-            // Check order
+            // The answer is correct only if the user's sequence exactly matches the correct answer sequence
             isCorrect = JSON.stringify(userOrder) === JSON.stringify(q.correct_answer);
         }
 
@@ -501,5 +491,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const total = score.correct + score.wrong;
         const percentage = total === 0 ? 0 : Math.round((score.correct / total) * 100);
         document.getElementById('final-percentage').textContent = `${percentage}%`;
+    }
+
+// --- HELPERS ---
+    function formatCodeBlocks(text) {
+        // Regex to find ```, optionally followed by a language name, then content, then ```
+        const regex = /```(\w*)\n([\s\S]*?)```/g;
+        return text.replace(regex, (match, lang, code) => {
+            const escapedCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return `<pre class="code-block">${escapedCode.trim()}</pre>`;
+        });
     }
 });

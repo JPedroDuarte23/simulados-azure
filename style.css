@@ -437,3 +437,15 @@ h1 {
 #hub-content > .grid-container {
     margin-bottom: 20px;
 }
+
+/* Code Block Styles */
+pre.code-block {
+    background-color: #2d2d2d;
+    color: #f1f1f1;
+    font-family: Consolas, 'Courier New', monospace;
+    padding: 15px;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 15px 0;
+}

@@ -4,17 +4,18 @@
       "type": "multiple_choice",
       "category": "Azure App Service",
       "difficulty": "Medium",
+      "allow_backtrack": true,
       "content": {
-        "statement": "Você está desenvolvendo um App Service que precisa acessar o Azure Key Vault sem armazenar credenciais no código. O que deve ser configurado?",
+        "statement": "Você está desenvolvendo um App Service que precisa acessar o Azure Key Vault usando Managed Identity. O código a seguir é usado para obter um segredo:\n```csharp\nvar client = new SecretClient(new Uri(\"https://my-key-vault.vault.azure.net/\"), new DefaultAzureCredential());\nvar secret = await client.GetSecretAsync(\"MySecret\");\n```\nQual configuração é necessária no App Service para que este código funcione sem armazenar credenciais?",
         "options": [
-          { "id": "a", "text": "Managed Identity" },
-          { "id": "b", "text": "Service Principal com Client Secret" },
-          { "id": "c", "text": "App Settings com conexão direta" },
-          { "id": "d", "text": "Certificado Auto-assinado" }
+          { "id": "a", "text": "Configurar Managed Identity (System-Assigned ou User-Assigned)" },
+          { "id": "b", "text": "Adicionar o Client Secret nas App Settings" },
+          { "id": "c", "text": "Usar uma connection string direta para o Key Vault" },
+          { "id": "d", "text": "Instalar um certificado auto-assinado no App Service" }
         ]
       },
       "correct_answer": ["a"],
-      "explanation": "Managed Identity permite que o recurso do Azure se autentique em outros serviços sem a necessidade de gerenciar segredos manualmente.",
+      "explanation": "A classe DefaultAzureCredential tenta vários métodos de autenticação, incluindo a Managed Identity. Quando o código roda em um App Service com Managed Identity habilitada (e com permissão no Key Vault), ele se autentica automaticamente sem precisar de segredos no código ou configuração.",
       "official_doc_link": "https://learn.microsoft.com/en-us/azure/app-service/overview-managed-identity"
     },
     {

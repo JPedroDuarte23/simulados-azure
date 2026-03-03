@@ -124,5 +124,489 @@
       ]
     },
     "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-ACA-29",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps",
+    "difficulty": "Média",
+    "explanation": "O comando `az containerapp ingress` é usado para gerenciar as configurações de entrada de um Azure Container App, e o subcomando `traffic set` especificamente lida com as regras de divisão de tráfego entre as revisões.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/cli/azure/containerapp/ingress/traffic?view=azure-cli-latest#az-containerapp-ingress-traffic-set",
+    "content": {
+      "statement": "Uma empresa usa o Azure Container Apps. Um aplicativo de contêiner chamado App1 reside em um grupo de recursos chamado RG1. A empresa exige testes de atualizações (A/B testing) contínuos para o App1. Você habilita o modo de revisão múltipla (multiple revision mode) no aplicativo. Agora, você precisa usar a linha de comando (Azure CLI) para garantir que o tráfego de rede recebido seja dividido: 80% das requisições devem ir para a <REVISION_1> e 20% para a <REVISION_2>.\nComo você deve completar o comando da Azure CLI?",
+      "text": "az {{0}} {{1}} traffic set \\\n  --name App1 \\\n  --resource-group RG1 \\\n  --revision-weight <REVISION_1>=80 <REVISION_2>=20",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "container" },
+            { "id": "B", "text": "containerapp" },
+            { "id": "C", "text": "network" },
+            { "id": "D", "text": "resource" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "app" },
+            { "id": "B", "text": "connection" },
+            { "id": "C", "text": "ingress" },
+            { "id": "D", "text": "revision" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-ACA-30",
+    "type": "drag_and_drop",
+    "category": "Azure Container Apps",
+    "difficulty": "Difícil",
+    "explanation": "Para configurar um domínio personalizado, primeiro é preciso habilitar o acesso externo (Ingress). Em seguida, você configura o DNS no seu provedor de domínio apontando para o FQDN do app. Depois, adiciona o domínio no Azure Container Apps, que fará a validação do registro DNS. Por fim, vincula o certificado SSL para habilitar o HTTPS.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/custom-domains-certificates",
+    "content": {
+      "statement": "Você está desenvolvendo vários microsserviços para execução no Azure Container Apps. Os microsserviços devem permitir o acesso HTTPS externo por meio de um domínio personalizado (custom domain). Você já possui o certificado SSL válido.\nEm qual ordem você deve executar as cinco ações a seguir no portal/CLI para configurar o domínio personalizado corretamente?",
+      "items_to_drag": [
+        { "id": "A", "text": "Validar o nome do domínio personalizado (Validate the custom domain name)." },
+        { "id": "B", "text": "Habilitar a entrada de tráfego (Enable ingress)." },
+        { "id": "C", "text": "Vincular o certificado SSL (Bind the certificate)." },
+        { "id": "D", "text": "Adicionar os registros DNS no provedor de domínio (Add DNS records to the domain provider)." },
+        { "id": "E", "text": "Adicionar o nome do domínio personalizado (Add the custom domain name)." }
+      ]
+    },
+    "correct_answer": ["B", "D", "E", "A", "C"]
+  },
+  {
+    "id": "Q-ACA-31",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps",
+    "difficulty": "Difícil",
+    "explanation": "O 'sistema de arquivos do contêiner' (D) é o armazenamento mais básico, atrelado ao ciclo de vida de um único contêiner. Um 'volume efêmero' (C) é projetado para ser compartilhado entre contêineres na mesma réplica e persiste enquanto a réplica estiver ativa. O 'Azure Blob Storage' (A) oferece persistência permanente e é ideal para acesso via API (SDKs), sem a necessidade de montar um sistema de arquivos.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/storage-mounts",
+    "content": {
+      "statement": "Você está desenvolvendo três microsserviços diferentes (serviceA, serviceB e serviceC). Você implanta esses microsserviços em um novo Ambiente do Azure Container Apps. Os microsserviços precisam persistir dados, mas cada um possui um requisito específico. Associe o tipo de armazenamento correto a cada microsserviço (I, II e III).",
+      "text": "I. O serviceA deve persistir dados que sejam visíveis apenas para o contêiner atual, e o armazenamento deve ser restrito à quantidade de espaço em disco disponível no host subjacente -> {{0}}\nII. O serviceB deve persistir dados durante toda a vida útil de uma réplica (replica lifetime) e permitir que vários contêineres dentro da mesma réplica montem o mesmo local de armazenamento -> {{1}}\nIII. O serviceC deve persistir dados permanentemente (além da vida útil da réplica) e permitir que vários contêineres acessem o armazenamento usando um modelo de permissões por objeto de API, sem montagem tradicional -> {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Blob Storage" },
+            { "id": "B", "text": "Azure Files storage" },
+            { "id": "C", "text": "Ephemeral volume (Volume efêmero)" },
+            { "id": "D", "text": "Container file system (Sistema de arquivos do contêiner)" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure Blob Storage" },
+            { "id": "B", "text": "Azure Files storage" },
+            { "id": "C", "text": "Ephemeral volume (Volume efêmero)" },
+            { "id": "D", "text": "Container file system (Sistema de arquivos do contêiner)" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Azure Blob Storage" },
+            { "id": "B", "text": "Azure Files storage" },
+            { "id": "C", "text": "Ephemeral volume (Volume efêmero)" },
+            { "id": "D", "text": "Container file system (Sistema de arquivos do contêiner)" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "C", "A"]
+  },
+  {
+    "id": "Q-ACA-32",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps",
+    "difficulty": "Fácil",
+    "explanation": "O 'Log streaming' fornece uma visão em tempo real dos logs do contêiner (stdout/stderr), enquanto o 'Container console' oferece acesso a um shell interativo dentro do contêiner para depuração e execução de comandos.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/log-streaming",
+    "content": {
+      "statement": "Você está desenvolvendo vários microsserviços para rodar no Azure Container Apps. Durante a fase de testes, você precisa monitorar e diagnosticar ativamente esses microsserviços pelo Portal do Azure. Quais recursos da aba de diagnóstico do ACA você deve utilizar para atender a cada necessidade?",
+      "text": "Requisito 1: Visualizar os logs de saída do console de um contêiner em tempo real: {{0}}\nRequisito 2: Acessar interativamente o interior do microsserviço (shell) para depuração: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Log streaming" },
+            { "id": "B", "text": "Container console" },
+            { "id": "C", "text": "Azure Monitor metrics" },
+            { "id": "D", "text": "Azure Monitor Log Analytics" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Log streaming" },
+            { "id": "B", "text": "Container console" },
+            { "id": "C", "text": "Azure Monitor metrics" },
+            { "id": "D", "text": "Azure Monitor Log Analytics" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-ACA-33",
+    "type": "no_return_series",
+    "category": "Azure Container Apps",
+    "difficulty": "Média",
+    "explanation": "A solução é correta. Desabilitar o Ingress faz com que a regra de escalonamento padrão baseada em tráfego HTTP seja desativada, levando o aplicativo a escalar para zero se não houver outras fontes de ativação (como scalers KEDA). Ao habilitar o Ingress (mesmo que interno), a regra de escalonamento HTTP é reativada. Adicionar uma regra de escalonamento TCP também é uma forma válida de manter o aplicativo ativo, pois o manterá com pelo menos uma instância se ele estiver escutando em uma porta TCP, resolvendo o problema de escalonamento para zero e tornando-o acessível.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app",
+    "content": {
+      "scenario": "Você implanta um aplicativo no Azure Container Apps. Por acreditar que ele trabalharia apenas internamente como um processador de dados (sem acesso web público), você desabilita a configuração de Ingress (Entrada de tráfego) no aplicativo. Logo depois, os usuários do sistema interno relatam que não conseguem acessar ou ver o processamento do aplicativo. Ao investigar, você percebe que o aplicativo foi escalonado automaticamente para 0 (zero) instâncias e está 'dormindo'.",
+      "statement": "Você precisa resolver o problema para que o contêiner de aplicativo volte a rodar. Solução Proposta: Você habilita o Ingress, cria uma regra de escalonamento personalizada baseada em TCP (TCP scale rule) e aplica a regra ao aplicativo.\nEssa solução proposta atende ao objetivo primário de tornar o aplicativo acessível aos usuários novamente da forma correta?",
+      "options": [
+        { "id": "A", "text": "Sim (Yes)" },
+        { "id": "B", "text": "Não (No)" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-ACA-34",
+    "type": "multiple_choice",
+    "category": "Azure Container Apps / Deployment",
+    "difficulty": "Média",
+    "explanation": "O modo de revisão múltipla (Multiple revision mode) é a funcionalidade nativa do Azure Container Apps projetada para cenários de implantação Blue-Green e Canary. Ele permite que várias versões (revisões) do aplicativo coexistam e que o tráfego seja dividido entre elas, possibilitando uma transição gradual e sem tempo de inatividade.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/revisions",
+    "content": {
+      "statement": "Você está desenvolvendo um microsserviço crítico para rodar no Azure Container Apps para uma empresa financeira. A entrada de tráfego HTTP externo (External Ingress) foi habilitada para o microsserviço. Uma nova versão do microsserviço precisa ser implantada. Os requisitos de negócios exigem estritamente que a nova versão seja implantada sem tirar a versão atual do ar (Zero-downtime deployment), permitindo que o tráfego seja gradualmente transferido para a nova versão.\nQual configuração do Azure Container Apps você deve utilizar para atender a esse requisito?",
+      "options": [
+        { "id": "A", "text": "Habilitar o modo de revisão única (Single revision mode) e usar as regras de substituição nativas (Rolling update)." },
+        { "id": "B", "text": "Configurar o número mínimo de réplicas (minimum replicas) para 2 em todas as instâncias." },
+        { "id": "C", "text": "Habilitar o modo de revisão múltipla (Multiple revision mode)." },
+        { "id": "D", "text": "Utilizar o recurso de Deployment Slots (Slots de implantação) e realizar uma operação de Swap (Troca)." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-ACA-35",
+    "type": "multiple_choice",
+    "category": "Azure Container Apps / Scaling",
+    "difficulty": "Alta",
+    "explanation": "Ao configurar um scaler KEDA, `type` é obrigatório para identificar qual scaler será usado (por exemplo, 'azure-eventhub', 'azure-servicebus'), e `metadata` é obrigatório para fornecer os parâmetros específicos para esse scaler, como connection strings, nomes de fila/hub, etc.",
+    "official_doc_link": "https://keda.sh/docs/2.10/concepts/scaling-deployments/",
+    "content": {
+      "statement": "Você está desenvolvendo vários microsserviços para rodar no Azure Container Apps. O tráfego de entrada TCP externo a partir da internet foi habilitado para os microsserviços. A empresa exige que os microsserviços sejam escalonados dinamicamente com base no volume de eventos aguardando em um gatilho do Azure Event Hub. Você precisa configurar o escalonamento dos microsserviços usando uma regra de dimensionamento personalizada (Custom scaling rule) baseada no KEDA (Kubernetes Event-driven Autoscaling).\nAo definir a matriz de metadados da regra, quais dois campos do gatilho KEDA você deve obrigatoriamente fornecer para que a regra funcione? (Escolha duas opções)",
+      "options": [
+        { "id": "A", "text": "metricType" },
+        { "id": "B", "text": "type" },
+        { "id": "C", "text": "metadata" },
+        { "id": "D", "text": "authenticationRef" },
+        { "id": "E", "text": "name" }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-ACA-36",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps / Architecture",
+    "difficulty": "Média",
+    "explanation": "O 'Azure Container Apps Environment' é o recurso que fornece um limite de isolamento, permitindo que os aplicativos compartilhem a mesma rede virtual (VNet) e configuração de logs. Para restringir o acesso a um microsserviço apenas à rede interna do ambiente, o 'Internal Ingress' deve ser usado.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/environment",
+    "content": {
+      "statement": "Você está projetando uma arquitetura de nuvem para hospedar 5 microsserviços inter-relacionados de um sistema de RH no Azure Container Apps. A equipe de segurança e operações definiu dois requisitos rígidos...\nQuais configurações arquiteturais do Azure Container Apps atendem a esses requisitos?",
+      "text": "Requisito 1 (Agrupamento, VNet e Logs unificados): Implantar todos os contêineres dentro do mesmo {{0}}.\nRequisito 2 (Comunicação segura do Cálculo de Folha de Pagamento): Configurar o microsserviço com a opção {{1}} habilitada.",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Container Apps Environment" },
+            { "id": "B", "text": "App Service Plan" },
+            { "id": "C", "text": "Container Group" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "External Ingress" },
+            { "id": "B", "text": "Internal Ingress" },
+            { "id": "C", "text": "VNet Peering" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-ACA-37",
+    "type": "drag_and_drop",
+    "category": "Azure Container Apps / CLI",
+    "difficulty": "Difícil",
+    "explanation": "A ordem correta é: 1. Criar o Log Analytics Workspace (B). 2. Obter as chaves desse workspace (D). 3. Criar o Ambiente do Container Apps, injetando as chaves do workspace (C). 4. Finalmente, criar o Container App dentro do ambiente já configurado (A).",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/tutorial-observability-cli",
+    "content": {
+      "statement": "Você está automatizando a criação de um novo ecossistema no Azure Container Apps utilizando scripts da CLI do Azure (az cli)... Em qual ordem você deve executar as quatro ações a seguir no seu script Bash para provisionar os recursos sem erros de dependência?",
+      "items_to_drag": [
+        { "id": "A", "text": "Criar o aplicativo de contêiner (az containerapp create --environment...)." },
+        { "id": "B", "text": "Criar o Log Analytics Workspace (az monitor log-analytics workspace create...)." },
+        { "id": "C", "text": "Criar o Ambiente do Container Apps (Environment) fornecendo o ID do cliente e o segredo do Log Analytics (az containerapp env create --logs-workspace-id...)." },
+        { "id": "D", "text": "Obter o ID do cliente (Customer ID) e a Chave Compartilhada (Shared Key) do Log Analytics Workspace recém-criado (az monitor log-analytics workspace get-shared-keys...)." }
+      ]
+    },
+    "correct_answer": ["B", "D", "C", "A"]
+  },
+  {
+    "id": "Q-ACA-38",
+    "type": "no_return_series",
+    "category": "Azure Container Apps / Scaling",
+    "difficulty": "Média",
+    "explanation": "Sim, a solução é totalmente válida. Habilitar o Ingress reativa a regra de escalonamento padrão baseada em tráfego HTTP. Além disso, definir `minimum replicas` como 1 força o Azure Container Apps a manter pelo menos uma instância do aplicativo em execução o tempo todo, independentemente do tráfego ou de outras regras de escalonamento, o que resolve diretamente o problema de escalar para zero.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app#set-min-and-max-replicas",
+    "content": {
+      "scenario": "Você implanta um aplicativo de processamento em segundo plano no Azure Container Apps... Você investiga e percebe que o aplicativo de contêiner foi escalonado para 0 (zero) instâncias.",
+      "statement": "Você precisa resolver o problema garantindo que o aplicativo volte a ficar acessível e em execução. Solução Proposta: Você habilita o Ingress (entrada de tráfego) e configura a propriedade de número mínimo de réplicas (minimum replicas) como 1 para o aplicativo de contêiner.\nEssa solução atende ao objetivo de reativar e manter o aplicativo rodando?",
+      "options": [
+        { "id": "A", "text": "Sim (Yes)" },
+        { "id": "B", "text": "Não (No)" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-ACA-39",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps / Revisions",
+    "difficulty": "Média",
+    "explanation": "Um 'rótulo de revisão' (Revision label) fornece um FQDN estável e único para uma revisão específica, ideal para testes direcionados. O 'modo de revisão' (Revision mode), por outro lado, é a configuração que determina se múltiplas revisões podem estar ativas ao mesmo tempo (multiple mode) ou apenas uma (single mode).",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/revisions#revision-labels",
+    "content": {
+      "statement": "Você está desenvolvendo vários microsserviços para execução no Azure Container Apps... Quais recursos do Azure Container Apps você deve configurar para atender a cada necessidade?",
+      "text": "Requisito 1 (URL única para usuários de teste): {{0}}\nRequisito 2 (Ativação simultânea do microsserviço): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Revision label (Rótulo de revisão)" },
+            { "id": "B", "text": "Revision mode (Modo de revisão)" },
+            { "id": "C", "text": "Container image (Imagem de contêiner)" },
+            { "id": "D", "text": "Container registry (Registro de contêiner)" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Revision label (Rótulo de revisão)" },
+            { "id": "B", "text": "Revision mode (Modo de revisão)" },
+            { "id": "C", "text": "Container image (Imagem de contêiner)" },
+            { "id": "D", "text": "Container registry (Registro de contêiner)" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-ACA-40",
+    "type": "no_return_series",
+    "category": "Azure Container Apps / Scaling",
+    "difficulty": "Fácil",
+    "explanation": "Sim, a solução é correta e a mais comum para esse cenário. Quando o Ingress é desabilitado, não há tráfego HTTP para acionar a regra de escala padrão, fazendo com que o aplicativo escale para zero. Ao habilitar o Ingress e adicionar uma regra de escala HTTP, você informa ao sistema que ele deve monitorar as solicitações HTTP recebidas e escalar o aplicativo (incluindo 'acordá-lo' do zero) quando o tráfego chegar.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app#http",
+    "content": {
+      "scenario": "Nota: Esta questão faz parte de uma série que apresenta o mesmo cenário, mas com soluções diferentes... Você observa que o aplicativo foi escalonado dinamicamente para 0 (zero) instâncias.",
+      "statement": "Você precisa resolver o problema garantindo que o aplicativo volte a responder e escale adequadamente. Solução Proposta: Você habilita o Ingress (entrada de tráfego), cria uma regra de escala do tipo HTTP (HTTP scale rule) e aplica a regra ao aplicativo de contêiner.\nEssa solução atende ao objetivo de reativar e dimensionar o aplicativo corretamente?",
+      "options": [
+        { "id": "A", "text": "Sim (Yes)" },
+        { "id": "B", "text": "Não (No)" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-ACA-41",
+    "type": "multiple_choice",
+    "category": "Azure Container Apps / Security",
+    "difficulty": "Média",
+    "explanation": "A Identidade Gerenciada é a solução de identidade nativa do Azure que elimina a necessidade de os desenvolvedores gerenciarem credenciais. Ao habilitar uma identidade gerenciada atribuída ao sistema no Container App e conceder a ela a função AcrPull no ACR, o aplicativo pode se autenticar de forma segura usando sua própria identidade gerenciada pelo Azure.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/managed-identity",
+    "content": {
+      "statement": "Você configurou um Azure Container Apps que precisa extrair (pull) imagens privadas de um Azure Container Registry (ACR). A equipe de segurança exige que o princípio do menor privilégio seja adotado... Qual é a maneira recomendada e nativa do Azure de conceder o acesso necessário para o Container App?",
+      "options": [
+        { "id": "A", "text": "Gerar um token SAS (Shared Access Signature) de longo prazo no ACR e injetá-lo na configuração do Container App." },
+        { "id": "B", "text": "Habilitar a Conta de Administrador (Admin User) no ACR e salvar a senha no Azure Key Vault." },
+        { "id": "C", "text": "Habilitar uma Identidade Gerenciada atribuída ao sistema (System-assigned Managed Identity) no Container App e conceder a função AcrPull no ACR." },
+        { "id": "D", "text": "Configurar um ponto de extremidade privado (Private Endpoint) no ACR e permitir tráfego apenas da VNet do Container Apps." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-ACA-42",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps / Architecture",
+    "difficulty": "Difícil",
+    "explanation": "Para um worker em segundo plano que não atende a solicitações HTTP, o Ingress deve ser desabilitado. O escalonamento baseado em eventos externos, como uma fila do Service Bus, requer o uso de uma regra de escala 'Custom' (Personalizada), que é implementada pelo KEDA.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app#keda-scalers",
+    "content": {
+      "statement": "Você está implantando um microsserviço de processamento em segundo plano (background worker) no Azure Container Apps... Como você deve definir a configuração de Ingress e o tipo de regra de escala para este cenário arquitetural?",
+      "text": "Configuração de Ingress (Entrada de Tráfego): {{0}}\nTipo de Regra de Escala (Scale Rule Type): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "External" },
+            { "id": "B", "text": "Internal" },
+            { "id": "C", "text": "Disabled" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "HTTP" },
+            { "id": "B", "text": "TCP" },
+            { "id": "C", "text": "Custom" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "C"]
+  },
+  {
+    "id": "Q-ACA-43",
+    "type": "drag_and_drop",
+    "category": "Azure Container Apps / Dapr",
+    "difficulty": "Difícil",
+    "explanation": "A ordem correta é: 1. Provisionar o recurso de backend (D), pois ele precisa existir primeiro. 2. Criar o arquivo de definição do componente Dapr (A) que aponta para o recurso criado. 3. Adicionar este componente no nível do Ambiente (C), tornando-o disponível para todos os apps. 4. Finalmente, habilitar o Dapr no aplicativo específico (B) e referenciar o componente para uso.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/dapr-overview",
+    "content": {
+      "statement": "Sua equipe está desenvolvendo uma arquitetura de microsserviços no Azure Container Apps... Você precisa habilitar e configurar o componente de gerenciamento de estado do Dapr em seu Ambiente de Container Apps para que um de seus microsserviços possa usá-lo. Em qual ordem você deve executar as quatro ações a seguir?",
+      "items_to_drag": [
+        { "id": "A", "text": "Criar um arquivo YAML contendo o esquema do componente Dapr (kind: Component, type: state.redis)." },
+        { "id": "B", "text": "Habilitar o Dapr nas configurações do Container App específico e definir um ID de aplicativo (app-id)." },
+        { "id": "C", "text": "Adicionar o arquivo de componente Dapr criado no nível do Ambiente do Azure Container Apps (Container Apps Environment)." },
+        { "id": "D", "text": "Provisionar o recurso de armazenamento de backend no Azure (ex: criar a instância do Azure Cache for Redis)." }
+      ]
+    },
+    "correct_answer": ["D", "A", "C", "B"]
+  },
+  {
+    "id": "Q-ACA-44",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps",
+    "difficulty": "Difícil",
+    "explanation": "O volume 'Ephemeral' é um armazenamento temporário e não persistente, ideal para dados de cache ou temporários que não precisam sobreviver à reinicialização da réplica, utilizando o disco do próprio nó. O Azure Blob Storage é ideal para persistência de longa duração, acessível via API e compartilhável entre múltiplas réplicas, o que se alinha com os requisitos do ServicoB.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/storage-mounts",
+    "content": {
+      "statement": "Você está desenvolvendo dois microsserviços, chamados ServicoA e ServicoB, e os implantará em um Ambiente do Azure Container Apps. Eles precisam persistir dados, mas com requisitos distintos:\n- O ServicoA precisa de um armazenamento temporário onde os dados sejam visíveis apenas para o contêiner atual, e o armazenamento deve ser estritamente restrito à quantidade de espaço em disco disponível no nó/host subjacente.\n- O ServicoB precisa persistir dados permanentemente (mesmo se a réplica for destruída), permitindo que vários contêineres acessem os arquivos simultaneamente utilizando um modelo de permissões por objeto via API (sem montagem de sistema de arquivos tradicional).\nQual tipo de armazenamento você deve atribuir a cada microsserviço? (Escolha a opção correta para cada lacuna)",
+      "text": "Armazenamento para o ServicoA: {{0}}\nArmazenamento para o ServicoB: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Blob Storage" },
+            { "id": "B", "text": "Azure Files storage" },
+            { "id": "C", "text": "Ephemeral volume" },
+            { "id": "D", "text": "Container file system" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure Blob Storage" },
+            { "id": "B", "text": "Azure Files storage" },
+            { "id": "C", "text": "Ephemeral volume" },
+            { "id": "D", "text": "Container file system" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "A"]
+  },
+  {
+    "id": "Q-ACA-45",
+    "type": "multiple_choice",
+    "category": "Azure Container Apps",
+    "difficulty": "Fácil",
+    "explanation": "O Azure Container Apps Environment é a construção fundamental que fornece um limite de isolamento para um grupo de aplicativos de contêiner. Todos os aplicativos de contêiner dentro do mesmo ambiente são implantados na mesma rede virtual e gravam logs no mesmo espaço de trabalho do Log Analytics, atendendo a todos os requisitos de governança e comunicação segura.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/environment",
+    "content": {
+      "statement": "Sua equipe de engenharia está migrando 5 microsserviços inter-relacionados para o Azure Container Apps. Para simplificar a governança, a equipe de arquitetura exige que:\n- Todos os 5 microsserviços sejam implantados dentro da mesma Rede Virtual (VNet).\n- Todos os microsserviços gravem seus logs de diagnóstico no mesmo espaço de trabalho do Azure Log Analytics.\n- Os microsserviços consigam se comunicar entre si de forma segura usando chamadas internas.\nQual é a abordagem nativa e mais eficiente do Azure Container Apps para garantir que todos esses requisitos sejam atendidos simultaneamente?",
+      "options": [
+        { "id": "A", "text": "Implantar todos os 5 microsserviços dentro do mesmo Azure Container Apps Environment (Ambiente)." },
+        { "id": "B", "text": "Criar 5 App Service Plans isolados e conectá-los usando VNet Peering." },
+        { "id": "C", "text": "Consolidar os 5 microsserviços dentro de um único Container Group do Azure Container Instances (ACI)." },
+        { "id": "D", "text": "Habilitar a funcionalidade de Multiple Revision Mode em um único aplicativo de contêiner." }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-ACA-46",
+    "type": "multiple_choice",
+    "category": "Azure Container Apps",
+    "difficulty": "Média",
+    "explanation": "Ao definir uma regra de escala personalizada com KEDA, a propriedade 'type' é obrigatória para especificar o tipo de scaler (por exemplo, 'azure-eventhub'), e o bloco 'metadata' é obrigatório para fornecer os detalhes de configuração específicos para aquele scaler, como o nome do hub de eventos, o grupo de consumidores, etc.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/keda-scalers",
+    "content": {
+      "statement": "Você está desenvolvendo microsserviços para execução no Azure Container Apps. O tráfego de entrada TCP externo a partir da internet foi habilitado. A arquitetura exige que esses microsserviços sejam escalonados dinamicamente (scale in/out) com base no processamento de eventos que chegam em um Azure Event Hub, em vez de escalonarem por requisições HTTP. Você decide criar uma regra de escala customizada (Custom scaling rule) utilizando o KEDA (Kubernetes Event-driven Autoscaling).\nAo declarar a regra de gatilho do KEDA no manifesto YAML do Container App, quais dois campos são obrigatórios para definir a regra corretamente? (Escolha duas opções)",
+      "options": [
+        { "id": "A", "text": "metadata" },
+        { "id": "B", "text": "type" },
+        { "id": "C", "text": "connectionString" },
+        { "id": "D", "text": "threshold" },
+        { "id": "E", "text": "authType" }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-ACA-47",
+    "type": "no_return_series",
+    "category": "Azure Container Apps",
+    "difficulty": "Média",
+    "explanation": "A solução é eficaz porque configurar o número mínimo de réplicas para 1 (ou mais) garante que o Azure Container Apps sempre mantenha pelo menos uma instância do aplicativo em execução, impedindo que ele seja escalonado para zero. Isso resolve o problema principal, independentemente da configuração de Ingress, que é mais relevante para o tráfego de entrada.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app",
+    "content": {
+      "scenario": "Você implanta um aplicativo de background no Azure Container Apps e, por padrão, você desabilita a configuração de Ingress (entrada de tráfego). Dias depois, os processos internos relatam que não conseguem mais acessar o aplicativo. Ao investigar as métricas, você observa que o aplicativo foi escalonado para 0 (zero) instâncias e não está mais processando tarefas. Você precisa resolver o problema garantindo que o aplicativo de contêiner fique ativo e não desligue completamente.",
+      "statement": "Solução Proposta: Você habilita o Ingress (entrada de tráfego) e configura a propriedade número mínimo de réplicas (minimum replicas) como 1 para o aplicativo de contêiner.\nEssa solução atende ao objetivo de reativar e manter o aplicativo em execução de forma confiável?",
+      "options": [
+        { "id": "A", "text": "Sim (Yes)" },
+        { "id": "B", "text": "Não (No)" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-ACA-48",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps",
+    "difficulty": "Difícil",
+    "explanation": "A Identidade Gerenciada Atribuída pelo Sistema (System-assigned managed identity) cria uma identidade no Microsoft Entra ID que está vinculada ao ciclo de vida do Container App, sendo excluída automaticamente quando o aplicativo é removido. Conceder a essa identidade a função RBAC 'AcrPull' no escopo do ACR segue o princípio do menor privilégio, permitindo apenas que o aplicativo puxe (leia) imagens sem conceder permissões desnecessárias.",
+    "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/managed-identity-container-registry",
+    "content": {
+      "statement": "Você está implantando um aplicativo conteinerizado no Azure Container Apps. A imagem Docker privada que o aplicativo deve executar está armazenada no Azure Container Registry (ACR) da sua empresa. A equipe de segurança impõe as seguintes regras estritas:\n- O princípio do menor privilégio deve ser aplicado (acesso apenas de leitura ao registro).\n- O Container App não pode usar senhas em texto simples ou chaves de administrador (Admin user) para se autenticar no ACR.\n- A identidade de acesso deve ser gerenciada pelo Microsoft Entra ID e deve ser excluída e limpa automaticamente pelo Azure caso o Container App seja deletado.\nComo você deve configurar a autenticação do registro nas configurações do Container App? (Escolha a opção correta para cada lacuna)",
+      "text": "Método de Autenticação no Registro: {{0}}\nFunção RBAC concedida no escopo do ACR: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Service principal" },
+            { "id": "B", "text": "Repository-scoped access token" },
+            { "id": "C", "text": "User-assigned managed identity" },
+            { "id": "D", "text": "System-assigned managed identity" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "AcrPull" },
+            { "id": "B", "text": "Owner" },
+            { "id": "C", "text": "AcrPush" },
+            { "id": "D", "text": "Contributor" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "A"]
   }
 ]

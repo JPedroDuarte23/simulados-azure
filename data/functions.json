@@ -6,8 +6,7 @@
     "difficulty": "Medium",
     "allow_backtrack": false,
     "content": {
-      "scenario": "Você tem uma Azure Function que processa mensagens de uma fila. O tempo de execução varia entre 15 e 20 minutos.",
-      "statement": "Solução: Você configura a Function no Plano de Consumo (Consumption Plan). Isso atende ao objetivo?",
+      "statement": "Você tem uma Azure Function que processa mensagens de uma fila. O tempo de execução varia entre 15 e 20 minutos. Solução: Você configura a Function no Plano de Consumo (Consumption Plan). Isso atende ao objetivo?",
       "options": [
         {
           "id": "yes",
@@ -1352,8 +1351,7 @@
     "difficulty": "Média",
     "explanation": "Sim. O padrão HTTP Async API do Durable Functions permite que a função HTTP retorne um status 202 (Accepted) imediatamente, enquanto a orquestração de Durable Functions continua o processamento do blob em segundo plano, sem timeout. O cliente pode então consultar o status da operação posteriormente.",
     "content": {
-      "scenario": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo.",
-      "statement": "Solução Proposta: Você utiliza o padrão assíncrono do Azure Durable Functions (Durable Function async pattern) para processar os dados do blob.\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você utiliza o padrão assíncrono do Azure Durable Functions (Durable Function async pattern) para processar os dados do blob.\nA solução atende ao objetivo?",
       "options": [
         {
           "id": "A",
@@ -1376,8 +1374,7 @@
     "difficulty": "Média",
     "explanation": "Embora o plano App Service com Always On possa aumentar o tempo de execução máximo, o Azure Load Balancer ainda impõe um limite de 230 segundos (3 minutos e 50 segundos) para funções HTTP. Para processamento longo, padrões assíncronos como Durable Functions ou Service Bus são necessários.",
     "content": {
-      "scenario": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo.",
-      "statement": "Solução Proposta: Você configura o aplicativo de função para usar um plano de hospedagem do tipo Serviço de Aplicativo (App Service plan) e habilita a configuração Always On (Sempre Ativo) do plano de hospedagem.\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você configura o aplicativo de função para usar um plano de hospedagem do tipo Serviço de Aplicativo (App Service plan) e habilita a configuração Always On (Sempre Ativo) do plano de hospedagem.\nA solução atende ao objetivo?",
       "options": [
         {
           "id": "A",
@@ -1400,8 +1397,7 @@
     "difficulty": "Média",
     "explanation": "A propriedade `functionTimeout` no `host.json` controla o tempo de execução da função, mas o Load Balancer do Azure ainda impõe um limite de 230 segundos para funções HTTP. Aumentar apenas o `functionTimeout` não resolverá o problema de timeout no lado do cliente HTTP.",
     "content": {
-      "scenario": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo.",
-      "statement": "Solução Proposta: Você atualiza a propriedade functionTimeout dentro do arquivo de projeto host.json para 10 minutos.\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você atualiza a propriedade functionTimeout dentro do arquivo de projeto host.json para 10 minutos.\nA solução atende ao objetivo?",
       "options": [
         {
           "id": "A",
@@ -1424,8 +1420,7 @@
     "difficulty": "Alta",
     "explanation": "Sim. Este é o padrão de 'fan-out/fan-in' ou 'decoupling' com Service Bus. A função HTTP retorna rapidamente um 202, evitando o timeout, e o processamento pesado é feito por uma função em segundo plano.",
     "content": {
-      "scenario": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo.",
-      "statement": "Solução Proposta: Você passa o payload (carga útil) do gatilho HTTP para uma fila do Azure Service Bus para ser processado em segundo plano por uma função acionada por fila (Queue trigger function), e retorna uma resposta HTTP de sucesso (ex: HTTP 202 Accepted) imediatamente para o chamador original.\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você passa o payload (carga útil) do gatilho HTTP para uma fila do Azure Service Bus para ser processado em segundo plano por uma função acionada por fila (Queue trigger function), e retorna uma resposta HTTP de sucesso (ex: HTTP 202 Accepted) imediatamente para o chamador original.\nA solução atende ao objetivo?",
       "options": [
         {
           "id": "A",
@@ -1448,8 +1443,7 @@
     "difficulty": "Média",
     "explanation": "Sim. O Azure Blob Storage trigger no plano de Consumo é otimizado para iniciar o processamento de novos blobs em tempo hábil (geralmente em segundos), o que atende ao requisito de iniciar o processo em menos de um minuto e minimiza custos por ser serverless.",
     "content": {
-      "scenario": "Você desenvolve uma oferta de Software como Serviço (SaaS) para gerenciar fotografias. Os usuários fazem upload de fotos para um serviço da web, que então armazena as fotos no Azure Blob Storage (conta do tipo General-purpose V2). Quando as fotos são carregadas, elas devem ser processadas para produzir e salvar uma versão compatível com dispositivos móveis. O processo que produz a versão mobile da imagem deve obrigatoriamente iniciar em menos de um minuto. Você precisa projetar a arquitetura que inicia esse processamento.",
-      "statement": "Solução Proposta: Você cria um aplicativo Azure Functions que usa o modelo de hospedagem de Consumo (Consumption plan) e configura a função para ser acionada nativamente pelo evento de upload do blob (Azure Blob Storage trigger).\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve uma oferta de Software como Serviço (SaaS) para gerenciar fotografias. Os usuários fazem upload de fotos para um serviço da web, que então armazena as fotos no Azure Blob Storage (conta do tipo General-purpose V2). Quando as fotos são carregadas, elas devem ser processadas para produzir e salvar uma versão compatível com dispositivos móveis. O processo que produz a versão mobile da imagem deve obrigatoriamente iniciar em menos de um minuto. Você precisa projetar a arquitetura que inicia esse processamento. Solução Proposta: Você cria um aplicativo Azure Functions que usa o modelo de hospedagem de Consumo (Consumption plan) e configura a função para ser acionada nativamente pelo evento de upload do blob (Azure Blob Storage trigger).\nA solução atende ao objetivo?",
       "options": [
         {
           "id": "A",

@@ -1,0 +1,128 @@
+Questão 21 (Múltipla Escolha) Você está desenvolvendo uma solução do Azure Cosmos DB que será implantada em várias regiões do Azure simultaneamente.
+A sua arquitetura deve atender aos seguintes requisitos obrigatórios:
+As operações de leitura nunca devem receber operações de gravação fora de ordem (out of order).
+Deve-se maximizar a simultaneidade (concurrency) das operações de leitura em todas as regiões, tolerando um pequeno atraso, mas com garantias de ordem.
+Qual nível de consistência você deve usar na configuração da conta do Cosmos DB?
+A) Session
+B) Eventual
+C) Bounded Staleness
+D) Consistent Prefix
+
+--------------------------------------------------------------------------------
+Questão 22 (Hotspot / Análise de Código) Você está desenvolvendo um aplicativo web de e-commerce hospedado no Azure. O aplicativo usará o Azure Cosmos DB (API for NoSQL) para armazenar pedidos de vendas. Você está usando o SDK V3 do .NET.
+Você avalia o seguinte trecho de código da sua aplicação (os números das linhas estão incluídos apenas para referência):
+21 using (await client.GetDatabase("SalesOrders").DeleteAsync()) { }
+22 database = await client.CreateDatabaseIfNotExistsAsync("SalesOrders");
+23 Container container1 = await database.CreateContainerAsync(id: "Container1", partitionKeyPath: "/AccountNumber");
+24 Container container2 = await database.CreateContainerAsync(id: "Container2", partitionKeyPath: "/AccountNumber");
+25 SalesOrder salesOrder1 = new SalesOrder() { AccountNumber = "123456" };
+26 await container1.CreateItemAsync(salesOrder1, new PartitionKey(salesOrder1.AccountNumber));
+27 SalesOrder salesOrder2 = new SalesOrder() { AccountNumber = "654321" };
+28 await container1.CreateItemAsync(salesOrder2, new PartitionKey(salesOrder2.AccountNumber));
+29 SalesOrder salesOrder3 = new SalesOrder() { AccountNumber = "109876" };
+30 await container2.CreateItemAsync(salesOrder3, new PartitionKey(salesOrder3.AccountNumber));
+Para cada uma das seguintes afirmações sobre a execução deste código, responda Sim (se for verdadeira) ou Não (se for falsa):
+22.1 - O código criará com sucesso um banco de dados chamado SalesOrders e ele incluirá dois contêineres lógicos. 22.2 - O Container1 conterá dois itens no final da execução. 22.3 - O Container2 conterá um item no final da execução.
+
+--------------------------------------------------------------------------------
+Questão 23 (Drag and Drop / Preenchimento de Script) Você está desenvolvendo um aplicativo de viagens. O aplicativo deve atender aos seguintes requisitos de infraestrutura e negócio:
+Aceitar reservas mesmo quando ocorrerem interrupções de rede locais ou falhas imprevistas (usando failover).
+Permitir a leitura de reservas simultâneas, mantendo a ordem correta, permitindo uma janela máxima de defasagem de 5 segundos (five-second tolerance window).
+Você provisionou um Resource Group chamado airlineResourceGroup na região South-Central US. Agora, você precisa provisionar a conta do Cosmos DB através do Azure CLI.
+Preencha as lacunas (1, 2 e 3) com os valores corretos fornecidos na lista de opções.
+Opções disponíveis: Eventual | BoundedStaleness | Strong | 5 | 100 | true | false
+Comando CLI:
+az cosmosdb create \
+  --name $accountName \
+  --resource-group airlineResourceGroup \
+  --default-consistency-level ___(1)___ \
+  --max-interval ___(2)___ \
+  --enable-automatic-failover ___(3)___ \
+  --locations "South Central US"=0
+Indique os valores para (1), (2) e (3).
+
+--------------------------------------------------------------------------------
+Questão 24 (Múltipla Escolha) Você está migrando e desenvolvendo um aplicativo que usará o Cosmos DB para armazenamento de dados no Azure. O aplicativo precisa processar grandes lotes de dados transacionais e o time de desenvolvimento deseja usar uma linguagem de consulta que suporte nativamente a sintaxe semelhante a comandos relacionais tradicionais (consultas com SELECT, WHERE, cláusulas ricas e suporte a índices automáticos).
+Considerando a recomendação padrão do Azure para novos projetos que exijam tais consultas flexíveis sobre documentos JSON, qual API do Cosmos DB você DEVE usar?
+A) MongoDB API
+B) Table API
+C) Core (SQL) API
+D) Cassandra API
+
+--------------------------------------------------------------------------------
+Questão 25 (Hotspot / Configuração de Change Feed) Você implementou uma solução no Azure que utiliza o Cosmos DB e um Change Feed Processor (Processador do Feed de Alterações).
+Durante a execução em produção, um lote grande de documentos falha repetidamente ao tentar processar um documento corrompido que está dentro do lote. Como o documento não consegue ser lido com sucesso, a função é acionada continuamente (loop de retry), impedindo a leitura de novos documentos e paralisando o feed.
+Você precisa implementar recursos para contornar esses erros do processador. Relacione os requisitos aos recursos do SDK:
+Recursos: [A] Lease container [B] Dead-letter queue (fila de mensagens mortas) [C] Life-cycle notifications (notificações de ciclo de vida) [D] Change feed estimator
+Requisitos (Indique a letra correspondente): 25.1 - Impedir que o processador fique "preso" e avançar para o próximo lote, salvando o documento que falhou em um local isolado. 25.2 - Registrar um manipulador (handler) em código para detectar automaticamente falhas subjacentes na instância/host e acionar alertas.
+
+--------------------------------------------------------------------------------
+Questão 26 (Múltipla Escolha) Você gerencia um banco de dados do Azure Cosmos DB for NoSQL. A aplicação associada executa um alto volume de leituras e gravações.
+Os requisitos de negócio exigem que todas as consultas (queries) sempre reflitam as gravações mais recentes sem nenhum atraso nos índices. Ou seja, você precisa garantir que o índice seja atualizado de forma totalmente síncrona à medida que os itens são criados, atualizados ou excluídos.
+Qual configuração de Indexing Mode (Modo de Indexação) você deve definir para o contêiner?
+A) Lazy
+B) None
+C) Consistent
+D) Eventual
+
+--------------------------------------------------------------------------------
+Questão 27 (Hotspot / Análise de Código) Uma empresa desenvolve uma série de jogos mobile e usa um serviço de placar global (leaderboard). O código deve ser escalável. Os registros consistem em playerId, gameId, score e time played. Você decide provisionar uma conta do Azure Cosmos DB usando a Table API. Você desenvolve o seguinte método em C# usando o SDK antigo/legado (Microsoft.Azure.Cosmos.Table) para salvar as pontuações:
+public void SaveScore(string gameId, string playerId, int score, long timePlayed) 
+{
+    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
+    CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+    CloudTable table = tableClient.GetTableReference("scoreTable");
+    table.CreateIfNotExists();
+
+    var scoreRecord = new PlayerScore(gameId, playerId, score, timePlayed);
+    TableOperation insertOperation = TableOperation.Insert(scoreRecord);
+    table.Execute(insertOperation);
+}
+Para cada uma das afirmações a seguir, responda Sim (se for verdadeira) ou Não (se for falsa):
+27.1 - Este código (usando CloudTableClient) funcionará corretamente e será capaz de se conectar e inserir dados em uma conta do Azure Cosmos DB (Table API). 27.2 - O método SaveScore, da forma como foi escrito, atualizará e substituirá um registro caso ele já exista no banco de dados com os mesmos playerId e gameId. 27.3 - A execução deste método armazenará com sucesso os valores dos parâmetros fornecidos (gameId e playerId) dentro do Cosmos DB.
+
+--------------------------------------------------------------------------------
+Questão 28 (Hotspot / Configuração de Bindings) Você planeja implementar um aplicativo do Azure Functions que interage com o Azure Blob Storage e o Azure Cosmos DB. A arquitetura do aplicativo possui os seguintes requisitos estritos:
+O processo deve ser acionado remotamente através de uma chamada WebHook feita por um sistema de terceiros.
+O aplicativo deve ser capaz de ler e carregar o conteúdo de uma imagem salva no Azure Blob Storage.
+Após a análise da imagem, a função deve criar nativamente um novo documento JSON (com metadados) salvando-o no Azure Cosmos DB.
+Selecione a configuração correta para os Bindings (associações) do Azure Function para atender a esses requisitos (Escolha entre: HTTP, Timer, Blob Storage, Azure Cosmos DB):
+28.1 - Trigger (Gatilho):
+A) HTTP
+B) Timer
+C) Blob Storage
+D) Azure Cosmos DB
+28.2 - Input binding (Associação de Entrada):
+A) HTTP
+B) Timer
+C) Blob Storage
+D) Azure Cosmos DB
+28.3 - Output binding (Associação de Saída):
+A) HTTP
+B) Timer
+C) Blob Storage
+D) Azure Cosmos DB
+
+--------------------------------------------------------------------------------
+Questão 29 (Múltipla Escolha) Você possui uma Azure Function que realiza leituras no Azure Cosmos DB for NoSQL para uma rede de lojas de varejo.
+Recentemente, a infraestrutura tem emitido alertas indicando um uso excessivo de Unidades de Solicitação (RUs). A análise revela que a Azure Function executa consultas múltiplas e muito complexas usando SQL, o que tem gerado alta latência nas leituras pontuais (point read latency) de itens grandes e alto custo na fatura, especialmente quando o tráfego da loja escala rapidamente.
+Você precisa solucionar esse problema e reduzir a latência de leitura e o consumo excessivo de RUs para as consultas. Quais são as DUAS abordagens recomendadas? (Escolha 2)
+A) Configurar o Cosmos DB para o nível de consistência Strong (Forte) para garantir que a leitura ocorra sem atrasos, o que naturalmente reduzirá a complexidade das rotinas internas do SDK.
+B) Provisionar um Dedicated Gateway (Gateway Dedicado) para a conta do Azure Cosmos DB. Atualizar a string de conexão da Azure Function para usar o endpoint deste novo gateway para se beneficiar do cache integrado (Integrated Cache).
+C) Criar um novo índice composto (composite index) no Azure Cosmos DB, cobrindo as propriedades filtradas com frequência. Modificar o código para suportar consultas SQL parametrizadas.
+D) Converter as chamadas nativas do Cosmos DB for NoSQL em invocações através da Table API, que possui menor latência intrínseca para buscas de chave-valor.
+
+--------------------------------------------------------------------------------
+Questão 30 (Drag and Drop / Preenchimento de SQL) Você desenvolve um aplicativo que gera vendas online de imagens processadas por IA. Uma campanha de marketing exibe anúncios exclusivos com frequência e o sistema armazena os dados de venda no Azure Cosmos DB for NoSQL. A data e hora exata de cada venda são armazenadas na propriedade JSON chamada whenFinished.
+O departamento de marketing solicita uma nova funcionalidade (view) via SQL do Cosmos DB que conte o número de vendas e as agrupe em janelas exatas de 2 dias (para medir a eficácia das campanhas que mudam a cada 48 horas).
+Preencha as lacunas do código da consulta (1 e 2) com a opção SQL nativa do Cosmos DB adequada.
+Opções disponíveis: count(c.whenFinished) | sum(c.whenFinished) | DateTimeBin(c.whenFinished, 'day', 2) | DateTimePart(c.whenFinished, 'day', 2)
+Consulta SQL:
+SELECT
+    ___(1)___
+FROM c
+GROUP BY
+    ___(2)___
+Indique a opção correta para a lacuna (1) e para a lacuna (2).
+
+--------------------------------------------------------------------------------

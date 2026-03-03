@@ -356,7 +356,7 @@
     "difficulty": "Alta",
     "explanation": "O volume do tipo `Azure file share` é o único que suporta o protocolo SMB nativamente e persiste os dados independentemente do ciclo de vida (paradas/crashes) do contêiner.",
     "content": {
-      "statement": "Qual tipo de volume você deve declarar no arquivo de implantação YAML do ACI?",
+      "statement": "Você planeja implantar um aplicativo no Azure executando-o em um contêiner Linux hospedado no Azure Container Instances (ACI). O aplicativo processa grandes volumes de dados localmente e grava resultados em arquivos de relatório dentro do contêiner. Você tem dois requisitos rígidos: Os arquivos de relatório não podem ser perdidos se a instância do contêiner travar e for reiniciada pelo Azure. Você deve ser capaz de montar e acessar esse diretório de arquivos remotamente a partir de um servidor Windows local usando o protocolo SMB (Server Message Block) para visualizar os resultados. Qual tipo de volume você deve declarar no arquivo de implantação YAML do ACI?",
       "options": [
         { "id": "A", "text": "Um volume do tipo emptyDir." },
         { "id": "B", "text": "Um volume do tipo Azure file share." },

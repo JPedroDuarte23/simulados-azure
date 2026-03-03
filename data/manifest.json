@@ -32,7 +32,24 @@
                     "id": "aca",
                     "name": "Azure Container Apps (ACA)",
                     "file": "data/container-apps.json",
-                    "count": 6
+                    "count": 26
+                }
+            ]
+        },
+         {
+            "title": "2. Armazenamento de Dados",
+            "categories": [
+                {
+                    "id": "blob-storage",
+                    "name": "Azure Blob Storage",
+                    "file": "data/blob-storage.json",
+                    "count": 30
+                },
+                {
+                    "id": "cosmos-db",
+                    "name": "Azure Cosmos DB",
+                    "file": "data/cosmos-db.json",
+                    "count": 36
                 }
             ]
         },
