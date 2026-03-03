@@ -73,7 +73,7 @@ Questões complexas que apresentam um cenário dividido em abas, seguido por uma
 - `tabs`: Uma array de objetos, onde cada objeto representa uma aba com informações.
   - `id`: um identificador único para a aba (ex: `tab-req`).
   - `title`: O título que aparecerá no botão da aba (ex: `Requisitos`).
-  - `content`: O texto (suporta HTML básico como quebras de linha `\n`) da aba.
+  - `content`: O texto (suporta HTML básico como quebras de linha `<br>`) da aba.
 - `statement`: A pergunta principal, relacionada ao estudo de caso.
 - `options`: Idêntico ao tipo `multiple_choice`.
 

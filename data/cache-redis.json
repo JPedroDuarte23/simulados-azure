@@ -5,7 +5,7 @@
       "category": "Azure Cache for Redis",
       "difficulty": "Fácil",
       "content": {
-        "statement": "Cenário: Compartilhar estado de sessão unificado, suporte a concorrência e salvar respostas HTTP completas.\n\nSolução Proposta: Implantar e configurar uma instância do Cache do Azure para Redis (Azure Cache for Redis) e atualizar o código dos aplicativos.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Compartilhar estado de sessão unificado, suporte a concorrência e salvar respostas HTTP completas. <br>  <br> Solução Proposta: Implantar e configurar uma instância do Cache do Azure para Redis (Azure Cache for Redis) e atualizar o código dos aplicativos. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -20,7 +20,7 @@
       "category": "Azure Cache for Redis",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você configura um App Service para streaming de vídeo com CI/CD. Precisa de alta disponibilidade e que os dados de mídia estejam o mais próximo possível do usuário geograficamente.\n\nSolução Proposta: Incluir o uso do Azure Cache for Redis na arquitetura.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você configura um App Service para streaming de vídeo com CI/CD. Precisa de alta disponibilidade e que os dados de mídia estejam o mais próximo possível do usuário geograficamente. <br>  <br> Solução Proposta: Incluir o uso do Azure Cache for Redis na arquitetura. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -35,7 +35,7 @@
       "category": "Azure Cache for Redis",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Compartilhar sessão entre apps ASP.NET, suporte a leitura/escrita simultânea e cache de HTML completo.\n\nSolução Proposta: Implantar um Azure Database for PostgreSQL e utilizá-lo como provedor de estado de sessão.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Compartilhar sessão entre apps ASP.NET, suporte a leitura/escrita simultânea e cache de HTML completo. <br>  <br> Solução Proposta: Implantar um Azure Database for PostgreSQL e utilizá-lo como provedor de estado de sessão. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }

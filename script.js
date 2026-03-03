@@ -141,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Reset UI
         feedbackArea.classList.add('hidden');
-        feedbackArea.className = 'feedback-area'; // Reset classes
         submitBtn.classList.remove('hidden');
         nextBtn.classList.add('hidden');
         questionContainer.innerHTML = '';

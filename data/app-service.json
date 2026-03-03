@@ -6,7 +6,7 @@
       "difficulty": "Medium",
       "allow_backtrack": true,
       "content": {
-        "statement": "Você está desenvolvendo um App Service que precisa acessar o Azure Key Vault usando Managed Identity. O código a seguir é usado para obter um segredo:\n```csharp\nvar client = new SecretClient(new Uri(\"https://my-key-vault.vault.azure.net/\"), new DefaultAzureCredential());\nvar secret = await client.GetSecretAsync(\"MySecret\");\n```\nQual configuração é necessária no App Service para que este código funcione sem armazenar credenciais?",
+        "statement": "Você está desenvolvendo um App Service que precisa acessar o Azure Key Vault usando Managed Identity. O código a seguir é usado para obter um segredo: <br> ```csharp <br> var client = new SecretClient(new Uri(\"https://my-key-vault.vault.azure.net/\"), new DefaultAzureCredential()); <br> var secret = await client.GetSecretAsync(\"MySecret\"); <br> ``` <br> Qual configuração é necessária no App Service para que este código funcione sem armazenar credenciais?",
         "options": [
           { "id": "a", "text": "Configurar Managed Identity (System-Assigned ou User-Assigned)" },
           { "id": "b", "text": "Adicionar o Client Secret nas App Settings" },
@@ -24,7 +24,7 @@
       "category": "Azure App Service",
       "difficulty": "Média",
       "content": {
-        "statement": "Você é um desenvolvedor na empresa Nimbus Digital. Você implantou um aplicativo web no Azure App Service e precisa monitorar o comportamento da aplicação em tempo real para fins de depuração de um erro intermitente que está ocorrendo em produção.\nQual comando da Azure CLI você deve executar para transmitir (stream) o arquivo de log do aplicativo em tempo real?",
+        "statement": "Você é um desenvolvedor na empresa Nimbus Digital. Você implantou um aplicativo web no Azure App Service e precisa monitorar o comportamento da aplicação em tempo real para fins de depuração de um erro intermitente que está ocorrendo em produção. <br> Qual comando da Azure CLI você deve executar para transmitir (stream) o arquivo de log do aplicativo em tempo real?",
         "options": [
           { "id": "A", "text": "az webapp download" },
           { "id": "B", "text": "Get-AzAppServiceLog" },
@@ -41,7 +41,7 @@
       "category": "Azure App Service / PowerShell",
       "difficulty": "Média",
       "content": {
-        "statement": "Sua equipe está configurando um novo ambiente no Azure usando o PowerShell. O objetivo é criar um Grupo de Recursos, um Plano do App Service e um Web App, além de um slot de implantação (Deployment Slot) específico para testes.\nVocê deve utilizar os cmdlets do módulo Az do PowerShell.\nOrganize as 4 ações abaixo na ordem cronológica correta em que devem ser executadas.",
+        "statement": "Sua equipe está configurando um novo ambiente no Azure usando o PowerShell. O objetivo é criar um Grupo de Recursos, um Plano do App Service e um Web App, além de um slot de implantação (Deployment Slot) específico para testes. <br> Você deve utilizar os cmdlets do módulo Az do PowerShell. <br> Organize as 4 ações abaixo na ordem cronológica correta em que devem ser executadas.",
         "items_to_drag": [
           { "id": "A", "text": "New-AzWebApp" },
           { "id": "B", "text": "New-AzAppServicePlan" },
@@ -59,7 +59,7 @@
       "difficulty": "Alta",
       "content": {
         "statement": "Você está implementando um web service SaaS (Software as a Service) em ASP.NET Core que será executado como um Azure Web App... Os recursos do Azure devem estar localizados em uma rede isolada (isolated network). Você precisa configurar o plano do App Service (App Service Plan) para o Web App. Selecione o valor correto para cada configuração.",
-        "text": "Área 1: Número de instâncias de VM: {{0}} \n\n Área 2: Camada de Preço: {{1}}",
+        "text": "Área 1: Número de instâncias de VM: {{0}}  <br>  <br>  Área 2: Camada de Preço: {{1}}",
         "dropdowns": [
           {
             "index": 0,
@@ -90,7 +90,7 @@
       "category": "Azure App Service",
       "difficulty": "Alta",
       "content": {
-        "statement": "Você implantou uma API no Azure App Service em um slot de implantação hospedado em Windows chamado DevEnv e adicionou dois slots extras chamados QA e Live.\nVocê habilita a funcionalidade de auto swap (troca automática) no slot Live. Você precisa garantir que os scripts de inicialização sejam executados e que os recursos dependentes estejam prontos antes que a troca (swap) ocorra efetivamente.\n\n**Solução proposta:** Você adiciona um novo endpoint chamado /warmupCheck ao aplicativo para executar os scripts e, em seguida, atualiza as configurações do aplicativo (App Settings) definindo WEBSITE_SWAP_WARMUP_PING_PATH e WEBSITE_SWAP_WARMUP_PING_STATUSES com o caminho para esse endpoint e os códigos de resposta HTTP esperados.\n\nEssa solução atende ao requisito?",
+        "statement": "Você implantou uma API no Azure App Service em um slot de implantação hospedado em Windows chamado DevEnv e adicionou dois slots extras chamados QA e Live. <br> Você habilita a funcionalidade de auto swap (troca automática) no slot Live. Você precisa garantir que os scripts de inicialização sejam executados e que os recursos dependentes estejam prontos antes que a troca (swap) ocorra efetivamente. <br>  <br> **Solução proposta:** Você adiciona um novo endpoint chamado /warmupCheck ao aplicativo para executar os scripts e, em seguida, atualiza as configurações do aplicativo (App Settings) definindo WEBSITE_SWAP_WARMUP_PING_PATH e WEBSITE_SWAP_WARMUP_PING_STATUSES com o caminho para esse endpoint e os códigos de resposta HTTP esperados. <br>  <br> Essa solução atende ao requisito?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -106,7 +106,7 @@
       "difficulty": "Alta",
       "content": {
         "statement": "Uma empresa de SaaS possui um serviço que consiste em vários aplicativos web do Azure, todos executados em um único App Service Plan chamado PrimaryASP. Você está desenvolvendo um novo web app, ExcelParser, que usa uma biblioteca que só pode ter uma única instância executando por vez. Você precisa configurar o serviço no PowerShell para garantir a conformidade com a licença sem afetar o escalonamento dos outros aplicativos. Selecione a opção correta para preencher as lacunas do script.",
-        "text": "```powershell\nSet-AzAppServicePlan -ResourceGroupName $rg -Name \"PrimaryASP\" `\n  -{{0}}\n\n$app = Get-AzWebApp -ResourceGroupName $rg -Name \"ExcelParser\"\n$app.{{1}}\nSet-AzWebApp $app\n```",
+        "text": "```powershell <br> Set-AzAppServicePlan -ResourceGroupName $rg -Name \"PrimaryASP\" ` <br>   -{{0}} <br>  <br> $app = Get-AzWebApp -ResourceGroupName $rg -Name \"ExcelParser\" <br> $app.{{1}} <br> Set-AzWebApp $app <br> ```",
         "dropdowns": [
           {
             "index": 0,
@@ -137,7 +137,7 @@
       "category": "Azure App Service",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você desenvolve um site e planeja hospedá-lo no Azure. Você espera que o site tenha altos volumes de tráfego logo após ser publicado. Você deve garantir que o site permaneça disponível e responsivo perante esses picos de tráfego, ao mesmo tempo em que minimiza os custos.\n\nPergunta: O que você deve fazer para implantar o site?",
+        "statement": "Cenário: Você desenvolve um site e planeja hospedá-lo no Azure. Você espera que o site tenha altos volumes de tráfego logo após ser publicado. Você deve garantir que o site permaneça disponível e responsivo perante esses picos de tráfego, ao mesmo tempo em que minimiza os custos. <br>  <br> Pergunta: O que você deve fazer para implantar o site?",
         "options": [
           { "id": "A", "text": "Implantar o site em um App Service que use o nível de serviço Shared (D1). Configurar o plano do App Service para dimensionar automaticamente quando a carga da CPU estiver alta." },
           { "id": "B", "text": "Implantar o site em uma Máquina Virtual (VM). Configurar a VM para escalar automaticamente quando a carga da CPU estiver alta." },
@@ -154,7 +154,7 @@
       "category": "Azure App Service",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você está desenvolvendo e implantando vários aplicativos web ASP.NET no Azure App Service. Você precisa armazenar as informações de estado da sessão (session state) e o HTML de saída. Você deve usar um mecanismo de armazenamento que atenda aos seguintes requisitos:\n1. Compartilhar o estado da sessão entre todos os aplicativos web ASP.NET.\n2. Suporte a acesso controlado e simultâneo para vários leitores e um único gravador.\n3. Salvar as respostas HTTP completas para solicitações simultâneas.\n\nSolução proposta: Você habilita o recurso de Roteamento de Solicitação de Aplicativo (Application Request Routing - ARR) no Azure App Service.\n\nPergunta: A solução atende aos objetivos?",
+        "statement": "Cenário: Você está desenvolvendo e implantando vários aplicativos web ASP.NET no Azure App Service. Você precisa armazenar as informações de estado da sessão (session state) e o HTML de saída. Você deve usar um mecanismo de armazenamento que atenda aos seguintes requisitos: <br> 1. Compartilhar o estado da sessão entre todos os aplicativos web ASP.NET. <br> 2. Suporte a acesso controlado e simultâneo para vários leitores e um único gravador. <br> 3. Salvar as respostas HTTP completas para solicitações simultâneas. <br>  <br> Solução proposta: Você habilita o recurso de Roteamento de Solicitação de Aplicativo (Application Request Routing - ARR) no Azure App Service. <br>  <br> Pergunta: A solução atende aos objetivos?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -169,7 +169,7 @@
       "category": "Azure App Service",
       "difficulty": "Difícil",
       "content": {
-        "statement": "Cenário: Você desenvolveu um web app que atualmente utiliza o plano do App Service de nível D1 (Shared). Picos de tráfego estão causando lentidão. Você precisa configurar o Autoscale para quando a CPU atingir 85%, minimizando custos.\n\nTarefa: Ordene as 4 ações corretas para atingir o objetivo.",
+        "statement": "Cenário: Você desenvolveu um web app que atualmente utiliza o plano do App Service de nível D1 (Shared). Picos de tráfego estão causando lentidão. Você precisa configurar o Autoscale para quando a CPU atingir 85%, minimizando custos. <br>  <br> Tarefa: Ordene as 4 ações corretas para atingir o objetivo.",
         "items_to_drag": [
           { "id": "A", "text": "Adicionar uma Regra de Escalonamento (Scale rule)." },
           { "id": "B", "text": "Habilitar o dimensionamento automático (Autoscaling) no web app." },
@@ -187,7 +187,7 @@
       "difficulty": "Alta",
       "content": {
         "statement": "Cenário: Azure Web App for Containers (Linux). Necessidade de persistência de dados de diagnóstico via variável de ambiente `DIAGDATA`.",
-        "text": "Pergunta 1: Qual App Setting você deve definir como true?\n{{0}}\n\nPergunta 2: Qual deve ser o valor definido para a variável de ambiente DIAGDATA?\n{{1}}",
+        "text": "Pergunta 1: Qual App Setting você deve definir como true? <br> {{0}} <br>  <br> Pergunta 2: Qual deve ser o valor definido para a variável de ambiente DIAGDATA? <br> {{1}}",
         "dropdowns": [
           {
             "index": 0,
@@ -217,7 +217,7 @@
       "category": "Azure App Service",
       "difficulty": "Alta",
       "content": {
-        "statement": "Cenário: Plano Basic, única região. Precisa capturar a call stack completa (pilha de chamadas) para identificar gargalos, correlacionar dados e minimizar impacto/custo.\n\nPergunta: Quais três (3) ações conjuntas você deve realizar?",
+        "statement": "Cenário: Plano Basic, única região. Precisa capturar a call stack completa (pilha de chamadas) para identificar gargalos, correlacionar dados e minimizar impacto/custo. <br>  <br> Pergunta: Quais três (3) ações conjuntas você deve realizar?",
         "options": [
           { "id": "A", "text": "Reiniciar todos os aplicativos no plano do App Service." },
           { "id": "B", "text": "Habilitar a extensão de site do Application Insights." },
@@ -235,7 +235,7 @@
       "category": "Azure App Service",
       "difficulty": "Fácil",
       "content": {
-        "statement": "Cenário: Você cria e publica um novo aplicativo web no Azure App Service. A autenticação e a autorização do usuário na aplicação devem usar o Microsoft Entra ID (antigo Azure AD). Você precisa configurar isso diretamente no portal do Azure.\n\nPergunta: Qual deve ser a sua primeira ação no portal?",
+        "statement": "Cenário: Você cria e publica um novo aplicativo web no Azure App Service. A autenticação e a autorização do usuário na aplicação devem usar o Microsoft Entra ID (antigo Azure AD). Você precisa configurar isso diretamente no portal do Azure. <br>  <br> Pergunta: Qual deve ser a sua primeira ação no portal?",
         "options": [
           { "id": "A", "text": "Adicionar um certificado privado (Private certificate)." },
           { "id": "B", "text": "Mapear um nome de domínio personalizado existente." },
@@ -252,7 +252,7 @@
       "category": "Azure App Service / Azure CLI",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Migração de um app ASP.NET Core em Docker para o Azure App Service (Linux). O Resource Group e o App Service Plan já existem. Você precisa provisionar o Web App, configurar a imagem e o domínio personalizado.\n\nTarefa: Ordene os comandos da Azure CLI para a execução correta.",
+        "statement": "Cenário: Migração de um app ASP.NET Core em Docker para o Azure App Service (Linux). O Resource Group e o App Service Plan já existem. Você precisa provisionar o Web App, configurar a imagem e o domínio personalizado. <br>  <br> Tarefa: Ordene os comandos da Azure CLI para a execução correta.",
         "items_to_drag": [
           { "id": "A", "text": "az webapp config container set ..." },
           { "id": "B", "text": "az webapp config hostname add ..." },
@@ -270,7 +270,7 @@
       "difficulty": "Difícil",
       "content": {
         "statement": "Cenário: Web app em produção com 4 instâncias e slot de staging. Você precisa atender a dois requisitos operacionais distintos.",
-        "text": "Pergunta 1: Aumentar a disponibilidade redirecionando tráfego de instâncias com erro e substituindo-as após 1 hora.\n{{0}}\n\nPergunta 2: Enviar logs do servidor, logs de aplicativos e saída padrão (stdout) para um Blob Storage.\n{{1}}",
+        "text": "Pergunta 1: Aumentar a disponibilidade redirecionando tráfego de instâncias com erro e substituindo-as após 1 hora. <br> {{0}} <br>  <br> Pergunta 2: Enviar logs do servidor, logs de aplicativos e saída padrão (stdout) para um Blob Storage. <br> {{1}}",
         "dropdowns": [
           {
             "index": 0,
@@ -299,7 +299,7 @@
       "category": "Azure App Service",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você usa slots de Development, Testing e Production com Auto Swap habilitado para o slot Production. Você precisa garantir que scripts de inicialização rodem com sucesso ANTES da troca de slots.\n\nSolução proposta: Desabilitar o auto swap. Atualizar o app com um método statuscheck via applicationInitialization no web.config/settings. Reabilitar o auto swap e implantar.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você usa slots de Development, Testing e Production com Auto Swap habilitado para o slot Production. Você precisa garantir que scripts de inicialização rodem com sucesso ANTES da troca de slots. <br>  <br> Solução proposta: Desabilitar o auto swap. Atualizar o app com um método statuscheck via applicationInitialization no web.config/settings. Reabilitar o auto swap e implantar. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -314,7 +314,7 @@
       "category": "Azure App Service / Segurança",
       "difficulty": "Fácil",
       "content": {
-        "statement": "Cenário: O App1 precisa acessar segredos e certificados no Vault1 sem armazenar credenciais no código e permitindo a rotação automática.\n\nPergunta: O que você deve fazer para garantir essa comunicação de forma segura?",
+        "statement": "Cenário: O App1 precisa acessar segredos e certificados no Vault1 sem armazenar credenciais no código e permitindo a rotação automática. <br>  <br> Pergunta: O que você deve fazer para garantir essa comunicação de forma segura?",
         "options": [
           { "id": "A", "text": "Habilitar a Autenticação do App Service para o App1 e atribuir uma role RBAC customizada ao Vault1." },
           { "id": "B", "text": "Executar um script que recupere as chaves do cofre e as defina como variáveis de ambiente na inicialização da aplicação." },
@@ -331,7 +331,7 @@
       "category": "Azure App Service",
       "difficulty": "Fácil",
       "content": {
-        "statement": "Cenário: Você tem um plano do Azure App Service chamado APSPlan1 na camada Basic (B1). Você planeja habilitar o dimensionamento automático baseado em agendamento (schedule-based autoscaling) para o APSPlan1, visando minimizar custos.\n\nSolução proposta: Você rebaixa (scale down) o plano APSPlan1 para a camada de preço Shared (Compartilhado).\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você tem um plano do Azure App Service chamado APSPlan1 na camada Basic (B1). Você planeja habilitar o dimensionamento automático baseado em agendamento (schedule-based autoscaling) para o APSPlan1, visando minimizar custos. <br>  <br> Solução proposta: Você rebaixa (scale down) o plano APSPlan1 para a camada de preço Shared (Compartilhado). <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -346,7 +346,7 @@
       "category": "Application Insights",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Aplicativo web ASP.NET monitorado pelo Application Insights. Você precisa garantir disponibilidade global, resposta dentro de um limite de tempo e que recursos dependentes (imagens/JS) carreguem corretamente.\n\nPergunta: Quais dois (2) tipos de teste do Application Insights você pode usar?",
+        "statement": "Cenário: Aplicativo web ASP.NET monitorado pelo Application Insights. Você precisa garantir disponibilidade global, resposta dentro de um limite de tempo e que recursos dependentes (imagens/JS) carreguem corretamente. <br>  <br> Pergunta: Quais dois (2) tipos de teste do Application Insights você pode usar?",
         "options": [
           { "id": "A", "text": "Teste de integração (Integration test)" },
           { "id": "B", "text": "Teste web de várias etapas (Multi-step web test)" },
@@ -365,7 +365,7 @@
       "difficulty": "Média",
       "content": {
         "statement": "Cenário: Migração de site local para App Service com foco em custo mínimo, mas exigindo Autoscale e validação de código (staging) antes da produção.",
-        "text": "Pergunta 1: Qual o Nível do Plano do App Service (Tier) mínimo necessário?\n{{0}}\n\nPergunta 2: Qual recurso deve ser usado para validação de alteração de código?\n{{1}}",
+        "text": "Pergunta 1: Qual o Nível do Plano do App Service (Tier) mínimo necessário? <br> {{0}} <br>  <br> Pergunta 2: Qual recurso deve ser usado para validação de alteração de código? <br> {{1}}",
         "dropdowns": [
           {
             "index": 0,
@@ -396,7 +396,7 @@
       "category": "Azure App Service / Azure CLI",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Automatizar via Azure CLI a criação de um Web App Java, um slot de staging e realizar o deploy a partir de um repositório GitHub.\n\nTarefa: Ordene as 5 ações cronologicamente.",
+        "statement": "Cenário: Automatizar via Azure CLI a criação de um Web App Java, um slot de staging e realizar o deploy a partir de um repositório GitHub. <br>  <br> Tarefa: Ordene as 5 ações cronologicamente.",
         "items_to_drag": [
           { "id": "A", "text": "az webapp create ..." },
           { "id": "B", "text": "az webapp deployment slot create ... --slot staging" },
@@ -414,7 +414,7 @@
       "category": "Azure App Service / Rede",
       "difficulty": "Alta",
       "content": {
-        "statement": "Cenário: Web App protegido por WAF via Application Gateway. Endereço interno: `contoso.azurewebsites.net`. Requisito: SSL de ponta a ponta (End-to-End SSL).\n\nPergunta: Quais duas (2) ações você deve executar no Application Gateway?",
+        "statement": "Cenário: Web App protegido por WAF via Application Gateway. Endereço interno: `contoso.azurewebsites.net`. Requisito: SSL de ponta a ponta (End-to-End SSL). <br>  <br> Pergunta: Quais duas (2) ações você deve executar no Application Gateway?",
         "options": [
           { "id": "A", "text": "Nas configurações HTTP, definir 'Override backend path' para contoso22.azurewebsites.net." },
           { "id": "B", "text": "Nas configurações HTTP, habilitar a configuração 'Use for App service'." },
@@ -431,7 +431,7 @@
       "category": "Azure App Service",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: A HarborLane executa seis (6) aplicativos web dentro de um único Plano do App Service (ASP). Cada aplicativo possui um slot de production e um slot de staging. O plano está configurado para scale out (escala horizontal) para quatro (4) instâncias.\n\nPergunta: Quantas máquinas virtuais (VMs) estão em execução no Azure para dar suporte a esses aplicativos e seus respectivos slots?",
+        "statement": "Cenário: A HarborLane executa seis (6) aplicativos web dentro de um único Plano do App Service (ASP). Cada aplicativo possui um slot de production e um slot de staging. O plano está configurado para scale out (escala horizontal) para quatro (4) instâncias. <br>  <br> Pergunta: Quantas máquinas virtuais (VMs) estão em execução no Azure para dar suporte a esses aplicativos e seus respectivos slots?",
         "options": [
           { "id": "A", "text": "4" },
           { "id": "B", "text": "12" },
@@ -465,7 +465,7 @@
       "category": "Azure App Service / Cache",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você precisa compartilhar estado de sessão (session state) entre aplicativos ASP.NET, com suporte a leitores simultâneos e um gravador, além de salvar respostas HTTP completas (output cache).\n\nSolução proposta: Você implanta e configura o Azure Cache for Redis e atualiza o código para utilizá-lo como provedor de estado de sessão.\n\nPergunta: A solução atende aos objetivos?",
+        "statement": "Cenário: Você precisa compartilhar estado de sessão (session state) entre aplicativos ASP.NET, com suporte a leitores simultâneos e um gravador, além de salvar respostas HTTP completas (output cache). <br>  <br> Solução proposta: Você implanta e configura o Azure Cache for Redis e atualiza o código para utilizá-lo como provedor de estado de sessão. <br>  <br> Pergunta: A solução atende aos objetivos?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -480,7 +480,7 @@
       "category": "Azure App Service / Azure CLI",
       "difficulty": "Fácil",
       "content": {
-        "statement": "Cenário: Desenvolver app em Go (Docker) no App Service on Linux. Você precisa criar um novo Grupo de Recursos em uma região suportada, o Plano e o Web App, minimizando o número de grupos.\n\nTarefa: Selecione três (3) comandos e ordene-os cronologicamente para a implantação inicial.",
+        "statement": "Cenário: Desenvolver app em Go (Docker) no App Service on Linux. Você precisa criar um novo Grupo de Recursos em uma região suportada, o Plano e o Web App, minimizando o número de grupos. <br>  <br> Tarefa: Selecione três (3) comandos e ordene-os cronologicamente para a implantação inicial.",
         "items_to_drag": [
           { "id": "B", "text": "az webapp create" },
           { "id": "D", "text": "az appservice plan create" },
@@ -496,8 +496,8 @@
       "category": "Azure App Service / Azure CLI",
       "difficulty": "Alta",
       "content": {
-        "statement": "Cenário: Automação de Web App Linux usando imagem Docker de um ACR privado. Requisito: Imutabilidade (versão v1.0.0).\n\nTarefa: Selecione a opção correta para cada área.",
-        "text": "Área 1: Criação do App Service Plan\n`az appservice plan create ... {{0}}`\n\nÁrea 2: Criação do Web App especificando a imagem\n`az webapp create ... {{1}}`\n\nÁrea 3: Configuração das credenciais do ACR no Web App\n`az webapp config container set ... {{2}}`",
+        "statement": "Cenário: Automação de Web App Linux usando imagem Docker de um ACR privado. Requisito: Imutabilidade (versão v1.0.0). <br>  <br> Tarefa: Selecione a opção correta para cada área.",
+        "text": "Área 1: Criação do App Service Plan <br> `az appservice plan create ... {{0}}` <br>  <br> Área 2: Criação do Web App especificando a imagem <br> `az webapp create ... {{1}}` <br>  <br> Área 3: Configuração das credenciais do ACR no Web App <br> `az webapp config container set ... {{2}}`",
         "dropdowns": [
           {
             "index": 0,
@@ -534,7 +534,7 @@
       "category": "Azure App Service / Segurança",
       "difficulty": "Alta",
       "content": {
-        "statement": "Cenário: Você desenvolve um Web App com autenticação via Microsoft Entra ID. Você precisa de três níveis de permissão (admin, normal, reader) baseados na associação de grupo do usuário.\n\nSolução proposta: Registrar o app no Entra ID, adicionar App Roles ao manifesto, atribuir grupos às funções e configurar o Web App para ler a roles claim do token JWT.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você desenvolve um Web App com autenticação via Microsoft Entra ID. Você precisa de três níveis de permissão (admin, normal, reader) baseados na associação de grupo do usuário. <br>  <br> Solução proposta: Registrar o app no Entra ID, adicionar App Roles ao manifesto, atribuir grupos às funções e configurar o Web App para ler a roles claim do token JWT. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -549,7 +549,7 @@
       "category": "Azure App Service / .NET",
       "difficulty": "Difícil",
       "content": {
-        "statement": "Cenário: Aplicativo ASP.NET Core no App Service usando Azure App Configuration. Requisitos: Autenticação, Autorização e Feature Flags dinâmicas.\n\nTarefa: Selecione os métodos na ordem exata e obrigatória em que devem aparecer no método `Configure` do pipeline HTTP.",
+        "statement": "Cenário: Aplicativo ASP.NET Core no App Service usando Azure App Configuration. Requisitos: Autenticação, Autorização e Feature Flags dinâmicas. <br>  <br> Tarefa: Selecione os métodos na ordem exata e obrigatória em que devem aparecer no método `Configure` do pipeline HTTP.",
         "items_to_drag": [
           { "id": "A", "text": "UseAuthorization()" },
           { "id": "B", "text": "UseAuthentication()" },
@@ -565,7 +565,7 @@
       "category": "Application Insights",
       "difficulty": "Fácil",
       "content": {
-        "statement": "Cenário: Configurar aplicativos para enviar eventos personalizados e telemetria avançada via código para o Application Insights.\n\nTarefa: Selecione e ordene as 3 ações corretas.",
+        "statement": "Cenário: Configurar aplicativos para enviar eventos personalizados e telemetria avançada via código para o Application Insights. <br>  <br> Tarefa: Selecione e ordene as 3 ações corretas.",
         "items_to_drag": [
           { "id": "B", "text": "Configurar o SDK do Application Insights no aplicativo." },
           { "id": "C", "text": "Copiar a string de conexão (Connection String)." },
@@ -581,7 +581,7 @@
       "category": "Application Insights",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Aplicativo multi-região com Traffic Manager. Necessidade de analisar o tempo de atividade (uptime) mensal para relatórios de SLA.\n\nPergunta: Quais duas (2) soluções atingirão o objetivo?",
+        "statement": "Cenário: Aplicativo multi-região com Traffic Manager. Necessidade de analisar o tempo de atividade (uptime) mensal para relatórios de SLA. <br>  <br> Pergunta: Quais duas (2) soluções atingirão o objetivo?",
         "options": [
           { "id": "A", "text": "Azure Monitor logs" },
           { "id": "B", "text": "Application Insights alerts" },
@@ -598,7 +598,7 @@
       "category": "Azure App Service",
       "difficulty": "Fácil",
       "content": {
-        "statement": "Cenário: Ecommerce com pico de tráfego previsível toda segunda-feira de manhã. Resto da semana estável. Objetivo: Equilibrar custo e disponibilidade.\n\nPergunta: Qual a melhor abordagem de Autoscale?",
+        "statement": "Cenário: Ecommerce com pico de tráfego previsível toda segunda-feira de manhã. Resto da semana estável. Objetivo: Equilibrar custo e disponibilidade. <br>  <br> Pergunta: Qual a melhor abordagem de Autoscale?",
         "options": [
           { "id": "A", "text": "Configurar regras baseadas em métricas de CPU avaliadas exclusivamente às segundas." },
           { "id": "B", "text": "Manter o aplicativo em Scale up permanente." },
@@ -615,7 +615,7 @@
       "category": "Azure App Service",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você usa slots de Development, Testing e Production com Auto Swap habilitado para o slot Production. Você precisa garantir que scripts de inicialização rodem com sucesso antes que a troca (swap) ocorra.\n\nSolução Proposta: Atualizar o arquivo web.config da aplicação para incluir o elemento de configuração applicationInitialization e especificar as ações personalizadas.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você usa slots de Development, Testing e Production com Auto Swap habilitado para o slot Production. Você precisa garantir que scripts de inicialização rodem com sucesso antes que a troca (swap) ocorra. <br>  <br> Solução Proposta: Atualizar o arquivo web.config da aplicação para incluir o elemento de configuração applicationInitialization e especificar as ações personalizadas. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -630,7 +630,7 @@
       "category": "Azure App Service",
       "difficulty": "Fácil",
       "content": {
-        "statement": "Cenário: Você precisa compartilhar o estado da sessão (session state) entre vários apps ASP.NET, com suporte a leitores simultâneos e cache de saída (HTML) completo.\n\nSolução Proposta: Habilitar o recurso de Roteamento de Solicitação de Aplicativo (Application Request Routing - ARR) no Azure App Service.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você precisa compartilhar o estado da sessão (session state) entre vários apps ASP.NET, com suporte a leitores simultâneos e cache de saída (HTML) completo. <br>  <br> Solução Proposta: Habilitar o recurso de Roteamento de Solicitação de Aplicativo (Application Request Routing - ARR) no Azure App Service. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -645,7 +645,7 @@
       "category": "Azure App Service",
       "difficulty": "Fácil",
       "content": {
-        "statement": "Cenário: Você deseja habilitar o dimensionamento automático baseado em agendamento (schedule-based autoscaling) no plano APSPlan1, buscando também minimizar custos.\n\nSolução Proposta: Você rebaixa (scale down) o plano APSPlan1 para a camada de preço Shared (Compartilhado).\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você deseja habilitar o dimensionamento automático baseado em agendamento (schedule-based autoscaling) no plano APSPlan1, buscando também minimizar custos. <br>  <br> Solução Proposta: Você rebaixa (scale down) o plano APSPlan1 para a camada de preço Shared (Compartilhado). <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -660,7 +660,7 @@
       "category": "Azure App Service",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Plano Basic (B1) com necessidade de habilitar Autoscale agendado e minimizar custos.\n\nSolução Proposta: Realizar o Scale Up (escalonamento vertical) para a camada Premium V2.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Plano Basic (B1) com necessidade de habilitar Autoscale agendado e minimizar custos. <br>  <br> Solução Proposta: Realizar o Scale Up (escalonamento vertical) para a camada Premium V2. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -677,7 +677,7 @@
       "explanation": "Para Web Apps on Linux, a flag `--is-linux` é obrigatória. Para imutabilidade, usa-se a tag fixa `v1.0.0`. No Passo 3, o login server do ACR deve incluir as credenciais admin.",
       "content": {
         "statement": "Complete os comandos para provisionar um Web App for Containers com imagem fixa de um ACR privado.",
-        "text": "Passo 1: az appservice plan create --name websitePlan {{0}}\nPasso 2: az webapp create --plan websitePlan {{1}} --name meussite\nPasso 3: az webapp config container set {{2}} --name meussite",
+        "text": "Passo 1: az appservice plan create --name websitePlan {{0}} <br> Passo 2: az webapp create --plan websitePlan {{1}} --name meussite <br> Passo 3: az webapp config container set {{2}} --name meussite",
         "dropdowns": [
           {
             "index": 0,
@@ -730,7 +730,7 @@
       "explanation": "Ao habilitar a `Continuous Deployment` (Implantação contínua) no App Service, o Azure cria automaticamente um `Webhook` no ACR para notificar o App Service sempre que houver um novo push.",
       "content": {
         "statement": "Qual recurso ativar no App Service para atualização automática e o que ele cria no ACR?",
-        "text": "Configuração no App Service: {{0}}\nMecanismo no ACR: {{1}}",
+        "text": "Configuração no App Service: {{0}} <br> Mecanismo no ACR: {{1}}",
         "dropdowns": [
           {
             "index": 0,

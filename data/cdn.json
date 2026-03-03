@@ -5,7 +5,7 @@
       "category": "Azure CDN",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Streaming de vídeo, alta disponibilidade e mídia próxima ao usuário geograficamente.\n\nSolução Proposta: Incluir o uso da Rede de Distribuição de Conteúdo do Azure (Azure CDN) na arquitetura.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Streaming de vídeo, alta disponibilidade e mídia próxima ao usuário geograficamente. <br>  <br> Solução Proposta: Incluir o uso da Rede de Distribuição de Conteúdo do Azure (Azure CDN) na arquitetura. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }

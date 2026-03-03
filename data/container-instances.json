@@ -25,7 +25,7 @@
     "explanation": "O `Container group` é o recurso do ACI que fornece o ciclo de vida compartilhado para múltiplos contêineres. Para persistência de dados em caso de crashes ou reinicializações, o `Azure file share` é o volume recomendado.",
     "content": {
       "statement": "Você está desenvolvendo um aplicativo com dois contêineres para o ACI. Quais valores de configuração você deve usar no YAML?",
-      "text": "Shared lifecycle (Ciclo de vida compartilhado): {{0}}\nStorage volume (Volume de armazenamento): {{1}}",
+      "text": "Shared lifecycle (Ciclo de vida compartilhado): {{0}} <br> Storage volume (Volume de armazenamento): {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -57,7 +57,7 @@
     "explanation": "O protocolo SMB é suportado no ACI através da montagem de um `Azure file share`. Para tarefas que devem rodar apenas uma vez (como scripts de processamento), a política de reinicialização deve ser `Never`.",
     "content": {
       "statement": "Como você deve configurar o ACI para acessar dados via SMB e garantir que os scripts rodem apenas uma vez?",
-      "text": "External data volume (Volume de dados externo): {{0}}\nContainer restart policy (Política de reinicialização): {{1}}",
+      "text": "External data volume (Volume de dados externo): {{0}} <br> Container restart policy (Política de reinicialização): {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -122,7 +122,7 @@
     "explanation": "O `Azure Container Instances` é o alvo de computação que suporta o uso isolado de GPUs com custo faturado por segundo. A `Restart policy` definida como Never ou OnFailure garante que o contêiner seja interrompido após o término do script.",
     "content": {
       "statement": "Você precisa de recursos de GPU e minimizar custos para renderização. Como preencher os parâmetros?",
-      "text": "Compute target (Alvo de computação): {{0}}\nContainer termination (Configuração de encerramento): {{1}}",
+      "text": "Compute target (Alvo de computação): {{0}} <br> Container termination (Configuração de encerramento): {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -171,7 +171,7 @@
     "explanation": "A implantação de ACI em uma Rede Virtual (VNet) exige o `osType` como `Linux`. Na propriedade `ipAddress`, o `type` deve ser definido como `Private` para receber o IP da sub-rede interna.",
     "content": {
       "statement": "Como configurar o YAML para implantar o ACI dentro de uma VNet privada?",
-      "text": "osType (Sistema operacional): {{0}}\ntype (Tipo de IP sob a propriedade ipAddress): {{1}}",
+      "text": "osType (Sistema operacional): {{0}} <br> type (Tipo de IP sob a propriedade ipAddress): {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -217,7 +217,7 @@
     "explanation": "Para variáveis de ambiente sensíveis no YAML, usa-se a propriedade `secureValue`. O valor passado nela ficará oculto em comandos de inspeção (como az container show).",
     "content": {
       "statement": "Como declarar a variável de ambiente no YAML para que o valor fique oculto na inspeção?",
-      "text": "environmentVariables:\n  - name: \"API_KEY\"\n    {{0}}: {{1}}",
+      "text": "environmentVariables: <br>   - name: \"API_KEY\" <br>     {{0}}: {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -249,7 +249,7 @@
     "explanation": "Para injetar arquivos confidenciais, usa-se `volumeMounts` no contêiner para definir o caminho e `volumes` no grupo para definir o tipo do volume como `secret`.",
     "content": {
       "statement": "Como preencher o manifesto YAML para montar um volume secreto?",
-      "text": "containers:\n- name: mycontainer\n  properties:\n    {{0}}:\n    - name: secretvolume\n      mountPath: /mnt/secrets\n{{1}}:\n- name: secretvolume\n  {{2}}:\n    mysecretkey: <base64-encoded-secret>",
+      "text": "containers: <br> - name: mycontainer <br>   properties: <br>     {{0}}: <br>     - name: secretvolume <br>       mountPath: /mnt/secrets <br> {{1}}: <br> - name: secretvolume <br>   {{2}}: <br>     mysecretkey: <base64-encoded-secret>",
       "dropdowns": [
         {
           "index": 0,
@@ -302,7 +302,7 @@
     "explanation": "O comando `az container exec` permite executar um comando interativo em um contêiner. O parâmetro `--name` refere-se ao nome do grupo de contêineres e `--exec-command` ao comando do shell (ex: `/bin/bash`).",
     "content": {
       "statement": "Você precisa abrir uma sessão de shell interativa. Como completar o comando?",
-      "text": "az container {{0}} \\\n  --resource-group RG-Producao \\\n  --name {{1}} \\\n  --container-name app-web \\\n  --exec-command {{2}}",
+      "text": "az container {{0}} \\ <br>   --resource-group RG-Producao \\ <br>   --name {{1}} \\ <br>   --container-name app-web \\ <br>   --exec-command {{2}}",
       "dropdowns": [
         {
           "index": 0,

@@ -30,8 +30,8 @@
     "category": "Azure Functions / Custom Handlers",
     "difficulty": "Média",
     "content": {
-      "statement": "Você está desenvolvendo um aplicativo em C++ que compila para um executável nativo chamado process.exe. O aplicativo aceita imagens como entrada e retorna imagens processadas. Você precisa implantar esse aplicativo como um Azure Function usando um Custom Handler (Manipulador Personalizado).\nComo você deve preencher os arquivos function.json e host.json para que a requisição seja roteada corretamente para o executável sem usar os payloads padrão de manipulador personalizado? Escolha a opção correta para cada lacuna.",
-      "text": "Arquivo function.json\n```json\n{\n   \"type\": \"{{0}}\",\n   \"direction\": \"out\",\n   \"name\": \"result\"\n}\n```\nArquivo host.json\n```json\n{\n   \"customHandler\": {\n      \"description\": {\n         \"defaultExecutablePath\": \"process.exe\"\n      }\n   },\n   \"enableForwardingHttpRequest\": {{1}}\n}\n```",
+      "statement": "Você está desenvolvendo um aplicativo em C++ que compila para um executável nativo chamado process.exe. O aplicativo aceita imagens como entrada e retorna imagens processadas. Você precisa implantar esse aplicativo como um Azure Function usando um Custom Handler (Manipulador Personalizado). <br> Como você deve preencher os arquivos function.json e host.json para que a requisição seja roteada corretamente para o executável sem usar os payloads padrão de manipulador personalizado? Escolha a opção correta para cada lacuna.",
+      "text": "Arquivo function.json <br> ```json <br> { <br>    \"type\": \"{{0}}\", <br>    \"direction\": \"out\", <br>    \"name\": \"result\" <br> } <br> ``` <br> Arquivo host.json <br> ```json <br> { <br>    \"customHandler\": { <br>       \"description\": { <br>          \"defaultExecutablePath\": \"process.exe\" <br>       } <br>    }, <br>    \"enableForwardingHttpRequest\": {{1}} <br> } <br> ```",
       "dropdowns": [
         {
           "index": 0,
@@ -81,7 +81,7 @@
     "category": "Azure Functions / Key Vault / Managed Identity",
     "difficulty": "Difícil",
     "content": {
-      "statement": "Você está desenvolvendo uma aplicação Java serverless no Azure. Você cria um novo Azure Key Vault para gerenciar segredos que serão usados por um novo aplicativo Azure Functions. O aplicativo deve atender aos seguintes requisitos:\nReferenciar o Azure Key Vault sem exigir alterações no código Java.\nAdicionar e remover dinamicamente instâncias do host do Azure Functions com base no volume de eventos recebidos.\nGarantir que as instâncias fiquem perpetuamente aquecidas para evitar cold starts (inicializações a frio).\nConectar-se a uma rede virtual (VNet).\nA autenticação com a instância do Key Vault deve ser removida automaticamente se o aplicativo Azure Function for excluído.\n\nPergunta: Quais três ações você deve executar em sequência para conceder acesso do aplicativo Azure Functions ao Azure Key Vault?",
+      "statement": "Você está desenvolvendo uma aplicação Java serverless no Azure. Você cria um novo Azure Key Vault para gerenciar segredos que serão usados por um novo aplicativo Azure Functions. O aplicativo deve atender aos seguintes requisitos: <br> Referenciar o Azure Key Vault sem exigir alterações no código Java. <br> Adicionar e remover dinamicamente instâncias do host do Azure Functions com base no volume de eventos recebidos. <br> Garantir que as instâncias fiquem perpetuamente aquecidas para evitar cold starts (inicializações a frio). <br> Conectar-se a uma rede virtual (VNet). <br> A autenticação com a instância do Key Vault deve ser removida automaticamente se o aplicativo Azure Function for excluído. <br>  <br> Pergunta: Quais três ações você deve executar em sequência para conceder acesso do aplicativo Azure Functions ao Azure Key Vault?",
       "items_to_drag": [
         {
           "id": "B",
@@ -110,7 +110,7 @@
     "category": "Azure Functions / Durable Functions",
     "difficulty": "Média",
     "content": {
-      "statement": "Você desenvolve um aplicativo Azure Functions com gatilho HTTP (HTTP trigger) para processar dados armazenados em blobs do Azure Storage. O aplicativo usa uma associação de saída (output binding) para salvar o resultado no blob.\nDurante os testes com arquivos muito grandes, o aplicativo sofre timeout (tempo limite excedido) após cerca de quatro minutos, e a execução falha. O aplicativo precisa obrigatoriamente conseguir processar os dados completos do blob, independentemente do tamanho.\n\nSolução proposta: Você reescreve a função utilizando o padrão assíncrono do Azure Durable Functions (Durable Function async pattern / HTTP Async API) para processar os dados do blob.\n\nEsta solução atende ao objetivo de evitar o timeout do gatilho HTTP e concluir o processamento?",
+      "statement": "Você desenvolve um aplicativo Azure Functions com gatilho HTTP (HTTP trigger) para processar dados armazenados em blobs do Azure Storage. O aplicativo usa uma associação de saída (output binding) para salvar o resultado no blob. <br> Durante os testes com arquivos muito grandes, o aplicativo sofre timeout (tempo limite excedido) após cerca de quatro minutos, e a execução falha. O aplicativo precisa obrigatoriamente conseguir processar os dados completos do blob, independentemente do tamanho. <br>  <br> Solução proposta: Você reescreve a função utilizando o padrão assíncrono do Azure Durable Functions (Durable Function async pattern / HTTP Async API) para processar os dados do blob. <br>  <br> Esta solução atende ao objetivo de evitar o timeout do gatilho HTTP e concluir o processamento?",
       "options": [
         {
           "id": "A",
@@ -133,7 +133,7 @@
     "category": "Azure Functions / Durable Functions",
     "difficulty": "Média",
     "content": {
-      "statement": "Você está desenvolvendo uma solução no Azure Durable Functions para gerenciar um processo complexo de pedidos online. O fluxo de pedidos possui várias etapas sequenciais. Em uma dessas etapas, o processo deve chamar uma API externa para coletar informações de desconto do produto.\n\nQuais tipos de função do Azure Durable Functions você deve usar para implementar a coordenação desse fluxo e a chamada à API externa?",
+      "statement": "Você está desenvolvendo uma solução no Azure Durable Functions para gerenciar um processo complexo de pedidos online. O fluxo de pedidos possui várias etapas sequenciais. Em uma dessas etapas, o processo deve chamar uma API externa para coletar informações de desconto do produto. <br>  <br> Quais tipos de função do Azure Durable Functions você deve usar para implementar a coordenação desse fluxo e a chamada à API externa?",
       "options": [
         {
           "id": "A",
@@ -165,8 +165,8 @@
     "category": "Azure Functions",
     "difficulty": "Alta",
     "content": {
-      "statement": "Você está desenvolvendo um Azure Function App e precisa definir configurações globais. Todas as funções dentro do aplicativo devem atender rigorosamente à seguinte política de repetição (retry policy):\nOcorrer até obter uma execução bem-sucedida ou atingir o limite máximo de 10 tentativas.\nGarantir que haja um intervalo de espera progressivo entre as falhas, com um mínimo de 20 segundos entre tentativas, podendo chegar até 15 minutos.\n\nComo você deve completar o arquivo host.json abaixo?",
-      "text": "```json\n{\n   \"{{0}}\": {\n      \"strategy\": \"{{1}}\",\n      \"{{2}}\": 10,\n      \"minimumInterval\": \"00:00:20\",\n      \"maximumInterval\": \"00:15:00\"\n   }\n}\n```",
+      "statement": "Você está desenvolvendo um Azure Function App e precisa definir configurações globais. Todas as funções dentro do aplicativo devem atender rigorosamente à seguinte política de repetição (retry policy): <br> Ocorrer até obter uma execução bem-sucedida ou atingir o limite máximo de 10 tentativas. <br> Garantir que haja um intervalo de espera progressivo entre as falhas, com um mínimo de 20 segundos entre tentativas, podendo chegar até 15 minutos. <br>  <br> Como você deve completar o arquivo host.json abaixo?",
+      "text": "```json <br> { <br>    \"{{0}}\": { <br>       \"strategy\": \"{{1}}\", <br>       \"{{2}}\": 10, <br>       \"minimumInterval\": \"00:00:20\", <br>       \"maximumInterval\": \"00:15:00\" <br>    } <br> } <br> ```",
       "dropdowns": [
         {
           "index": 0,
@@ -235,8 +235,8 @@
     "difficulty": "Média",
     "explanation": "Para linguagens não suportadas nativamente como Rust, você deve usar `Docker Container` para publicação, escolher `Custom Handler` como runtime stack e a `Version` como `custom`.",
     "content": {
-      "statement": "Você está desenvolvendo um Azure Function App e decide escrever o código usando a linguagem Rust, que não é suportada nativamente pelo host do Azure Functions. A linguagem de código oferece suporte a primitivos HTTP. Você precisa implantar o código em um ambiente de produção do Azure Function App.\nComo você deve preencher os parâmetros de configuração de implantação no portal do Azure? (Escolha a opção correta para cada lacuna)",
-      "text": "Publish (Publicar): {{0}}\nRuntime stack (Pilha de tempo de execução): {{1}}\nVersion (Versão): {{2}}",
+      "statement": "Você está desenvolvendo um Azure Function App e decide escrever o código usando a linguagem Rust, que não é suportada nativamente pelo host do Azure Functions. A linguagem de código oferece suporte a primitivos HTTP. Você precisa implantar o código em um ambiente de produção do Azure Function App. <br> Como você deve preencher os parâmetros de configuração de implantação no portal do Azure? (Escolha a opção correta para cada lacuna)",
+      "text": "Publish (Publicar): {{0}} <br> Runtime stack (Pilha de tempo de execução): {{1}} <br> Version (Versão): {{2}}",
       "dropdowns": [
         {
           "index": 0,
@@ -304,7 +304,7 @@
     "difficulty": "Alta",
     "explanation": "O código da função é implantado via `Deployment`. O `ScaledObject` define as regras de escalonamento, incluindo o intervalo de sondagem. A `Connection String` deve ser armazenada como um `Secret` no Kubernetes.",
     "content": {
-      "statement": "Você é desenvolvedor de uma empresa de Software como Serviço (SaaS) que usa um Azure Function para processar pedidos. Atualmente, a função é executada em um aplicativo acionado por uma fila do Azure Storage (Queue trigger). Sua equipe decidiu migrar esse Azure Function para o Kubernetes usando o KEDA (Kubernetes-based Event Driven Autoscaling).\nVocê precisa configurar os Custom Resource Definitions (CRD) do Kubernetes para o Azure Function. Associe as configurações aos tipos de CRD corretos. (Escolha as 3 opções da lista abaixo correspondentes a I, II e III).\nI. Código do Azure Function (Azure Function code) -> [ ? ]\nII. Intervalo de sondagem (Polling interval) -> [ ? ]\nIII. String de conexão do Azure Storage -> [ ? ]",
+      "statement": "Você é desenvolvedor de uma empresa de Software como Serviço (SaaS) que usa um Azure Function para processar pedidos. Atualmente, a função é executada em um aplicativo acionado por uma fila do Azure Storage (Queue trigger). Sua equipe decidiu migrar esse Azure Function para o Kubernetes usando o KEDA (Kubernetes-based Event Driven Autoscaling). <br> Você precisa configurar os Custom Resource Definitions (CRD) do Kubernetes para o Azure Function. Associe as configurações aos tipos de CRD corretos. (Escolha as 3 opções da lista abaixo correspondentes a I, II e III). <br> I. Código do Azure Function (Azure Function code) -> [ ? ] <br> II. Intervalo de sondagem (Polling interval) -> [ ? ] <br> III. String de conexão do Azure Storage -> [ ? ]",
       "items_to_drag": [
         {
           "id": "A",
@@ -337,7 +337,7 @@
     "difficulty": "Média",
     "explanation": "Para minimizar cold starts e garantir processamento rápido, especialmente com gatilhos de armazenamento, o plano App Service (Dedicated ou Premium) com 'Always On' é preferível ao Consumption. O gatilho de Blob Storage é o ideal para reagir ao upload.",
     "content": {
-      "statement": "Você está desenvolvendo um Azure Function App que processa imagens assim que elas são carregadas em um contêiner do Azure Blob Storage. As imagens devem ser processadas o mais rápido possível após o upload, e a solução deve minimizar qualquer latência (como atrasos de inicialização a frio - cold starts). Você cria o código para processar as imagens quando o Function App é acionado.\nComo você deve configurar o Function App para atingir esse objetivo de latência?",
+      "statement": "Você está desenvolvendo um Azure Function App que processa imagens assim que elas são carregadas em um contêiner do Azure Blob Storage. As imagens devem ser processadas o mais rápido possível após o upload, e a solução deve minimizar qualquer latência (como atrasos de inicialização a frio - cold starts). Você cria o código para processar as imagens quando o Function App é acionado. <br> Como você deve configurar o Function App para atingir esse objetivo de latência?",
       "options": [
         {
           "id": "A",
@@ -368,8 +368,8 @@
     "difficulty": "Média",
     "explanation": "Para referenciar App Settings no `function.json`, usa-se `%settingName%`. Para o nome do blob de saída, `samples-workitems/{queueTrigger}` permite usar o nome da mensagem da fila como parte do caminho do blob.",
     "content": {
-      "statement": "Você planeja implementar um aplicativo Azure Functions com os seguintes requisitos:\nDeve ser acionado por uma mensagem colocada em uma fila do Azure Storage.\nO nome da fila deve ser definido dinamicamente por uma configuração de aplicativo (App Setting) chamada input_queue.\nDeve criar um arquivo no Azure Blob Storage com o nome exato do conteúdo da mensagem recebida na fila.\nComo você deve referenciar os nomes no arquivo function.json? (Escolha a opção correta para cada lacuna)",
-      "text": "{\n  \"bindings\": [\n    {\n      \"type\": \"queueTrigger\",\n      \"direction\": \"in\",\n      \"name\": \"myQueueItem\",\n      \"queueName\": \"{{0}}\",\n      \"connection\": \"AzureWebJobsStorage\"\n    },\n    {\n      \"type\": \"blob\",\n      \"direction\": \"out\",\n      \"name\": \"myBlob\",\n      \"path\": \"samples-workitems/{{1}}\",\n      \"connection\": \"AzureWebJobsStorage\"\n    }\n  ]\n}",
+      "statement": "Você planeja implementar um aplicativo Azure Functions com os seguintes requisitos: <br> Deve ser acionado por uma mensagem colocada em uma fila do Azure Storage. <br> O nome da fila deve ser definido dinamicamente por uma configuração de aplicativo (App Setting) chamada input_queue. <br> Deve criar um arquivo no Azure Blob Storage com o nome exato do conteúdo da mensagem recebida na fila. <br> Como você deve referenciar os nomes no arquivo function.json? (Escolha a opção correta para cada lacuna)",
+      "text": "{ <br>   \"bindings\": [ <br>     { <br>       \"type\": \"queueTrigger\", <br>       \"direction\": \"in\", <br>       \"name\": \"myQueueItem\", <br>       \"queueName\": \"{{0}}\", <br>       \"connection\": \"AzureWebJobsStorage\" <br>     }, <br>     { <br>       \"type\": \"blob\", <br>       \"direction\": \"out\", <br>       \"name\": \"myBlob\", <br>       \"path\": \"samples-workitems/{{1}}\", <br>       \"connection\": \"AzureWebJobsStorage\" <br>     } <br>   ] <br> }",
       "dropdowns": [
         {
           "index": 0,
@@ -419,7 +419,7 @@
     "difficulty": "Média",
     "explanation": "Embora o plano App Service com Always On possa aumentar o tempo de execução máximo, o Azure Load Balancer ainda impõe um limite de 230 segundos (3 minutos e 50 segundos) para funções HTTP. Para processamento longo, padrões assíncronos como Durable Functions ou Service Bus são necessários.",
     "content": {
-      "statement": "Você desenvolve um Azure Function App com gatilho HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo é acionado via HTTP e usa um output binding para salvar o resultado no blob. Durante os testes, você nota que a função sofre timeout repetidamente após 4 minutos de execução devido ao tamanho grande do blob, não conseguindo concluir o processamento.\nSolução proposta: Você configura o aplicativo de função para usar um plano de hospedagem do tipo App Service e ativa a configuração Always On (Sempre Ativado) para evitar o timeout.\nEssa solução atende ao objetivo de garantir que o aplicativo não sofra timeout e processe os dados do blob corretamente?",
+      "statement": "Você desenvolve um Azure Function App com gatilho HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo é acionado via HTTP e usa um output binding para salvar o resultado no blob. Durante os testes, você nota que a função sofre timeout repetidamente após 4 minutos de execução devido ao tamanho grande do blob, não conseguindo concluir o processamento. <br> Solução proposta: Você configura o aplicativo de função para usar um plano de hospedagem do tipo App Service e ativa a configuração Always On (Sempre Ativado) para evitar o timeout. <br> Essa solução atende ao objetivo de garantir que o aplicativo não sofra timeout e processe os dados do blob corretamente?",
       "options": [
         {
           "id": "A",
@@ -442,8 +442,8 @@
     "difficulty": "Média",
     "explanation": "O WebHook externo aciona um gatilho `HTTP`. Para ler a imagem, usa-se um `Blob Storage` como input binding. Para salvar no Cosmos DB, usa-se `Azure Cosmos DB` como output binding.",
     "content": {
-      "statement": "Você está desenvolvendo um aplicativo Azure Functions. O aplicativo deve expor um WebHook para que um sistema externo o acione. Ao ser acionado, a função deve ler uma imagem armazenada em um contêiner do Azure Blob Storage e, após o processamento, criar um novo documento de registro no Azure Cosmos DB.\nComo você deve configurar os tipos de gatilhos e associações (bindings) na definição da função? (Escolha a opção correta para cada categoria)",
-      "text": "Trigger (Gatilho): {{0}}\nInput binding (Associação de entrada): {{1}}\nOutput binding (Associação de saída): {{2}}",
+      "statement": "Você está desenvolvendo um aplicativo Azure Functions. O aplicativo deve expor um WebHook para que um sistema externo o acione. Ao ser acionado, a função deve ler uma imagem armazenada em um contêiner do Azure Blob Storage e, após o processamento, criar um novo documento de registro no Azure Cosmos DB. <br> Como você deve configurar os tipos de gatilhos e associações (bindings) na definição da função? (Escolha a opção correta para cada categoria)",
+      "text": "Trigger (Gatilho): {{0}} <br> Input binding (Associação de entrada): {{1}} <br> Output binding (Associação de saída): {{2}}",
       "dropdowns": [
         {
           "index": 0,
@@ -523,7 +523,7 @@
     "difficulty": "Média",
     "explanation": "Para monitorar a disponibilidade externa e a latência de endpoints HTTP de diversas regiões, o `URL ping test` do Application Insights é a ferramenta padrão e mais adequada.",
     "content": {
-      "statement": "Você desenvolve e adiciona várias funções a um Azure Function App que usa o runtime mais recente. As funções contêm vários endpoints de API REST protegidos por SSL. O aplicativo é executado nativamente em um plano de Consumo (Consumption plan).\nVocê precisa obrigatoriamente enviar um alerta para a equipe de suporte quando qualquer um dos endpoints da função estiver indisponível ou respondendo muito lentamente de diversas regiões do mundo. Qual é a abordagem recomendada pela Microsoft para monitorar a disponibilidade dessas funções de forma confiável em um ambiente Serverless?",
+      "statement": "Você desenvolve e adiciona várias funções a um Azure Function App que usa o runtime mais recente. As funções contêm vários endpoints de API REST protegidos por SSL. O aplicativo é executado nativamente em um plano de Consumo (Consumption plan). <br> Você precisa obrigatoriamente enviar um alerta para a equipe de suporte quando qualquer um dos endpoints da função estiver indisponível ou respondendo muito lentamente de diversas regiões do mundo. Qual é a abordagem recomendada pela Microsoft para monitorar a disponibilidade dessas funções de forma confiável em um ambiente Serverless?",
       "options": [
         {
           "id": "A",
@@ -554,8 +554,8 @@
     "difficulty": "Alta",
     "explanation": "Para acesso seguro e sem segredos ao Blob Storage, `System-assigned managed identity` é a opção recomendada. Para bloquear o acesso de outros domínios, as origens permitidas do CORS devem ser configuradas para **remover todas (blank)**.",
     "content": {
-      "statement": "Você está desenvolvendo um Azure Function App (App1) e revisando as configurações de solicitações de origem cruzada (CORS). Você tem os seguintes requisitos de segurança:\nAs funções do App1 devem acessar um cofre do Azure Blob Storage de forma totalmente segura.\nO acesso a esse Blob Storage não deve exigir o provisionamento ou a rotação manual de segredos/chaves no código.\nO código JavaScript executado em navegadores de qualquer host externo não deve ter permissão para interagir com a função.\nComo você deve configurar o App1? (Escolha a opção correta para cada lacuna)",
-      "text": "Acesso ao Azure Blob Storage: {{0}}\nBloquear acesso de outros domínios: {{1}}",
+      "statement": "Você está desenvolvendo um Azure Function App (App1) e revisando as configurações de solicitações de origem cruzada (CORS). Você tem os seguintes requisitos de segurança: <br> As funções do App1 devem acessar um cofre do Azure Blob Storage de forma totalmente segura. <br> O acesso a esse Blob Storage não deve exigir o provisionamento ou a rotação manual de segredos/chaves no código. <br> O código JavaScript executado em navegadores de qualquer host externo não deve ter permissão para interagir com a função. <br> Como você deve configurar o App1? (Escolha a opção correta para cada lacuna)",
+      "text": "Acesso ao Azure Blob Storage: {{0}} <br> Bloquear acesso de outros domínios: {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -601,7 +601,7 @@
     "difficulty": "Média",
     "explanation": "A sintaxe `@Microsoft.KeyVault(SecretUri=...)` é a maneira correta de referenciar segredos do Key Vault diretamente nas configurações de aplicativo do Azure.",
     "content": {
-      "statement": "Você está desenvolvendo um Azure Function que chama APIs externas usando um access token (token de acesso). Para manter a segurança, o token de acesso foi armazenado em um segredo chamado token dentro de um Azure Key Vault chamado mykeyvault. Você ativou a Identidade Gerenciada da função e concedeu a ela a política de acesso correta ao Key Vault.\nPara que a função acesse o token nativamente através das Configurações de Aplicativo (App Settings) sem a necessidade de escrever código de requisição ao cofre, qual sintaxe de valor exata você deve salvar na configuração da Função?",
+      "statement": "Você está desenvolvendo um Azure Function que chama APIs externas usando um access token (token de acesso). Para manter a segurança, o token de acesso foi armazenado em um segredo chamado token dentro de um Azure Key Vault chamado mykeyvault. Você ativou a Identidade Gerenciada da função e concedeu a ela a política de acesso correta ao Key Vault. <br> Para que a função acesse o token nativamente através das Configurações de Aplicativo (App Settings) sem a necessidade de escrever código de requisição ao cofre, qual sintaxe de valor exata você deve salvar na configuração da Função?",
       "options": [
         {
           "id": "A",
@@ -632,8 +632,8 @@
     "difficulty": "Alta",
     "explanation": "Para escalar até zero e usar imagens Linux personalizadas, o plano `Premium` é necessário. O tempo limite do Load Balancer para requisições HTTP é de 230 segundos.",
     "content": {
-      "statement": "Você planeja desenvolver um Azure Functions App com um gatilho HTTP (HTTP trigger)... O aplicativo deve suportar estritamente os seguintes requisitos: Escalonamento orientado a eventos (Event-driven scaling) até zero. Capacidade de usar imagens personalizadas do Linux (Custom Linux images) para a execução da função. Você precisa identificar o plano de hospedagem correto e saber qual é o tempo máximo absoluto que a função HTTP pode levar para responder a uma solicitação recebida antes de sofrer timeout pelo Load Balancer do Azure.\nPlano de Hospedagem (Hosting plan): [Lacuna 1]\nTempo máximo de execução para o gatilho HTTP: [Lacuna 2]",
-      "text": "Plano de Hospedagem (Hosting plan): {{0}}\nTempo máximo de execução para o gatilho HTTP: {{1}}",
+      "statement": "Você planeja desenvolver um Azure Functions App com um gatilho HTTP (HTTP trigger)... O aplicativo deve suportar estritamente os seguintes requisitos: Escalonamento orientado a eventos (Event-driven scaling) até zero. Capacidade de usar imagens personalizadas do Linux (Custom Linux images) para a execução da função. Você precisa identificar o plano de hospedagem correto e saber qual é o tempo máximo absoluto que a função HTTP pode levar para responder a uma solicitação recebida antes de sofrer timeout pelo Load Balancer do Azure. <br> Plano de Hospedagem (Hosting plan): [Lacuna 1] <br> Tempo máximo de execução para o gatilho HTTP: [Lacuna 2]",
+      "text": "Plano de Hospedagem (Hosting plan): {{0}} <br> Tempo máximo de execução para o gatilho HTTP: {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -684,7 +684,7 @@
     "explanation": "O comando `func init` é usado para inicializar um novo projeto de Function App, e o parâmetro `--worker-runtime` especifica a linguagem (ex: C#, python) sem usar um template de função específico.",
     "content": {
       "statement": "Você está criando um novo projeto de aplicativo do Azure Functions em seu ambiente de desenvolvimento local usando a CLI do Azure Functions Core Tools. Você precisa obrigatoriamente criar a estrutura base do projeto utilizando a linguagem C# ou Python, mas sem usar um template gerado automaticamente. Qual comando e parâmetro exatos você deve especificar no terminal? (Escolha a opção correta para cada lacuna)",
-      "text": "Comando: {{0}}\nParâmetro: {{1}}",
+      "text": "Comando: {{0}} <br> Parâmetro: {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -734,8 +734,8 @@
     "difficulty": "Alta",
     "explanation": "Para interagir com Durable Entities, injeta-se `[DurableClient] IDurableEntityClient`. Para um padrão 'fire-and-forget' (sem esperar a conclusão da operação), usa-se `SignalEntityAsync`.",
     "content": {
-      "statement": "Você está desenvolvendo um jogo online que permite que os jogadores votem em sua foto favorita. O jogo é construído usando Azure Functions e utiliza Durable Entities (Entidades Duráveis) para rastrear e armazenar o estado contínuo da contagem de votos. A janela de votação é de apenas 30 segundos, e o requisito máximo é minimizar a latência da requisição (a função HTTP deve responder imediatamente, sem esperar o processamento do voto).\nComo você deve completar o código da função de gatilho HTTP para sinalizar o voto à entidade de forma assíncrona (\"fire-and-forget\")? (Escolha a opção correta para cada lacuna)",
-      "text": "[FunctionName(\"Vote\")]\npublic static async Task<HttpResponseMessage> Run(\n    [HttpTrigger(\"POST\", Route = \"pic/{id}\")] HttpRequestMessage req,\n    {{0}} c, \n    string id)\n{\n    var eid = new EntityId(\"pic\", id);\n    await c.{{1}}(eid, \"vote\");\n\n    return req.CreateResponse(HttpStatusCode.OK);\n}",
+      "statement": "Você está desenvolvendo um jogo online que permite que os jogadores votem em sua foto favorita. O jogo é construído usando Azure Functions e utiliza Durable Entities (Entidades Duráveis) para rastrear e armazenar o estado contínuo da contagem de votos. A janela de votação é de apenas 30 segundos, e o requisito máximo é minimizar a latência da requisição (a função HTTP deve responder imediatamente, sem esperar o processamento do voto). <br> Como você deve completar o código da função de gatilho HTTP para sinalizar o voto à entidade de forma assíncrona (\"fire-and-forget\")? (Escolha a opção correta para cada lacuna)",
+      "text": "[FunctionName(\"Vote\")] <br> public static async Task<HttpResponseMessage> Run( <br>     [HttpTrigger(\"POST\", Route = \"pic/{id}\")] HttpRequestMessage req, <br>     {{0}} c,  <br>     string id) <br> { <br>     var eid = new EntityId(\"pic\", id); <br>     await c.{{1}}(eid, \"vote\"); <br>  <br>     return req.CreateResponse(HttpStatusCode.OK); <br> }",
       "dropdowns": [
         {
           "index": 0,
@@ -789,7 +789,7 @@
     "difficulty": "Média",
     "explanation": "Para linguagens não nativas, o `Custom handler` é a solução. Para usar bindings declarativos (como Blob Storage Trigger/Binding), você precisa das extensões de binding, que são entregues via `Extension bundle`.",
     "content": {
-      "statement": "Você está desenvolvendo um aplicativo Azure Functions. O aplicativo possui dois requisitos muito específicos de engenharia de software:\nPermitir que os desenvolvedores escrevam as funções usando a linguagem Rust (que não possui suporte nativo direto pelo Functions host).\nConectar-se declarativamente a uma conta do Azure Blob Storage utilizando as configurações padrão de input/output sem escrever código adicional de conexão na mão.\nAssocie os recursos arquiteturais do Azure Function que você deve implementar para atender a cada requisito. (Escolha uma opção da lista para cada requisito)\nI. Permitir escrever as funções na linguagem Rust -> [ ? ]\nII. Conectar declarativamente ao Azure Blob Storage (associações/bindings) -> [ ? ]",
+      "statement": "Você está desenvolvendo um aplicativo Azure Functions. O aplicativo possui dois requisitos muito específicos de engenharia de software: <br> Permitir que os desenvolvedores escrevam as funções usando a linguagem Rust (que não possui suporte nativo direto pelo Functions host). <br> Conectar-se declarativamente a uma conta do Azure Blob Storage utilizando as configurações padrão de input/output sem escrever código adicional de conexão na mão. <br> Associe os recursos arquiteturais do Azure Function que você deve implementar para atender a cada requisito. (Escolha uma opção da lista para cada requisito) <br> I. Permitir escrever as funções na linguagem Rust -> [ ? ] <br> II. Conectar declarativamente ao Azure Blob Storage (associações/bindings) -> [ ? ]",
       "items_to_drag": [
         {
           "id": "A",
@@ -821,7 +821,7 @@
     "difficulty": "Média",
     "explanation": "1º `Criar o recurso do Application Insights` no Azure (C). 2º `Copiar a Connection String` para as configurações da Function (D). 3º `Configurar o SDK` ou ativar a integração no aplicativo para começar a enviar telemetria (B).",
     "content": {
-      "statement": "Uma organização possui recursos de computação hospedados no Azure. A organização deseja começar a rastrear falhas, eventos e dados avançados de telemetria em um aplicativo Azure Functions utilizando o Application Insights.\nVocê precisa configurar a integração do lado do desenvolvimento e provisionamento na nuvem. Em qual ordem você deve executar as três ações a seguir? (Escolha 3 ações da lista e ordene-as de 1 a 3)",
+      "statement": "Uma organização possui recursos de computação hospedados no Azure. A organização deseja começar a rastrear falhas, eventos e dados avançados de telemetria em um aplicativo Azure Functions utilizando o Application Insights. <br> Você precisa configurar a integração do lado do desenvolvimento e provisionamento na nuvem. Em qual ordem você deve executar as três ações a seguir? (Escolha 3 ações da lista e ordene-as de 1 a 3)",
       "items_to_drag": [
         {
           "id": "A",
@@ -859,7 +859,7 @@
     "explanation": "Para garantir que o gatilho da fila funcione e evite atrasos em planos que não são de Consumo, `Always On` deve ser ativado. O nível `Basic` é o plano mínimo que oferece `Always On` e é mais econômico que o Standard.",
     "content": {
       "statement": "Você tem um plano do Serviço de Aplicativo (App Service plan) chamado asp1 que atualmente está usando o nível de preços Free (Gratuito)... A prioridade do seu gerente é minimizar os custos, evitando planos Premium, mas garantindo que o gatilho da fila consiga \"acordar\" o aplicativo sempre que uma mensagem chegar. Quais opções de configuração você deve aplicar? (Escolha a opção correta para cada categoria)",
-      "text": "Configuração obrigatória do Azure App Service Feature: {{0}}\nNível de preço (Pricing Tier) mínimo suportado para Functions: {{1}}",
+      "text": "Configuração obrigatória do Azure App Service Feature: {{0}} <br> Nível de preço (Pricing Tier) mínimo suportado para Functions: {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -909,7 +909,7 @@
     "difficulty": "Média",
     "explanation": "A exceção indica esgotamento do pool de conexões. Diminuir o valor da opção `batchSize` no `host.json` reduz a concorrência e o número de conexões ativas ao SQL Database, aliviando a pressão sobre o pool.",
     "content": {
-      "statement": "Você está desenvolvendo um aplicativo do Azure Functions que se conecta a uma instância do Banco de Dados SQL do Azure (Azure SQL Database). A função é acionada por uma fila do Azure Storage (Queue trigger).\nDurante um pico de carga, você recebe relatórios de inúmeras exceções System.InvalidOperationException nos logs, com a seguinte mensagem: \"Timeout expired. The timeout period elapsed prior to obtaining a connection from the pool. This may have occurred because all pooled connections were in use and max pool size was reached.\"\nVocê precisa resolver/prevenir essa exceção focando nas configurações do host da função. O que você deve fazer?",
+      "statement": "Você está desenvolvendo um aplicativo do Azure Functions que se conecta a uma instância do Banco de Dados SQL do Azure (Azure SQL Database). A função é acionada por uma fila do Azure Storage (Queue trigger). <br> Durante um pico de carga, você recebe relatórios de inúmeras exceções System.InvalidOperationException nos logs, com a seguinte mensagem: \"Timeout expired. The timeout period elapsed prior to obtaining a connection from the pool. This may have occurred because all pooled connections were in use and max pool size was reached.\" <br> Você precisa resolver/prevenir essa exceção focando nas configurações do host da função. O que você deve fazer?",
       "options": [
         {
           "id": "A",
@@ -940,7 +940,7 @@
     "difficulty": "Alta",
     "explanation": "I. Falso: `myQueueItem.InsertionTime` é a hora que a mensagem foi colocada na fila, não processada. II. Falso: O padrão de retries para Queue Triggers é 10 vezes antes de ir para a fila de poison, não 5. III. Verdadeiro: Funções acionadas por fila processam mensagens em lotes e podem escalar para múltiplas instâncias para concorrência.",
     "content": {
-      "statement": "Você está desenvolvendo um Azure Function App usando C# e Visual Studio. O aplicativo processará pedidos inseridos por um Web App. O Web App coloca as informações do pedido no Azure Queue Storage. Você revisa o seguinte trecho de código:\n```csharp\n[FunctionName(\"ProcessOrders\")]\npublic static void ProcessOrders(\n    [QueueTrigger(\"incoming-orders\")] CloudQueueMessage myQueueItem, \n    [Table(\"Orders\")] ICollector<Order> tableBindings, ILogger log)\n{\n    log.LogInformation($\"Processing Order: {myQueueItem.Id}\");\n    log.LogInformation($\"Queue Insertion Time: {myQueueItem.InsertionTime}\");\n    log.LogInformation($\"Queue Expiration Time: {myQueueItem.ExpirationTime}\");\n    tableBindings.Add(JsonConvert.DeserializeObject<Order>(myQueueItem.AsString));\n}\n\n[FunctionName(\"ProcessOrders-Poison\")]\npublic static void ProcessFailedOrders(\n    [QueueTrigger(\"incoming-orders-poison\")] CloudQueueMessage myQueueItem, ILogger log)\n{\n    log.LogError($\"Failed to process order: {myQueueItem.AsString}\");\n}\n```\nPara cada uma das afirmações abaixo, defina se é Verdadeira (V) ou Falsa (F). (Responda V ou F para I, II e III):\nQual das afirmações abaixo é verdadeira?",
+      "statement": "Você está desenvolvendo um Azure Function App usando C# e Visual Studio. O aplicativo processará pedidos inseridos por um Web App. O Web App coloca as informações do pedido no Azure Queue Storage. Você revisa o seguinte trecho de código: <br> ```csharp <br> [FunctionName(\"ProcessOrders\")] <br> public static void ProcessOrders( <br>     [QueueTrigger(\"incoming-orders\")] CloudQueueMessage myQueueItem,  <br>     [Table(\"Orders\")] ICollector<Order> tableBindings, ILogger log) <br> { <br>     log.LogInformation($\"Processing Order: {myQueueItem.Id}\"); <br>     log.LogInformation($\"Queue Insertion Time: {myQueueItem.InsertionTime}\"); <br>     log.LogInformation($\"Queue Expiration Time: {myQueueItem.ExpirationTime}\"); <br>     tableBindings.Add(JsonConvert.DeserializeObject<Order>(myQueueItem.AsString)); <br> } <br>  <br> [FunctionName(\"ProcessOrders-Poison\")] <br> public static void ProcessFailedOrders( <br>     [QueueTrigger(\"incoming-orders-poison\")] CloudQueueMessage myQueueItem, ILogger log) <br> { <br>     log.LogError($\"Failed to process order: {myQueueItem.AsString}\"); <br> } <br> ``` <br> Para cada uma das afirmações abaixo, defina se é Verdadeira (V) ou Falsa (F). (Responda V ou F para I, II e III): <br> Qual das afirmações abaixo é verdadeira?",
       "options": [
         {
           "id": "A",
@@ -967,8 +967,8 @@
     "difficulty": "Alta",
     "explanation": "A concorrência dinâmica é configurada no arquivo `host.json`. Dentro do `host.json`, você pode especificar as configurações para gatilhos específicos, como `f3` (Azure Queues), que suporta concorrência configurável por função.",
     "content": {
-      "statement": "Você possui um Azure Functions App que utiliza o plano de hospedagem de Consumo (Consumption plan) para uma empresa. O aplicativo contém as seguintes três funções: f1: HTTP (Gatilho HTTP), f2: Timer (Gatilho de Temporizador), f3: Azure Queues (Gatilho de fila do Storage). Você planeja habilitar a concorrência dinâmica (dynamic concurrency) no aplicativo. A empresa exige que cada função tenha seu nível de concorrência gerenciado separadamente e da forma correta.\nQuais nomes de arquivo e de função você deve focar para configurar essa concorrência com sucesso? (Escolha a opção correta para cada lacuna)",
-      "text": "Nome do arquivo (File name): {{0}}\nNome da função alvo que suporta o recurso (Function name): {{1}}",
+      "statement": "Você possui um Azure Functions App que utiliza o plano de hospedagem de Consumo (Consumption plan) para uma empresa. O aplicativo contém as seguintes três funções: f1: HTTP (Gatilho HTTP), f2: Timer (Gatilho de Temporizador), f3: Azure Queues (Gatilho de fila do Storage). Você planeja habilitar a concorrência dinâmica (dynamic concurrency) no aplicativo. A empresa exige que cada função tenha seu nível de concorrência gerenciado separadamente e da forma correta. <br> Quais nomes de arquivo e de função você deve focar para configurar essa concorrência com sucesso? (Escolha a opção correta para cada lacuna)",
+      "text": "Nome do arquivo (File name): {{0}} <br> Nome da função alvo que suporta o recurso (Function name): {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -1018,8 +1018,8 @@
     "difficulty": "Alta",
     "explanation": "No orquestrador, `context.SetCustomStatus()` permite definir um estado personalizado que não falha a orquestração. No cliente, o status de orquestração completa é `Completed`, e o estado personalizado é acessado via `result.customStatus`.",
     "content": {
-      "statement": "Você está desenvolvendo uma aplicação baseada no Azure Durable Functions que processa uma lista de valores de entrada. O aplicativo é monitorado de forma externa usando um aplicativo de console que recupera os dados JSON do endpoint de diagnóstico (status query API) da função. Durante o processamento do lote, caso ocorra a entrada de um valor inválido, isso não deve causar a falha da função inteira. Em vez disso, a entrada inválida deve ser capturada e o erro deve ficar disponível para o aplicativo de monitoramento ler como parte do estado da orquestração.\nComo você deve completar os segmentos de código do orquestrador e do monitoramento? (Escolha a opção correta para cada lacuna)",
-      "text": "Trecho do Orquestrador (Azure Function):\n```csharp\n[FunctionName(\"App\")]\npublic static async Task<List<string>> RunOrchestrator(\n    [OrchestrationTrigger] IDurableOrchestrationContext context) {\n    \n    // ... processamento do array input ...\n    int errIndex = ...; // índice que falhou\n    \n    // Define o erro para ser visto pelo monitoramento sem falhar a orquestração\n    {{0}};\n}\n```\nTrecho do Console de Monitoramento externo:\n```csharp\nvar response = await client.GetAsync(\"... status endpoint ...\");\ndynamic result = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());\n\nif (result.runtimeStatus == \"{{1}}\")\n{\n    return result.{{2}};\n}\n```",
+      "statement": "Você está desenvolvendo uma aplicação baseada no Azure Durable Functions que processa uma lista de valores de entrada. O aplicativo é monitorado de forma externa usando um aplicativo de console que recupera os dados JSON do endpoint de diagnóstico (status query API) da função. Durante o processamento do lote, caso ocorra a entrada de um valor inválido, isso não deve causar a falha da função inteira. Em vez disso, a entrada inválida deve ser capturada e o erro deve ficar disponível para o aplicativo de monitoramento ler como parte do estado da orquestração. <br> Como você deve completar os segmentos de código do orquestrador e do monitoramento? (Escolha a opção correta para cada lacuna)",
+      "text": "Trecho do Orquestrador (Azure Function): <br> ```csharp <br> [FunctionName(\"App\")] <br> public static async Task<List<string>> RunOrchestrator( <br>     [OrchestrationTrigger] IDurableOrchestrationContext context) { <br>      <br>     // ... processamento do array input ... <br>     int errIndex = ...; // índice que falhou <br>      <br>     // Define o erro para ser visto pelo monitoramento sem falhar a orquestração <br>     {{0}}; <br> } <br> ``` <br> Trecho do Console de Monitoramento externo: <br> ```csharp <br> var response = await client.GetAsync(\"... status endpoint ...\"); <br> dynamic result = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync()); <br>  <br> if (result.runtimeStatus == \"{{1}}\") <br> { <br>     return result.{{2}}; <br> } <br> ```",
       "dropdowns": [
         {
           "index": 0,
@@ -1087,8 +1087,8 @@
     "difficulty": "Média",
     "explanation": "Para ser acionado por eventos do Web PubSub, o `type` do binding deve ser `webPubSubTrigger`. O `eventType` para eventos enviados pelo cliente é `user`.",
     "content": {
-      "statement": "Você está desenvolvendo um serviço onde os clientes podem reportar eventos de notícias diretamente do navegador. O serviço é implementado como um Azure Function App e se comunica através do Azure Web PubSub usando o subprotocolo JSON WebSocket.\nVocê precisa implementar a associação de entrada (trigger binding) no arquivo function.json da Azure Function para que ela seja acionada pelos eventos recebidos do cliente.\nComo você deve configurar os parâmetros do binding? (Escolha a opção correta para cada lacuna)",
-      "text": "{\n  \"bindings\": [\n    {\n      \"type\": \"{{0}}\",\n      \"direction\": \"in\",\n      \"name\": \"data\",\n      \"eventName\": \"message\",\n      \"eventType\": \"{{1}}\"\n    }\n  ]\n}",
+      "statement": "Você está desenvolvendo um serviço onde os clientes podem reportar eventos de notícias diretamente do navegador. O serviço é implementado como um Azure Function App e se comunica através do Azure Web PubSub usando o subprotocolo JSON WebSocket. <br> Você precisa implementar a associação de entrada (trigger binding) no arquivo function.json da Azure Function para que ela seja acionada pelos eventos recebidos do cliente. <br> Como você deve configurar os parâmetros do binding? (Escolha a opção correta para cada lacuna)",
+      "text": "```{ <br>   \"bindings\": [ <br>     { <br>       \"type\": \"{{0}}\", <br>       \"direction\": \"in\", <br>       \"name\": \"data\", <br>       \"eventName\": \"message\", <br>       \"eventType\": \"{{1}}\" <br>     } <br>   ] <br> }```",
       "dropdowns": [
         {
           "index": 0,
@@ -1173,7 +1173,7 @@
     "difficulty": "Alta",
     "explanation": "Sim. Este é o padrão de 'fan-out/fan-in' ou 'decoupling' com Service Bus. A função HTTP retorna rapidamente um 202, evitando o timeout, e o processamento pesado é feito por uma função em segundo plano.",
     "content": {
-      "statement": "Um desenvolvedor criou uma Azure Function com gatilho HTTP para a empresa MeridianRetail a fim de processar arquivos de vídeo muito grandes armazenados em blobs do Azure. A função usa uma associação de saída (output binding) para atualizar o blob após o processamento. Durante os testes, a função sofre repetidamente um erro de timeout após três/quatro minutos ao lidar com o conteúdo pesado. É um requisito obrigatório que o aplicativo consiga concluir o processamento dos dados do blob sem que a requisição do cliente caia por tempo limite.\nSolução proposta: A equipe propõe modificar a arquitetura: a função HTTP receberá o payload de entrada, o colocará em uma fila do Azure Service Bus e retornará uma resposta de sucesso imediatamente para o cliente (HTTP 202 Accepted). Uma segunda Azure Function, acionada por essa fila do Service Bus (Queue trigger), fará o processamento pesado do arquivo em background.\nEssa abordagem atende ao objetivo de evitar o timeout da requisição HTTP e garantir o processamento dos dados?",
+      "statement": "Um desenvolvedor criou uma Azure Function com gatilho HTTP para a empresa MeridianRetail a fim de processar arquivos de vídeo muito grandes armazenados em blobs do Azure. A função usa uma associação de saída (output binding) para atualizar o blob após o processamento. Durante os testes, a função sofre repetidamente um erro de timeout após três/quatro minutos ao lidar com o conteúdo pesado. É um requisito obrigatório que o aplicativo consiga concluir o processamento dos dados do blob sem que a requisição do cliente caia por tempo limite. <br> Solução proposta: A equipe propõe modificar a arquitetura: a função HTTP receberá o payload de entrada, o colocará em uma fila do Azure Service Bus e retornará uma resposta de sucesso imediatamente para o cliente (HTTP 202 Accepted). Uma segunda Azure Function, acionada por essa fila do Service Bus (Queue trigger), fará o processamento pesado do arquivo em background. <br> Essa abordagem atende ao objetivo de evitar o timeout da requisição HTTP e garantir o processamento dos dados?",
       "options": [
         {
           "id": "A",
@@ -1197,7 +1197,7 @@
     "explanation": "Para monitorar o progresso e o atraso do Change Feed Processor, o `Change feed estimator` é a ferramenta correta. Para lidar com erros e não travar o lote, as `Life-cycle notifications` permitem interceptar eventos de erro e implementar lógica para descartar itens problemáticos.",
     "content": {
       "statement": "Você implementa uma solução no Azure que usa o Azure Cosmos DB (Core SQL API) e o SDK mais recente. Você cria um processador de feed de alterações (Change Feed Processor) em uma nova instância de contêiner utilizando uma Azure Function com gatilho do Azure Cosmos DB. Durante a execução, um lote grande de documentos falha repetidamente devido à leitura de um único documento corrompido no lote. A função com gatilho continua repetindo infinitamente esse mesmo lote de documentos, o que trava o processamento. Você precisa aprimorar a implementação do processador do Change Feed para resolver esse gargalo e também permitir o monitoramento de atrasos. Quais recursos você deve implementar? (Escolha a opção correta para cada lacuna)",
-      "text": "Requirement 1 (Monitorar o progresso/atraso do processador de change feed): {{0}}\nRequirement 2 (Lidar com erros no processador de change feed para não travar o lote inteiro): {{1}}",
+      "text": "Requirement 1 (Monitorar o progresso/atraso do processador de change feed): {{0}} <br> Requirement 2 (Lidar com erros no processador de change feed para não travar o lote inteiro): {{1}}",
       "dropdowns": [
         {
           "index": 0,
@@ -1255,8 +1255,8 @@
     "difficulty": "Média",
     "explanation": "Para atualizar o Cosmos DB, o `Binding type` é `Azure Cosmos DB` e a `Direction` é `out`. Para processar uploads de blob com a menor latência possível, o `Azure Event Grid trigger` é mais rápido que o Blob Storage trigger.",
     "content": {
-      "statement": "Você está projetando um Azure Function App para processar dados de localização de filiais de varejo da empresa. A solução tem os seguintes requisitos arquiteturais rigorosos ditados pela equipe de engenharia:\nAs Azure Functions devem processar os dados imediatamente (com a menor latência possível) e garantidamente no momento em que um arquivo é feito o upload para o Azure Blob Storage. Após o cálculo na memória, as Azure Functions devem obrigatoriamente atualizar um banco do Azure Cosmos DB utilizando consultas nativas baseadas em linguagem SQL. Como você deve configurar a estrutura de associações e gatilhos dessa Função para atender aos requisitos arquiteturais de performance e ação? (Escolha a opção correta para cada categoria)",
-      "text": "Binding type (Tipo de associação alvo para o banco de dados): {{0}}\nDirection (Direção da associação para o banco de dados): {{1}}\nTrigger (Tipo de gatilho para escutar a criação do blob com latência mínima): {{2}}",
+      "statement": "Você está projetando um Azure Function App para processar dados de localização de filiais de varejo da empresa. A solução tem os seguintes requisitos arquiteturais rigorosos ditados pela equipe de engenharia: <br> As Azure Functions devem processar os dados imediatamente (com a menor latência possível) e garantidamente no momento em que um arquivo é feito o upload para o Azure Blob Storage. Após o cálculo na memória, as Azure Functions devem obrigatoriamente atualizar um banco do Azure Cosmos DB utilizando consultas nativas baseadas em linguagem SQL. Como você deve configurar a estrutura de associações e gatilhos dessa Função para atender aos requisitos arquiteturais de performance e ação? (Escolha a opção correta para cada categoria)",
+      "text": "Binding type (Tipo de associação alvo para o banco de dados): {{0}} <br> Direction (Direção da associação para o banco de dados): {{1}} <br> Trigger (Tipo de gatilho para escutar a criação do blob com latência mínima): {{2}}",
       "dropdowns": [
         {
           "index": 0,
@@ -1351,7 +1351,7 @@
     "difficulty": "Média",
     "explanation": "Sim. O padrão HTTP Async API do Durable Functions permite que a função HTTP retorne um status 202 (Accepted) imediatamente, enquanto a orquestração de Durable Functions continua o processamento do blob em segundo plano, sem timeout. O cliente pode então consultar o status da operação posteriormente.",
     "content": {
-      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você utiliza o padrão assíncrono do Azure Durable Functions (Durable Function async pattern) para processar os dados do blob.\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você utiliza o padrão assíncrono do Azure Durable Functions (Durable Function async pattern) para processar os dados do blob. <br> A solução atende ao objetivo?",
       "options": [
         {
           "id": "A",
@@ -1374,7 +1374,7 @@
     "difficulty": "Média",
     "explanation": "Embora o plano App Service com Always On possa aumentar o tempo de execução máximo, o Azure Load Balancer ainda impõe um limite de 230 segundos (3 minutos e 50 segundos) para funções HTTP. Para processamento longo, padrões assíncronos como Durable Functions ou Service Bus são necessários.",
     "content": {
-      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você configura o aplicativo de função para usar um plano de hospedagem do tipo Serviço de Aplicativo (App Service plan) e habilita a configuração Always On (Sempre Ativo) do plano de hospedagem.\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você configura o aplicativo de função para usar um plano de hospedagem do tipo Serviço de Aplicativo (App Service plan) e habilita a configuração Always On (Sempre Ativo) do plano de hospedagem. <br> A solução atende ao objetivo?",
       "options": [
         {
           "id": "A",
@@ -1397,7 +1397,7 @@
     "difficulty": "Média",
     "explanation": "A propriedade `functionTimeout` no `host.json` controla o tempo de execução da função, mas o Load Balancer do Azure ainda impõe um limite de 230 segundos para funções HTTP. Aumentar apenas o `functionTimeout` não resolverá o problema de timeout no lado do cliente HTTP.",
     "content": {
-      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você atualiza a propriedade functionTimeout dentro do arquivo de projeto host.json para 10 minutos.\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você atualiza a propriedade functionTimeout dentro do arquivo de projeto host.json para 10 minutos. <br> A solução atende ao objetivo?",
       "options": [
         {
           "id": "A",
@@ -1420,7 +1420,7 @@
     "difficulty": "Alta",
     "explanation": "Sim. Este é o padrão de 'fan-out/fan-in' ou 'decoupling' com Service Bus. A função HTTP retorna rapidamente um 202, evitando o timeout, e o processamento pesado é feito por uma função em segundo plano.",
     "content": {
-      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você passa o payload (carga útil) do gatilho HTTP para uma fila do Azure Service Bus para ser processado em segundo plano por uma função acionada por fila (Queue trigger function), e retorna uma resposta HTTP de sucesso (ex: HTTP 202 Accepted) imediatamente para o chamador original.\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve um aplicativo Azure Functions acionado por HTTP (HTTP trigger) para processar dados de blob do Azure Storage. O aplicativo usa uma associação de saída (output binding) no blob. Durante o processamento, o aplicativo sofre erro de tempo limite (timeout) repetidamente após quatro minutos. O aplicativo deve obrigatoriamente concluir o processamento dos dados do blob. Você precisa garantir que o aplicativo não sofra timeout e processe todo o conteúdo. Solução Proposta: Você passa o payload (carga útil) do gatilho HTTP para uma fila do Azure Service Bus para ser processado em segundo plano por uma função acionada por fila (Queue trigger function), e retorna uma resposta HTTP de sucesso (ex: HTTP 202 Accepted) imediatamente para o chamador original. <br> A solução atende ao objetivo?",
       "options": [
         {
           "id": "A",
@@ -1443,7 +1443,7 @@
     "difficulty": "Média",
     "explanation": "Sim. O Azure Blob Storage trigger no plano de Consumo é otimizado para iniciar o processamento de novos blobs em tempo hábil (geralmente em segundos), o que atende ao requisito de iniciar o processo em menos de um minuto e minimiza custos por ser serverless.",
     "content": {
-      "statement": "Você desenvolve uma oferta de Software como Serviço (SaaS) para gerenciar fotografias. Os usuários fazem upload de fotos para um serviço da web, que então armazena as fotos no Azure Blob Storage (conta do tipo General-purpose V2). Quando as fotos são carregadas, elas devem ser processadas para produzir e salvar uma versão compatível com dispositivos móveis. O processo que produz a versão mobile da imagem deve obrigatoriamente iniciar em menos de um minuto. Você precisa projetar a arquitetura que inicia esse processamento. Solução Proposta: Você cria um aplicativo Azure Functions que usa o modelo de hospedagem de Consumo (Consumption plan) e configura a função para ser acionada nativamente pelo evento de upload do blob (Azure Blob Storage trigger).\nA solução atende ao objetivo?",
+      "statement": "Você desenvolve uma oferta de Software como Serviço (SaaS) para gerenciar fotografias. Os usuários fazem upload de fotos para um serviço da web, que então armazena as fotos no Azure Blob Storage (conta do tipo General-purpose V2). Quando as fotos são carregadas, elas devem ser processadas para produzir e salvar uma versão compatível com dispositivos móveis. O processo que produz a versão mobile da imagem deve obrigatoriamente iniciar em menos de um minuto. Você precisa projetar a arquitetura que inicia esse processamento. Solução Proposta: Você cria um aplicativo Azure Functions que usa o modelo de hospedagem de Consumo (Consumption plan) e configura a função para ser acionada nativamente pelo evento de upload do blob (Azure Blob Storage trigger). <br> A solução atende ao objetivo?",
       "options": [
         {
           "id": "A",

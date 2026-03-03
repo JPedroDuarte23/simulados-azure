@@ -5,7 +5,7 @@
       "category": "Azure API Management",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você tem um back-end RESTful no App Service e precisa configurar a autenticação de back-end dentro do serviço do Azure API Management (APIM).\n\nSolução Proposta: Configurar as credenciais de gateway para utilizar o método de Certificado de Cliente (Client cert) para o endpoint HTTP(s).\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você tem um back-end RESTful no App Service e precisa configurar a autenticação de back-end dentro do serviço do Azure API Management (APIM).Solução Proposta: Configurar as credenciais de gateway para utilizar o método de Certificado de Cliente (Client cert) para o endpoint HTTP(s).Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -20,7 +20,7 @@
       "category": "Azure API Management",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: API pública no APIM com back-end no App Service. Você precisa configurar a autenticação de back-end de forma segura.\n\nSolução Proposta: Configurar credenciais de gateway para utilizar Autenticação Básica (usuário e senha) para o endpoint do App Service.\n\nPergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: API pública no APIM com back-end no App Service. Você precisa configurar a autenticação de back-end de forma segura.Solução Proposta: Configurar credenciais de gateway para utilizar Autenticação Básica (usuário e senha) para o endpoint do App Service.Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
