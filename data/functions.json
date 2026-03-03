@@ -369,7 +369,7 @@
     "explanation": "Para referenciar App Settings no `function.json`, usa-se `%settingName%`. Para o nome do blob de saída, `samples-workitems/{queueTrigger}` permite usar o nome da mensagem da fila como parte do caminho do blob.",
     "content": {
       "statement": "Você planeja implementar um aplicativo Azure Functions com os seguintes requisitos: <br> Deve ser acionado por uma mensagem colocada em uma fila do Azure Storage. <br> O nome da fila deve ser definido dinamicamente por uma configuração de aplicativo (App Setting) chamada input_queue. <br> Deve criar um arquivo no Azure Blob Storage com o nome exato do conteúdo da mensagem recebida na fila. <br> Como você deve referenciar os nomes no arquivo function.json? (Escolha a opção correta para cada lacuna)",
-      "text": "{ <br>   \"bindings\": [ <br>     { <br>       \"type\": \"queueTrigger\", <br>       \"direction\": \"in\", <br>       \"name\": \"myQueueItem\", <br>       \"queueName\": \"{{0}}\", <br>       \"connection\": \"AzureWebJobsStorage\" <br>     }, <br>     { <br>       \"type\": \"blob\", <br>       \"direction\": \"out\", <br>       \"name\": \"myBlob\", <br>       \"path\": \"samples-workitems/{{1}}\", <br>       \"connection\": \"AzureWebJobsStorage\" <br>     } <br>   ] <br> }",
+      "text": "```{ <br>   \"bindings\": [ <br>     { <br>       \"type\": \"queueTrigger\", <br>       \"direction\": \"in\", <br>       \"name\": \"myQueueItem\", <br>       \"queueName\": \"{{0}}\", <br>       \"connection\": \"AzureWebJobsStorage\" <br>     }, <br>     { <br>       \"type\": \"blob\", <br>       \"direction\": \"out\", <br>       \"name\": \"myBlob\", <br>       \"path\": \"samples-workitems/{{1}}\", <br>       \"connection\": \"AzureWebJobsStorage\" <br>     } <br>   ] <br> }```",
       "dropdowns": [
         {
           "index": 0,
@@ -735,7 +735,7 @@
     "explanation": "Para interagir com Durable Entities, injeta-se `[DurableClient] IDurableEntityClient`. Para um padrão 'fire-and-forget' (sem esperar a conclusão da operação), usa-se `SignalEntityAsync`.",
     "content": {
       "statement": "Você está desenvolvendo um jogo online que permite que os jogadores votem em sua foto favorita. O jogo é construído usando Azure Functions e utiliza Durable Entities (Entidades Duráveis) para rastrear e armazenar o estado contínuo da contagem de votos. A janela de votação é de apenas 30 segundos, e o requisito máximo é minimizar a latência da requisição (a função HTTP deve responder imediatamente, sem esperar o processamento do voto). <br> Como você deve completar o código da função de gatilho HTTP para sinalizar o voto à entidade de forma assíncrona (\"fire-and-forget\")? (Escolha a opção correta para cada lacuna)",
-      "text": "[FunctionName(\"Vote\")] <br> public static async Task<HttpResponseMessage> Run( <br>     [HttpTrigger(\"POST\", Route = \"pic/{id}\")] HttpRequestMessage req, <br>     {{0}} c,  <br>     string id) <br> { <br>     var eid = new EntityId(\"pic\", id); <br>     await c.{{1}}(eid, \"vote\"); <br>  <br>     return req.CreateResponse(HttpStatusCode.OK); <br> }",
+      "text": "```[FunctionName(\"Vote\")] <br> public static async Task<HttpResponseMessage> Run( <br>     [HttpTrigger(\"POST\", Route = \"pic/{id}\")] HttpRequestMessage req, <br>     {{0}} c,  <br>     string id) <br> { <br>     var eid = new EntityId(\"pic\", id); <br>     await c.{{1}}(eid, \"vote\"); <br>  <br>     return req.CreateResponse(HttpStatusCode.OK); <br> }```",
       "dropdowns": [
         {
           "index": 0,

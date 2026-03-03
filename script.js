@@ -150,20 +150,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (q.type === 'no_return_series') {
             const scenario = document.createElement('div');
             scenario.className = 'scenario-box';
-            scenario.innerHTML = `<strong>Cenário:</strong> ${formatCodeBlocks(q.content.scenario)}`;
+            scenario.innerHTML = `<strong>Cenário:</strong> ${formatText(q.content.scenario)}`;
             questionContainer.appendChild(scenario);
             
             const statement = document.createElement('p');
-            statement.innerHTML = `<strong>Pergunta:</strong> ${formatCodeBlocks(q.content.statement)}`;
+            statement.innerHTML = `<strong>Pergunta:</strong> ${formatText(q.content.statement)}`;
             questionContainer.appendChild(statement);
         } else if (q.type === 'case_study') {
-            renderCaseStudyTabs(q);
+            renderCaseStudyTabs(q); // Formatting is handled inside this function
             const statement = document.createElement('p');
-            statement.innerHTML = `<strong>Pergunta:</strong> ${formatCodeBlocks(q.content.statement)}`;
+            statement.innerHTML = `<strong>Pergunta:</strong> ${formatText(q.content.statement)}`;
             questionContainer.appendChild(statement);
         } else {
             const statement = document.createElement('p');
-            statement.innerHTML = formatCodeBlocks(q.content.statement); // Use innerHTML for formatted code
+            statement.innerHTML = formatText(q.content.statement); // Use innerHTML for formatted code
             questionContainer.appendChild(statement);
         }
 
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const pane = document.createElement('div');
             pane.id = `tab-${tab.id}`;
             pane.className = `cs-tab-pane ${index === 0 ? 'active' : ''}`;
-            pane.innerHTML = formatCodeBlocks(tab.content.replace(/\n/g, '<br>'));
+            pane.innerHTML = formatText(tab.content); // Apply formatting here
             tabContent.appendChild(pane);
         });
 
@@ -221,8 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.createElement('div');
         container.className = 'dropdown-text-container';
         
-        // Format code blocks first, then handle dropdowns
-        let textHtml = formatCodeBlocks(q.content.text);
+        // Format code blocks and newlines first
+        let textHtml = formatText(q.content.text);
         
         const regex = /\{\{(\d+)\}\}/g;
         textHtml = textHtml.replace(regex, (match, index) => {
@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackArea.className = `feedback-area ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
         
         document.getElementById('feedback-message').innerHTML = `<strong>${isCorrect ? 'Correto!' : 'Incorreto'}</strong>`;
-        document.getElementById('explanation-text').textContent = q.explanation;
+        document.getElementById('explanation-text').innerHTML = formatText(q.explanation); // Apply formatting here
         
         const docLink = document.getElementById('doc-link');
         if (q.official_doc_link) {
@@ -493,12 +493,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 // --- HELPERS ---
-    function formatCodeBlocks(text) {
-        // Regex to find ```, optionally followed by a language name, then content, then ```
-        const regex = /```(\w*)\n([\s\S]*?)```/g;
-        return text.replace(regex, (match, lang, code) => {
-            const escapedCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    function formatText(text) {
+        if (!text) return '';
+
+        // Regex to find ```, optionally a language, then any whitespace including <br>, then content, then ```
+        const regex = /```(?:\w*)?\s*(?:<br>)?\s*([\s\S]*?)\s*(?:<br>)?\s*```/g;
+        
+        return text.replace(regex, (match, code) => {
+            // Inside the code block, convert <br> back to \n
+            const codeWithNewlines = code.replace(/<br\s*\/?>/gi, '\n');
+            // Escape HTML characters to prevent rendering them
+            const escapedCode = codeWithNewlines.replace(/</g, '&lt;').replace(/>/g, '&gt;');
             return `<pre class="code-block">${escapedCode.trim()}</pre>`;
         });
     }
+
+    function handleDragStart(e) { e.target.classList.add('dragging'); }
 });
