@@ -1,0 +1,495 @@
+[
+  {
+    "id": "Q-MSAL-01",
+    "type": "dropdown_fill_in_blank",
+    "category": "MSAL & Graph API",
+    "difficulty": "Difícil",
+    "explanation": "'ConfidentialClientApplicationBuilder' é usado para criar um cliente confidencial, e 'scopes' é passado para 'AcquireTokenForClient' para especificar as permissões.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo web que faz chamadas para a API do Microsoft Graph. O aplicativo lê as configurações de um arquivo appsettings.json e usa um certificado X.509 válido. Você precisa implementar o código que adquire um token usando esse certificado.",
+      "text": "var app = {{0}}<br>            .Create(config.ClientId)<br>            .WithCertificate(certificate)<br>            .WithAuthority(new Uri(config.Authority))<br>            .Build();<br><br>string[] scopes = new string[] { $\"{config.ApiUrl}.default\" };<br>AuthenticationResult result = await app.AcquireTokenForClient({{1}}).ExecuteAsync();",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "ConfidentialClientApplicationBuilder" },
+            { "id": "B", "text": "GetAccountAsync()" },
+            { "id": "C", "text": "GetAccountsAsync()" },
+            { "id": "D", "text": "ConfidentialClientApplication" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "scopes" },
+            { "id": "B", "text": "app" },
+            { "id": "C", "text": "config" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-MSAL-02",
+    "type": "drag_and_drop",
+    "category": "MSAL & Graph API",
+    "difficulty": "Difícil",
+    "explanation": "A sequência é: Registrar o aplicativo, construir um cliente, criar um provedor de autenticação, criar uma instância do GraphServiceClient e invocar a solicitação.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo para recuperar informações de perfil de usuário. O aplicativo usará o Microsoft Graph SDK. Você precisa chamar a API do Microsoft Graph a partir do aplicativo.",
+      "items_to_drag": [
+        { "id": "A", "text": "Registrar o aplicativo na plataforma de identidade da Microsoft (Register the application)." },
+        { "id": "B", "text": "Construir um cliente usando o ID do aplicativo cliente (Build a client by using the client app ID)." },
+        { "id": "C", "text": "Criar um provedor de autenticação (Create an authentication provider)." },
+        { "id": "D", "text": "Criar uma nova instância do GraphServiceClient." },
+        { "id": "E", "text": "Invocar a solicitação para a API do Microsoft Graph (Invoke the request)." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D", "E"]
+  },
+  {
+    "id": "Q-MSAL-03",
+    "type": "multiple_choice",
+    "category": "MSAL & Graph API",
+    "difficulty": "Média",
+    "explanation": "Microsoft Graph API para interagir com os dados do diretório e MSAL para autenticação e aquisição de tokens.",
+    "content": {
+      "statement": "Você está desenvolvendo uma API REST no Azure App Service. A API deve recuperar e atualizar informações de perfil de usuário armazenadas no Azure Active Directory (Microsoft Entra ID). Quais DUAS ferramentas ou bibliotecas você deve usar em conjunto para configurar a API para fazer essas atualizações no diretório?",
+      "options": [
+        { "id": "A", "text": "Microsoft Graph API" },
+        { "id": "B", "text": "Microsoft Authentication Library (MSAL)" },
+        { "id": "C", "text": "Azure API Management" },
+        { "id": "D", "text": "Microsoft Azure Security Center" },
+        { "id": "E", "text": "Microsoft Azure Key Vault SDK" }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-MSAL-04",
+    "type": "dropdown_fill_in_blank",
+    "category": "MSAL & Graph API",
+    "difficulty": "Média",
+    "explanation": "Microsoft Graph API para acessar dados de perfil e MSAL para autenticação com Azure AD B2C.",
+    "content": {
+      "statement": "Você desenvolve e implanta um aplicativo da web no Azure App Service. O aplicativo permite que os usuários se autentiquem usando provedores de identidade sociais através do serviço Azure AD B2C. Você deve atualizar o aplicativo para exibir propriedades comuns do usuário do Azure B2C (como endereço de e-mail, cargo, nome, sobrenome e local do escritório).",
+      "text": "API para acessar as propriedades do usuário: {{0}}<br>Biblioteca de código para interagir com o Azure AD B2C: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Microsoft Graph" },
+            { "id": "B", "text": "Azure AD Graph" },
+            { "id": "C", "text": "Azure Key Vault" },
+            { "id": "D", "text": "Azure AD entitlement management" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Microsoft Authentication Library (MSAL)" },
+            { "id": "B", "text": "Microsoft Azure Key Vault SDK" },
+            { "id": "C", "text": "Azure Identity library" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-MSAL-05",
+    "type": "dropdown_fill_in_blank",
+    "category": "MSAL & Graph API",
+    "difficulty": "Fácil",
+    "explanation": "O endpoint '/v1.0/me' retorna os dados do usuário logado, e a permissão delegada 'User.Read' é necessária para ler o perfil básico.",
+    "content": {
+      "statement": "Como parte dos requisitos de um portal corporativo, você precisa exibir a foto do perfil e o e-mail da equipe interna no site assim que eles se autenticarem usando o Microsoft Entra ID. Qual configuração do Microsoft Graph você deve usar na sua requisição HTTP REST para buscar os dados básicos do usuário logado?",
+      "text": "Endpoint: {{0}}<br>Permissão Delegada (Permission): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "/v1.0/me" },
+            { "id": "B", "text": "/v1.0/me/people/?$search=me" },
+            { "id": "C", "text": "/v1.0/users?$select=profilePhoto,mail" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "User.Read" },
+            { "id": "B", "text": "User.Export.All" },
+            { "id": "C", "text": "User.ReadWrite" },
+            { "id": "D", "text": "User.ManageIdentities.All" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-MSAL-06",
+    "type": "multiple_choice",
+    "category": "MSAL & Graph API",
+    "difficulty": "Média",
+    "explanation": "Microsoft Graph API para interagir com o diretório e MSAL para autenticação e aquisição de tokens.",
+    "content": {
+      "statement": "Você está desenvolvendo uma API REST no Azure App Service. A API deve ser chamada por um aplicativo Web do Azure App Service. A API deve recuperar e atualizar informações de perfil de usuário armazenadas no Microsoft Entra ID (Azure AD). Você precisa configurar a API para realizar essas atualizações de forma programática.",
+      "options": [
+        { "id": "A", "text": "Microsoft Graph API" },
+        { "id": "B", "text": "Microsoft Authentication Library (MSAL)" },
+        { "id": "C", "text": "Azure API Management" },
+        { "id": "D", "text": "Microsoft Azure Security Center" },
+        { "id": "E", "text": "Microsoft Azure Key Vault SDK" }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-MSAL-07",
+    "type": "drag_and_drop",
+    "category": "MSAL & Graph API",
+    "difficulty": "Difícil",
+    "explanation": "A sequência é: Registrar o aplicativo, construir um cliente, criar um provedor de autenticação, criar uma instância do GraphServiceClient e invocar a solicitação.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo corporativo para recuperar informações de perfil de usuário. O aplicativo usará o Microsoft Graph SDK para as chamadas em código. O aplicativo deve recuperar as informações por meio de uma chamada à API do Microsoft Graph.",
+      "items_to_drag": [
+        { "id": "A", "text": "Registrar o aplicativo na plataforma de identidade da Microsoft (Register the application)." },
+        { "id": "B", "text": "Construir um cliente usando o ID do aplicativo cliente (Build a client by using the client app ID)." },
+        { "id": "C", "text": "Criar um provedor de autenticação (Create an authentication provider)." },
+        { "id": "D", "text": "Criar uma nova instância do GraphServiceClient." },
+        { "id": "E", "text": "Invocar a solicitação para a API do Microsoft Graph (Invoke the request)." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D", "E"]
+  },
+  {
+    "id": "Q-MSAL-08",
+    "type": "dropdown_fill_in_blank",
+    "category": "MSAL & Graph API",
+    "difficulty": "Difícil",
+    "explanation": "A consulta OData usa '$filter' para filtrar, a expressão 'groupTypes/any(c:c eq 'Unified')' para encontrar grupos unificados, e '$consistencyLevel=eventual' para garantir que a consulta avançada funcione.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo web que interage com grupos do Microsoft Entra ID (Azure AD) usando a API do Microsoft Graph. Você precisa construir uma página da web que mostre todos os grupos que NÃO são do tipo 'Unified'. Você decide construir a consulta OData (query) diretamente na URI do Microsoft Graph.",
+      "text": "https://graph.microsoft.com/v1.0/groups?{{0}}=NOT {{1}}&{{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "$filter" },
+            { "id": "B", "text": "$search" },
+            { "id": "C", "text": "$contain" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "groupTypes/any(c:c eq 'Unified')" },
+            { "id": "B", "text": "groupTypes/contains('Unified')" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "$count=true" },
+            { "id": "B", "text": "$top=true" },
+            { "id": "C", "text": "$consistencyLevel=eventual" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A", "C"]
+  },
+  {
+    "id": "Q-MSAL-09",
+    "type": "dropdown_fill_in_blank",
+    "category": "MSAL & Graph API",
+    "difficulty": "Média",
+    "explanation": "ID Token para identificar usuários, Access Token para permissões de API, Refresh Token para acesso de longo prazo.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo da web que usa a plataforma de identidade da Microsoft (implementada via MSAL) para autenticação de usuários e recursos. O aplicativo web chama várias APIs REST. Você está implementando vários fluxos de autenticação e autorização e precisa validar e armazenar as claims (reivindicações) usando o tipo de token correto para cada situação.",
+      "text": "A) Identificar os usuários para o aplicativo usando um token JWT que contém claims. -> {{0}}<br>B) Identificar as permissões concedidas às APIs usando um token JWT que contém claims. -> {{1}}<br>C) Fornecer ao aplicativo da web acesso de longo prazo aos recursos em nome dos usuários, sem exigir a interação manual contínua deles. -> {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Access Token" },
+            { "id": "B", "text": "ID Token" },
+            { "id": "C", "text": "Refresh Token" },
+            { "id": "D", "text": "SAML" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Access Token" },
+            { "id": "B", "text": "ID Token" },
+            { "id": "C", "text": "Refresh Token" },
+            { "id": "D", "text": "SAML" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Access Token" },
+            { "id": "B", "text": "ID Token" },
+            { "id": "C", "text": "Refresh Token" },
+            { "id": "D", "text": "SAML" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A", "C"]
+  },
+  {
+    "id": "Q-MSAL-10",
+    "type": "multiple_choice",
+    "category": "MSAL & Graph API",
+    "difficulty": "Fácil",
+    "explanation": "O parâmetro 'scope' é usado para solicitar permissões específicas durante o fluxo de autenticação OAuth 2.0.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo da web que usa a plataforma de identidade da Microsoft para autenticar usuários e recursos. O aplicativo web chama várias APIs REST. Uma chamada de API REST deve ler o calendário do usuário. Além disso, o aplicativo web requer permissão para enviar um e-mail como o usuário. Você precisa autorizar o aplicativo web e a API passando o parâmetro correto na sua requisição de autenticação para solicitar essas permissões (por exemplo, User.Read e Mail.Send).",
+      "options": [
+        { "id": "A", "text": "tenant" },
+        { "id": "B", "text": "code_challenge" },
+        { "id": "C", "text": "state" },
+        { "id": "D", "text": "client_id" },
+        { "id": "E", "text": "scope" }
+      ]
+    },
+    "correct_answer": ["E"]
+  },
+  {
+    "id": "Q-MSAL-11",
+    "type": "multiple_choice",
+    "category": "MSAL & Graph API",
+    "difficulty": "Média",
+    "explanation": "MSAL para autenticação e aquisição de tokens, e Microsoft Graph API para interagir com os dados do diretório.",
+    "content": {
+      "statement": "Você está desenvolvendo uma API REST hospedada no Azure App Service. A API é chamada por outro aplicativo web interno e precisa recuperar e atualizar informações de perfil de usuário armazenadas no Microsoft Entra ID (Azure AD) de forma programática. Quais DUAS ferramentas ou bibliotecas você deve usar em conjunto para implementar a autenticação e realizar essas atualizações no diretório?",
+      "options": [
+        { "id": "A", "text": "Azure API Management (APIM)" },
+        { "id": "B", "text": "Biblioteca de Autenticação da Microsoft (MSAL)" },
+        { "id": "C", "text": "Microsoft Graph API" },
+        { "id": "D", "text": "Azure Identity Library" },
+        { "id": "E", "text": "Microsoft Azure Key Vault SDK" }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-MSAL-12",
+    "type": "drag_and_drop",
+    "category": "MSAL & Graph API",
+    "difficulty": "Difícil",
+    "explanation": "A sequência correta de codificação é: Registrar o aplicativo, construir o cliente, criar o provedor de autenticação, criar o GraphServiceClient e, por fim, invocar a solicitação.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo corporativo em C# para recuperar informações de perfil de usuário. O código do aplicativo usará o Microsoft Graph SDK. Você precisa configurar o código para chamar a API do Microsoft Graph corretamente.",
+      "items_to_drag": [
+        { "id": "A", "text": "Registrar o aplicativo na plataforma de identidade da Microsoft (Register the application)." },
+        { "id": "B", "text": "Construir um aplicativo cliente usando o ID do aplicativo cliente (Build a client by using the client app ID)." },
+        { "id": "C", "text": "Criar um provedor de autenticação (Create an authentication provider)." },
+        { "id": "D", "text": "Criar uma nova instância do GraphServiceClient." },
+        { "id": "E", "text": "Invocar a solicitação para a API do Microsoft Graph (Invoke the request)." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D", "E"]
+  },
+  {
+    "id": "Q-MSAL-13",
+    "type": "dropdown_fill_in_blank",
+    "category": "MSAL & Graph API",
+    "difficulty": "Difícil",
+    "explanation": "Use '$filter' para filtrar, 'groupTypes/any(c:c eq 'Unified')' para encontrar grupos unificados, e '$consistencyLevel=eventual' para consultas avançadas.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo web de página única (SPA) que interage com grupos do Microsoft Entra ID usando a API REST do Microsoft Graph. Você precisa construir uma consulta que mostre todos os grupos que NÃO são do tipo 'Unified'. Como você deve formatar os parâmetros da URI OData do Microsoft Graph?",
+      "text": "https://graph.microsoft.com/v1.0/groups?{{0}}=NOT {{1}}&{{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "$filter" },
+            { "id": "B", "text": "$search" },
+            { "id": "C", "text": "$contain" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "groupTypes/any(c:c eq 'Unified')" },
+            { "id": "B", "text": "groupTypes/contains('Unified')" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "$count=true" },
+            { "id": "B", "text": "$top=true" },
+            { "id": "C", "text": "$consistencyLevel=eventual" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A", "C"]
+  },
+  {
+    "id": "Q-MSAL-14",
+    "type": "dropdown_fill_in_blank",
+    "category": "MSAL & Graph API",
+    "difficulty": "Difícil",
+    "explanation": "'ConfidentialClientApplicationBuilder' para criar o cliente e 'scopes' para adquirir o token.",
+    "content": {
+      "statement": "Você está desenvolvendo um serviço de daemon (processo em segundo plano) que faz chamadas para a API do Microsoft Graph sem a interação do usuário. O aplicativo usa um certificado X.509 válido carregado no registro do aplicativo para autenticação. Você precisa implementar o código usando MSAL para adquirir o token usando o fluxo de credenciais de cliente (client credentials flow).",
+      "text": "var app = {{0}}.Create(config.ClientId)<br>            .WithCertificate(certificate)<br>            .WithAuthority(new Uri(config.Authority))<br>            .Build();<br><br>string[] scopes = new string[] { $\"{config.ApiUrl}.default\" };<br>AuthenticationResult result = await app.AcquireTokenForClient({{1}}).ExecuteAsync();",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "ConfidentialClientApplicationBuilder" },
+            { "id": "B", "text": "PublicClientApplicationBuilder" },
+            { "id": "C", "text": "GetAccountAsync()" },
+            { "id": "D", "text": "ConfidentialClientApplication" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "scopes" },
+            { "id": "B", "text": "app" },
+            { "id": "C", "text": "config" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-MSAL-15",
+    "type": "dropdown_fill_in_blank",
+    "category": "MSAL & Graph API",
+    "difficulty": "Fácil",
+    "explanation": "Endpoint '/v1.0/me' para dados do usuário logado e permissão 'User.Read' para ler o perfil.",
+    "content": {
+      "statement": "Como parte da modernização do site corporativo, você precisa exibir a foto do perfil e o endereço de e-mail do funcionário (staff) logo após ele fazer o login usando sua própria conta do Microsoft Entra ID. Qual configuração do Microsoft Graph você deve usar na requisição para obter os dados de forma mais direta do próprio usuário logado?",
+      "text": "Endpoint: {{0}}<br>Permissão (Permission): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "/v1.0/me" },
+            { "id": "B", "text": "/v1.0/users?$select=profilePhoto,mail" },
+            { "id": "C", "text": "/v1.0/me/people/?$search=me" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "User.Read" },
+            { "id": "B", "text": "User.ReadWrite" },
+            { "id": "C", "text": "User.Export.All" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-MSAL-16",
+    "type": "multiple_choice",
+    "category": "MSAL & Graph API",
+    "difficulty": "Alta",
+    "explanation": "A Conexão de Dados do Microsoft Graph (Microsoft Graph data connect) é projetada para extração de dados em larga escala com controle e consentimento granular.",
+    "content": {
+      "statement": "Você está desenvolvendo um portal de usuários para a sua empresa. Você precisa criar um relatório para o portal que liste informações detalhadas e em massa sobre funcionários que são especialistas no assunto (SMEs) para um tópico específico. O requisito de segurança dita que você deve garantir que os administradores do locatário (tenant) tenham controle total e consentimento granular sobre a extração e o uso desses dados em larga escala.",
+      "options": [
+        { "id": "A", "text": "API do Microsoft Graph (Microsoft Graph API)" },
+        { "id": "B", "text": "Conectores do Microsoft Graph (Microsoft Graph connectors)" },
+        { "id": "C", "text": "Conexão de Dados do Microsoft Graph (Microsoft Graph data connect)" },
+        { "id": "D", "text": "Azure Active Directory Graph" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-MSAL-17",
+    "type": "dropdown_fill_in_blank",
+    "category": "MSAL & Graph API",
+    "difficulty": "Difícil",
+    "explanation": "O cabeçalho 'Prefer' com o valor 'include-unknown-enum-members' é usado para suportar enumerações evolutivas no Microsoft Graph.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo integrado ao Microsoft Entra ID (usando MSAL) que interage profundamente com o Microsoft Graph. A API do Microsoft Graph está em constante evolução. Você deve permitir que as operações GET do seu código recebam membros desconhecidos que possam vir a ser definidos no futuro (novas propriedades retornadas pela API). Você planeja incluir suporte para enumerações evolutivas (evolvable enumerations) no aplicativo.",
+      "text": "{{0}}: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Prefer" },
+            { "id": "B", "text": "Accept" },
+            { "id": "C", "text": "OData-MaxVersion" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "include-unknown-enum-members" },
+            { "id": "B", "text": "return=representation" },
+            { "id": "C", "text": "application/json;odata.metadata=minimal" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-MSAL-18",
+    "type": "multiple_choice",
+    "category": "MSAL & Graph API",
+    "difficulty": "Alta",
+    "explanation": "O parâmetro 'resetRedemption' na Graph API é usado para alterar o método de autenticação de um usuário convidado sem perder seus dados.",
+    "content": {
+      "statement": "Você está construindo um aplicativo web B2B que usa a colaboração do Azure B2B para autenticação. Os clientes pagantes se autenticam usando federação. O aplicativo também permite que novos usuários se inscrevam em contas de teste usando senhas de uso único (One-Time Passcodes - OTP) para qualquer endereço de e-mail. Quando um usuário converte da conta de teste para cliente pagante, os dados associados ao teste devem ser mantidos de forma contínua, mas o usuário deve, a partir daquele momento, se autenticar usando federação.",
+      "options": [
+        { "id": "A", "text": "userFlowType" },
+        { "id": "B", "text": "invitedUser" },
+        { "id": "C", "text": "Status" },
+        { "id": "D", "text": "resetRedemption" }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-MSAL-19",
+    "type": "drag_and_drop",
+    "category": "MSAL & Graph API",
+    "difficulty": "Média",
+    "explanation": "A sequência correta é: Registrar o aplicativo, criar um segredo de cliente, conceder permissões da API e, opcionalmente, criar um fluxo de usuário.",
+    "content": {
+      "statement": "Você está configurando a segurança e o registro de um novo aplicativo web corporativo para que ele possa utilizar a MSAL e fazer requisições autorizadas à API do Microsoft Graph. Quais QUATRO ações você deve executar em sequência no portal do Azure para configurar corretamente essa aplicação e suas permissões?",
+      "items_to_drag": [
+        { "id": "A", "text": "Registrar o aplicativo web no Microsoft Entra (Register the web app with Microsoft Entra)." },
+        { "id": "B", "text": "Criar um segredo de cliente (Create a client secret)." },
+        { "id": "C", "text": "Conceder as permissões da API do Microsoft Graph ao aplicativo web (Grant Microsoft Graph API permissions to the web app)." },
+        { "id": "D", "text": "Criar um fluxo de usuário e associá-lo ao aplicativo web (Create a user flow and associate the web app)." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D"]
+  },
+  {
+    "id": "Q-MSAL-20",
+    "type": "multiple_choice",
+    "category": "MSAL & Graph API",
+    "difficulty": "Fácil",
+    "explanation": "A Autenticação do Azure App Service passa as claims do usuário para o aplicativo por meio de cabeçalhos de solicitação HTTP, que podem ser lidos nativamente.",
+    "content": {
+      "statement": "Você desenvolve e implanta um aplicativo de comércio eletrônico no Azure App Service. Os logins do aplicativo são protegidos de forma nativa usando a Autenticação do Azure App Service e o Microsoft Entra ID (que implementam fluxos MSAL nos bastidores). Você precisa acessar os dados do objeto de reivindicação do usuário (User Claims) diretamente no código do aplicativo web de e-commerce da forma mais rápida e com o menor custo de rede.",
+      "options": [
+        { "id": "A", "text": "Escrever código personalizado para fazer uma chamada à API do Microsoft Graph a partir do aplicativo web passando o token." },
+        { "id": "B", "text": "Atribuir a função RBAC de Colaborador (Contributor) ao aplicativo web usando a API do Resource Manager." },
+        { "id": "C", "text": "Usando a CLI do Azure, habilitar o Compartilhamento de Recursos de Origem Cruzada (CORS)." },
+        { "id": "D", "text": "Atualizar o aplicativo web para ler nativamente os valores do cabeçalho da solicitação HTTP (HTTP request header values)." }
+      ]
+    },
+    "correct_answer": ["D"]
+  }
+]

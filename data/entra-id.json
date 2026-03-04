@@ -1,0 +1,487 @@
+[
+  {
+    "id": "Q-EID-01",
+    "type": "dropdown_fill_in_blank",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "Para definir uma App Role, 'allowedMemberTypes' especifica quem pode ser atribuído (User, Application), e 'value' é o valor da role que aparecerá no token.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo web corporativo e precisa criar uma função de aplicativo (App Role) personalizada chamada ContentReviewer. Os usuários deverão ser atribuídos a essa função para revisar o conteúdo. Você precisa adicionar a marcação correta no arquivo JSON do manifesto do aplicativo (Application Manifest) no Microsoft Entra ID.",
+      "text": "\"appRoles\": [<br>  {<br>    \"{{0}}\": [<br>      \"{{1}}\"<br>    ],<br>    \"displayName\": \"ContentReviewer\",<br>    \"id\": \"e1c2ade8-98f8-45fd-aa4a-6d24b512c22a\",<br>    \"isEnabled\": true,<br>    \"{{2}}\": \"ContentReviewer\"<br>  }<br>]",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "allowedMemberTypes" },
+            { "id": "B", "text": "User" },
+            { "id": "C", "text": "value" },
+            { "id": "D", "text": "role" },
+            { "id": "E", "text": "Application" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "allowedMemberTypes" },
+            { "id": "B", "text": "User" },
+            { "id": "C", "text": "value" },
+            { "id": "D", "text": "role" },
+            { "id": "E", "text": "Application" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "allowedMemberTypes" },
+            { "id": "B", "text": "User" },
+            { "id": "C", "text": "value" },
+            { "id": "D", "text": "role" },
+            { "id": "E", "text": "Application" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-EID-02",
+    "type": "drag_and_drop",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Fácil",
+    "explanation": "A sequência correta é: 1. Selecionar a instância do Entra ID. 2. Ir para App Registrations e selecionar New registration. 3. Criar o novo aplicativo fornecendo os detalhes necessários.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo web e precisa registrá-lo em um locatário (tenant) ativo do Microsoft Entra ID para permitir a autenticação de usuários. Quais TRÊS ações você deve executar em sequência no portal do Azure?",
+      "items_to_drag": [
+        { "id": "A", "text": "Selecionar a instância do Microsoft Entra ID (Azure AD)." },
+        { "id": "B", "text": "Em App Registrations (Registros de Aplicativos), selecionar New registration (Novo registro)." },
+        { "id": "C", "text": "Criar um novo aplicativo e fornecer o nome, tipo de conta e URI de redirecionamento." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-EID-03",
+    "type": "multiple_choice",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "A claim 'oid' (object identifier) é o identificador único e imutável para um usuário no Microsoft Entra ID.",
+    "content": {
+      "statement": "Você está construindo um aplicativo da web que usa a plataforma de identidade da Microsoft (Microsoft Identity Platform) para autenticação de usuários. Você está implementando a identificação do usuário para o aplicativo da web e precisa recuperar uma claim (reivindicação) no token para identificar de forma exclusiva e imutável o usuário dentro do diretório.",
+      "options": [
+        { "id": "A", "text": "aud" },
+        { "id": "B", "text": "nonce" },
+        { "id": "C", "text": "oid" },
+        { "id": "D", "text": "idp" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-EID-04",
+    "type": "dropdown_fill_in_blank",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Difícil",
+    "explanation": "'groupMembershipClaims' com valor 'All' inclui todos os grupos de segurança no token. 'oauth2AllowImplicitFlow' como 'true' habilita o fluxo implícito para obter tokens diretamente.",
+    "content": {
+      "statement": "Você está construindo um site para acessar dados de projetos relacionados a equipes dentro de sua organização. A autenticação é executada usando um aplicativo do Microsoft Entra ID chamado internal. O site possui os seguintes requisitos de autenticação:\nA personalização do site e os níveis de permissão devem ser baseados na associação do usuário a grupos do Active Directory (Groups).\nO aplicativo deve suportar a obtenção de tokens de acesso diretamente do ponto de extremidade de autorização (sem precisar de chamadas adicionais de backend).",
+      "text": "Propriedade para habilitar os grupos no token: {{0}} : \"All\"<br>Propriedade para habilitar o fluxo necessário: {{1}} : true",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "optionalClaims" },
+            { "id": "B", "text": "groupMembershipClaims" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "allowPublicClient" },
+            { "id": "B", "text": "oauth2Permissions" },
+            { "id": "C", "text": "oauth2AllowImplicitFlow" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-EID-05",
+    "type": "dropdown_fill_in_blank",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "ID token para identificar usuários, Access token para permissões de API, e Refresh token para acesso de longo prazo.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo web que usa a plataforma de identidade da Microsoft para autenticação de usuários e recursos. O aplicativo chama várias APIs REST. Você precisa validar as claims no token de autenticação e usar o tipo de token correto para cada objetivo da arquitetura.",
+      "text": "Identificar usuários para o aplicativo usando um token JWT que contenha claims: {{0}}<br>Identificar as permissões concedidas às APIs usando um token JWT: {{1}}<br>Fornecer ao aplicativo web acesso de longo prazo aos recursos em nome dos usuários, sem exigir a interação deles: {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Access token" },
+            { "id": "B", "text": "ID token" },
+            { "id": "C", "text": "Refresh token" },
+            { "id": "D", "text": "SAML" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Access token" },
+            { "id": "B", "text": "ID token" },
+            { "id": "C", "text": "Refresh token" },
+            { "id": "D", "text": "SAML" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Access token" },
+            { "id": "B", "text": "ID token" },
+            { "id": "C", "text": "Refresh token" },
+            { "id": "D", "text": "SAML" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A", "C"]
+  },
+  {
+    "id": "Q-EID-06",
+    "type": "dropdown_fill_in_blank",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "A Microsoft Graph API é usada para acessar dados de perfil de usuário, e a MSAL é a biblioteca recomendada para interagir com o Azure AD B2C para autenticação.",
+    "content": {
+      "statement": "Você desenvolve e implanta um aplicativo web no Azure App Service. O aplicativo web permite que os usuários se autentiquem usando provedores de identidade social (Google, Facebook) por meio do serviço Azure AD B2C. Todas as informações de perfil do usuário são armazenadas no Azure AD B2C. Você deve atualizar o aplicativo web para exibir propriedades comuns do usuário armazenadas no diretório B2C, incluindo: Endereço de e-mail, Cargo, Nome, Sobrenome e Local do escritório.",
+      "text": "API para acessar as propriedades do usuário: {{0}}<br>Biblioteca de código para interface com o Azure AD B2C: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Microsoft Graph" },
+            { "id": "B", "text": "Azure AD Graph" },
+            { "id": "C", "text": "Azure Key Vault" },
+            { "id": "D", "text": "Azure AD entitlement management" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Microsoft Authentication Library (MSAL)" },
+            { "id": "B", "text": "Microsoft Azure Key Vault SDK" },
+            { "id": "C", "text": "Azure Identity library" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-EID-07",
+    "type": "multiple_choice",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "A Microsoft Graph API é usada para interagir com os dados do Entra ID, e a MSAL é usada para lidar com a autenticação e aquisição de tokens.",
+    "content": {
+      "statement": "Uma equipe de software está construindo uma API REST hospedada no Azure App Service que é chamada por um aplicativo web complementar. A API precisa recuperar e atualizar os atributos de perfil do usuário armazenados no locatário (tenant) do Microsoft Entra ID da empresa. Quais DUAS ferramentas ou tecnologias a equipe deve configurar para que a API possa executar essas atualizações com segurança?",
+      "options": [
+        { "id": "A", "text": "Microsoft Azure Security Center" },
+        { "id": "B", "text": "Microsoft Graph API" },
+        { "id": "C", "text": "Azure API Management (APIM)" },
+        { "id": "D", "text": "Microsoft Authentication Library (MSAL)" }
+      ]
+    },
+    "correct_answer": ["B", "D"]
+  },
+  {
+    "id": "Q-EID-08",
+    "type": "drag_and_drop",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Difícil",
+    "explanation": "A sequência é: Registrar o aplicativo, construir um cliente com o ID, criar um provedor de autenticação, criar uma instância do GraphServiceClient e, finalmente, invocar a solicitação.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo para recuperar informações de perfil de usuário em seu locatário. O aplicativo usará o Microsoft Graph SDK. O aplicativo deve recuperar as informações do perfil do usuário por meio de uma chamada à API do Microsoft Graph. Você precisa configurar e chamar a API do Microsoft Graph a partir do aplicativo.",
+      "items_to_drag": [
+        { "id": "A", "text": "Registrar o aplicativo na plataforma de identidade da Microsoft (Microsoft Identity Platform)." },
+        { "id": "B", "text": "Construir um cliente (Client) usando o ID do aplicativo cliente (Client App ID)." },
+        { "id": "C", "text": "Criar um provedor de autenticação (Authentication provider)." },
+        { "id": "D", "text": "Criar uma nova instância do GraphServiceClient." },
+        { "id": "E", "text": "Invocar a solicitação para a API do Microsoft Graph." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D", "E"]
+  },
+  {
+    "id": "Q-EID-09",
+    "type": "multiple_choice",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Alta",
+    "explanation": "App Roles definidas no manifesto do aplicativo estão diretamente ligadas ao ciclo de vida do registro do aplicativo e serão removidas se o aplicativo for excluído.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo ASP.NET Core hospedado no Azure App Service. O aplicativo requer que reivindicações (claims) personalizadas sejam retornadas do Microsoft Entra ID para a autorização do usuário. Um requisito rigoroso de segurança dita que essas reivindicações devem ser totalmente removidas e deixar de existir caso o registro do aplicativo (App Registration) seja excluído do Entra ID.",
+      "options": [
+        { "id": "A", "text": "Adicionar as reivindicações usando grupos de segurança do Azure AD e configurar a propriedade groupMembershipClaims." },
+        { "id": "B", "text": "Adicionar as funções (roles) ao atributo appRoles no manifesto do aplicativo (App Manifest)." },
+        { "id": "C", "text": "Criar uma função (role) RBAC personalizada no Azure (Azure Custom Role) e atribuí-la ao aplicativo." },
+        { "id": "D", "text": "Armazenar as reivindicações no Azure Key Vault e recuperá-las em tempo de execução usando uma identidade gerenciada." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EID-10",
+    "type": "multiple_choice",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "O parâmetro 'scope' é usado em solicitações OAuth 2.0 para especificar as permissões que o aplicativo está solicitando.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo da web que usa a plataforma de identidade da Microsoft para autenticar usuários e recursos. O aplicativo web chama várias APIs REST. Uma das chamadas de API REST deve ler o calendário do usuário. Além disso, o aplicativo web requer permissão para enviar um e-mail como o usuário. Você precisa autorizar o aplicativo web e a API a realizarem essas ações no momento em que o token é solicitado.",
+      "options": [
+        { "id": "A", "text": "tenant" },
+        { "id": "B", "text": "code_challenge" },
+        { "id": "C", "text": "state" },
+        { "id": "D", "text": "client_id" },
+        { "id": "E", "text": "scope" }
+      ]
+    },
+    "correct_answer": ["E"]
+  },
+  {
+    "id": "Q-EID-11",
+    "type": "multiple_choice",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Difícil",
+    "explanation": "O Azure AD B2C é projetado para cenários voltados para o cliente e suporta a integração com provedores de identidade social e internos por meio de políticas personalizadas.",
+    "content": {
+      "statement": "Uma empresa mantém vários aplicativos da web e móveis. A arquitetura exige que esses aplicativos suportem o login tanto com provedores de identidade internos personalizados quanto com provedores de identidade social (como Facebook, Google e contas da Microsoft). Você precisa implementar uma solução de Logon Único (SSO - Single Sign-On) centralizada para todos esses aplicativos voltados para clientes. O que você deve fazer?",
+      "options": [
+        { "id": "A", "text": "Usar o Azure Active Directory B2B (Azure AD B2B) e habilitar a colaboração externa." },
+        { "id": "B", "text": "Usar o Azure Active Directory B2B (Azure AD B2B) nativamente com contas de convidado." },
+        { "id": "C", "text": "Usar o Azure Active Directory B2C (Azure AD B2C) com políticas personalizadas (custom policies)." },
+        { "id": "D", "text": "Conectar o Azure Application Gateway e configurar restrições baseadas em OIDC." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-EID-12",
+    "type": "dropdown_fill_in_blank",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "O valor 'AzureADMultipleOrgs' na propriedade 'signInAudience' configura o aplicativo para ser multi-tenant, permitindo logins de outras organizações.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo no Microsoft Entra ID (Azure AD) que interage com o Microsoft Graph. O aplicativo é voltado para uso corporativo e deve suportar locatários múltiplos (multi-tenant), o que significa que os usuários farão login usando as instâncias do Azure AD de suas próprias empresas. Você precisa configurar o manifesto do aplicativo (App Manifest) para aceitar esse comportamento de login de outras organizações.",
+      "text": "\"signInAudience\": \"{{0}}\"",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "AzureADMyOrg" },
+            { "id": "B", "text": "AzureADMultipleOrgs" },
+            { "id": "C", "text": "AzureADandPersonalMicrosoftAccount" },
+            { "id": "D", "text": "PersonalMicrosoftAccount" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EID-13",
+    "type": "dropdown_fill_in_blank",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "A política de Acesso Condicional deve ser aplicada a 'All users', para o aplicativo 'Microsoft Azure Management', e a ação a ser concedida é 'Require multi-factor authentication'.",
+    "content": {
+      "statement": "Você está configurando uma política de Acesso Condicional (Conditional Access Policy) no Microsoft Entra ID para um aplicativo de nível corporativo. O requisito estrito de segurança determina que a política deve exigir a Autenticação Multifator (MFA) para todos os usuários, mas apenas quando eles tentarem acessar o Portal de Gerenciamento do Azure (Azure Portal).",
+      "text": "Assignments > Users and groups: {{0}}<br>Assignments > Cloud apps or actions: {{1}}<br>Access controls > Grant: {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Exigir Autenticação Multifator (Require multi-factor authentication)" },
+            { "id": "B", "text": "Gerenciamento do Microsoft Azure (Microsoft Azure Management)" },
+            { "id": "C", "text": "Todos os usuários (All users)" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Exigir Autenticação Multifator (Require multi-factor authentication)" },
+            { "id": "B", "text": "Gerenciamento do Microsoft Azure (Microsoft Azure Management)" },
+            { "id": "C", "text": "Todos os usuários (All users)" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Exigir Autenticação Multifator (Require multi-factor authentication)" },
+            { "id": "B", "text": "Gerenciamento do Microsoft Azure (Microsoft Azure Management)" },
+            { "id": "C", "text": "Todos os usuários (All users)" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "B", "A"]
+  },
+  {
+    "id": "Q-EID-14",
+    "type": "multiple_choice",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Alta",
+    "explanation": "O parâmetro 'resetRedemption' na Graph API é usado para redefinir o método de autenticação de um usuário convidado, permitindo que ele mude de OTP para federação.",
+    "content": {
+      "statement": "Você está construindo um aplicativo web B2B (Business-to-Business) que usa a colaboração do Azure B2B para autenticação. Os clientes pagantes se autenticam usando federação. O aplicativo também permite que usuários comuns se inscrevam em contas de teste usando qualquer endereço de e-mail (usando senhas de uso único / One-Time Passcodes). Quando um usuário converte da versão de teste para cliente pagante, os dados associados ao teste devem ser mantidos, mas o usuário deve passar a se autenticar usando federação. Você precisa atualizar o usuário no Microsoft Entra ID (Azure AD) via Graph API quando ele se converter em cliente pagante.",
+      "options": [
+        { "id": "A", "text": "userFlowType" },
+        { "id": "B", "text": "resetRedemption" },
+        { "id": "C", "text": "Status" },
+        { "id": "D", "text": "invitedUser" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EID-15",
+    "type": "dropdown_fill_in_blank",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Difícil",
+    "explanation": "A URL do IMDS é 'http://169.254.169.254/metadata/identity/oauth2/token'. Para desserializar a resposta JSON em um dicionário, use 'JsonConvert.DeserializeObject'.",
+    "content": {
+      "statement": "Você está desenvolvendo um serviço web em C# (.NET) que será executado em Máquinas Virtuais (VMs) do Azure. O código fará chamadas ao Azure Storage. Você configurou todas as VMs para usarem Identidades Gerenciadas atribuídas pelo sistema (System-assigned Managed Identities). Os requisitos de segurança ditam que:\nMecanismos de autenticação baseados em segredos não são permitidos.\nO código deve obter o token chamando diretamente e exclusivamente o endpoint local do Azure Instance Metadata Service (IMDS).",
+      "text": "var url = \"{{0}}?api-version=2018-02-01&resource=https%3A%2F%2Fstorage.azure.com%2F\";<br>// ...<br>var token = {{1}};",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "http://localhost:50342/oauth2/token" },
+            { "id": "B", "text": "http://169.254.169.254/metadata/identity/oauth2/token" },
+            { "id": "C", "text": "http://10.0.0.1/metadata/identity/oauth2/token" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "XDocument.Parse(payload)" },
+            { "id": "B", "text": "new MultipartContent(payload)" },
+            { "id": "C", "text": "JsonConvert.DeserializeObject<Dictionary<string, string>>(payload)" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-EID-16",
+    "type": "multiple_choice",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "A solução proposta de usar App Roles para definir permissões e atribuir grupos a essas roles é a maneira correta de implementar a autorização baseada em grupos no Entra ID.",
+    "content": {
+      "statement": "Nota: Esta questão faz parte de uma série de cenários que avaliam soluções para um mesmo problema. Determine se a solução atende ao objetivo.\nVocê está desenvolvendo um site ASP.NET Core que será executado como um aplicativo Web do Azure App Service. Os usuários farão a autenticação usando suas credenciais do Microsoft Entra ID (Azure AD). Você planeja atribuir aos usuários um dos seguintes níveis de permissão para o site: admin, normal e reader. A associação a grupos do Azure AD de um usuário deve ser usada para determinar seu nível de permissão. Você precisa configurar a autorização.\nSolução proposta:\nCriar um novo aplicativo no Azure AD (App Registration).\nNo manifesto do aplicativo, definir funções de aplicativo (App Roles) que correspondam aos níveis de permissão exigidos.\nAtribuir o grupo apropriado do Azure AD a cada função (Role).\nNo código do site, usar o valor da reivindicação (claim) roles do token JWT do usuário para determinar as permissões.",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-EID-17",
+    "type": "dropdown_fill_in_blank",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Difícil",
+    "explanation": "Para o Azure Storage, a permissão delegada é 'user_impersonation'. Para o Microsoft Graph, a permissão delegada para ler o perfil do usuário é 'User.Read'.",
+    "content": {
+      "statement": "Você está desenvolvendo um site ASP.NET Core que gerencia fotografias armazenadas em contêineres do Azure Blob Storage. Os usuários do site se autenticam usando as credenciais do Microsoft Entra ID. Você precisa configurar as permissões (Permissions) e o tipo de escopo (Type) corretos nas configurações de Registro de Aplicativo (App Registration) para que a aplicação possa agir em nome do usuário conectado.",
+      "text": "Azure Storage: {{0}}<br>Microsoft Graph: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "user_impersonation / delegated" },
+            { "id": "B", "text": "User.Read / delegated" },
+            { "id": "C", "text": "application / application" },
+            { "id": "D", "text": "profile / application" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "user_impersonation / delegated" },
+            { "id": "B", "text": "User.Read / delegated" },
+            { "id": "C", "text": "application / application" },
+            { "id": "D", "text": "profile / application" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-EID-18",
+    "type": "multiple_choice",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "A implementação de MFA baseada em condições requer o Azure AD Premium (P1 ou P2) e a criação de uma política de Acesso Condicional.",
+    "content": {
+      "statement": "Você possui uma nova assinatura do Azure. Você está desenvolvendo um site interno para que os funcionários visualizem dados corporativos confidenciais. O site usa o Microsoft Entra ID (Azure AD) para autenticação. Você precisa implementar rigorosamente a Autenticação Multifator (MFA) para o site baseada em eventos de login específicos e locais de rede.",
+      "options": [
+        { "id": "A", "text": "Configurar o site para usar o Azure AD B2C." },
+        { "id": "B", "text": "No Entra ID, criar uma nova política de Acesso Condicional (Conditional Access Policy)." },
+        { "id": "C", "text": "Fazer o upgrade do locatário (tenant) para o Azure AD Premium (P1 ou P2)." },
+        { "id": "D", "text": "No Entra ID, habilitar o Application Proxy." },
+        { "id": "E", "text": "Nas configurações de segurança do Entra ID, habilitar os padrões de segurança (Security Defaults)." }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-EID-19",
+    "type": "dropdown_fill_in_blank",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Alta",
+    "explanation": "Uma única Identidade Gerenciada Atribuída ao Usuário minimiza as alterações no Entra ID, pois cria apenas um recurso de identidade para todos os aplicativos.",
+    "content": {
+      "statement": "Você tem um aplicativo que inclui um Azure Web App e vários Azure Function Apps. Segredos do aplicativo, incluindo cadeias de conexão e certificados, são armazenados no Azure Key Vault. A equipe de segurança determina que:\nOs segredos não devem ser armazenados em código ou em variáveis de ambiente das aplicações.\nAs alterações no Microsoft Entra ID (Azure AD) devem ser minimizadas na arquitetura.",
+      "text": "Identidade a ser usada: {{0}}<br>Justificativa arquitetônica: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Identidade Gerenciada Atribuída ao Sistema (System-assigned) em cada App" },
+            { "id": "B", "text": "Identidade Gerenciada Atribuída ao Usuário (User-assigned) única para todos os Apps" },
+            { "id": "C", "text": "Service Principal do Entra ID com Segredo" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Minimiza as alterações no Entra ID pois cria apenas um recurso de identidade independente" },
+            { "id": "B", "text": "Garante que cada aplicativo tenha seu próprio ciclo de vida de identidade" },
+            { "id": "C", "text": "Exige a rotação manual de segredos do aplicativo" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A"]
+  },
+  {
+    "id": "Q-EID-20",
+    "type": "multiple_choice",
+    "category": "Microsoft Entra ID",
+    "difficulty": "Média",
+    "explanation": "Para impor autorização baseada em roles, você deve declarar as App Roles no manifesto do aplicativo. Essas roles podem então ser atribuídas a usuários e validadas no token.",
+    "content": {
+      "statement": "Você está construindo um serviço de nuvem que autentica usuários através do Microsoft Entra ID. Você precisa restringir endpoints de API específicos para que apenas usuários aos quais foram atribuídas funções (roles) específicas do Entra ID possam chamá-los. Qual componente de registro do aplicativo você deve configurar obrigatoriamente para impor/declarar essas atribuições de função internamente à sua aplicação?",
+      "options": [
+        { "id": "A", "text": "Adicionar Grupos do Entra ID na aba de administradores da aplicação." },
+        { "id": "B", "text": "Definir as funções (roles) em tempo de execução dentro de um banco de dados SQL." },
+        { "id": "C", "text": "Configurar os escopos delegados na aba API Permissions." },
+        { "id": "D", "text": "Declarar App Roles (Funções de Aplicativo) no manifesto de registro do aplicativo (App Manifest)." }
+      ]
+    },
+    "correct_answer": ["D"]
+  }
+]

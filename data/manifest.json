@@ -54,6 +54,24 @@
             ]
         },
         {
+            "title": "3. Processamento de Dados",
+            "categories": [
+                {
+                    "id": "entra-id",
+                    "name": "Azure Entra ID",
+                    "file": "data/entra-id.json",
+                    "count": 20
+                },
+                {
+                    "id": "msal-graph-api",
+                    "name": "MSAL e Microsoft Graph API",
+                    "file": "data/msal-graph-api.json",
+                    "count": 20
+                }
+            ]
+
+        },
+        {
             "title": "4. Integração: Mensageria e Eventos",
             "categories": [
                 {

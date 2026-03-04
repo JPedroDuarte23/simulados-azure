@@ -18,38 +18,6 @@
     "correct_answer": ["D", "B", "E", "C", "A"]
   },
   {
-    "id": "Q-ACI-02",
-    "type": "dropdown_fill_in_blank",
-    "category": "Azure Container Instances / YAML",
-    "difficulty": "Alta",
-    "explanation": "O `Container group` é o recurso do ACI que fornece o ciclo de vida compartilhado para múltiplos contêineres. Para persistência de dados em caso de crashes ou reinicializações, o `Azure file share` é o volume recomendado.",
-    "content": {
-      "statement": "Você está desenvolvendo um aplicativo com dois contêineres para o ACI. Quais valores de configuração você deve usar no YAML?",
-      "text": "Shared lifecycle (Ciclo de vida compartilhado): {{0}} <br> Storage volume (Volume de armazenamento): {{1}}",
-      "dropdowns": [
-        {
-          "index": 0,
-          "options": [
-            { "id": "A", "text": "Container group" },
-            { "id": "B", "text": "Container image" },
-            { "id": "C", "text": "Service endpoint" },
-            { "id": "D", "text": "Resource group" }
-          ]
-        },
-        {
-          "index": 1,
-          "options": [
-            { "id": "A", "text": "Azure file share" },
-            { "id": "B", "text": "Secret" },
-            { "id": "C", "text": "Empty directory (emptyDir)" },
-            { "id": "D", "text": "Cloned Git repo" }
-          ]
-        }
-      ]
-    },
-    "correct_answer": ["A", "A"]
-  },
-  {
     "id": "Q-ACI-03",
     "type": "dropdown_fill_in_blank",
     "category": "Azure Container Instances",
@@ -365,5 +333,819 @@
       ]
     },
     "correct_answer": ["B"]
+  }
+,
+  {
+    "id": "Q-ACI-31",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "Para acessar dados via SMB, um 'Azure file share' é a opção correta. Para contêineres que devem rodar apenas uma vez, a política de reinicialização 'Never' garante que eles não reiniciem após a conclusão.",
+    "content": {
+      "statement": "Você desenvolve dois scripts Python para processar dados. Os scripts Python devem ser implantados em dois contêineres Linux separados em execução em um grupo de contêineres do Azure Container Instances (ACI). Os contêineres devem acessar dados externos usando o protocolo Server Message Block (SMB). Os contêineres no grupo de contêineres devem ser executados apenas uma vez. Selecione a opção apropriada para cada configuração do ACI:",
+      "text": "Volume de dados externos (External data volume): {{0}}<br>Política de reinicialização (Container restart policy): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Secret" },
+            { "id": "B", "text": "Empty directory" },
+            { "id": "C", "text": "Cloned git repo" },
+            { "id": "D", "text": "Azure file share" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Never" },
+            { "id": "B", "text": "Always" },
+            { "id": "C", "text": "OnFailure" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "A"]
+  },
+  {
+    "id": "Q-ACI-32",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Difícil",
+    "explanation": "Para montar segredos como arquivos, usa-se 'volumeMounts' dentro da definição do contêiner e 'volumes' no nível do grupo de contêineres para definir o volume do tipo 'secret'.",
+    "content": {
+      "statement": "Você tem um aplicativo (ContentUploadService) rodando no Azure Container Instances. Você precisa adicionar uma marcação YAML no arquivo de configuração para garantir que o contêiner possa acessar as chaves de acesso do Azure Storage montadas com segurança. Preencha os espaços [A], [B] e [C] com os segmentos YAML corretos, escolhendo a partir da lista de opções abaixo. (Nem todas as opções serão usadas).",
+      "text": "Código YAML:<br>    {{0}}:<br>      - mountPath: /mnt/secrets<br>        name: accesskey<br>    {{1}}:<br>      - name: accesskey<br>        {{2}}:<br>          key: TXkgZmlyc3Qgc2VjcmV0IEZPTwo=",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "volumeMounts" },
+            { "id": "B", "text": "volumes" },
+            { "id": "C", "text": "secret" },
+            { "id": "D", "text": "envVar" },
+            { "id": "E", "text": "secretValues" },
+            { "id": "F", "text": "environmentVariables" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "volumeMounts" },
+            { "id": "B", "text": "volumes" },
+            { "id": "C", "text": "secret" },
+            { "id": "D", "text": "envVar" },
+            { "id": "E", "text": "secretValues" },
+            { "id": "F", "text": "environmentVariables" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "volumeMounts" },
+            { "id": "B", "text": "volumes" },
+            { "id": "C", "text": "secret" },
+            { "id": "D", "text": "envVar" },
+            { "id": "E", "text": "secretValues" },
+            { "id": "F", "text": "environmentVariables" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-ACI-33",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "O comando 'az container attach' é usado para anexar ao output de um contêiner em tempo real, o que é ideal para investigar problemas como erros HTTP 502.",
+    "content": {
+      "statement": "Usuários do seu aplicativo de contêiner ContentUploadService relatam que ocasionalmente veem respostas HTTP 502 em páginas específicas. Você precisa investigar a saída de log do servidor HTTP em tempo real (standard out e standard error) diretamente do contêiner para resolver o problema. Qual comando da CLI do Azure você deve usar primeiro?",
+      "options": [
+        { "id": "A", "text": "az webapp log" },
+        { "id": "B", "text": "az ams live-output" },
+        { "id": "C", "text": "az monitor activity-log" },
+        { "id": "D", "text": "az container attach" }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-ACI-34",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "Um 'Container group' permite que contêineres compartilhem ciclo de vida, rede e volumes. Um volume 'emptyDir' persiste através de falhas do contêiner, mas é limpo quando o grupo de contêineres para ou reinicia.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo que inclui dois contêineres Docker. O aplicativo deve atender aos seguintes requisitos:\nOs contêineres não devem ser executados como root.\nOs contêineres devem ser implantados no Azure Container Instances usando um arquivo YAML.\nOs contêineres devem compartilhar um ciclo de vida, recursos, rede local e um volume de armazenamento.\nO volume de armazenamento deve persistir após falhas (crashes) dos contêineres.\nO volume de armazenamento deve ser reimplantado ao parar ou reiniciar os contêineres (deve começar limpo nessas situações específicas, mas não perder dados no crash).\nSelecione as opções apropriadas:",
+      "text": "Ciclo de vida compartilhado (Shared lifecycle): {{0}}<br>Volume de armazenamento (Storage volume): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Container group" },
+            { "id": "B", "text": "Container image" },
+            { "id": "C", "text": "Service endpoint" },
+            { "id": "D", "text": "Resource group" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure file share" },
+            { "id": "B", "text": "Secret" },
+            { "id": "C", "text": "Empty directory" },
+            { "id": "D", "text": "Cloned Git repo" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "C"]
+  },
+  {
+    "id": "Q-ACI-35",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Alta",
+    "explanation": "O Azure Container Instances é ideal para cargas de trabalho sob demanda que precisam de GPU, minimizando custos. A 'Restart policy' garante que o contêiner termine após a conclusão da tarefa.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo Python para renderização de imagens. O aplicativo usa recursos de GPU para otimizar os processos de renderização. Você tem os seguintes requisitos:\nO aplicativo deve ser implantado em um contêiner Linux.\nO contêiner deve ser interrompido e finalizado assim que a renderização da imagem for concluída (processamento sob demanda).\nA solução deve minimizar os custos.\nSelecione a configuração de ambiente correta:",
+      "text": "Destino de computação (Compute target): {{0}}<br>Término do contêiner (Container termination): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Container Instances" },
+            { "id": "B", "text": "Azure Kubernetes Service" },
+            { "id": "C", "text": "Azure Container Apps" },
+            { "id": "D", "text": "Azure App Service" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Restart policy" },
+            { "id": "B", "text": "Environment variable" },
+            { "id": "C", "text": "System-assigned Managed identity" },
+            { "id": "D", "text": "User-assigned Managed identity" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-ACI-36",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "A métrica de uso da CPU para contêineres é frequentemente medida em milinúcleos. Um alerta para 80% de uso de CPU seria acionado quando o uso exceder 800 milinúcleos.",
+    "content": {
+      "statement": "Você tem um serviço chamado ContentUploadService implantado como um grupo de contêineres no Azure Container Instances (ACI). Você precisa criar um alerta no Azure Monitor que seja acionado se o serviço usar mais de 80% do limite configurado de CPU (ou 800 milinúcleos, dependendo da métrica exata em uso para contêineres). Lembrando que contêineres expõem métricas diferentes das Máquinas Virtuais, qual comando da CLI do Azure você deve utilizar?",
+      "options": [
+        { "id": "A", "text": "az monitor metrics alert create -n alert -g rg --scopes ... --condition \"avg Percentage CPU > 8\"" },
+        { "id": "B", "text": "az monitor metrics alert create -n alert -g rg --scopes ... --condition \"avg Percentage CPU > 800\"" },
+        { "id": "C", "text": "az monitor metrics alert create -n alert -g rg --scopes ... --condition \"CPU Usage > 800\"" },
+        { "id": "D", "text": "az monitor metrics alert create -n alert -g rg --scopes ... --condition \"CPU Usage > 8\"" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-ACI-37",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances",
+    "difficulty": "Alta",
+    "explanation": "As duas maneiras seguras de passar segredos para um contêiner ACI são usando a propriedade 'secureValue' para variáveis de ambiente ou montando um 'secret volume'.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo Python para renderização de imagens que usa recursos de GPU. Você implanta o aplicativo em um contêiner Linux no Azure Container Instances (ACI). O aplicativo exige que um valor de segredo (secret) seja passado no momento em que o contêiner é iniciado. Por segurança, o valor só deve ser acessado de dentro do contêiner e não pode estar visível no portal. Quais são as DUAS maneiras possíveis de atingir esse objetivo? (Cada resposta correta apresenta uma solução completa. Escolha duas).",
+      "options": [
+        { "id": "A", "text": "Criar uma variável de ambiente definindo a propriedade secureValue com o valor do segredo." },
+        { "id": "B", "text": "Adicionar o valor do segredo à imagem do contêiner (Dockerfile) e usar uma identidade gerenciada." },
+        { "id": "C", "text": "Adicionar o valor do segredo ao código do aplicativo e definir o comando de inicialização do contêiner." },
+        { "id": "D", "text": "Adicionar o valor do segredo a uma conta de Blob Storage do Azure e gerar um token SAS." },
+        { "id": "E", "text": "Montar um volume secreto (secret volume) contendo o valor do segredo mapeado em um arquivo dentro do contêiner." }
+      ]
+    },
+    "correct_answer": ["A", "E"]
+  },
+  {
+    "id": "Q-ACI-38",
+    "type": "drag_and_drop",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "A ordem correta dos comandos em um Dockerfile é: FROM (imagem base), WORKDIR (diretório de trabalho), COPY (copiar arquivos), RUN (executar comandos de build), CMD (comando de execução).",
+    "content": {
+      "statement": "Você planeja criar uma imagem Docker que executa um aplicativo ASP.NET Core chamado ContosoApp. Você possui um script de configuração chamado setupScript.ps1 e uma série de arquivos de aplicativo, incluindo o compilado ContosoApp.dll. Você precisa criar um documento Dockerfile que atenda aos seguintes requisitos:\nChamar e executar o setupScript.ps1 durante a construção (build) do contêiner.\nExecutar o ContosoApp.dll quando o contêiner for iniciado.\nOrdene os 5 comandos a seguir na sequência correta de execução dentro de um Dockerfile.",
+      "items_to_drag": [
+        { "id": "A", "text": "COPY ./ ." },
+        { "id": "B", "text": "CMD [\"dotnet\", \"ContosoApp.dll\"]" },
+        { "id": "C", "text": "WORKDIR /apps/ContosoApp" },
+        { "id": "D", "text": "FROM microsoft/aspnetcore:latest" },
+        { "id": "E", "text": "RUN powershell ./setupScript.ps1" }
+      ]
+    },
+    "correct_answer": ["D", "C", "A", "E", "B"]
+  },
+  {
+    "id": "Q-ACI-39",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "Para implantar um grupo de contêineres ACI em uma VNet, o tipo de endereço IP deve ser 'Private' e o sistema operacional deve ser 'Linux'.",
+    "content": {
+      "statement": "Você está elaborando um arquivo YAML para implantar um grupo de contêineres no Azure Container Instances (ACI). O grupo de contêineres deve ser implantado em uma Rede Virtual (VNet) do Azure e receberá um endereço IP na faixa privada 10.0.0.0/24. Selecione os valores corretos para completar as propriedades no arquivo YAML:",
+      "text": "ipAddress.type (Tipo de endereço IP): {{0}}<br>osType (Tipo de sistema operacional suportado para VNet no ACI): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Public" },
+            { "id": "B", "text": "Private" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Windows" },
+            { "id": "B", "text": "Linux" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "B"]
+  },
+  {
+    "id": "Q-ACR-01",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Registry",
+    "difficulty": "Alta",
+    "explanation": "Para CI/CD de terceiros, um 'Service principal' é o método de autenticação apropriado. A função 'AcrPush' concede as permissões mínimas necessárias para enviar e extrair imagens.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo em contêiner e planeja implantá-lo em um Azure Container Registry (ACR) usando um utilitário de integração contínua e entrega contínua (CI/CD) de terceiros. A implantação deve atender aos seguintes requisitos:\nSer um processo autônomo (não interativo).\nO utilitário de CI/CD deve ser capaz apenas de enviar (push) e extrair (pull) imagens do registro.\nA autenticação deve ser gerenciada pelo Microsoft Entra ID (Azure AD).\nA solução deve usar o princípio do menor privilégio.\nSelecione as configurações apropriadas:",
+      "text": "Método de autenticação no ACR: {{0}}<br>Função RBAC (Role): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Service principal" },
+            { "id": "B", "text": "Individual identity" },
+            { "id": "C", "text": "Repository-scoped access token" },
+            { "id": "D", "text": "System-assigned managed identity" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "AcrPull" },
+            { "id": "B", "text": "Owner" },
+            { "id": "C", "text": "AcrPush" },
+            { "id": "D", "text": "Contributor" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "C"]
+  },
+  {
+    "id": "Q-ACR-02",
+    "type": "drag_and_drop",
+    "category": "Azure Container Registry",
+    "difficulty": "Difícil",
+    "explanation": "A sequência correta para automatizar a atualização de imagens é: criar a tarefa, adicionar credenciais, atribuir a função RBAC, criar a imagem e, finalmente, executar a tarefa.",
+    "content": {
+      "statement": "Você tem duas instâncias do Azure Container Registry (ACR): ACR01 e ACR02. Você planeja implementar um aplicativo em contêiner chamado APP1 que usará uma imagem base chamada BASE1. A imagem para APP1 será armazenada no ACR01. A imagem BASE1 será armazenada no ACR02. Você precisa automatizar a implementação usando uma sequência de comandos da CLI do Azure. Sua solução deve garantir que a imagem APP1 no ACR01 seja atualizada automaticamente sempre que a imagem BASE1 for atualizada.\nOrdene as 5 ações abaixo na sequência correta de execução para configurar essa automação de Task no ACR.",
+      "items_to_drag": [
+        { "id": "A", "text": "az acr task credential add" },
+        { "id": "B", "text": "az role assignment create" },
+        { "id": "C", "text": "az acr build" },
+        { "id": "D", "text": "az acr task run" },
+        { "id": "E", "text": "az acr task create" }
+      ]
+    },
+    "correct_answer": ["E", "A", "B", "C", "D"]
+  },
+  {
+    "id": "Q-CA-01",
+    "type": "multiple_choice",
+    "category": "Azure Container Apps",
+    "difficulty": "Média",
+    "explanation": "Se o ingresso estiver desabilitado, o Container Apps pode escalar para zero. Para evitar isso, habilite o ingresso e defina o número mínimo de réplicas como 1.",
+    "content": {
+      "statement": "Você implanta um aplicativo no Azure Container Apps e, por motivos de design inicial, desabilita o ingress (entrada de tráfego) no aplicativo de contêiner. Pouco tempo depois, os usuários relatam que não conseguem acessar o aplicativo. Você investiga e observa que o aplicativo foi automaticamente dimensionado para 0 (zero) instâncias. Você precisa resolver esse problema com o aplicativo de contêiner para que ele volte a ficar acessível.\nQual solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Habilitar o ingress, criar uma regra de escala TCP personalizada e aplicá-la ao aplicativo." },
+        { "id": "B", "text": "Habilitar o ingress e configurar o número mínimo de réplicas (minimum replicas) como 1 para o aplicativo de contêiner." },
+        { "id": "C", "text": "Criar uma regra de escala HTTP personalizada com o ingress ainda desabilitado." },
+        { "id": "D", "text": "Migrar o aplicativo de contêiner para um ambiente de App Service com plano Dedicado." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-CA-02",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps",
+    "difficulty": "Média",
+    "explanation": "Um 'Revision label' fornece uma URL única para uma revisão específica, ideal para testes. O 'Revision mode' controla como as revisões são ativadas e desativadas.",
+    "content": {
+      "statement": "Você está desenvolvendo vários microsserviços para rodar no Azure Container Apps. O tráfego HTTP de entrada (ingress) externo foi habilitado para os microsserviços. Um microsserviço implantado precisa ser atualizado para permitir que os usuários testem novos recursos. Você tem os seguintes requisitos:\nHabilitar e manter uma URL única para o microsserviço atualizado para fornecer aos usuários de teste.\nPermitir a atualização do microsserviço para novas versões mantendo o controle sobre qual versão está ativa simultaneamente.\nSelecione o recurso apropriado do Azure Container Apps para cada requisito:",
+      "text": "URL única para usuários de teste (Single URL for test users): {{0}}<br>Ativação do microsserviço atual (Current microservice activation): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Revision label" },
+            { "id": "B", "text": "Revision mode" },
+            { "id": "C", "text": "Container image" },
+            { "id": "D", "text": "Container registry" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Revision label" },
+            { "id": "B", "text": "Revision mode" },
+            { "id": "C", "text": "Container image" },
+            { "id": "D", "text": "Container registry" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-CA-03",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps",
+    "difficulty": "Difícil",
+    "explanation": "O comando para configurar o tráfego em Azure Container Apps é 'az containerapp revision traffic set'.",
+    "content": {
+      "statement": "Uma empresa usa o Azure Container Apps. Um aplicativo de contêiner chamado App1 reside em um grupo de recursos chamado RG1. A empresa exige testes de atualizações no App1 (teste A/B ou Canary). Você habilita o modo de revisão múltipla (multiple revision mode) no App1. Você precisa garantir que o tráfego seja roteado e dividido proporcionalmente para cada revisão do App1 (80% para a revisão 1 e 20% para a revisão 2).\nSelecione as opções corretas para completar o comando da CLI do Azure:",
+      "text": "az {{0}} {{1}} traffic set \\<br>  --name App1 \\<br>  --resource-group RG1 \\<br>  --revision-weight <REVISION_1>=80 <REVISION_2>=20",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "container" },
+            { "id": "B", "text": "containerapp" },
+            { "id": "C", "text": "network" },
+            { "id": "D", "text": "resource" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "app" },
+            { "id": "B", "text": "connection" },
+            { "id": "C", "text": "ingress" },
+            { "id": "D", "text": "revision" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "D"]
+  },
+  {
+    "id": "Q-CA-04",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Apps",
+    "difficulty": "Difícil",
+    "explanation": "serviceA usa 'Container file system'. serviceB usa 'Ephemeral volume'. serviceC usa 'Azure Files storage'.",
+    "content": {
+      "statement": "Você está desenvolvendo vários microsserviços chamados serviceA, serviceB e serviceC. Você implanta os microsserviços em um novo ambiente do Azure Container Apps. Você tem os seguintes requisitos de armazenamento (storage mounts):\nserviceA: Deve persistir dados visíveis apenas para o contêiner atual, e o armazenamento deve ser restrito ao espaço em disco disponível no contêiner.\nserviceB: Deve persistir dados durante a vida útil da réplica (replica) e permitir que vários contêineres na mesma réplica montem o mesmo local de armazenamento.\nserviceC: Deve persistir dados além da vida útil da réplica, permitindo que vários contêineres e réplicas acessem o armazenamento e suportando permissões por objeto/arquivo (SMB).\nCombine o microsserviço com o tipo de armazenamento correto. (Sobrará uma opção não utilizada):",
+      "text": "serviceA: {{0}}<br>serviceB: {{1}}<br>serviceC: {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Blob Storage" },
+            { "id": "B", "text": "Azure Files storage" },
+            { "id": "C", "text": "Ephemeral volume" },
+            { "id": "D", "text": "Container file system" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure Blob Storage" },
+            { "id": "B", "text": "Azure Files storage" },
+            { "id": "C", "text": "Ephemeral volume" },
+            { "id": "D", "text": "Container file system" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Azure Blob Storage" },
+            { "id": "B", "text": "Azure Files storage" },
+            { "id": "C", "text": "Ephemeral volume" },
+            { "id": "D", "text": "Container file system" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "C", "B"]
+  },
+  {
+    "id": "Q-AS-01",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Service",
+    "difficulty": "Média",
+    "explanation": "Para habilitar o log de contêiner, use 'az webapp log config --docker-container-logging filesystem'. Para visualizar os logs em tempo real, use 'az webapp log tail'.",
+    "content": {
+      "statement": "Você planeja implantar um aplicativo da web no Azure App Service on Linux usando contêineres. Você cria um plano do App Service e envia (push) uma imagem Docker personalizada para o Azure Container Registry. Você precisa acessar os logs do console (standard out e standard error) gerados de dentro do contêiner em tempo real para depuração.\nSelecione as opções corretas para completar os comandos da CLI do Azure:",
+      "text": "# Comando 1: Habilitar o log de contêiner<br>az webapp log {{0}} --name ContosoWeb --resource-group ContosoDevRG \\<br>  {{1}} filesystem<br><br># Comando 2: Iniciar o streaming de log em tempo real<br>az webapp log {{2}} --name ContosoWeb --resource-group ContosoDevRG",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "config" },
+            { "id": "B", "text": "download" },
+            { "id": "C", "text": "show" },
+            { "id": "D", "text": "tail" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "--web-server-logging" },
+            { "id": "B", "text": "--docker-container-logging" },
+            { "id": "C", "text": "--application-logging" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "config" },
+            { "id": "B", "text": "download" },
+            { "id": "C", "text": "show" },
+            { "id": "D", "text": "tail" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B", "D"]
+  },
+  {
+    "id": "Q-ACR-03",
+    "type": "multiple_choice",
+    "category": "Azure Container Registry",
+    "difficulty": "Fácil",
+    "explanation": "O formato para extrair uma imagem de um namespace em um ACR é 'docker pull <registry_name>/<namespace>/<image_name>'.",
+    "content": {
+      "statement": "Sua equipe usa um Azure Container Registry (ACR) chamado scrumtuous.azurecr.io. Você organizou os repositórios em namespaces (espaços de nomes) para organizar as áreas da empresa: sales, marketing, technology e customerservice. O projeto do site (website) está armazenado no namespace de marketing.\nQual comando do Docker fará o download da imagem do site a partir do registro?",
+      "options": [
+        { "id": "A", "text": "docker pull marketing.scrumtuous.azurecr.io/website" },
+        { "id": "B", "text": "docker pull scrumtuous.azurecr.io -location marketing/website" },
+        { "id": "C", "text": "docker pull scrumtuous.azurecr.io/marketing/website" },
+        { "id": "D", "text": "docker pull scrumtuous.azurecr.io -path marketing -project website" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-AS-02",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Service",
+    "difficulty": "Difícil",
+    "explanation": "Para criar um plano do App Service para Linux, use '--sku B1 --is-linux'. Para especificar a versão da imagem, use '--deployment-container-image-name' com a tag da versão. Para configurar as credenciais do registro, use 'az webapp config container set'.",
+    "content": {
+      "statement": "Você está se preparando para implantar um site Python em um Azure Web App usando um contêiner. O Azure Container Registry (ACR) chamado images é um registro privado. O nome de usuário e a senha do registro são admin. O Web App deve sempre executar a mesma versão do site (v1.0.0), independentemente de compilações (builds) futuras. Selecione as opções corretas para criar os recursos via CLI:",
+      "text": "# Criar o plano<br>az appservice plan create --name websitePlan {{0}}<br><br># Criar o web app baseado no contêiner<br>az webapp create --plan websitePlan {{1}}<br><br># Configurar as credenciais do registro<br>az webapp config {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "--sku SHARED" },
+            { "id": "B", "text": "--tags container" },
+            { "id": "C", "text": "--sku B1 --is-linux" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "--deployment-source-url images.azurecr.io/website:latest" },
+            { "id": "B", "text": "--deployment-container-image-name images.azurecr.io/website:v1.0.0" },
+            { "id": "C", "text": "--deployment-container-image-name images.azurecr.io/website:latest" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "container set --docker-registry-server-url https://images.azurecr.io -u admin -p admin" },
+            { "id": "B", "text": "set --python-version 3.6 --generic-configurations user=admin password=admin" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "B", "A"]
+  },
+  {
+    "id": "Q-AS-03",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Service",
+    "difficulty": "Média",
+    "explanation": "Para habilitar o armazenamento persistente no App Service, 'WEBSITES_ENABLE_APP_SERVICE_STORAGE' deve ser 'true'. O caminho mapeado no contêiner Linux é '/home'.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo web ASP.NET Core e planeja implantá-lo no Azure Web App for Containers (Linux). O aplicativo precisa armazenar dados de diagnóstico em tempo de execução que devem persistir após a reinicialização (restarts) do aplicativo/contêiner. O código C# busca o caminho do diretório em uma variável de ambiente chamada DIAGDATA.\nVocê precisa definir as configurações do aplicativo para garantir a persistência correta do armazenamento (Storage Mount) nativo do App Service. Selecione os valores corretos para as duas configurações no portal do Azure:",
+      "text": "App Setting WEBSITES_ENABLE_APP_SERVICE_STORAGE (Habilitar armazenamento persistente): {{0}}<br>App Setting DIAGDATA (Caminho mapeado persistente no contêiner Linux): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "true" },
+            { "id": "B", "text": "false" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "/local" },
+            { "id": "B", "text": "/home" },
+            { "id": "C", "text": "D:\\home" },
+            { "id": "D", "text": "D:\\local" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-AKS-01",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Kubernetes Service",
+    "difficulty": "Alta",
+    "explanation": "Para autenticação gerenciada pelo Azure AD que é removida com o recurso, use 'System-assigned managed identity'. A função 'AcrPull' concede permissão para extrair imagens, seguindo o princípio do menor privilégio.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo em contêiner. O aplicativo deve ser implantado em um cluster existente do Azure Kubernetes Service (AKS) a partir de uma instância do Azure Container Registry (ACR). Você tem os seguintes requisitos rigorosos de identidade e acesso:\nAs imagens devem apenas ser extraídas (pull) do registro.\nA autenticação deve ser gerenciada pelo Microsoft Entra ID (Azure AD) e deve ser removida automaticamente caso a instância do AKS (recurso) seja excluída.\nA solução deve usar o princípio do menor privilégio.\nSelecione as opções de configuração apropriadas para vincular a identidade ao registro:",
+      "text": "Método de autenticação no Registry: {{0}}<br>Função Azure RBAC (Role) no Registry: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Service principal" },
+            { "id": "B", "text": "Repository-scoped access token" },
+            { "id": "C", "text": "User-assigned managed identity" },
+            { "id": "D", "text": "System-assigned managed identity" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Reader" },
+            { "id": "B", "text": "AcrPush" },
+            { "id": "C", "text": "AcrPull" },
+            { "id": "D", "text": "Contributor" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "C"]
+  },
+  {
+    "id": "Q-ACI-40",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances",
+    "difficulty": "Fácil",
+    "explanation": "ACI suporta múltiplos contêineres em um único grupo apenas para contêineres Linux.",
+    "content": {
+      "statement": "Você planeja implantar um grupo de contêineres (container group) com vários contêineres rodando juntos e compartilhando o mesmo ciclo de vida usando o Azure Container Instances (ACI). Qual sistema operacional você deve usar para que os contêineres sejam suportados em um cenário de multi-container group?",
+      "options": [
+        { "id": "A", "text": "Apenas Windows" },
+        { "id": "B", "text": "Apenas Linux" },
+        { "id": "C", "text": "Ambos Linux e Windows" },
+        { "id": "D", "text": "O ACI não suporta múltiplos contêineres em um único grupo." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-ACI-41",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances",
+    "difficulty": "Fácil",
+    "explanation": "Para visualizar o histórico de logs de um contêiner ACI, o comando correto é 'az container logs'.",
+    "content": {
+      "statement": "Você possui um aplicativo web chamado ContentAnalysisService hospedado em um contêiner no Azure Container Instances (ACI) que começou a apresentar mau funcionamento. Você precisa visualizar o histórico de logs do contêiner para entender o que aconteceu antes de decidir se vai transmitir (stream) a saída de erros em tempo real. Qual comando da CLI do Azure você deve executar primeiro para apenas visualizar os logs?",
+      "options": [
+        { "id": "A", "text": "az container attach" },
+        { "id": "B", "text": "az webapp log tail" },
+        { "id": "C", "text": "az container logs" },
+        { "id": "D", "text": "az monitor activity-log" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-ACI-42",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "A implantação de um grupo de contêineres ACI em uma VNet é suportada apenas para contêineres Linux.",
+    "content": {
+      "statement": "Você está projetando uma arquitetura de rede restrita que exige a implantação de um grupo de contêineres do Azure Container Instances (ACI) diretamente em uma Rede Virtual (VNet) do Azure. Qual afirmação sobre o suporte a sistemas operacionais para implantação em VNet no ACI é verdadeira?",
+      "options": [
+        { "id": "A", "text": "A implantação em uma rede virtual é suportada apenas para contêineres Linux." },
+        { "id": "B", "text": "A implantação em uma rede virtual é suportada apenas para contêineres Windows." },
+        { "id": "C", "text": "A implantação em uma rede virtual é suportada tanto para Windows quanto para Linux." },
+        { "id": "D", "text": "O ACI não suporta implantação em Redes Virtuais (VNets)." }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-ACI-43",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "Os dados em um volume 'emptyDir' são persistidos em caso de falha do contêiner, mas não são mantidos se o contêiner for reiniciado ou o grupo de contêineres for parado.",
+    "content": {
+      "statement": "Você implanta um grupo de contêineres no ACI que utiliza um volume do tipo emptyDir para compartilhar dados temporários. Você precisa entender o ciclo de vida dos dados armazenados neste volume em diferentes cenários de infraestrutura.\nCombine o evento do contêiner com o comportamento de persistência de dados esperado para o volume emptyDir. (Os comportamentos podem ser usados mais de uma vez).",
+      "text": "O contêiner sofre uma falha inesperada (Crash): {{0}}<br>O contêiner é reiniciado (Restart): {{1}}<br>O grupo de contêineres é parado (Stop): {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Os dados SÃO persistidos / mantidos." },
+            { "id": "B", "text": "Os dados NÃO SÃO garantidos ou não são persistidos." }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Os dados SÃO persistidos / mantidos." },
+            { "id": "B", "text": "Os dados NÃO SÃO garantidos ou não são persistidos." }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Os dados SÃO persistidos / mantidos." },
+            { "id": "B", "text": "Os dados NÃO SÃO garantidos ou não são persistidos." }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B", "B"]
+  },
+  {
+    "id": "Q-ACI-44",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Fácil",
+    "explanation": "Para tarefas de execução única, use a política de reinicialização 'Never' ou 'OnFailure'. Para tarefas de longa duração, use 'Always'.",
+    "content": {
+      "statement": "Você está configurando a política de reinicialização (restart policy) para grupos de contêineres no ACI via linha de comando. Você possui dois tipos de cargas de trabalho distintas e precisa aplicar a melhor prática de política para cada uma delas:\nUma tarefa de execução única (run-once task) que processa um lote de imagens e deve ser encerrada ao terminar.\nUm serviço de longa duração (long-running task), como um servidor web.\nSelecione a política de reinicialização apropriada para cada cenário:",
+      "text": "Tarefa de execução única (Run-once task): {{0}}<br>Tarefa de longa duração (Long-running task): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Always" },
+            { "id": "B", "text": "Never ou OnFailure" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Always" },
+            { "id": "B", "text": "Never ou OnFailure" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A"]
+  },
+  {
+    "id": "Q-ACI-45",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "A implantação de um grupo de contêineres ACI em uma VNet é suportada atualmente apenas para contêineres Linux.",
+    "content": {
+      "statement": "Você precisa implantar um novo aplicativo conteinerizado baseado em um contêiner Windows no Azure Container Instances (ACI). A equipe de segurança da sua empresa exige que o contêiner seja implantado de forma privada, diretamente dentro de uma sub-rede de uma Rede Virtual (VNet) do Azure, para não ser exposto à internet. O que você deve considerar ao projetar essa arquitetura no ACI?",
+      "options": [
+        { "id": "A", "text": "O ACI suporta contêineres Windows em VNets de forma nativa e sem restrições." },
+        { "id": "B", "text": "A implantação de um grupo de contêineres em uma VNet é suportada atualmente apenas para contêineres Linux." },
+        { "id": "C", "text": "Você deve usar um Azure NAT Gateway para rotear o tráfego do contêiner Windows." },
+        { "id": "D", "text": "O ACI suporta contêineres Windows em VNets apenas se o tipo de endereço IP (ipAddress type) for definido como Público." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-ACI-46",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances",
+    "difficulty": "Fácil",
+    "explanation": "Para definir uma variável de ambiente segura em um arquivo YAML para ACI, use a propriedade 'secureValue'.",
+    "content": {
+      "statement": "Você está implantando um contêiner no Azure Container Instances (ACI) usando um arquivo YAML. O aplicativo exige que uma senha de conexão ao banco de dados seja passada como variável de ambiente. Por questões de segurança, você precisa garantir que o valor dessa senha não fique visível em texto simples quando a configuração do contêiner for visualizada no portal do Azure ou por meio da CLI do Azure. Qual propriedade você deve utilizar no arquivo YAML para definir essa variável?",
+      "options": [
+        { "id": "A", "text": "secretValue" },
+        { "id": "B", "text": "hiddenValue" },
+        { "id": "C", "text": "secureValue" },
+        { "id": "D", "text": "protectedValue" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-ACI-47",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Fácil",
+    "explanation": "Para visualizar o histórico de logs de um contêiner, use o comando 'az container logs'.",
+    "content": {
+      "statement": "Você implantou um grupo de contêineres chamado MeuContainerApp em um grupo de recursos chamado MeuRG. O contêiner parou de responder corretamente. Você quer baixar/visualizar o histórico de logs do contêiner (a saída padrão anterior, sem ser o streaming em tempo real) para descobrir o motivo da falha.\nSelecione as opções corretas para completar o comando da CLI do Azure:",
+      "text": "az {{0}} {{1}} --resource-group MeuRG --name MeuContainerApp",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "container" },
+            { "id": "B", "text": "webapp" },
+            { "id": "C", "text": "acr" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "attach" },
+            { "id": "B", "text": "logs" },
+            { "id": "C", "text": "show" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-ACI-48",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "'secret' é usado para dados confidenciais. 'Azure file share' é para armazenamento persistente. 'gitRepo' clona um repositório. 'emptyDir' é para compartilhamento temporário.",
+    "content": {
+      "statement": "Você está projetando a arquitetura de armazenamento para grupos de contêineres no ACI. O ACI suporta a montagem de diferentes tipos de volumes. Combine o tipo de volume do ACI com o seu cenário de uso correto. (Cada opção é usada apenas uma vez).",
+      "text": "[A] Fornece dados confidenciais aos contêineres (como chaves SSH ou certificados), mapeando-os em arquivos armazenados em um sistema de arquivos montado na RAM (tmpfs): {{0}}<br>[B] Compartilha dados de forma persistente entre vários contêineres e mantém os dados armazenados de forma independente, mesmo após o grupo de contêineres ser excluído: {{1}}<br>[C] Monta um diretório e clona o código-fonte de um repositório especificado durante a inicialização do contêiner: {{2}}<br>[D] Fornece um diretório temporário para compartilhar dados entre contêineres do mesmo grupo de contêineres apenas durante o ciclo de vida do grupo: {{3}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure file share" },
+            { "id": "B", "text": "emptyDir" },
+            { "id": "C", "text": "secret" },
+            { "id": "D", "text": "gitRepo" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure file share" },
+            { "id": "B", "text": "emptyDir" },
+            { "id": "C", "text": "secret" },
+            { "id": "D", "text": "gitRepo" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Azure file share" },
+            { "id": "B", "text": "emptyDir" },
+            { "id": "C", "text": "secret" },
+            { "id": "D", "text": "gitRepo" }
+          ]
+        },
+        {
+          "index": 3,
+          "options": [
+            { "id": "A", "text": "Azure file share" },
+            { "id": "B", "text": "emptyDir" },
+            { "id": "C", "text": "secret" },
+            { "id": "D", "text": "gitRepo" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "A", "D", "B"]
+  },
+  {
+    "id": "Q-ACI-49",
+    "type": "multiple_choice",
+    "category": "Azure Container Instances",
+    "difficulty": "Média",
+    "explanation": "Para garantir que um contêiner rode apenas uma vez e pare, a política de reinicialização deve ser definida como 'OnFailure' ou 'Never'.",
+    "content": {
+      "statement": "Você implantou um grupo de contêineres no Azure Container Instances. O contêiner contém um script em Python de processamento de imagens (lote) que leva cerca de 2 horas para rodar e, ao terminar, o script encerra a sua execução (processo concluído com sucesso). Você acessa o portal do Azure no dia seguinte e percebe que os custos estão altíssimos porque o contêiner ficou reiniciando e rodando o mesmo script em loop infinito o tempo todo.\nComo você deve alterar a configuração do grupo de contêineres no ACI para garantir que ele rode apenas uma vez e pare?",
+      "options": [
+        { "id": "A", "text": "Configurar uma Liveness Probe para matar o contêiner assim que o script terminar." },
+        { "id": "B", "text": "Alterar a política de reinicialização (restart policy) de Never para Always." },
+        { "id": "C", "text": "Alterar a política de reinicialização (restart policy) de Always para OnFailure ou Never." },
+        { "id": "D", "text": "Utilizar uma Managed Identity para revogar os acessos após a primeira execução." }
+      ]
+    },
+    "correct_answer": ["C"]
   }
 ]
