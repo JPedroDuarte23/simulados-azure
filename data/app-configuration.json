@@ -1,0 +1,716 @@
+[
+  {
+    "id": "Q-AC-01",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "A ordem correta do middleware no pipeline do ASP.NET Core é 'UseAuthentication', depois 'UseAuthorization', e então 'UseAzureAppConfiguration' para habilitar a atualização dinâmica.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo ASP.NET Core que inclui sinalizadores de recursos (feature flags) gerenciados pelo Azure App Configuration. Você precisa atualizar o aplicativo para usar o recurso 'Export' sem reinicialização, validar usuários e permitir o acesso a recursos seguros. Escolha as opções corretas para completar o método Configure.",
+      "text": "app.{{0}}();<br>app.{{1}}();<br>app.{{2}}();",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "UseAuthentication" },
+            { "id": "B", "text": "UseAuthorization" },
+            { "id": "C", "text": "UseAzureAppConfiguration" },
+            { "id": "D", "text": "UseSession" },
+            { "id": "E", "text": "UseStaticFiles" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "UseAuthentication" },
+            { "id": "B", "text": "UseAuthorization" },
+            { "id": "C", "text": "UseAzureAppConfiguration" },
+            { "id": "D", "text": "UseSession" },
+            { "id": "E", "text": "UseStaticFiles" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "UseAuthentication" },
+            { "id": "B", "text": "UseAuthorization" },
+            { "id": "C", "text": "UseAzureAppConfiguration" },
+            { "id": "D", "text": "UseSession" },
+            { "id": "E", "text": "UseStaticFiles" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-AC-02",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "O atributo 'FeatureGate' controla o acesso baseado em flags, 'AddAzureAppConfiguration' registra o serviço, e o endpoint do App Configuration segue o formato 'https://<name>.azconfig.io'.",
+    "content": {
+      "statement": "Você precisa garantir que o uso do recurso 'Export' possa ser controlado via Feature Flags em rotas e views do seu aplicativo MVC, hospedado em 'appfeatureflagstore'. Complete a tabela de configuração.",
+      "text": "Controller attribute: {{0}}<br>Startup method: {{1}}<br>AppConfig endpoint setting: {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "FeatureGate" },
+            { "id": "B", "text": "Route" },
+            { "id": "C", "text": "ServiceFilter" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "AddAzureAppConfiguration" },
+            { "id": "B", "text": "AddControllersWithViews" },
+            { "id": "C", "text": "AddUserSecrets" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "https://appfeatureflagstore.azconfig.io" },
+            { "id": "B", "text": "https://appfeatureflagstore.vault.azure.net" },
+            { "id": "C", "text": "https://export.azconfig.io" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A", "A"]
+  },
+  {
+    "id": "Q-AC-03",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Difícil",
+    "explanation": "Use 'AddAzureAppConfiguration' para injetar as configurações. Para forçar o uso exclusivo da identidade gerenciada, especifique 'ManagedIdentityCredential' explicitamente, evitando o fallback do 'DefaultAzureCredential'.",
+    "content": {
+      "statement": "Você está criando um site em um Web App do Azure que usa o App Configuration. O acesso ao App Configuration deve utilizar a identidade do Web App (Managed Identity) e nenhum outro sistema de autenticação deve ser tentado. Qual código você deve usar?",
+      "text": "config.{{0}}(options => \n    options.Connect(new Uri(settings[\"AppConfig:Endpoint\"]), new {{1}}())\n);",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "AddAzureKeyVault" },
+            { "id": "B", "text": "DefaultAzureCredential" },
+            { "id": "C", "text": "ChainedTokenCredential" },
+            { "id": "D", "text": "ManagedIdentityCredential" },
+            { "id": "E", "text": "AddAzureAppConfiguration" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "AddAzureKeyVault" },
+            { "id": "B", "text": "DefaultAzureCredential" },
+            { "id": "C", "text": "ChainedTokenCredential" },
+            { "id": "D", "text": "ManagedIdentityCredential" },
+            { "id": "E", "text": "AddAzureAppConfiguration" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["E", "D"]
+  },
+  {
+    "id": "Q-AC-04",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "Usar uma 'sentinel key' com 'refreshAll' como 'true' minimiza as requisições, verificando apenas uma chave, e garante a consistência ao recarregar todas as configurações de uma vez.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo ASP.NET Core que utiliza o Azure App Configuration com 100 chaves. Para evitar throttling e custos, você precisa minimizar as requisições para verificar alterações, mas quando uma atualização ocorrer, todas devem ser aplicadas ao mesmo tempo. O que você deve fazer?",
+      "options": [
+        { "id": "A", "text": "Registrar todas as chaves no código e definir o parâmetro refreshAll do método Register como false." },
+        { "id": "B", "text": "Aumentar o tempo de expiração do cache do App Configuration acima do valor padrão (30 segundos)." },
+        { "id": "C", "text": "Criar e registrar uma \"sentinel key\" (chave sentinela) no App Configuration. Definir o parâmetro refreshAll do método Register como true." },
+        { "id": "D", "text": "Diminuir o tempo de expiração do cache do App Configuration." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-AC-05",
+    "type": "drag_and_drop",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "A sequência correta é: 1. Criar a identidade gerenciada para o App Service. 2. Criar o App Configuration store. 3. Conceder à identidade do App Service a permissão de leitor no App Configuration.",
+    "content": {
+      "statement": "Você está implantando um site no Azure App Service e precisa armazenar todas as configurações de forma central e segura no Azure App Configuration, sem segredos no código. Quais ações você deve executar e em qual sequência?",
+      "items_to_drag": [
+        { "id": "A", "text": "Criar uma identidade gerenciada (Managed Identity) para o App Service." },
+        { "id": "B", "text": "Criar um Azure App Configuration store." },
+        { "id": "C", "text": "Atualizar as atribuições de função (Role assignments) para o Azure App Configuration store." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-AC-06",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "Usar uma 'sentinel key' com 'refreshAll' como 'true' garante consistência. Aumentar o tempo de expiração do cache reduz o número total de solicitações de polling.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo ASP.NET Core que utiliza o Azure App Configuration com 100 configurações. Os requisitos são: garantir consistência, lidar com alterações dinamicamente e reduzir o número de solicitações. Quais DUAS ações em conjunto ajudam a atingir esses objetivos? (Escolha duas)",
+      "options": [
+        { "id": "A", "text": "Registrar todas as chaves individualmente no método Register e definir o parâmetro refreshAll como false." },
+        { "id": "B", "text": "Diminuir o tempo de expiração do cache do App Configuration a partir do seu valor padrão." },
+        { "id": "C", "text": "Criar e registrar uma sentinel key (chave sentinela) no App Configuration. Definir o parâmetro refreshAll do método Register como true." },
+        { "id": "D", "text": "Aumentar o tempo de expiração do cache do App Configuration a partir do seu valor padrão." },
+        { "id": "E", "text": "Configurar variáveis de ambiente do Azure App Service para substituir as chamadas ao App Configuration." }
+      ]
+    },
+    "correct_answer": ["C", "D"]
+  },
+  {
+    "id": "Q-AC-07",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Difícil",
+    "explanation": "No SDK de Python, a classe para o cliente é 'AzureAppConfigurationClient'. Para forçar o uso da identidade gerenciada, a classe de credencial é 'ManagedIdentityCredential'.",
+    "content": {
+      "statement": "Você está desenvolvendo um serviço web em Python em uma VM do Azure com Identidade Gerenciada habilitada. A segurança exige que nenhum outro método de autenticação seja tentado. Como você deve completar o script Python para carregar dados do Azure App Configuration?",
+      "text": "from azure.identity import {{0}}<br>from azure.appconfiguration import {{1}}<br><br>credential = {{2}}()<br>client = {{3}}(base_url=\"https://meuappconfig.azconfig.io\", credential=credential)",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "DefaultAzureCredential" },
+            { "id": "B", "text": "ChainedTokenCredential" },
+            { "id": "C", "text": "ManagedIdentityCredential" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "ConfigurationClient" },
+            { "id": "B", "text": "AzureAppConfigurationClient" },
+            { "id": "C", "text": "AddAzureAppConfiguration" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "DefaultAzureCredential" },
+            { "id": "B", "text": "ChainedTokenCredential" },
+            { "id": "C", "text": "ManagedIdentityCredential" }
+          ]
+        },
+        {
+          "index": 3,
+          "options": [
+            { "id": "A", "text": "ConfigurationClient" },
+            { "id": "B", "text": "AzureAppConfigurationClient" },
+            { "id": "C", "text": "AddAzureAppConfiguration" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "B", "C", "B"]
+  },
+  {
+    "id": "Q-AC-08",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "O nível 'Free' tem um limite de 1.000 requisições por dia. O nível 'Standard' suporta 30.000 requisições por hora e integração com Key Vault, sendo o mais econômico para o cenário.",
+    "content": {
+      "statement": "Você está projetando uma arquitetura de microsserviços com Azure Functions que farão um pico de até 20.000 chamadas por hora ao App Configuration. O serviço deve suportar chaves do Key Vault e os custos devem ser mínimos. Qual plano do Azure App Configuration você deve provisionar?",
+      "options": [
+        { "id": "A", "text": "Free (Gratuito)" },
+        { "id": "B", "text": "Standard (Padrão)" },
+        { "id": "C", "text": "Premium" },
+        { "id": "D", "text": "Consumption (Consumo)" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-AC-09",
+    "type": "drag_and_drop",
+    "category": "Azure App Configuration",
+    "difficulty": "Difícil",
+    "explanation": "1. Crie a identidade para o Web App. 2. Dê à identidade permissão de leitura no App Config. 3. Dê à identidade permissão para ler segredos no Key Vault. 4. Adicione a referência ao segredo no App Config.",
+    "content": {
+      "statement": "Você gerencia um Azure Web App que usa o App Configuration com referências ao Key Vault. Para que a aplicação leia a configuração e resolva o segredo usando a identidade gerenciada, qual a ordem correta das 4 ações a seguir?",
+      "items_to_drag": [
+        { "id": "A", "text": "Criar uma Identidade Gerenciada (System-assigned) para o Web App." },
+        { "id": "B", "text": "Conceder à Identidade Gerenciada do Web App a permissão de 'App Configuration Data Reader' no App Configuration." },
+        { "id": "C", "text": "Conceder à Identidade Gerenciada do Web App a permissão de 'Key Vault Secrets User' no Key Vault." },
+        { "id": "D", "text": "Adicionar a 'Key Vault Reference' dentro do App Configuration." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D"]
+  },
+  {
+    "id": "Q-AC-10",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Fácil",
+    "explanation": "O 'Targeting Filter' é o filtro nativo do App Configuration projetado para liberar funcionalidades para usuários ou grupos de usuários específicos.",
+    "content": {
+      "statement": "Seu aplicativo de e-commerce usa Feature Flags do App Configuration. A nova interface 'NovoCarrinho' deve ser ativada apenas para usuários do grupo 'BetaTesters'. Qual filtro nativo você deve adicionar na configuração da sua Feature Flag?",
+      "options": [
+        { "id": "A", "text": "Percentage Filter" },
+        { "id": "B", "text": "Targeting Filter" },
+        { "id": "C", "text": "Custom Rule Filter" },
+        { "id": "D", "text": "TimeWindow Filter" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-AC-11",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "A criptografia com Customer-Managed Keys (CMK) é suportada apenas no nível 'Standard' do App Configuration. A chave deve ser armazenada em um Azure Key Vault com soft-delete e purge-protection habilitados.",
+    "content": {
+      "statement": "Sua empresa tem várias Azure Functions que precisam de configuração centralizada e criptografada com uma chave RSA-HSM da empresa (Customer-Managed Key), com autenticação via Managed Identities. Quais DUAS ações você deve executar? (Escolha duas)",
+      "options": [
+        { "id": "A", "text": "Criar uma instância do Azure App Configuration no nível Free (Gratuito) e registrá-la com um Service Principal." },
+        { "id": "B", "text": "Armazenar a chave RSA-HSM no Azure Key Vault com as proteções de soft-delete (exclusão temporária) e purge-protection (proteção contra limpeza) habilitadas." },
+        { "id": "C", "text": "Armazenar a chave RSA-HSM no Azure Blob Storage com uma política de imutabilidade aplicada." },
+        { "id": "D", "text": "Criar uma instância do Azure App Configuration no nível Standard (Padrão) com uma identidade gerenciada do Azure AD atribuída." }
+      ]
+    },
+    "correct_answer": ["B", "D"]
+  },
+  {
+    "id": "Q-AC-12",
+    "type": "drag_and_drop",
+    "category": "Azure App Configuration",
+    "difficulty": "Difícil",
+    "explanation": "1. Configure um endpoint de WebHook em seu aplicativo. 2. Assine o evento 'KeyValueModified' no Event Grid, apontando para o seu WebHook. 3. No WebHook, valide o evento. 4. Chame '_refresher.TryRefreshAsync()' para recarregar o cache.",
+    "content": {
+      "statement": "Seu aplicativo ASP.NET Core consome configurações do App Configuration com uma estratégia de polling. Para reduzir custos, você está mudando para uma estratégia de Push orientada a eventos. Ordene as 4 ações necessárias para implementar a atualização baseada em eventos.",
+      "items_to_drag": [
+        { "id": "A", "text": "Configurar um endpoint (WebHook) na sua aplicação web para receber eventos." },
+        { "id": "B", "text": "Assinar o evento de sistema Microsoft.AppConfiguration.KeyValueModified do App Config no Azure Event Grid." },
+        { "id": "C", "text": "O aplicativo recebe a requisição no endpoint do WebHook validando o evento." },
+        { "id": "D", "text": "Invocar o método _refresher.TryRefreshAsync() para recarregar o cache internamente." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D"]
+  },
+  {
+    "id": "Q-AC-13",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "O filtro de porcentagem é chamado 'Percentage'. O parâmetro 'Value' deve ser um número inteiro de 0 a 100.",
+    "content": {
+      "statement": "Sua equipe está implementando um recurso chamado 'NovoCheckout' com uma implantação gradual (Canary Release) para 25% do tráfego. Você está configurando o JSON para o provedor do Microsoft.FeatureManagement. Selecione as propriedades corretas.",
+      "text": "\"Name\": \"{{0}}\",<br>\"Parameters\": {<br>  \"Value\": {{1}}<br>}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Percentage" },
+            { "id": "B", "text": "TimeWindow" },
+            { "id": "C", "text": "Targeting" },
+            { "id": "D", "text": "Fraction" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "25" },
+            { "id": "B", "text": "\"25%\"" },
+            { "id": "C", "text": "0.25" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-AC-14",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "O método 'Select' com um rótulo ('prod') filtra as chaves para esse ambiente. O método 'ConfigureRefresh' é usado para registrar uma chave sentinela para atualizações dinâmicas.",
+    "content": {
+      "statement": "Você tem uma Azure Function que se conecta ao App Configuration. O repositório tem chaves com rótulo nulo (Desenvolvimento) e 'prod' (Produção). Você precisa que a função em produção puxe os valores da label 'prod' e configure a chave sentinela. Complete o código.",
+      "text": "options.Connect(new Uri(endpoint), new DefaultAzureCredential())<br>       .Select(KeyFilter.Any, \"{{0}}\")<br>       .{{1}}(refreshOptions =><br>       {<br>           refreshOptions.Register(\"SentinelKey\", refreshAll: true);<br>       });",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "LabelFilter.Null" },
+            { "id": "B", "text": "prod" },
+            { "id": "C", "text": "%environment%" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "ConfigureRefresh" },
+            { "id": "B", "text": "UseFeatureFlags" },
+            { "id": "C", "text": "SetCacheExpiration" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A"]
+  },
+  {
+    "id": "Q-AC-15",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Fácil",
+    "explanation": "O comando 'az appconfig kv import' é a ferramenta correta da CLI para importar em massa configurações de um arquivo JSON para o Azure App Configuration.",
+    "content": {
+      "statement": "Você consolidou todas as configurações de um aplicativo em um arquivo 'appsettings.json'. Você deseja automatizar o envio dessas configurações para um novo Azure App Configuration em um pipeline de CI/CD. Qual comando do Azure CLI você deve utilizar?",
+      "options": [
+        { "id": "A", "text": "az appconfig set --name <nome-do-appconfig> --source file --path appsettings.json" },
+        { "id": "B", "text": "az webapp config appsettings set --name <nome-do-appconfig> --settings @appsettings.json" },
+        { "id": "C", "text": "az appconfig kv import --name <nome-do-appconfig> --source file --format json --path appsettings.json" },
+        { "id": "D", "text": "az appconfig feature set --name <nome-do-appconfig> --source json --path appsettings.json" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-AC-16",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Difícil",
+    "explanation": "Use 'ConfigureKeyVault' para habilitar a resolução de referências do Key Vault. Dentro dele, use 'SetCredential' para especificar a credencial (ManagedIdentityCredential) que será usada para autenticar no Key Vault.",
+    "content": {
+      "statement": "Seu aplicativo ASP.NET Core consome configurações do App Configuration, que contém referências ao Key Vault. O aplicativo é executado no App Service com uma Identidade Gerenciada. Você precisa configurar o provedor para resolver as referências do Key Vault usando a identidade gerenciada. Complete o código.",
+      "text": "options.Connect(new Uri(\"https://appconfig.azconfig.io\"), new ManagedIdentityCredential())<br>       .{{0}}(kv =><br>       {<br>           kv.{{1}}(new ManagedIdentityCredential());<br>       });",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "ConfigureKeyVault" },
+            { "id": "B", "text": "UseKeyVault" },
+            { "id": "C", "text": "AddKeyVaultSecrets" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "SetCredential" },
+            { "id": "B", "text": "SetAuthentication" },
+            { "id": "C", "text": "Connect" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "A"]
+  },
+  {
+    "id": "Q-AC-17",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "O SDK do .NET para App Configuration suporta failover automático para geo-replicação. Basta passar uma lista de URIs (primária e réplicas) para o método 'Connect()'.",
+    "content": {
+      "statement": "Você provisionou um armazenamento do App Configuration na região East US e habilitou a geo-replicação para a região West US. Qual é a maneira mais eficiente de configurar o SDK do .NET para realizar o failover automático para a réplica se o endpoint primário ficar indisponível?",
+      "options": [
+        { "id": "A", "text": "Criar um DelegatingHandler customizado no pipeline HTTP que intercepte erros 503 e reescreva a URI da solicitação para o endpoint da réplica." },
+        { "id": "B", "text": "Registrar dois provedores AddAzureAppConfiguration separados no método ConfigureServices e encapsulá-los em um bloco try-catch." },
+        { "id": "C", "text": "Fornecer um IEnumerable<Uri> contendo tanto o endpoint primário quanto o endpoint da réplica para o método Connect()." },
+        { "id": "D", "text": "Implantar um Azure Traffic Manager e configurar o SDK do App Configuration para apontar para a URL de roteamento do Traffic Manager." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-AC-18",
+    "type": "drag_and_drop",
+    "category": "Azure App Configuration",
+    "difficulty": "Difícil",
+    "explanation": "1. Registre o serviço com o comportamento de refresh no Startup.cs. 2. Injete 'IConfigurationRefresherProvider' no construtor da função. 3. Chame 'TryRefreshAsync()' no início da execução da função.",
+    "content": {
+      "statement": "Você está desenvolvendo uma Azure Function (in-process, C#) que precisa recarregar a configuração dinamicamente do App Configuration quando uma chave 'AtualizarCache' mudar. Ordene as 3 ações necessárias para implementar a atualização dinâmica a cada execução.",
+      "items_to_drag": [
+        { "id": "A", "text": "Registrar o App Configuration no arquivo Startup.cs usando AddAzureAppConfiguration e definindo o método ConfigureRefresh()." },
+        { "id": "B", "text": "Injetar a interface IConfigurationRefresherProvider no construtor da classe da Function e obter o refresher via .Refreshers.First()." },
+        { "id": "C", "text": "Chamar await _refresher.TryRefreshAsync() no início da execução do método da função." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-AC-19",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Fácil",
+    "explanation": "O 'TimeWindow Filter' é o recurso nativo do Feature Manager projetado para ativar ou desativar uma funcionalidade com base em um intervalo de datas e horas.",
+    "content": {
+      "statement": "O marketing solicitou que uma funcionalidade 'BlackFridayBanner' apareça no site de e-commerce apenas entre 24 de Novembro e 26 de Novembro. A flag deve retornar 'false' automaticamente fora desse período. Qual recurso do App Configuration você deve usar?",
+      "options": [
+        { "id": "A", "text": "Targeting Filter (Filtro de Direcionamento) com os parâmetros de grupo ajustados para \"Novembro\"." },
+        { "id": "B", "text": "TimeWindow Filter (Filtro de Janela de Tempo) com os parâmetros Start e End definidos." },
+        { "id": "C", "text": "Percentage Filter (Filtro de Porcentagem) combinado com uma trigger de Tempo (Timer Trigger)." },
+        { "id": "D", "text": "Custom Rule Filter (Filtro de Regra Personalizada) invocando uma Azure Function externa." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-AC-20",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "Para verificar o estado de uma feature flag programaticamente em um serviço, injete a interface 'IFeatureManager' e chame o método 'IsEnabledAsync'.",
+    "content": {
+      "statement": "Em um serviço de infraestrutura 'PaymentService' (não um Controller) em um aplicativo ASP.NET Core, você precisa verificar programaticamente se a feature flag 'UsaNovoGatewayDePagamento' está ativada. Qual interface você deve injetar e qual método deve invocar?",
+      "text": "private readonly {{0}} _featureManager;<br><br>public PaymentService({{0}} featureManager) { ... }<br><br>if (await _featureManager.{{1}}(\"UsaNovoGatewayDePagamento\")) { ... }",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "IFeatureManager" },
+            { "id": "B", "text": "IFeatureFilter" },
+            { "id": "C", "text": "IConfiguration" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "EvaluateAsync" },
+            { "id": "B", "text": "IsActiveAsync" },
+            { "id": "C", "text": "IsEnabledAsync" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "C"]
+  },
+  {
+    "id": "Q-AC-21",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "Para usar feature flags em Views Razor, importe as Tag Helpers com '@addTagHelper' no '_ViewImports.cshtml'. Em seguida, use a tag '<feature>' para renderização condicional.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo web ASP.NET Core MVC e usa o App Configuration para gerenciar feature flags. Você precisa ocultar um item de menu na View (Razor) se a flag 'NovoDashboard' estiver desativada. Complete o código para habilitar a renderização condicional.",
+      "text": "No arquivo _ViewImports.cshtml:<br>@{{0}} *, Microsoft.FeatureManagement.AspNetCore<br><br>No arquivo _Layout.cshtml:<br><<{{1}} name=\"NovoDashboard\"><br>    ...\n</{{1}}>",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "using" },
+            { "id": "B", "text": "addTagHelper" },
+            { "id": "C", "text": "inject" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "feature" },
+            { "id": "B", "text": "FeatureGate" },
+            { "id": "C", "text": "app-config" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A"]
+  },
+  {
+    "id": "Q-AC-22",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Difícil",
+    "explanation": "O recurso 'Snapshots' do App Configuration cria um conjunto imutável de configurações, garantindo que uma versão específica do código sempre carregue os mesmos valores, independentemente de alterações posteriores.",
+    "content": {
+      "statement": "Sua empresa tem um processo de liberação rigoroso. Quando um microsserviço é publicado em Produção, as configurações carregadas por aquela versão devem ser imutáveis, mesmo que administradores modifiquem valores no App Configuration. Qual recurso você deve implementar para garantir essa imutabilidade?",
+      "options": [
+        { "id": "A", "text": "Habilitar o Point-in-time restore (Restauração pontual) no SDK e reverter as chaves dinamicamente na inicialização." },
+        { "id": "B", "text": "Aplicar um bloqueio de recurso (Read-Only Resource Lock) no grupo de recursos do App Configuration." },
+        { "id": "C", "text": "Criar um Snapshot (Instantâneo) no Azure App Configuration e configurar a aplicação para consumir os dados desse Snapshot." },
+        { "id": "D", "text": "Configurar o provedor para usar refreshAll: false no arquivo appsettings.json." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-AC-23",
+    "type": "drag_and_drop",
+    "category": "Azure App Configuration",
+    "difficulty": "Difícil",
+    "explanation": "1. Crie a classe que herda de 'IFeatureFilter'. 2. Implemente o método 'EvaluateAsync' com a lógica. 3. Decore a classe com '[FilterAlias]'. 4. Registre o filtro no contêiner de dependências.",
+    "content": {
+      "statement": "Você precisa criar um filtro de recurso personalizado para liberar uma funcionalidade apenas em horário comercial. Como os filtros nativos não atendem, você decide criar um 'Custom Feature Filter'. Ordene as 4 ações necessárias para implementar e registrar o filtro.",
+      "items_to_drag": [
+        { "id": "A", "text": "Criar uma classe chamada BusinessHoursFilter que herde da interface IFeatureFilter." },
+        { "id": "B", "text": "Implementar o método obrigatório EvaluateAsync(FeatureFilterEvaluationContext) contendo a lógica de verificação de horário." },
+        { "id": "C", "text": "Decorar a classe com o atributo [FilterAlias(\"BusinessHours\")] para que ele possa ser referenciado no JSON." },
+        { "id": "D", "text": "Registrar o filtro no contêiner de dependências chamando .AddFeatureFilter<BusinessHoursFilter>() após AddFeatureManagement()." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D"]
+  },
+  {
+    "id": "Q-AC-24",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "A ordem das chamadas '.Select()' determina a precedência. O último 'Select' sobrescreve os anteriores. Para que 'qa' substitua o padrão (nulo), 'LabelFilter.Null' deve vir primeiro.",
+    "content": {
+      "statement": "Seu App Configuration tem configurações base sem rótulo (Label = Null) e substituições com o rótulo 'qa'. Ao iniciar o aplicativo no ambiente de Qualidade, você precisa carregar as chaves base e, em seguida, sobrescrevê-las com as chaves 'qa'. Qual a ordem correta das chamadas '.Select()'?",
+      "text": "options.Connect(connectionString)<br>       .Select(KeyFilter.Any, {{0}})<br>       .Select(KeyFilter.Any, {{1}});",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "LabelFilter.Null" },
+            { "id": "B", "text": "\"qa\"" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "LabelFilter.Null" },
+            { "id": "B", "text": "\"qa\"" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-AC-25",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "O parâmetro '--strict' do comando 'az appconfig kv import' garante que o App Configuration de destino se torne uma cópia exata do arquivo de origem, excluindo quaisquer chaves que não existam no arquivo.",
+    "content": {
+      "statement": "Você gerencia um aplicativo web e mantém um arquivo 'appsettings.json'. Em seu pipeline de CI/CD, você deseja que o App Configuration de destino seja uma cópia exata do arquivo JSON, excluindo chaves antigas que não existem mais no arquivo. Qual parâmetro do comando 'az appconfig kv import' você deve usar?",
+      "options": [
+        { "id": "A", "text": "--skip-features" },
+        { "id": "B", "text": "--force" },
+        { "id": "C", "text": "--strict" },
+        { "id": "D", "text": "--depth" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-AC-26",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "A ordem de registro dos provedores de configuração dita a precedência, com o último registrado tendo a prioridade mais alta. A ordem correta é 'AddJsonFile', 'AddAzureAppConfiguration' e, por último, 'AddEnvironmentVariables'.",
+    "content": {
+      "statement": "Seu aplicativo ASP.NET Core consome configurações de 'appsettings.json', Azure App Configuration e Variáveis de Ambiente. A ordem de precedência deve ser: Variáveis de Ambiente > Azure App Configuration > appsettings.json. Qual a ordem correta de registro dos provedores?",
+      "text": "builder.Configuration.{{0}}(\"appsettings.json\", optional: true, reloadOnChange: true);<br><br>builder.Configuration.{{1}}(options => { ... });<br><br>builder.Configuration.{{2}}();",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "AddAzureAppConfiguration" },
+            { "id": "B", "text": "AddEnvironmentVariables" },
+            { "id": "C", "text": "AddJsonFile" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "AddAzureAppConfiguration" },
+            { "id": "B", "text": "AddEnvironmentVariables" },
+            { "id": "C", "text": "AddJsonFile" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "AddAzureAppConfiguration" },
+            { "id": "B", "text": "AddEnvironmentVariables" },
+            { "id": "C", "text": "AddJsonFile" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "A", "B"]
+  },
+  {
+    "id": "Q-AC-27",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Fácil",
+    "explanation": "O recurso 'Point-in-time restore' do nível Standard do App Configuration permite reverter o estado do repositório para um momento específico, recuperando valores alterados ou excluídos.",
+    "content": {
+      "statement": "Um script de automação alterou e excluiu acidentalmente chaves críticas no seu App Configuration (nível Standard). O aplicativo de produção começou a falhar. Você precisa reverter o repositório para o estado de 2 horas atrás da forma mais rápida possível. O que você deve fazer?",
+      "options": [
+        { "id": "A", "text": "Acessar a lâmina de Deleted resources (Recursos excluídos) no portal do Azure e restaurar as chaves uma a uma." },
+        { "id": "B", "text": "Utilizar o recurso nativo Point-in-time restore (Restauração pontual) no portal do Azure para reverter o armazenamento para a data e hora desejadas." },
+        { "id": "C", "text": "Executar o comando az appconfig kv restore no Azure CLI apontando para um snapshot armazenado no Azure Blob Storage." },
+        { "id": "D", "text": "Restaurar o armazenamento do Azure App Configuration a partir do último backup diário do Azure Backup Service." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-AC-28",
+    "type": "drag_and_drop",
+    "category": "Azure App Configuration",
+    "difficulty": "Difícil",
+    "explanation": "1. Crie a Azure Function que atuará como webhook. 2. Crie a Assinatura de Evento no App Config primário. 3. Filtre os eventos desejados ('KeyValueModified', 'KeyValueDeleted'). 4. Configure o endpoint da assinatura para apontar para a Function.",
+    "content": {
+      "statement": "Sua arquitetura exige uma replicação Ativo-Ativo customizada entre duas lojas do App Configuration (East US e West Europe), onde alterações em East US são copiadas em tempo real para West Europe. Você usará Event Grid e Functions. Ordene as 4 ações necessárias para configurar essa sincronização.",
+      "items_to_drag": [
+        { "id": "A", "text": "Criar uma Azure Function (gatilho de Event Grid) que receba o evento e utilize o SDK para gravar a alteração na loja secundária." },
+        { "id": "B", "text": "Criar uma Assinatura de Evento (Event Subscription) no Azure Event Grid apontando para a loja primária (East US)." },
+        { "id": "C", "text": "Filtrar a assinatura de evento para capturar os tipos de evento KeyValueModified e KeyValueDeleted." },
+        { "id": "D", "text": "Configurar o Endpoint Type da Assinatura de Evento para apontar para o WebHook da Azure Function criada." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D"]
+  },
+  {
+    "id": "Q-AC-29",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "O comando 'az appconfig kv export' permite enviar configurações do App Configuration para um destino. Para exportar para um App Service, o destino é 'appservice'.",
+    "content": {
+      "statement": "Você tem uma loja do App Configuration chamada 'ConfigStoreProd'. Você precisa copiar todas as chaves com a label 'v2.0' e aplicá-las como Application Settings em um App Service chamado 'WebAppFrontend'. Complete o comando da CLI para executar essa exportação direta.",
+      "text": "az appconfig kv {{0}} \\<br>    --name ConfigStoreProd \\<br>    --label \"v2.0\" \\<br>    --destination {{1}} \\<br>    --appservice-account WebAppFrontend \\<br>    --resource-group RG-Web",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "import" },
+            { "id": "B", "text": "export" },
+            { "id": "C", "text": "set" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "webapp" },
+            { "id": "B", "text": "appservice" },
+            { "id": "C", "text": "env" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "B"]
+  },
+  {
+    "id": "Q-AC-30",
+    "type": "multiple_choice",
+    "category": "Azure App Configuration",
+    "difficulty": "Média",
+    "explanation": "O Azure Private Link, com 'Private Endpoints', permite que o tráfego entre a sua VNet (onde a VM está) e o App Configuration flua pela rede privada da Microsoft, bloqueando o acesso público.",
+    "content": {
+      "statement": "A segurança da sua empresa determinou que o tráfego entre sua aplicação em uma VM e o Azure App Configuration não pode trafegar pela internet pública. O acesso via IP público ao App Configuration deve ser bloqueado. Qual recurso você deve implementar?",
+      "options": [
+        { "id": "A", "text": "Service Endpoints (Pontos de extremidade de serviço)." },
+        { "id": "B", "text": "Cross-Origin Resource Sharing (CORS) configurado para a subnet local." },
+        { "id": "C", "text": "Private Endpoints (Pontos de extremidade privados / Azure Private Link)." },
+        { "id": "D", "text": "Application Security Groups (Grupos de segurança de aplicativo)." }
+      ]
+    },
+    "correct_answer": ["C"]
+  }
+]

@@ -67,6 +67,30 @@
                     "name": "MSAL e Microsoft Graph API",
                     "file": "data/msal-graph-api.json",
                     "count": 20
+                },
+                {
+                    "id": "azure-key-vault",
+                    "name": "Azure Key Vault",
+                    "file": "data/key-vault.json",
+                    "count": 20
+                },
+                {
+                    "id": "managed-identities",
+                    "name": "Azure Managed Identities",
+                    "file": "data/managed-identities.json",
+                    "count": 15
+                },
+                {
+                    "id": "sas-token",
+                    "name": "SAS Token",
+                    "file": "data/sas-token.json",
+                    "count": 20
+                },
+                {
+                    "id": "app-configuration",
+                    "name": "Azure App Configuration",
+                    "file": "data/app-configuration.json",
+                    "count": 30
                 }
             ]
 

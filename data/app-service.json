@@ -58,7 +58,7 @@
       "category": "Azure App Service",
       "difficulty": "Alta",
       "content": {
-        "statement": "Você está implementando um web service SaaS (Software as a Service) em ASP.NET Core que será executado como um Azure Web App... Os recursos do Azure devem estar localizados em uma rede isolada (isolated network). Você precisa configurar o plano do App Service (App Service Plan) para o Web App. Selecione o valor correto para cada configuração.",
+        "statement": "Você está implementando um web service SaaS (Software as a Service) em ASP.NET Core que será executado como um Azure Web App, o aplicativo precisa garantir que cada WebJob para cada um dos 4 clientes seja executado como um singleton de forma garantida. Os recursos do Azure devem estar localizados em uma rede isolada (isolated network). Você precisa configurar o plano do App Service (App Service Plan) para o Web App. Selecione o valor correto para cada configuração.",
         "text": "Área 1: Número de instâncias de VM: {{0}}  <br>  <br>  Área 2: Camada de Preço: {{1}}",
         "dropdowns": [
           {

@@ -1,0 +1,426 @@
+[
+  {
+    "id": "Q-KV-01",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Média",
+    "explanation": "Para manter objetos excluídos por 90 dias e protegê-los contra exclusão permanente, você deve habilitar tanto 'EnableSoftDelete' quanto 'EnablePurgeProtection'.",
+    "content": {
+      "statement": "Você está criando um Azure Key Vault usando o PowerShell. Os objetos excluídos do cofre de chaves devem ser mantidos por um período definido de 90 dias. Quais dois dos seguintes parâmetros devem ser usados em conjunto na criação para atender a esse requisito? (Escolha duas opções)",
+      "options": [
+        { "id": "A", "text": "EnabledForDeployment" },
+        { "id": "B", "text": "EnablePurgeProtection" },
+        { "id": "C", "text": "EnabledForTemplateDeployment" },
+        { "id": "D", "text": "EnableSoftDelete" }
+      ]
+    },
+    "correct_answer": ["B", "D"]
+  },
+  {
+    "id": "Q-KV-02",
+    "type": "drag_and_drop",
+    "category": "Azure Key Vault",
+    "difficulty": "Difícil",
+    "explanation": "A sequência BYOK correta é: 1. Gerar a KEK. 2. Recuperar a chave pública da KEK. 3. Gerar o blob de transferência. 4. Importar a chave com 'az keyvault key import'.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo hospedado no Azure que deve usar uma chave de módulo de segurança de hardware (HSM) local. A chave deve ser transferida com segurança para o seu Azure Key Vault existente usando o processo Bring Your Own Key (BYOK). Quais quatro ações abaixo você deve executar em sequência?",
+      "items_to_drag": [
+        { "id": "A", "text": "Generate a Key Exchange Key (KEK)." },
+        { "id": "B", "text": "Retrieve the Key Exchange Key (KEK) public key." },
+        { "id": "C", "text": "Generate a key transfer blob file by using the HSM vendor-provided tool." },
+        { "id": "D", "text": "Run the az keyvault key import command." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D"]
+  },
+  {
+    "id": "Q-KV-03",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Key Vault",
+    "difficulty": "Média",
+    "explanation": "Para interagir com segredos, você instancia um 'SecretClient' e passa as credenciais usando 'DefaultAzureCredential' para autenticação nativa na nuvem.",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução do Azure e precisa desenvolver um código em C# para acessar um segredo armazenado no Azure Key Vault. Como você deve completar o segmento de código para criar o cliente e autenticar no Key Vault de forma nativa na nuvem?",
+      "text": "string var1 = Environment.GetEnvironmentVariable(\"KEY_VAULT_URI\");<br>var var2 = new {{0}} ( new Uri(var1), new {{1}} () );",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "DefaultAzureCredential" },
+            { "id": "B", "text": "ClientSecretCredential" },
+            { "id": "C", "text": "CloudClients" },
+            { "id": "D", "text": "SecretClient" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "DefaultAzureCredential" },
+            { "id": "B", "text": "ClientSecretCredential" },
+            { "id": "C", "text": "CloudClients" },
+            { "id": "D", "text": "SecretClient" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "A"]
+  },
+  {
+    "id": "Q-KV-04",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Fácil",
+    "explanation": "O Azure Policy é o serviço usado para impor padrões, como algoritmos criptográficos e tamanhos de chave específicos, em recursos do Azure como o Key Vault.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo que usa chaves armazenadas no Azure Key Vault. Você precisa impor (enforce) que um algoritmo criptográfico específico e um tamanho exato de chave sejam utilizados para todas as chaves armazenadas neste cofre. O que você deve usar para aplicar essa regra no recurso?",
+      "options": [
+        { "id": "A", "text": "Secret versioning" },
+        { "id": "B", "text": "Azure Policy" },
+        { "id": "C", "text": "Key Vault Firewall" },
+        { "id": "D", "text": "Access policies" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-KV-05",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Média",
+    "explanation": "A sintaxe '@Microsoft.KeyVault(SecretUri=...)' é o formato de referência nativo para acessar segredos do Key Vault a partir das configurações de um App Service ou Azure Function.",
+    "content": {
+      "statement": "Você está desenvolvendo um Azure Function que chama APIs externas usando um token de acesso para a API. O token de acesso é armazenado em um segredo chamado \"token\" em um Azure Key Vault chamado \"mykeyvault\". Você precisa garantir que a Azure Function possa acessar esse token diretamente pelas configurações nativas. Qual valor você deve definir nas configurações (App Settings) do Azure Function App?",
+      "options": [
+        { "id": "A", "text": "KeyVault:mykeyvault;Secret:token" },
+        { "id": "B", "text": "App:Settings:Secret:mykeyvault:token" },
+        { "id": "C", "text": "AZUREKVCONNSTR_ https://mykeyvault.vault.azure.net/secrets/token/" },
+        { "id": "D", "text": "@Microsoft.KeyVault(SecretUri=https://mykeyvault.vault.azure.net/secrets/token/)" }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-KV-06",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Média",
+    "explanation": "Para rotação automatizada, configure uma 'Key rotation policy'. Para notificações de expiração, configure 'Azure Key Vault alerts'.",
+    "content": {
+      "statement": "Você está desenvolvendo vários microsserviços para implantar em um cluster do Azure Kubernetes Service (AKS). Os dados são protegidos usando chaves gerenciadas pelo cliente (Customer-Managed Keys) armazenadas no Azure Key Vault. Você precisa automatizar a rotação de todas as chaves do Key Vault para que elas sejam rotacionadas a cada três meses, além de permitir a rotação manual. Adicionalmente, notificações de chaves prestes a expirar devem ser enviadas antes de sua data de expiração. Quais duas ações você deve executar para atender aos requisitos de rotação e alertas? (Escolha duas opções)",
+      "options": [
+        { "id": "A", "text": "Criar e configurar uma nova instância do Azure Event Grid." },
+        { "id": "B", "text": "Configurar alertas do Azure Key Vault (Azure Key Vault alerts)." },
+        { "id": "C", "text": "Criar e atribuir uma Access Policy customizada no Azure Key Vault." },
+        { "id": "D", "text": "Criar e configurar uma política de rotação de chaves (Key rotation policy) durante a criação da chave." }
+      ]
+    },
+    "correct_answer": ["B", "D"]
+  },
+  {
+    "id": "Q-KV-07",
+    "type": "drag_and_drop",
+    "category": "Azure Key Vault",
+    "difficulty": "Difícil",
+    "explanation": "Para evitar cold starts e ter suporte a VNet, use o plano Premium. Para que a permissão seja removida com o app, use uma system-assigned managed identity. Por fim, crie uma access policy para essa identidade.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo Java serverless no Azure. Você cria um novo Azure Key Vault para trabalhar com segredos consumidos por um novo aplicativo Azure Functions. A arquitetura do aplicativo deve atender aos seguintes requisitos:\n- Referenciar o Azure Key Vault sem exigir alterações no código Java.\n- Adicionar e remover instâncias dinamicamente com base na quantidade de eventos recebidos.\n- Garantir que as instâncias fiquem perpetuamente \"quentes\" (warm) para evitar partidas a frio (cold starts).\n- Conectar-se a uma rede virtual (VNet).\n- A permissão de autenticação no Azure Key Vault deve ser removida automaticamente caso o aplicativo Azure Function seja excluído.\nQuais três ações abaixo você deve executar em sequência?",
+      "items_to_drag": [
+        { "id": "A", "text": "Create the Azure Functions app with a Premium plan type." },
+        { "id": "B", "text": "Create a system-assigned managed identity for the application." },
+        { "id": "C", "text": "Create an access policy in Azure Key Vault for the application identity." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-KV-08",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Key Vault",
+    "difficulty": "Média",
+    "explanation": "O comando 'az keyvault key' é usado para interagir com chaves. Ao configurar a criptografia da conta de armazenamento, a fonte da chave deve ser 'Microsoft.Keyvault'.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo que usa o Azure Storage para armazenar dados de clientes. Para atender a um requisito de segurança, os dados devem ser criptografados com uma chave do Azure Key Vault. O cliente deve receber um script em Azure CLI que permita a ele rotacionar as chaves sempre que necessário. Como você deve completar o comando da Azure CLI abaixo para fornecer esse script ao cliente?",
+      "text": "$x = az keyvault {{0}} list-versions --name \"\" --vault-name \"\" --query \".kid\"<br><br>az storage account update \\<br>  --name <account_name> \\<br>  --resource-group <resource_group> \\<br>  --encryption-key-name <key_name> \\<br>  --encryption-key-version $x \\<br>  --encryption-key-source {{1}} \\<br>  --encryption-key-vault $h",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "key" },
+            { "id": "B", "text": "secret" },
+            { "id": "C", "text": "recover" },
+            { "id": "D", "text": "certificate" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Microsoft.Secret" },
+            { "id": "B", "text": "Microsoft.Storage" },
+            { "id": "C", "text": "Microsoft.Keyvault" },
+            { "id": "D", "text": "Microsoft.Certificate" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "C"]
+  },
+  {
+    "id": "Q-KV-09",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Alta",
+    "explanation": "Uma única User-assigned Managed Identity minimiza as alterações no Entra ID, pois pode ser criada uma vez e atribuída a múltiplos recursos, evitando a criação de uma identidade por serviço.",
+    "content": {
+      "statement": "Você possui uma arquitetura de solução que inclui um Azure Web App e vários Azure Function Apps. Todos os segredos da aplicação, incluindo strings de conexão de banco de dados e certificados, estão armazenados no Azure Key Vault. Por motivos de governança, os segredos não podem ser armazenados no código do aplicativo ou em variáveis de ambiente em texto plano. Além disso, as criações e alterações de registros no Microsoft Entra ID (Azure AD) devem ser minimizadas ao máximo. Você precisa projetar a abordagem correta para que os serviços carreguem os segredos com segurança. O que você deve fazer?",
+      "options": [
+        { "id": "A", "text": "Criar uma única Managed Identity atribuída ao usuário (User-assigned) com permissão para acessar o Key Vault e configurar todos os App Services/Functions para usarem essa mesma identidade." },
+        { "id": "B", "text": "Criar um único Service Principal no Azure AD com permissão para acessar o Key Vault e usar um client secret dentro do código dos App Services para autenticar." },
+        { "id": "C", "text": "Habilitar uma Managed Identity atribuída ao sistema (System-assigned) nativa em cada um dos App Services/Functions e dar permissão individual a cada uma no Key Vault." },
+        { "id": "D", "text": "Criar um Service Principal exclusivo no Azure AD para cada App Service e usar um certificado associado para acessar o Key Vault." }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-KV-10",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Média",
+    "explanation": "A conta de armazenamento precisa das permissões 'wrapkey', 'unwrapkey', e 'get' para usar uma chave do Key Vault para criptografia de dados.",
+    "content": {
+      "statement": "Você está configurando uma conta de armazenamento do Azure (Azure Storage account) que será protegida usando chaves gerenciadas pelo cliente (Customer-Managed Keys) provenientes de um Azure Key Vault. Você precisa executar um comando do PowerShell para conceder à identidade da conta de armazenamento as permissões vitais necessárias dentro do Key Vault para permitir o envelopamento e a recuperação da chave de criptografia dos blobs. Qual conjunto de parâmetros você deve incluir no comando Set-AzKeyVaultAccessPolicy?",
+      "options": [
+        { "id": "A", "text": "-PermissionsToSecrets get, list, set" },
+        { "id": "B", "text": "-PermissionsToCertificates create, encrypt, decrypt" },
+        { "id": "C", "text": "-PermissionsToKeys wrapkey, unwrapkey, get" },
+        { "id": "D", "text": "-PermissionsToKeys encrypt, decrypt, backup" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-KV-11",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Key Vault",
+    "difficulty": "Difícil",
+    "explanation": "O fluxo é: criar o cofre ('az keyvault create'), criar a chave ('az keyvault key create'), e então habilitar a criptografia na VM para todos os volumes ('--volume-type all').",
+    "content": {
+      "statement": "Você planeja implantar um novo aplicativo em uma máquina virtual (VM) Linux hospedada no Azure. A VM inteira deve ser protegida em repouso usando tecnologia de criptografia padrão do setor para atender aos requisitos organizacionais de segurança e conformidade, aproveitando o Azure Key Vault. Você precisa configurar o Azure Disk Encryption para a VM. Como você deve completar os comandos da Azure CLI?",
+      "text": "az {{0}} create ... --enabled-for-disk-encryption True<br><br>az {{1}} create ...<br><br>az vm encryption enable ... --volume-type {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "vm" },
+            { "id": "B", "text": "keyvault" },
+            { "id": "C", "text": "keyvault key" },
+            { "id": "D", "text": "vm encryption" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "vm" },
+            { "id": "B", "text": "keyvault" },
+            { "id": "C", "text": "keyvault key" },
+            { "id": "D", "text": "vm encryption" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "all" },
+            { "id": "B", "text": "data" },
+            { "id": "C", "text": "os" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "C", "A"]
+  },
+  {
+    "id": "Q-KV-12",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Fácil",
+    "explanation": "Habilitar uma Managed Identity atribuída pelo sistema para o App Service cria uma identidade no Entra ID que pode ser usada para autenticar de forma segura no Key Vault sem credenciais no código.",
+    "content": {
+      "statement": "Sua empresa está hospedando um aplicativo web de varejo no Azure App Service e armazenará segredos de autenticação no Azure Key Vault. A autenticação do App Service será feita com o Microsoft Entra ID (Azure AD). Qual configuração você deve aplicar ao App Service de varejo para que o aplicativo possa recuperar segredos do Key Vault de forma segura, sem precisar armazenar credenciais no código-fonte?",
+      "options": [
+        { "id": "A", "text": "Usar o comando da Azure CLI az keyvault secret para injetar o segredo diretamente nas configurações." },
+        { "id": "B", "text": "Registrar um aplicativo e criar um Service Principal no Microsoft Entra ID gerenciado manualmente." },
+        { "id": "C", "text": "Habilitar uma Identidade Gerenciada (Managed Identity) atribuída pelo sistema para o App Service." },
+        { "id": "D", "text": "Habilitar o Azure AD Connect no App Service." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-KV-13",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Alta",
+    "explanation": "Criptografar os dados no lado do cliente com uma chave do Key Vault antes de enviá-los para o Blob Storage garante que, mesmo se os dados forem vazados, eles permanecerão ilegíveis.",
+    "content": {
+      "statement": "Você está desenvolvendo um site de gerenciamento de prontuários médicos. O site é usado para armazenar cópias digitalizadas de formulários de admissão de pacientes. Se os formulários de admissão armazenados forem baixados do armazenamento por terceiros de forma indevida, o conteúdo dos formulários não deve ser exposto (deve estar ilegível). O tamanho de cada formulário é de vários Megabytes. Você precisa armazenar os formulários de admissão atendendo a esses rigorosos requisitos de segurança usando os serviços do Azure. Qual abordagem você deve adotar?",
+      "options": [
+        { "id": "A", "text": "Armazenar os formulários de admissão de pacientes diretamente como Segredos no Azure Key Vault." },
+        { "id": "B", "text": "Habilitar a Criptografia de Serviço de Armazenamento (SSE) do Azure Blob Storage nativamente, o que impede a leitura por terceiros quando baixados." },
+        { "id": "C", "text": "Criptografar os formulários usando a parte pública de uma chave do Azure Key Vault e armazenar os dados criptografados no Azure Blob Storage." },
+        { "id": "D", "text": "Configurar a política de acesso de delegação de usuário no Key Vault para permitir o armazenamento dos blobs." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-KV-14",
+    "type": "drag_and_drop",
+    "category": "Azure Key Vault",
+    "difficulty": "Difícil",
+    "explanation": "A sequência correta é: 1. Listar as assinaturas. 2. Definir o contexto da assinatura. 3. Obter a chave da conta de armazenamento. 4. Converter e definir o segredo no Key Vault. 5. Verificar o segredo.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo e sua conta de usuário do Azure possui acesso a múltiplas assinaturas (subscriptions). Você precisa construir um script em PowerShell para recuperar uma chave de conta de armazenamento e armazená-la de forma segura como um segredo no Azure Key Vault. Em qual ordem você deve organizar os comandos do PowerShell para desenvolver essa solução?",
+      "items_to_drag": [
+        { "id": "A", "text": "Get-AzSubscription" },
+        { "id": "B", "text": "Set-AzContext -SubscriptionId $subscriptionID" },
+        { "id": "C", "text": "Get-AzStorageAccountKey -ResourceGroupName $resGroup -Name $storAcct" },
+        { "id": "D", "text": "$secretvalue = ConvertTo-SecureString $storAcctkey -AsPlainText -Force e na sequência Set-AzKeyVaultSecret -VaultName $vaultName -Name $secretName -SecretValue $secretvalue" },
+        { "id": "E", "text": "Get-AzKeyVaultSecret -VaultName $vaultName (Para verificação)" }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D", "E"]
+  },
+  {
+    "id": "Q-KV-15",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Alta",
+    "explanation": "O primeiro passo para configurar o 'Always Encrypted' com o Cosmos DB é criar uma Customer-Managed Key (CMK) no Azure Key Vault. Esta chave mestre protegerá as chaves de criptografia de dados (DEKs).",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo Java que será implantado no Azure. O aplicativo armazena dados confidenciais usando o Azure Cosmos DB. Você precisa configurar o recurso \"Always Encrypted\" (Sempre Criptografado) para realizar a criptografia transparente dos dados confidenciais de forma nativa e client-side. O que você deve fazer primeiro para preparar o ambiente para a criptografia?",
+      "options": [
+        { "id": "A", "text": "Criar um novo contêiner Cosmos DB para incluir uma política de criptografia (encryption policy) referenciando as propriedades JSON a serem criptografadas." },
+        { "id": "B", "text": "Criar uma Data Encryption Key (DEK) usando o SDK do Azure Cosmos DB e armazená-la como um documento isolado na coleção." },
+        { "id": "C", "text": "Criar uma Customer-Managed Key (CMK) e armazenar a chave mestre em uma nova instância do Azure Key Vault." },
+        { "id": "D", "text": "Configurar um Service Principal e usar um token JWT para mascaramento de dados em voo." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-KV-16",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Fácil",
+    "explanation": "A Identidade Gerenciada (Managed Identity) cria uma identidade no Entra ID para o App Service, permitindo que ele se autentique de forma segura no Key Vault sem gerenciar credenciais no código.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo e-Commerce Web App. Você quer usar o Azure Key Vault para garantir que as conexões de serviços da web aos segredos sejam protegidas usando a infraestrutura do Microsoft Entra ID (Azure AD), sem que nenhuma credencial seja exposta no código-fonte. O que você deve fazer nas configurações do aplicativo e-Commerce Web App hospedado no Azure App Service para atender a essa meta de forma automatizada?",
+      "options": [
+        { "id": "A", "text": "Executar o comando da Azure CLI az keyvault secret." },
+        { "id": "B", "text": "Habilitar o serviço Azure AD Connect." },
+        { "id": "C", "text": "Habilitar a funcionalidade Managed Service Identity (MSI) / Identidade Gerenciada." },
+        { "id": "D", "text": "Criar um Service Principal do Azure AD e armazenar o Client Secret nas configurações de aplicativo (appsettings.json)." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-KV-17",
+    "type": "multiple_choice",
+    "category": "Azure Key Vault",
+    "difficulty": "Média",
+    "explanation": "O código correto usa a classe 'SecretClient' com a Uri completa do cofre e 'DefaultAzureCredential' para autenticação, e atribui o resultado a um objeto 'KeyVaultSecret'.",
+    "content": {
+      "statement": "Uma equipe de desenvolvimento está construindo uma aplicação em .NET que precisa ler um segredo chamado \"AppToken\" armazenado em um Azure Key Vault. A equipe utiliza a versão mais recente do SDK do Azure para .NET (Azure.Security.KeyVault.Secrets) e deseja adotar a recomendação de acesso passwordless (sem senha) usando bibliotecas de nuvem. Qual exemplo de código busca corretamente o segredo do cofre de chaves?",
+      "options": [
+        { "id": "A", "text": "var client = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(...)); var secret = client.GetSecretAsync(\"https://meucofre.vault.azure.net/secrets/AppToken\").Result;" },
+        { "id": "B", "text": "var secretClient = new SecretClient(new Uri(\"meucofre\"), new DefaultAzureCredential()); var secret = secretClient.GetSecretAsync(\"AppToken\").GetAwaiter().GetResult();" },
+        { "id": "C", "text": "var client = new SecretClient(new Uri(\"https://meucofre.vault.azure.net/\"), new DefaultAzureCredential()); KeyVaultSecret secret = client.GetSecret(\"AppToken\");" },
+        { "id": "D", "text": "var secret = new SecretClient(\"meucofre\", new DefaultAzureCredential()).GetSecret(\"AppToken\").Value;" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-KV-18",
+    "type": "drag_and_drop",
+    "category": "Azure Key Vault",
+    "difficulty": "Difícil",
+    "explanation": "A sequência é: 1. Habilitar a identidade gerenciada no App Service. 2. Atribuir a role 'Key Vault Secrets User' à identidade. 3. Usar 'DefaultAzureCredential' no código para autenticação automática.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo no Azure App Service e precisa acessar os segredos armazenados de forma segura em um novo Azure Key Vault. O acesso ao cofre deve ser feito obrigatoriamente usando o modelo de permissão Azure RBAC (Role-Based Access Control), pois as políticas de acesso legadas (Access Policies) foram desativadas por segurança na organização. Você deve estabelecer essa conexão sem armazenar chaves localmente. Quais três ações você deve executar em sequência para permitir o acesso do código ao Key Vault?",
+      "items_to_drag": [
+        { "id": "A", "text": "Habilitar a Identidade Gerenciada atribuída pelo sistema (System-assigned Managed Identity) no Azure App Service." },
+        { "id": "B", "text": "Atribuir a função de \"Key Vault Secrets User\" (Usuário de Segredos do Key Vault) para a identidade gerenciada do App Service, no escopo do Key Vault." },
+        { "id": "C", "text": "Atualizar o código do aplicativo para instanciar o SecretClient utilizando a classe DefaultAzureCredential." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-KV-19",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Key Vault",
+    "difficulty": "Difícil",
+    "explanation": "O endpoint do IMDS é 'http://169.254.169.254/metadata/identity/oauth2/token'. A resposta é um JSON que deve ser desserializado para extrair o token.",
+    "content": {
+      "statement": "Você está desenvolvendo um serviço web que será executado em Máquinas Virtuais (VMs) do Azure. O código deve acessar o Azure Key Vault e as contas de armazenamento. Todas as VMs estão configuradas com identidades gerenciadas (Managed Identities). Seu chefe exige que a solução siga as regras:\n- Mecanismos de autenticação baseados em segredos de texto plano são proibidos.\n- Você deve obter o token utilizando exclusivamente o endpoint local do Azure Instance Metadata Service (IMDS), sem o uso de SDKs externos na requisição de base.\nComo você deve completar o código em C# para recuperar esse token de acesso de dentro da VM?",
+      "text": "var url = \"{{0}}\";<br>...<br>return {{1}};",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "http://localhost:50342/oauth2/token" },
+            { "id": "B", "text": "http://169.254.169.254:50432/oauth2/token" },
+            { "id": "C", "text": "http://localhost/metadata/identity/oauth2/token" },
+            { "id": "D", "text": "http://169.254.169.254/metadata/identity/oauth2/token" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "XDocument.Parse(payload);" },
+            { "id": "B", "text": "new MultipartContent(payload);" },
+            { "id": "C", "text": "new NetworkCredential(\"Azure\", payload);" },
+            { "id": "D", "text": "JsonConvert.DeserializeObject<Dictionary<string, string>>(payload);" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "D"]
+  },
+  {
+    "id": "Q-KV-20",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Key Vault",
+    "difficulty": "Alta",
+    "explanation": "'AddAzureAppConfiguration' é usado para adicionar o provedor de configuração. 'ManagedIdentityCredential' é usado para forçar a autenticação estritamente através da identidade gerenciada do recurso.",
+    "content": {
+      "statement": "Você é um desenvolvedor construindo um site usando o Azure Web App. O aplicativo buscará dados e referências de segredos centrais que residem no Azure App Configuration (integrado ao Key Vault). O acesso a essas configurações deve ser feito através da identidade do próprio aplicativo web. Um rigoroso requisito de conformidade de segurança determina que nenhum outro sistema ou método de cadeia de credenciais deve ser tentado. Como você deve completar o código de inicialização para carregar as configurações utilizando estritamente a identidade nativa requerida?",
+      "text": "config.{{0}}(options => options.Connect(new Uri(settings[\"AppConfig:Endpoint\"]), new {{1}}()));",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "AddAzureKeyVault" },
+            { "id": "B", "text": "DefaultAzureCredential" },
+            { "id": "C", "text": "ChainedTokenCredential" },
+            { "id": "D", "text": "ManagedIdentityCredential" },
+            { "id": "E", "text": "AddAzureAppConfiguration" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "AddAzureKeyVault" },
+            { "id": "B", "text": "DefaultAzureCredential" },
+            { "id": "C", "text": "ChainedTokenCredential" },
+            { "id": "D", "text": "ManagedIdentityCredential" },
+            { "id": "E", "text": "AddAzureAppConfiguration" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["E", "D"]
+  }
+]

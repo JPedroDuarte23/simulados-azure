@@ -1,0 +1,309 @@
+[
+  {
+    "id": "Q-MI-01",
+    "type": "drag_and_drop",
+    "category": "Managed Identities",
+    "difficulty": "Difícil",
+    "explanation": "1. O plano Premium é necessário para VNet e para evitar cold starts. 2. A identidade system-assigned garante que o ciclo de vida da identidade esteja atrelado ao da função. 3. Uma política de acesso no Key Vault é necessária para conceder permissões à identidade.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo Java serverless no Azure. Você cria um novo Azure Key Vault para trabalhar com segredos de um novo aplicativo Azure Functions. O aplicativo deve atender aos seguintes requisitos rigorosos:\n- Fazer referência ao Azure Key Vault sem exigir nenhuma alteração no código Java.\n- Adicionar e remover dinamicamente instâncias do host do Azure Functions com base no número de eventos de aplicativo recebidos.\n- Garantir que as instâncias fiquem perpetuamente aquecidas para evitar partidas a frio (cold starts).\n- Conectar-se a uma Virtual Network (VNet).\n- A autenticação para a instância do Azure Key Vault deve ser automaticamente removida se o aplicativo Azure Function for excluído.\nQual é a sequência correta de três ações para conceder o acesso necessário?",
+      "items_to_drag": [
+        { "id": "A", "text": "Criar o aplicativo Azure Functions com um tipo de plano Premium." },
+        { "id": "B", "text": "Criar uma identidade gerenciada atribuída pelo sistema (system-assigned) para o aplicativo." },
+        { "id": "C", "text": "Criar uma política de acesso no Azure Key Vault para a identidade do aplicativo." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-MI-02",
+    "type": "dropdown_fill_in_blank",
+    "category": "Managed Identities",
+    "difficulty": "Média",
+    "explanation": "'AddAzureAppConfiguration' é o método para carregar configurações do serviço. 'ManagedIdentityCredential' é usado para forçar o uso exclusivo da identidade gerenciada, sem fallback para outras credenciais.",
+    "content": {
+      "statement": "Você é um desenvolvedor construindo um site usando um Azure Web App. O site armazena dados de configuração no Azure App Configuration. O acesso ao Azure App Configuration foi configurado para usar a identidade do web app para autenticação. Os requisitos de segurança especificam de forma estrita que nenhum outro sistema de autenticação deve ser usado (sem fallback para outras credenciais, como Azure CLI ou Visual Studio). Como você deve completar o código?",
+      "text": "config.{{0}}(options =>\n    options.Connect(new Uri(settings[\"AppConfig:Endpoint\"]),\n    new {{1}}()));",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "AddAzureKeyVault" },
+            { "id": "B", "text": "DefaultAzureCredential" },
+            { "id": "C", "text": "ManagedIdentityCredential" },
+            { "id": "D", "text": "AddAzureAppConfiguration" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "AddAzureKeyVault" },
+            { "id": "B", "text": "DefaultAzureCredential" },
+            { "id": "C", "text": "ChainedTokenCredential" },
+            { "id": "D", "text": "ManagedIdentityCredential" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "D"]
+  },
+  {
+    "id": "Q-MI-03",
+    "type": "multiple_choice",
+    "category": "Managed Identities",
+    "difficulty": "Fácil",
+    "explanation": "A abordagem correta para obter um token de acesso de uma VM com identidade gerenciada é fazer uma chamada local para o endpoint do Azure Instance Metadata Service (IMDS).",
+    "content": {
+      "statement": "Você desenvolve soluções em nuvem do Azure. Você deve conceder a uma Máquina Virtual (VM) acesso a grupos de recursos específicos no Azure Resource Manager. Você precisa obter um token de acesso do Azure Resource Manager usando a identidade gerenciada atribuída pelo sistema (system-assigned) que foi previamente ativada na VM.\nSolução proposta: A partir de um script dentro da VM, você executa o cmdlet Invoke-RestMethod ou Invoke-WebRequest para fazer uma solicitação HTTP local ao endpoint do Azure Instance Metadata Service (IMDS) para obter o token para os recursos do Azure.\nA solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-MI-04",
+    "type": "dropdown_fill_in_blank",
+    "category": "Managed Identities",
+    "difficulty": "Média",
+    "explanation": "Para habilitar uma identidade atribuída pelo sistema em uma VM via PowerShell, use o parâmetro '-IdentityType' com o valor 'SystemAssigned'.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo que precisa de acesso a uma máquina virtual (VM) do Azure. O ciclo de vida do acesso para o aplicativo deve estar associado à instância do serviço da VM. Você precisa habilitar a identidade gerenciada correta para a VM. Como você deve concluir o segmento de script em PowerShell?",
+      "text": "Update-AzVM -ResourceGroupName \"ContosoRG\" -VM $vm {{0}} {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "-AssignIdentity" },
+            { "id": "B", "text": "-IdentityId" },
+            { "id": "C", "text": "-IdentityType" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "$SystemAssigned" },
+            { "id": "B", "text": "$UserAssigned" },
+            { "id": "C", "text": "SystemAssigned" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "C"]
+  },
+  {
+    "id": "Q-MI-05",
+    "type": "multiple_choice",
+    "category": "Managed Identities",
+    "difficulty": "Média",
+    "explanation": "Uma identidade gerenciada atribuída pelo usuário tem um ciclo de vida independente do recurso, o que significa que ela persistirá mesmo se o Logic App for excluído.",
+    "content": {
+      "statement": "Você constrói e implanta um fluxo de trabalho do Azure Logic App que invoca um aplicativo Azure Functions e interage com uma conta de armazenamento de Blobs do Azure. Todos os componentes se autenticam usando o Microsoft Entra ID. O fluxo de trabalho lógico deve acessar o armazenamento de Blobs com segurança e a identidade no Microsoft Entra ID deve persistir caso o fluxo de trabalho do Logic App seja excluído. O que você deve configurar?",
+      "options": [
+        { "id": "A", "text": "Criar um Azure Key Vault e emitir um certificado de cliente." },
+        { "id": "B", "text": "Criar uma identidade gerenciada atribuída pelo sistema (system-assigned) e provisionar um certificado de cliente." },
+        { "id": "C", "text": "Registrar um aplicativo do Azure AD e conceder a ele a função Storage Blob Data Contributor." },
+        { "id": "D", "text": "Criar uma identidade gerenciada atribuída pelo usuário (user-assigned) e atribuir controle de acesso baseado em função (RBAC)." }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-MI-06",
+    "type": "drag_and_drop",
+    "category": "Managed Identities",
+    "difficulty": "Difícil",
+    "explanation": "1. Crie uma única identidade user-assigned. 2. Atribua essa identidade a todos os aplicativos. 3. Conceda a permissão à identidade no Key Vault. 4. Configure os aplicativos para usar a referência do Key Vault.",
+    "content": {
+      "statement": "Você é o arquiteto de nuvem de uma empresa e está configurando o acesso de um aplicativo hospedado no Azure App Service para acessar credenciais no Azure Key Vault de forma segura. Existem vários aplicativos Web e aplicativos de Função (Function Apps) que precisarão compartilhar exatamente o mesmo acesso a esses segredos. A equipe de segurança exige que a abordagem utilize o Microsoft Entra ID (Azure AD) e que a solução elimine o gerenciamento manual de credenciais, além de minimizar a sobrecarga administrativa e as alterações no locatário do AD. Selecione as quatro ações necessárias e ordene-as na sequência lógica correta.",
+      "items_to_drag": [
+        { "id": "A", "text": "Criar uma identidade gerenciada atribuída pelo usuário (user-assigned) no Azure." },
+        { "id": "B", "text": "Atribuir a identidade gerenciada criada aos respectivos App Services e Function Apps." },
+        { "id": "C", "text": "Conceder à identidade gerenciada a permissão de leitura ('Get') nas políticas de acesso ou RBAC do Azure Key Vault." },
+        { "id": "D", "text": "Adicionar uma configuração de aplicativo (App Setting) nos App Services utilizando a sintaxe de Referência do Key Vault." }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D"]
+  },
+  {
+    "id": "Q-MI-07",
+    "type": "dropdown_fill_in_blank",
+    "category": "Managed Identities",
+    "difficulty": "Difícil",
+    "explanation": "O endpoint do IMDS é 'http://169.254.169.254/metadata/identity/oauth2/token'. A resposta é um JSON, que deve ser desserializado para extrair o token de acesso.",
+    "content": {
+      "statement": "Você está desenvolvendo um serviço da Web que será executado em Máquinas Virtuais (VMs) do Azure. O serviço precisa interagir com o Azure Storage. Todas as VMs foram configuradas para usar identidades gerenciadas. Os requisitos de segurança estipulam que:\n- Mecanismos de autenticação baseados em segredos ou chaves não são permitidos.\n- O código deve interagir estritamente com os endpoints do Azure Instance Metadata Service (IMDS) locais da VM para buscar o token.\nComplete o código em C# para recuperar e processar o token de acesso.",
+      "text": "var url = \"{{0}}\";\n... \nreturn {{1}};",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "http://localhost:50342/oauth2/token" },
+            { "id": "B", "text": "http://169.254.169.254:50432/oauth2/token" },
+            { "id": "C", "text": "http://localhost/metadata/identity/oauth2/token" },
+            { "id": "D", "text": "http://169.254.169.254/metadata/identity/oauth2/token" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "XDocument.Parse(payload);" },
+            { "id": "B", "text": "new MultipartContent(payload);" },
+            { "id": "C", "text": "new NetworkCredential(\"Azure\", payload);" },
+            { "id": "D", "text": "JsonConvert.DeserializeObject<Dictionary<string, string>>(payload);" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["D", "D"]
+  },
+  {
+    "id": "Q-MI-08",
+    "type": "multiple_choice",
+    "category": "Managed Identities",
+    "difficulty": "Média",
+    "explanation": "Criar uma única identidade gerenciada atribuída pelo usuário (user-assigned) e atribuí-la a todos os recursos é a abordagem que minimiza as alterações no Entra ID e o esforço administrativo.",
+    "content": {
+      "statement": "Você possui um aplicativo que consiste em um aplicativo Web do Azure e vários aplicativos do Azure Functions. Os segredos do aplicativo, incluindo strings de conexão e certificados, são armazenados no Azure Key Vault. Os segredos não devem ser armazenados no código do aplicativo ou no ambiente de tempo de execução. As modificações no Microsoft Entra ID (Azure AD) devem ser minimizadas. Você precisa projetar a abordagem para o carregamento dos segredos do aplicativo. O que você deve fazer?",
+      "options": [
+        { "id": "A", "text": "Criar uma única identidade gerenciada atribuída pelo usuário (user-assigned) com permissão para acessar o Key Vault e configurar cada App Service/Function para usá-la." },
+        { "id": "B", "text": "Criar uma única Entidade de Serviço (Service Principal) do Azure AD com permissão para acessar o Key Vault e usar um client secret de dentro dos App Services." },
+        { "id": "C", "text": "Criar uma identidade gerenciada atribuída pelo sistema (system-assigned) em cada App Service e conceder permissões individuais no Key Vault." },
+        { "id": "D", "text": "Criar uma Entidade de Serviço (Service Principal) do Azure AD para cada App Service e usar certificados de dentro do aplicativo para autenticação." }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-MI-09",
+    "type": "multiple_choice",
+    "category": "Managed Identities",
+    "difficulty": "Média",
+    "explanation": "Os cmdlets 'Get-AzVM' e 'Get-AzResource' podem ser usados para inspecionar as propriedades de um recurso do Azure, incluindo o 'PrincipalId' da sua identidade gerenciada atribuída pelo sistema.",
+    "content": {
+      "statement": "O seu grupo de operações é responsável por gerenciar 120 máquinas virtuais (VMs) do Azure que possuem identidades gerenciadas atribuídas pelo sistema (system-assigned) habilitadas. Você precisa construir um script para auditar essas máquinas e obter o valor do objectId (Identificador do Objeto/Principal) de cada identidade gerenciada anexada a essas VMs. Quais dois comandos PowerShell retornam a propriedade necessária para obter essas informações? (Escolha 2)",
+      "options": [
+        { "id": "A", "text": "Get-AzADServicePrincipal" },
+        { "id": "B", "text": "Get-AzVM" },
+        { "id": "C", "text": "Get-AzADUser" },
+        { "id": "D", "text": "Get-AzRoleAssignment" },
+        { "id": "E", "text": "Get-AzResource" }
+      ]
+    },
+    "correct_answer": ["B", "E"]
+  },
+  {
+    "id": "Q-MI-10",
+    "type": "multiple_choice",
+    "category": "Managed Identities",
+    "difficulty": "Fácil",
+    "explanation": "A identidade gerenciada é o mecanismo de autenticação recomendado para serviços do Azure se comunicarem entre si de forma segura, sem a necessidade de gerenciar credenciais no código.",
+    "content": {
+      "statement": "Sua empresa está desenvolvendo uma API do Azure hospedada no Azure API Management (APIM) e em um App Service. Você precisa implementar a autenticação para que a API do Azure possa acessar de forma segura outros recursos de back-end do Azure (como um Key Vault ou Storage Account). Você possui os seguintes requisitos:\n- Todas as chamadas feitas pela API aos outros recursos do Azure devem ser autenticadas.\n- O código que efetua a chamada da API para o back-end não deve enviar ou conter credenciais (sem armazenamento de chaves).\nQual mecanismo de autenticação você deve usar para a API acessar os outros recursos?",
+      "options": [
+        { "id": "A", "text": "Autenticação Básica (Basic Auth)" },
+        { "id": "B", "text": "Certificado de Cliente (Client Certificate)" },
+        { "id": "C", "text": "Identidade Gerenciada (Managed Identity)" },
+        { "id": "D", "text": "Chave de Acesso Compartilhado (SAS Token)" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-MI-11",
+    "type": "multiple_choice",
+    "category": "Managed Identities",
+    "difficulty": "Fácil",
+    "explanation": "Habilitar uma Identidade Gerenciada (MSI) para o App Service permite que ele se autentique no Azure Key Vault usando o Entra ID, eliminando a necessidade de credenciais no código.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo de comércio eletrônico hospedado em um Azure App Service (Web App). Você deseja usar o Azure Key Vault para garantir que os logins no aplicativo da Web de comércio eletrônico sejam protegidos usando a autenticação do Serviço de Aplicativo do Azure e o Azure Active Directory (Microsoft Entra ID). O que você deve configurar no aplicativo Web de comércio eletrônico para que ele acesse os segredos sem armazenar credenciais no código?",
+      "options": [
+        { "id": "A", "text": "Executar o comando az keyvault secret na inicialização do aplicativo." },
+        { "id": "B", "text": "Habilitar o Azure AD Connect no ambiente de hospedagem." },
+        { "id": "C", "text": "Habilitar uma Identidade Gerenciada (Managed Service Identity - MSI) para o App Service." },
+        { "id": "D", "text": "Criar uma Entidade de Serviço (Service Principal) e armazenar seu segredo de cliente localmente." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-MI-12",
+    "type": "dropdown_fill_in_blank",
+    "category": "Managed Identities",
+    "difficulty": "Difícil",
+    "explanation": "No SDK legado, a classe 'AzureServiceTokenProvider' é usada para obter tokens de identidade gerenciada, e o método para isso é 'GetAccessTokenAsync'.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo em C# usando uma biblioteca mais antiga/legada para se conectar a serviços do Azure a partir de uma Máquina Virtual habilitada para Identidade Gerenciada. Sua equipe ainda não migrou para o pacote moderno Azure.Identity e precisa solicitar o token programaticamente usando a biblioteca nativa compatível no ambiente. Como você deve completar o trecho de código para recuperar o token de acesso do Azure Resource Manager via Managed Identity?",
+      "text": "var provider = new {{0}}();<br>string accessToken = await provider.{{1}}(\"https://management.azure.com/\");",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "AzureServiceTokenProvider" },
+            { "id": "B", "text": "ChainedTokenCredential" },
+            { "id": "C", "text": "ManagedIdentityCredential" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "GetTokenAsync" },
+            { "id": "B", "text": "AcquireTokenSilentAsync" },
+            { "id": "C", "text": "GetAccessTokenAsync" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "C"]
+  },
+  {
+    "id": "Q-MI-13",
+    "type": "drag_and_drop",
+    "category": "Managed Identities",
+    "difficulty": "Média",
+    "explanation": "1. Habilite a identidade gerenciada no Logic App. 2. Defina o nível de autorização da Function como 'Anonymous' para que ela confie no token de identidade gerenciada para autenticação.",
+    "content": {
+      "statement": "Você desenvolve e implanta um aplicativo lógico (Azure Logic App) que chama um aplicativo de função do Azure (Azure Function App). O Azure Function App realiza operações sensíveis e deve ser invocado exclusivamente por meio do Logic App. Você decide usar a Identidade Gerenciada (Managed Identity) do Logic App para que a Function valide a chamada adequadamente. Quais duas ações você deve realizar para configurar essa autenticação corretamente e em qual sequência?",
+      "items_to_drag": [
+        { "id": "A", "text": "Habilitar a identidade gerenciada atribuída pelo sistema (system-assigned) no aplicativo Logic App." },
+        { "id": "B", "text": "Definir o nível de autenticação (Authorization Level) do gatilho da Azure Function como 'Anonymous'." }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-MI-14",
+    "type": "multiple_choice",
+    "category": "Managed Identities",
+    "difficulty": "Média",
+    "explanation": "Você pode obter um token de acesso para uma identidade gerenciada de dentro da VM fazendo uma solicitação ao endpoint do IMDS. Com esse token, você pode então chamar o Azure Resource Manager.",
+    "content": {
+      "statement": "Você desenvolve uma solução que usa Máquinas Virtuais (VMs) do Azure. O código hospedado nas VMs deve acessar os recursos em um grupo de recursos do Azure. Você concedeu acesso à VM ao grupo de recursos no Azure Resource Manager via RBAC. Você precisa obter um token de acesso que use a identidade gerenciada atribuída pelo sistema (system-assigned) da própria VM. Quais duas ações você pode executar para atingir o objetivo? (Escolha 2)",
+      "options": [
+        { "id": "A", "text": "A partir do código rodando na VM, chamar o endpoint do Azure Resource Manager diretamente usando um token de acesso de provedor de identidade." },
+        { "id": "B", "text": "Usar o PowerShell em uma máquina remota (fora da rede do Azure) para fazer uma solicitação ao endpoint local de Identidade Gerenciada." },
+        { "id": "C", "text": "Usar o PowerShell dentro da própria VM para fazer uma solicitação ao endpoint do Azure Instance Metadata Service (IMDS) na porta 169.254.169.254." },
+        { "id": "D", "text": "A partir do código na VM, chamar o Azure Resource Manager usando um token SAS (Shared Access Signature)." }
+      ]
+    },
+    "correct_answer": ["A", "C"]
+  },
+  {
+    "id": "Q-MI-15",
+    "type": "multiple_choice",
+    "category": "Managed Identities",
+    "difficulty": "Fácil",
+    "explanation": "Atribuir uma identidade gerenciada ao App Service é a maneira padrão e mais segura de permitir o acesso a outros recursos do Azure, como o Key Vault, sem gerenciar credenciais no código.",
+    "content": {
+      "statement": "Você desenvolve e implanta um aplicativo web do Azure App Service chamado App1. Você cria um novo Azure Key Vault chamado Vault1 e importa várias chaves de API, senhas, certificados e chaves criptográficas nele. Você precisa conceder ao App1 acesso de leitura ao Vault1 garantindo que as credenciais possam ser rotacionadas automaticamente. Os segredos não devem ser armazenados no código sob nenhuma circunstância. O que você deve fazer?",
+      "options": [
+        { "id": "A", "text": "Habilitar a autenticação do App Service para o App1 e atribuir uma função RBAC personalizada diretamente aos usuários do sistema." },
+        { "id": "B", "text": "Carregar um certificado de cliente autoassinado no Vault1 e atualizar o App1 para usar esse certificado via código." },
+        { "id": "C", "text": "Atribuir uma identidade gerenciada (Managed Identity) ao App1." },
+        { "id": "D", "text": "Adicionar uma vinculação SSL (TLS/SSL binding) ao App1 e injetar chaves no Vault1." }
+      ]
+    },
+    "correct_answer": ["C"]
+  }
+]
