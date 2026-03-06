@@ -124,7 +124,7 @@
         { "id": "D", "text": "Adicionar uma configuração de aplicativo (App Setting) nos App Services utilizando a sintaxe de Referência do Key Vault." }
       ]
     },
-    "correct_answer": ["A", "B", "C", "D"]
+    "correct_answer": ["A", "C", "B", "D"]
   },
   {
     "id": "Q-MI-07",
