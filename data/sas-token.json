@@ -6,7 +6,7 @@
     "difficulty": "Difícil",
     "explanation": "Para revogar um user delegation SAS, você pode revogar a chave de delegação usada para assiná-lo ou remover a atribuição de função RBAC do principal de segurança.",
     "content": {
-      "statement": "Você desenvolve uma API REST e implementa um token de user delegation SAS (SAS de delegação de usuário) para se comunicar com o armazenamento de Blobs do Azure. Após alguns dias, você descobre que o token foi comprometido e você precisa revogá-lo imediatamente. Quais são as duas maneiras possíveis de atingir esse objetivo? (Cada resposta correta apresenta uma solução completa).",
+      "statement": "Você desenvolve uma API REST e implementa um token de `user delegation SAS` (SAS de delegação de usuário) para se comunicar com o armazenamento de Blobs do Azure. Após alguns dias, você descobre que o token foi comprometido e você precisa revogá-lo imediatamente. Quais são as duas maneiras possíveis de atingir esse objetivo? (Cada resposta correta apresenta uma solução completa).",
       "options": [
         { "id": "A", "text": "Revogar a chave de delegação (delegation key)." },
         { "id": "B", "text": "Excluir a política de acesso armazenado (stored access policy)." },
@@ -141,7 +141,7 @@
     "difficulty": "Difícil",
     "explanation": "A criptografia de serviço do Azure Storage (SSE) protege os dados em repouso, mas os descriptografa para solicitações autorizadas. Se um token SAS for vazado, um invasor poderá baixar os dados legíveis. A criptografia do lado do cliente é necessária para garantir que os dados permaneçam ilegíveis.",
     "content": {
-      "statement": "Nota: Esta questão faz parte de uma série de questões com o mesmo cenário. Você está desenvolvendo um site de gerenciamento de prontuários médicos. O site é usado para armazenar cópias digitalizadas de formulários de pacientes em um Azure Blob Storage. Uma política de segurança afirma: \"Se os formulários armazenados forem baixados do armazenamento por um terceiro não autorizado (por exemplo, se um token SAS for vazado e usado indevidamente), o conteúdo dos formulários não pode ser comprometido (os dados devem estar ilegíveis).\"\nSolução proposta: Você cria uma chave no Azure Key Vault chamada skey. Em seguida, você configura o Armazenamento do Azure para habilitar a Criptografia da Conta de Armazenamento (Azure Storage Service Encryption) utilizando essa chave gerenciada pelo cliente (Customer-Managed Key - CMK) para criptografar os dados.\nEssa solução atende à meta?",
+      "statement": "Nota: Esta questão faz parte de uma série de questões com o mesmo cenário. Você está desenvolvendo um site de gerenciamento de prontuários médicos. O site é usado para armazenar cópias digitalizadas de formulários de pacientes em um Azure Blob Storage. Uma política de segurança afirma: \"Se os formulários armazenados forem baixados do armazenamento por um terceiro não autorizado (por exemplo, se um token SAS for vazado e usado indevidamente), o conteúdo dos formulários não pode ser comprometido (os dados devem estar ilegíveis).\"\nSolução proposta: Você cria uma chave no Azure Key Vault chamada `skey`. Em seguida, você configura o Armazenamento do Azure para habilitar a Criptografia da Conta de Armazenamento (Azure Storage Service Encryption) utilizando essa chave gerenciada pelo cliente (Customer-Managed Key - CMK) para criptografar os dados.\nEssa solução atende à meta?",
       "options": [
         { "id": "A", "text": "Sim" },
         { "id": "B", "text": "Não" }

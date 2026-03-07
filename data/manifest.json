@@ -99,10 +99,28 @@
             "title": "4. Integração: Mensageria e Eventos",
             "categories": [
                 {
+                    "id": "event-grid",
+                    "name": "Azure Event Grid",
+                    "file": "data/event-grid.json",
+                    "count": 30
+                },
+                {
+                    "id": "event-hub",
+                    "name": "Azure Event Hubs",
+                    "file": "data/event-hub.json",
+                    "count": 30
+                },
+                {
                     "id": "service-bus",
                     "name": "Azure Service Bus",
                     "file": "data/service-bus.json",
-                    "count": 2
+                    "count": 30
+                },
+                {
+                    "id": "queue-storage",
+                    "name": "Azure Queue Storage",
+                    "file": "data/queue-storage.json",
+                    "count": 25
                 }
             ]
         },

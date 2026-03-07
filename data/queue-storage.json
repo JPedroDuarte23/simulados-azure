@@ -1,0 +1,442 @@
+[
+    {
+        "id": "Q-QS-01",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está desenvolvendo um aplicativo de serviço do Azure que processa dados de fila quando recebe uma mensagem de um aplicativo móvel. As mensagens podem não ser enviadas ao serviço de forma consistente. Você tem os seguintes requisitos para a fila de mensagens:\n- O tamanho da fila não deve crescer além de 80 gigabytes (GB).\n- Deve haver a garantia de uso da ordenação First-In-First-Out (FIFO) para a entrega das mensagens.\n- Minimizar os custos do Azure.\nSolução Proposta: Você usa a API .NET para adicionar uma mensagem a uma Azure Storage Queue (Fila de Armazenamento do Azure) a partir do aplicativo móvel. Em seguida, você cria um Azure Function App que usa um gatilho de fila do Azure Storage (Queue trigger) para processar as mensagens.\nA solução atende ao objetivo?",
+            "options": [
+                { "id": "A", "text": "Sim" },
+                { "id": "B", "text": "Não" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "Resposta Correta: B (Não).\nExplicação: As filas do Azure Storage (Storage Queues) não garantem a entrega ordenada FIFO (First-In-First-Out). Elas oferecem entrega de melhor esforço (best-effort). Para garantir a ordenação FIFO rigorosa das mensagens (junto com o limite menor que 80 GB), você deve utilizar o Azure Service Bus Queue."
+    },
+    {
+        "id": "Q-QS-02",
+        "type": "drag_and_drop",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você é o desenvolvedor de uma empresa de SaaS (Software as a Service) que usa o Azure Functions para processar pedidos. Atualmente, a Azure Function é executada em um Function App acionado por uma Azure Storage Queue.\nVocê está se preparando para migrar essa Azure Function para o Kubernetes utilizando o KEDA (Kubernetes-based Event Driven Autoscaling). Você precisa configurar os Custom Resource Definitions (CRD) do Kubernetes para a Azure Function.\nAção: Associe os parâmetros de configuração na Coluna A ao tipo de CRD correto na Coluna B. (Considere as opções: Secret, Deployment, ScaledObject, TriggerAuthentication).",
+            "items_to_drag": [
+                { "id": "A", "text": "Código da Azure Function (Azure Function code)" },
+                { "id": "B", "text": "Intervalo de pesquisa (Polling interval)" },
+                { "id": "C", "text": "String de conexão do Azure Storage (Azure Storage connection string)" }
+            ],
+            "targets": [
+                { "id": "1", "text": "Deployment" },
+                { "id": "2", "text": "ScaledObject" },
+                { "id": "3", "text": "Secret" }
+            ]
+        },
+        "correct_answer": ["A-1", "B-2", "C-3"],
+        "explanation": "Resposta Correta:\nCódigo da Azure Function → Deployment\nIntervalo de pesquisa → ScaledObject\nString de conexão do Azure Storage → Secret\nExplicação: Ao usar o KEDA para escalar Azure Functions no Kubernetes, o código da sua aplicação (contêiner) é gerenciado por um CRD do tipo Deployment. O KEDA utiliza o ScaledObject para definir como a aplicação deve escalar, controlando propriedades como o intervalo que ele deve verificar a fila do Storage (pollingInterval). Por fim, strings de conexão e credenciais do Storage devem ser protegidas e salvas como um Secret do Kubernetes."
+    },
+    {
+        "id": "Q-QS-03",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você planeja implementar um Azure Functions app. O aplicativo possui os seguintes requisitos:\n- Deve ser acionado por uma mensagem colocada em uma fila do Azure Storage.\n- Deve usar o nome da fila definido por uma variável de ambiente/configuração de aplicativo (app setting) chamada input_queue.\n- Deve usar a mensagem para criar um arquivo no Azure Blob Storage com o mesmo nome do conteúdo exato da mensagem recebida.\nAção: Como você deve referenciar os nomes no arquivo function.json do seu aplicativo? Escolha a opção correta para cada parâmetro.",
+            "text": "Queue name (Nome da fila): {{0}}\nBlob name (Nome do blob): {{1}}",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "input_queue" },
+                        { "id": "B", "text": "{input_queue}" },
+                        { "id": "C", "text": "%input_queue%" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "{queueTrigger}" },
+                        { "id": "B", "text": "{input_queue}/{id}" },
+                        { "id": "C", "text": "%input_queue%/{filename}" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["C", "A"],
+        "explanation": "Resposta Correta:\nQueue name: `%input_queue%`\nBlob name: `{queueTrigger}`\nExplicação: Em Azure Functions, quando você precisa que uma propriedade de binding (como o nome da fila) seja resolvida a partir de uma configuração de aplicativo (App Setting), você deve envolver o nome da configuração com sinais de porcentagem (`%nome_da_configuracao%`). Para ler o conteúdo da mensagem da fila (o payload) e usá-lo dinamicamente no caminho/nome do blob de saída, a expressão de vinculação correta é a metadado do gatilho fornecido por `{queueTrigger}`."
+    },
+    {
+        "id": "Q-QS-04",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está desenvolvendo um aplicativo .NET que se comunica com o Azure Storage. Uma mensagem deve ser gravada na fila quando o aplicativo é inicializado.\nAção: Complete o segmento de código abaixo com as classes e métodos apropriados para conectar e enviar uma mensagem para a fila (usando a biblioteca legada compatível em exames antigos/atualizados presentes nos dumps).",
+            "text": "CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting(\"StorageConnectionString\"));\n\n// LINHA 1\n{{0}} pVar1 = storageAccount.{{1}}();\n\n// LINHA 2\n{{2}} pVar2 = pVar1.{{3}}(\"contoso-storage\");\n\ntry {\n    await pVar2.CreateIfNotExistsAsync();\n} catch (StorageException x) { throw; }\n\nCloudQueueMessage cloudQueueMessage = new CloudQueueMessage(\"App Launch: <iUserID>\");\nawait pVar2.AddMessageAsync(cloudQueueMessage);",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "CloudQueueClient" },
+                        { "id": "B", "text": "CloudTableClient" },
+                        { "id": "C", "text": "CloudQueue" },
+                        { "id": "D", "text": "CloudTable" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "CreateCloudQueueClient" },
+                        { "id": "B", "text": "CreateCloudTableClient" },
+                        { "id": "C", "text": "GetQueueReference" },
+                        { "id": "D", "text": "GetTableReference" }
+                    ]
+                },
+                {
+                    "index": 2,
+                    "options": [
+                        { "id": "A", "text": "CloudQueueClient" },
+                        { "id": "B", "text": "CloudTableClient" },
+                        { "id": "C", "text": "CloudQueue" },
+                        { "id": "D", "text": "CloudTable" }
+                    ]
+                },
+                {
+                    "index": 3,
+                    "options": [
+                        { "id": "A", "text": "CreateCloudQueueClient" },
+                        { "id": "B", "text": "CreateCloudTableClient" },
+                        { "id": "C", "text": "GetQueueReference" },
+                        { "id": "D", "text": "GetTableReference" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["A", "A", "C", "C"],
+        "explanation": "Resposta Correta:\nOpção A: `CloudQueueClient`\nOpção B: `CreateCloudQueueClient`\nOpção C: `CloudQueue`\nOpção D: `GetQueueReference`\nExplicação: Para interagir com o Queue Storage usando esta versão do SDK, primeiro você cria um cliente de fila a partir da conta de armazenamento utilizando `storageAccount.CreateCloudQueueClient()`, que retorna um objeto `CloudQueueClient`. Em seguida, você deve obter a referência para a fila específica invocando `GetQueueReference(\"nome-da-fila\")`, o que retorna o objeto manipulador `CloudQueue` onde a mensagem será adicionada via `AddMessageAsync`."
+    },
+    {
+        "id": "Q-QS-05",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você tem uma fila do Azure Storage (Azure Queue Storage) chamada queue1. Você planeja desenvolver um código que processará as mensagens na queue1.\nVocê precisa implementar uma operação de fila que permita definir ou alterar o valor do tempo limite de visibilidade (visibility timeout) de mensagens individuais já existentes ou lidas na queue1.\nAção: Quais duas operações de fila você pode usar para atingir esse objetivo?",
+            "options": [
+                { "id": "A", "text": "Espiar uma mensagem na fila (Peek at a message)." },
+                { "id": "B", "text": "Excluir uma mensagem da fila (Delete a message)." },
+                { "id": "C", "text": "Adicionar uma mensagem à fila (Add a message)." },
+                { "id": "D", "text": "Atualizar uma mensagem na fila (Update a message)." },
+                { "id": "E", "text": "Receber uma mensagem da fila (Receive / Get a message)." }
+            ]
+        },
+        "correct_answer": ["D", "E"],
+        "explanation": "Resposta Correta: D e E.\nExplicação: A propriedade `Visibility Timeout` controla por quanto tempo uma mensagem fica invisível para outros consumidores da fila.\nA operação de Receber (`GetMessage`) recupera a mensagem e define o tempo limite de visibilidade inicial (geralmente padrão de 30 segundos, mas configurável).\nA operação de Atualizar (`UpdateMessage`) permite modificar os metadados/conteúdo de uma mensagem que já foi recebida e, de forma crucial, estender ou reiniciar o tempo limite de visibilidade.\nEspiar (`Peek`) apenas lê o conteúdo sem ocultar a mensagem (não mexe na visibilidade). Excluir e Adicionar também não redefinem a visibilidade de mensagens que estão sendo processadas no momento."
+    },
+    {
+        "id": "Q-QS-06",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você gerencia um aplicativo de processamento de dados que recebe solicitações contínuas de uma fila do Azure Storage (Storage Queue). Você precisa gerenciar e conceder acesso à fila para aplicativos de terceiros.\nA solução de segurança deve atender aos seguintes requisitos:\n- Fornecer acesso estrito apenas à fila necessária.\n- Garantir que você possa revogar o acesso à fila imediatamente, sem precisar regenerar as chaves primárias da conta de armazenamento (Storage Account keys).\n- Especificar as permissões de acesso no nível da fila e não no nível da conta de armazenamento inteira.\nQual mecanismo de assinatura de acesso compartilhado (SAS) você deve usar?",
+            "options": [
+                { "id": "A", "text": "SAS Ad hoc de Serviço (Ad hoc Service SAS)." },
+                { "id": "B", "text": "SAS no nível da conta (Account-level SAS)." },
+                { "id": "C", "text": "SAS de Delegação de Usuário (User delegation SAS)." },
+                { "id": "D", "text": "SAS de Serviço com uma política de acesso armazenada (Service SAS with a stored access policy)." }
+            ]
+        },
+        "correct_answer": ["D"],
+        "explanation": "Resposta Correta: D.\nExplicação: Para revogar o acesso sem precisar alterar as chaves da conta de armazenamento, você precisa de uma SAS vinculada a uma Política de Acesso Armazenada (Stored Access Policy). Essa política é definida no nível do contêiner (neste caso, a fila específica), garantindo que o acesso não seja no nível da conta global. Uma SAS \"Ad hoc\" não pode ser revogada antes de expirar a menos que você regenere as chaves da conta de armazenamento."
+    },
+    {
+        "id": "Q-QS-07",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está desenvolvendo um Azure Function que se conecta a uma instância do Banco de Dados SQL do Azure. A função é acionada por novas mensagens que entram em uma fila do Azure Storage (Queue Trigger).\nRecentemente, você começou a receber relatórios de várias exceções System.InvalidOperationException nos logs com a seguinte mensagem: \"Timeout expired. The timeout period elapsed prior to obtaining a connection from the pool. This may have occurred because all pooled connections were in use and max pool size was reached.\"\nVocê precisa evitar a exceção limitando a taxa em que a função processa mensagens simultaneamente e esgota o pool de conexões.\nAção: Como você deve configurar seu aplicativo? Escolha a opção correta para cada área.",
+            "text": "Arquivo a ser modificado:\n{{0}}\nAção a ser realizada:\n{{1}}",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "function.json" },
+                        { "id": "B", "text": "local.settings.json" },
+                        { "id": "C", "text": "host.json" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "Diminuir o valor da opção batchSize." },
+                        { "id": "B", "text": "Aumentar o valor da opção maxDequeueCount." },
+                        { "id": "C", "text": "Alterar o tipo de acionamento para queueScaling." }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["C", "A"],
+        "explanation": "Resposta Correta:\nArquivo: `host.json`\nAção: Diminuir o valor da opção `batchSize`\nExplicação: A exceção ocorre porque o Azure Functions dimensiona o processamento lendo várias mensagens da fila ao mesmo tempo. Ao fazer isso em paralelo, a função abre muitas conexões com o SQL Database, excedendo o tamanho do pool. Para controlar o paralelismo e a escalabilidade de funções baseadas em fila, você deve editar o arquivo `host.json` e reduzir a propriedade `batchSize`, limitando o número de execuções concorrentes. A opção `maxDequeueCount` controla o envio para a fila de mensagens nocivas (poison queue) e não tem relação com o pool de conexões."
+    },
+    {
+        "id": "Q-QS-08",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está desenvolvendo um aplicativo que utiliza o Azure Storage Queues (usando o SDK `Microsoft.Azure.Storage.Queue` / SDK legado suportado no exame para avaliar conceitos básicos). Você possui o seguinte segmento de código em C#:\n```csharp\nCloudQueueMessage peekedMessage = await queue.PeekMessageAsync();\nif (peekedMessage != null) {\n    Console.WriteLine(\"The peeked message is: {0}\", peekedMessage.AsString);\n}\nCloudQueueMessage message = await queue.GetMessageAsync();\n// Nenhuma outra chamada a métodos da fila é feita após essa linha.\n```\nAção: Avalie as afirmações abaixo sobre o comportamento deste código. Marque \"Sim\" se for verdadeiro, ou \"Não\" se for falso.",
+            "text": "O código configura explicitamente uma duração personalizada de bloqueio de visibilidade (lock duration / visibility timeout) para a fila. {{0}}\nA última mensagem lida (`GetMessageAsync`) permanecerá na fila após a execução deste bloco de código. {{1}}\nA fila de armazenamento permanece existindo na conta de armazenamento após o código ser executado. {{2}}",
+            "dropdowns": [
+                { "index": 0, "options": [{ "id": "A", "text": "Sim" }, { "id": "B", "text": "Não" }] },
+                { "index": 1, "options": [{ "id": "A", "text": "Sim" }, { "id": "B", "text": "Não" }] },
+                { "index": 2, "options": [{ "id": "A", "text": "Sim" }, { "id": "B", "text": "Não" }] }
+            ]
+        },
+        "correct_answer": ["B", "A", "A"],
+        "explanation": "Resposta Correta:\nNão\nSim\nSim\nExplicação:\nO código chama `GetMessageAsync()` sem parâmetros, portanto usa o tempo limite de visibilidade padrão (30 segundos), não configurando uma duração explicitamente.\nA operação `GetMessageAsync` recupera a mensagem e a torna \"invisível\" para outros consumidores durante o tempo limite de visibilidade, mas não a exclui da fila. Para removê-la permanentemente, o código precisaria chamar `DeleteMessageAsync` após o processamento.\nA fila não sofre alterações em sua estrutura e não é deletada pelo código apresentado."
+    },
+    {
+        "id": "Q-QS-09",
+        "type": "drag_and_drop",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está configurando o comportamento do Azure Functions consumindo o Azure Queue Storage. Para isso, você está ajustando propriedades específicas dentro do objeto \"queues\": {} no arquivo host.json do seu projeto.\nAção: Associe as propriedades de configuração da Fila (Coluna A) às suas respectivas descrições (Coluna B).",
+            "items_to_drag": [
+                { "id": "A", "text": "`maxDequeueCount`" },
+                { "id": "B", "text": "`batchSize`" },
+                { "id": "C", "text": "`newBatchThreshold`" }
+            ],
+            "targets": [
+                { "id": "1", "text": "A: O número de mensagens atuais sendo processadas em paralelo a partir do qual o tempo de execução solicitará proativamente um novo lote da fila." },
+                { "id": "2", "text": "B: O número máximo de vezes que a função tentará processar uma mesma mensagem antes de enviá-la automaticamente para a fila de mensagens não entregues (poison queue)." },
+                { "id": "3", "text": "C: O número de mensagens da fila que a runtime do Functions recupera de uma só vez e tenta processar em paralelo por instância da função." }
+            ]
+        },
+        "correct_answer": ["A-2", "B-3", "C-1"],
+        "explanation": "Resposta Correta:\n`maxDequeueCount` → B (Padrão de 5 tentativas antes de virar poison-message).\n`batchSize` → C (O tamanho do lote processado simultaneamente, padrão de 16).\n`newBatchThreshold` → A (Limite que aciona a busca antecipada do próximo lote para manter a performance, padrão é metade do `batchSize` - ex: 8)."
+    },
+    {
+        "id": "Q-QS-10",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você é um arquiteto na empresa Contoso e está projetando uma solução de e-commerce que requer um sistema de mensageria na nuvem para comunicação assíncrona.\nAo levantar os requisitos, você identificou que o sistema de mensagens deve:\n- Suportar com facilidade um volume que exceda o tamanho de 80 gigabytes (GB) de armazenamento contínuo.\n- Permitir rastrear o andamento das mensagens em processamento (através da atualização do conteúdo da mensagem enquanto ela está na fila).\n- Fornecer uma trilha de auditoria (audit trail) rigorosa de todas as mensagens que passam pelo serviço, registrando logs de eventos.\nA garantia de entrega na ordem estrita de chegada (FIFO) NÃO é um requisito.\nQual tecnologia você deve escolher para implementar este serviço?",
+            "options": [
+                { "id": "A", "text": "Azure Event Hub" },
+                { "id": "B", "text": "Azure Storage Queue (Fila de Armazenamento do Azure)" },
+                { "id": "C", "text": "Azure Service Bus Queue (Fila do Barramento de Serviço do Azure)" },
+                { "id": "D", "text": "Azure Event Grid" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "Resposta Correta: B.\nExplicação: A documentação oficial da Microsoft para escolha de filas contrasta diretamente Azure Storage Queues e Azure Service Bus Queues. Você deve escolher o Azure Storage Queue se: espera que o tamanho da fila ultrapasse 80 GB; deseja rastrear o andamento de mensagens individuais atualizando seus dados internamente; ou necessita de um log analítico detalhado (audit trail) de todas as transações (adição, leitura, deleção) suportado pelo Storage Analytics. Se ordenação FIFO fosse exigida, ou suporte transacional, o Service Bus seria o indicado."
+    },
+    {
+        "id": "Q-QS-11",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está desenvolvendo uma solução na nuvem do Azure que utiliza filas para comunicação entre diferentes componentes da sua arquitetura de microsserviços.\nDurante o levantamento de requisitos com a equipe de negócios e segurança, foram identificados os seguintes pontos obrigatórios:\n- O sistema deve manter uma trilha de auditoria (audit trail) analítica de todas as mensagens que passam pelo serviço.\n- Espera-se que o tamanho consolidado das mensagens armazenadas na fila exceda 80 gigabytes (GB) nos próximos meses.\n- Os consumidores da fila devem ser capazes de rastrear o andamento do processamento de uma mensagem, atualizando os dados e metadados da mensagem enquanto ela ainda está dentro da fila.\nQual serviço de mensageria da Microsoft você deve escolher para este cenário?",
+            "options": [
+                { "id": "A", "text": "Azure Service Bus Queue" },
+                { "id": "B", "text": "Azure Storage Queue" },
+                { "id": "C", "text": "Azure Event Hub" },
+                { "id": "D", "text": "Azure Event Grid" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "Resposta Correta: B (Azure Storage Queue).\nExplicação: De acordo com as recomendações de arquitetura da Microsoft testadas no AZ-204, você deve escolher o Azure Storage Queue se: você espera que a fila exceda 80 GB de tamanho, necessita de registro transacional contínuo (audit trail via Storage Analytics logs) e precisa atualizar as mensagens já enfileiradas (através da operação `UpdateMessage`) para rastrear o andamento. O Service Bus é limitado a tamanhos de filas menores (geralmente até 80 GB dependendo da camada) e não permite a atualização direta de uma mensagem após o envio."
+    },
+    {
+        "id": "Q-QS-12",
+        "type": "drag_and_drop",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você é um Arquiteto de Soluções e está projetando diferentes módulos de um sistema de E-commerce. Você precisa decidir entre usar as filas do Azure Service Bus ou do Azure Storage Queue para casos de uso específicos.\nAção: Associe os Requisitos Técnicos (Coluna A) com a Tecnologia Apropriada (Coluna B).",
+            "items_to_drag": [
+                { "id": "A", "text": "Fornecer garantia estrita de entrega ordenada (First-In-First-Out - FIFO)." },
+                { "id": "B", "text": "Manter uma trilha de auditoria de log detalhada de quem acessou e consumiu mensagens na fila." },
+                { "id": "C", "text": "Agrupar a leitura e o processamento de várias mensagens do sistema em uma única \"transação\" (suporte transacional)." },
+                { "id": "D", "text": "Lidar com uma fila simples que possivelmente passará da marca de 200 GB de mensagens pendentes." }
+            ],
+            "targets": [
+                { "id": "1", "text": "Azure Storage Queue" },
+                { "id": "2", "text": "Azure Service Bus Queue" }
+            ]
+        },
+        "correct_answer": ["A-2", "B-1", "C-2", "D-1"],
+        "explanation": "Resposta Correta:\nFIFO → Azure Service Bus Queue\nTrilha de auditoria → Azure Storage Queue\nSuporte transacional → Azure Service Bus Queue\nPassará de 200 GB → Azure Storage Queue\nExplicação: O exame AZ-204 testa pesadamente o contraste entre estes dois serviços. Storage Queues são mais simples e podem armazenar até a capacidade de armazenamento total da Storage Account (500 TB+), possuindo rastreamento via Storage Analytics. O Service Bus possui recursos mais complexos de nível corporativo, suportando FIFO (usando Sessions), processamento transacional, identificação de duplicatas e mensagens nocivas (dead-lettering) de forma nativa."
+    },
+    {
+        "id": "Q-QS-13",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está desenvolvendo um Azure Function App usando Visual Studio. O aplicativo vai processar pedidos enviados por uma aplicação web. A aplicação web insere informações do pedido em uma fila do Azure Storage Queue.\nVocê está revisando o seguinte trecho de código da sua Function:\n[FunctionName(\"ProcessOrders\")]\npublic static void ProcessOrders(\n    [QueueTrigger(\"incoming-orders\")] CloudQueueMessage myQueueItem, \n    [Table(\"Orders\")] ICollector<Order> tableBindings, \n    ILogger log)\n{\n    log.LogInformation($\"Processando Pedido: {myQueueItem.Id}\");\n    tableBindings.Add(JsonConvert.DeserializeObject<Order>(myQueueItem.AsString));\n}\n\n[FunctionName(\"ProcessOrders-Poison\")]\npublic static void ProcessFailedOrders(\n    [QueueTrigger(\"incoming-orders-poison\")] CloudQueueMessage myQueueItem, \n    ILogger log)\n{\n    log.LogError($\"Falha processando pedido: {myQueueItem.AsString}\");\n}\nAção: Para cada uma das afirmações abaixo, selecione \"Sim\" se for verdadeira, ou \"Não\" se for falsa.",
+            "text": "Quando a função ProcessOrders falhar repetidamente, ela tentará processar a mensagem até 5 vezes (padrão) antes de enviá-la para a função ProcessOrders-Poison. {{0}}\nQuando houver vários pedidos na fila incoming-orders, um lote (batch) será recuperado de uma vez, e instâncias de ProcessOrders serão executadas em paralelo simultaneamente. {{1}}\nA função ProcessOrders fará a persistência (output) deste pedido em uma tabela do Azure SQL Database chamada \"Orders\". {{2}}",
+            "dropdowns": [
+                { "index": 0, "options": [{ "id": "A", "text": "Sim" }, { "id": "B", "text": "Não" }] },
+                { "index": 1, "options": [{ "id": "A", "text": "Sim" }, { "id": "B", "text": "Não" }] },
+                { "index": 2, "options": [{ "id": "A", "text": "Sim" }, { "id": "B", "text": "Não" }] }
+            ]
+        },
+        "correct_answer": ["A", "A", "B"],
+        "explanation": "Resposta Correta:\nSim\nSim\nNão\nExplicação:\nSim. O gatilho do Azure Storage Queue automaticamente tenta processar uma mensagem 5 vezes (parâmetro `maxDequeueCount` padrão) antes de encaminhá-la para uma fila paralela chamada `{nome-da-fila}-poison`.\nSim. A Azure Function nativamente recupera lotes (batches, por padrão 16) da Storage Queue e processa múltiplas mensagens simultaneamente para acelerar o desempenho e escalar de forma paralela.\nNão. O atributo `[Table(\"Orders\")]` está configurando um Output Binding para o Azure Table Storage (armazenamento NoSQL de chaves/valores no Azure Storage), e não para o Azure SQL Database relacional."
+    },
+    {
+        "id": "Q-QS-14",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você trabalha em um time de desenvolvimento e implementou um aplicativo WebASP.NET hospedado no Azure App Service. Você está usando o WebJobs SDK para projetar uma tarefa de processamento contínuo em segundo plano que invoca automaticamente uma função no código toda vez que novos dados (mensagens) são recebidos em uma fila do Azure Storage (Azure Storage Queue).\nVocê está preparando e configurando os serviços para executar este item da fila. Qual tecnologia de hospedagem do Azure é o ambiente alvo direto desta abordagem (utilizando o WebJobs SDK)?",
+            "options": [
+                { "id": "A", "text": "Azure Logic Apps" },
+                { "id": "B", "text": "Azure WebJobs" },
+                { "id": "C", "text": "Microsoft Power Automate" },
+                { "id": "D", "text": "Azure Functions" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "Resposta Correta: B (Azure WebJobs).\nExplicação: O Azure WebJobs SDK é o framework desenvolvido especificamente para simplificar a escrita de código de processamento em segundo plano para o Azure WebJobs (que rodam acoplados ao seu App Service). Ele possui um sistema declarativo de gatilhos (triggers) que monitora o Storage Queue e executa sua função. Embora o Azure Functions seja construído sobre a base do WebJobs SDK, a questão especificamente afirma que a sua aplicação de portal da web \"usa o WebJobs SDK para projetar uma tarefa de App Service\", apontando diretamente para um WebJob rodando no mesmo contexto do seu aplicativo Web."
+    },
+    {
+        "id": "Q-QS-15",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está desenvolvendo um aplicativo em C# utilizando o pacote mais recente do SDK `Azure.Storage.Queues` (v12). Seu aplicativo precisa consumir mensagens em lote e garantir a remoção correta delas após o processamento.\nAção: Complete o código C# selecionando os métodos e propriedades corretos para recuperar e excluir as mensagens usando o padrão nativo Peek-Lock de duas etapas.",
+            "text": "QueueClient queueClient = new QueueClient(connectionString, \"minha-fila\");\n\n// PASSO 1: Receber um lote de até 10 mensagens\nQueueMessage[] messages = await queueClient.{{0}}(maxMessages: 10);\n\nforeach (var message in messages)\n{\n    // Processamento customizado\n    ProcessarDados(message.Body.ToString());\n\n    // PASSO 2: Excluir a mensagem após o processamento bem-sucedido\n    await queueClient.{{1}}(message.MessageId, message.{{2}});\n}",
+            "dropdowns": [
+                { "index": 0, "options": [{ "id": "A", "text": "`GetMessagesAsync`" }, { "id": "B", "text": "`ReceiveMessagesAsync`" }, { "id": "C", "text": "`PeekMessagesAsync`" }] },
+                { "index": 1, "options": [{ "id": "A", "text": "`DeleteMessageAsync`" }, { "id": "B", "text": "`RemoveMessageAsync`" }, { "id": "C", "text": "`ClearMessageAsync`" }] },
+                { "index": 2, "options": [{ "id": "A", "text": "`PopReceipt`" }, { "id": "B", "text": "`NextVisibleOn`" }, { "id": "C", "text": "`MessageText`" }] }
+            ]
+        },
+        "correct_answer": ["B", "A", "A"],
+        "explanation": "Resposta Correta:\nOpção A: `ReceiveMessagesAsync`\nOpção B: `DeleteMessageAsync`\nOpção C: `PopReceipt`\nExplicação: No SDK atual (`Azure.Storage.Queues`), você usa `ReceiveMessagesAsync` para obter as mensagens (tornando-as invisíveis temporariamente na fila). Para concluir o processo (semelhante ao \"completar\" do Service Bus), você deve excluir a mensagem chamando `DeleteMessageAsync`. Para garantir a segurança de que o processo não apagará uma mensagem cujo lock (bloqueio) já expirou e foi pega por outro worker, a API exige a passagem de dois parâmetros de validação: o `MessageId` e o token temporário `PopReceipt` associado àquela leitura específica."
+    },
+    {
+        "id": "Q-QS-19",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você precisa criar a infraestrutura de mensageria na nuvem para o novo sistema contábil da sua empresa. Os requisitos exigem que:\n- Você deve poder auditar um log completo e detalhado (trilha de auditoria) de todas as mensagens que foram inseridas e removidas da fila.\n- O sistema deve armazenar um volume massivo de dados de back-log pendentes, ultrapassando garantidamente 150 GB de mensagens represadas.\n- Não há nenhuma exigência sobre o agrupamento de mensagens (transações) ou leitura em ordem restrita (FIFO).\nSolução: Você implementa uma Fila do Azure Service Bus (Azure Service Bus Queue) configurando-a na camada Premium e ativa os logs do Azure Monitor.\nA solução atende ao objetivo?",
+            "options": [
+                { "id": "A", "text": "Sim" },
+                { "id": "B", "text": "Não" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "Resposta Correta: B (Não).\nExplicação: Embora o Service Bus Premium permita cotas de fila maiores que a versão Standard, a recomendação arquitetural da Microsoft e os objetivos de exame AZ-204 apontam claramente que Azure Storage Queues são projetadas especificamente quando sua fila exceder 80 GB de tamanho e você precisar da capacidade analítica legada nativa (Storage Analytics) para ter uma trilha de auditoria (audit trail) baseada em log de cada operação de mensagem passada pela fila. Portanto, a solução proposta usando Service Bus é inadequada para esses requisitos específicos em contraste com o Storage Queue."
+    },
+    {
+        "id": "Q-QS-20",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você possui um Azure Function App rodando em um plano de Consumo (Consumption) projetado para consumir mensagens do Azure Storage Queue. Às vezes o fluxo de pedidos é muito baixo (horas sem mensagens), e em outros momentos há picos súbitos.\nVocê precisa ajustar como a runtime do Azure Functions procura por novas mensagens e gerencia a invisibilidade delas editando o arquivo `host.json`.\nAção: Identifique qual propriedade no bloco `\"queues\": {}` realiza a ação desejada:",
+            "text": "Define o intervalo máximo de tempo entre as verificações (pesquisas) na fila (quando a fila está vazia, o polling faz backoff até atingir esse limite para economizar transações):\n{{0}}\nDefine o tempo em que a mensagem fica oculta e \"bloqueada\" para outros workers enquanto a Azure Function atual tenta processá-la:\n{{1}}",
+            "dropdowns": [
+                { "index": 0, "options": [{ "id": "A", "text": "`visibilityTimeout`" }, { "id": "B", "text": "`batchSize`" }, { "id": "C", "text": "`maxPollingInterval`" }] },
+                { "index": 1, "options": [{ "id": "A", "text": "`visibilityTimeout`" }, { "id": "B", "text": "`newBatchThreshold`" }, { "id": "C", "text": "`maxDequeueCount`" }] }
+            ]
+        },
+        "correct_answer": ["C", "A"],
+        "explanation": "Resposta Correta:\n`maxPollingInterval`\n`visibilityTimeout`\nExplicação: O gatilho do Queue Storage usa polling com exponential backoff para reduzir os custos das transações de storage e checar a fila quando ela fica ociosa. O teto (limite máximo de tempo entre consultas quando não há tráfego) é determinado pela propriedade `maxPollingInterval` (por padrão, 1 minuto em algumas versões). Já o `visibilityTimeout` é a propriedade do `host.json` que dita por quanto tempo a função solicita que a mensagem recém-lida permaneça invisível para outras instâncias até que o processamento acabe (ou até expirar, momento em que volta a ficar visível)."
+    },
+    {
+        "id": "Q-QS-21",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Uma startup chamada BlueLantern Systems está construindo um aplicativo que deve enfileirar mensagens para processamento assíncrono. O aplicativo exige que as mensagens sejam consumidas estritamente na ordem em que foram produzidas (garantia First-In-First-Out - FIFO). A equipe avaliou o volume de dados e determinou que o tamanho acumulado das mensagens pendentes na fila permanecerá pouco abaixo de 95 gigabytes (GB).\nQual solução de mensageria do Azure a equipe de engenharia deve selecionar para arquitetar a fila?",
+            "options": [
+                { "id": "A", "text": "Azure Event Hubs" },
+                { "id": "B", "text": "Azure Event Grid" },
+                { "id": "C", "text": "Azure Storage Queues (Filas de Armazenamento do Azure)" },
+                { "id": "D", "text": "Azure Service Bus Queues (Filas do Barramento de Serviço)" }
+            ]
+        },
+        "correct_answer": ["D"],
+        "explanation": "Resposta Correta: D\nExplicação: A opção correta é \"Azure Service Bus queues\". O Azure Service Bus fornece mensageria ponto a ponto confiável e inclui recursos avançados como sessões de mensagens (Message Sessions), que permitem aos consumidores isolar as mensagens e processá-las exatamente na ordem em que foram produzidas, preservando assim a garantia estrita de FIFO. As instâncias de Storage Queues não fornecem garantia de ordenação FIFO. Além disso, o Azure Service Bus (em sua camada apropriada) pode facilmente acomodar limites de tamanho para comportar as exigências de até 95 GB descritas no cenário."
+    },
+    {
+        "id": "Q-QS-22",
+        "type": "drag_and_drop",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Uma organização planeja implantar e escalar os serviços de armazenamento do Azure (Azure Storage), consumindo ativamente o Blob Storage e o Queue Storage. Você é o desenvolvedor responsável e precisa configurar e criar Assinaturas de Acesso Compartilhado (SAS - Shared Access Signatures) que concedam acesso seguro e restrito a esses recursos.\nAção: Associe os tipos de permissão de SAS (Coluna A) aos seus respectivos casos de uso/requisitos (Coluna B).",
+            "items_to_drag": [
+                { "id": "A", "text": "Account-level SAS (SAS no nível da conta)" },
+                { "id": "B", "text": "Service-level SAS (SAS no nível do serviço)" },
+                { "id": "C", "text": "User delegation SAS (SAS de delegação de usuário)" }
+            ],
+            "targets": [
+                { "id": "1", "text": "A: Delegar acesso restrito a um recurso dentro de um único serviço de armazenamento (ex: dar acesso a apenas uma fila específica do Queue Storage)." },
+                { "id": "2", "text": "B: Proteger um recurso garantindo que a credencial de autenticação baseie-se em credenciais gerenciadas do Microsoft Entra ID (Azure AD)." },
+                { "id": "3", "text": "C: Delegar acesso amplo a recursos combinados em um ou mais dos serviços de armazenamento ao mesmo tempo (ex: interagir com Blobs e Queues simultaneamente)." }
+            ]
+        },
+        "correct_answer": ["A-3", "B-1", "C-2"],
+        "explanation": "Resposta Correta:\nAccount-level SAS → C\nService-level SAS → A\nUser delegation SAS → B\nExplicação: Um \"Account SAS\" (nível de conta) atua delegando acesso a recursos em um ou múltiplos serviços da sua conta de armazenamento (como operar com Blob e Queue juntos utilizando o mesmo token). Um \"Service SAS\" é restrito ao escopo de um único serviço, permitindo criar um token apenas para acesso granular a uma fila. Já a funcionalidade \"User delegation SAS\" existe especificamente para criar tokens amparados por credenciais do Azure Active Directory (Microsoft Entra ID), garantindo integração segura com identidades modernas."
+    },
+    {
+        "id": "Q-QS-23",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está desenvolvendo uma solução que consome várias filas do Azure Service Bus. O arquiteto decidiu criar uma assinatura do Azure Event Grid (Event Grid Subscription) ligada ao namespace do Azure Service Bus. Isso permitirá usar instâncias efêmeras do Azure Functions como assinantes (subscribers) que só são acionadas e processam os dados quando a fila emite um evento de alerta de lote, promovendo o padrão de nivelamento de carga (queue-based load leveling).\nVocê precisa emitir eventos do Azure Service Bus para o Azure Event Grid. Você deve aplicar o princípio do privilégio mínimo de segurança de rede e minimizar os custos desperdiçados.\nAção: Quais valores do Azure Service Bus você deve utilizar ou configurar para permitir essa integração nativa com o Event Grid? Escolha a opção correta para cada parâmetro.",
+            "text": "Tier (Camada do Service Bus):\n{{0}}\nAccess control (IAM) level (Nível de RBAC no Service Bus):\n{{1}}",
+            "dropdowns": [
+                { "index": 0, "options": [{ "id": "A", "text": "Basic" }, { "id": "B", "text": "Standard" }, { "id": "C", "text": "Premium" }] },
+                { "index": 1, "options": [{ "id": "A", "text": "Contributor" }, { "id": "B", "text": "Data Receiver" }, { "id": "C", "text": "Data Sender" }, { "id": "D", "text": "Data Owner" }] }
+            ]
+        },
+        "correct_answer": ["C", "A"],
+        "explanation": "Resposta Correta:\nTier: Premium\nAccess control (IAM) level: Contributor\nExplicação: Para configurar e habilitar a integração oficial de emissão de eventos a partir do Azure Service Bus diretamente para o Azure Event Grid, o seu namespace do Service Bus precisa, como pré-requisito obrigatório da Microsoft, estar na camada \"Premium\". Além disso, de acordo com o princípio de permissões gerenciais mínimas exigidas para estabelecer essa conexão e realizar modificações na assinatura do serviço, o usuário ou processo deve possuir o papel de \"Contributor\" (Colaborador) na IAM do namespace do Service Bus."
+    },
+    {
+        "id": "Q-QS-24",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Um desenvolvedor criou uma Azure Function acionada por uma chamada HTTP (HTTP triggered) para a empresa MeridianRetail. A função recebe requisições, faz o download de um grande conteúdo de dados e os atualiza como arquivos armazenados em Blobs do Azure, usando um output binding.\nComo o processamento do conteúdo do Blob é extenso, a função HTTP atinge o limite de tempo limite (timeout) repetidamente após três minutos, interrompendo e falhando antes de concluir todo o processamento de dados.\nSolução Proposta: A equipe propõe modificar a arquitetura: o endpoint HTTP receberá a requisição original e passará imediatamente o payload (os dados ou a referência do conteúdo) inserindo uma nova mensagem em uma fila (Azure Service Bus queue ou Azure Storage queue). O endpoint HTTP então retornará imediatamente um código de sucesso para o cliente. Uma segunda Azure Function paralela, acionada por um gatilho de fila (Queue trigger), lerá a mensagem em seu próprio ritmo e executará o longo trabalho de atualizar o Blob.\nEssa abordagem atende ao objetivo de garantir o processamento dos dados sem apresentar o erro de timeout?",
+            "options": [
+                { "id": "A", "text": "Sim, essa abordagem atinge o objetivo." },
+                { "id": "B", "text": "Não, essa arquitetura não atinge o objetivo." }
+            ]
+        },
+        "correct_answer": ["A"],
+        "explanation": "Resposta Correta: A\nExplicação: Sim, essa abordagem atinge plenamente o objetivo. Colocar o payload inicial em uma fila desacopla a solicitação HTTP (que deve ter vida curta para não esgotar as regras do balanceador de carga ou travar a tela do usuário) do processamento do Blob (que é longo). Ao usar este padrão, a requisição HTTP retorna sucesso quase instantâneo, e a Azure Function acionada pela fila pode realizar o trabalho pesado em segundo plano de forma confiável e assíncrona, evitando os limites e restrições de timeout do protocolo HTTP original."
+    },
+    {
+        "id": "Q-QS-25",
+        "type": "multiple_choice",
+        "category": "Azure Queue Storage",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Cenário: Você está desenvolvendo um aplicativo no Azure que processa e analisa dados assíncronos quando recebe uma notificação proveniente de dispositivos móveis. Você mapeou os seguintes requisitos da área de negócio:\n- O tamanho da fila não deve crescer além de 80 gigabytes (GB) de dados.\n- O sistema deve garantir rigorosamente o uso da ordenação First-In-First-Out (FIFO) para entrega das mensagens.\n- O sistema deve ser desenhado para minimizar ao máximo os custos do Azure e não cobrar por horas ociosas.\nSolução: Você usa a API do SDK .NET para adicionar e postar a mensagem numa fila do Azure Service Bus (Service Bus Queue) a partir dos clientes móveis. Você então cria e provisiona uma Máquina Virtual (VM) rodando o Windows Server no Azure que monitora constantemente e é acionada (triggered) pelos eventos do Service Bus Queue para processar os itens um a um.\nA solução acima atende aos três objetivos exigidos?",
+            "options": [
+                { "id": "A", "text": "Sim" },
+                { "id": "B", "text": "Não" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "Resposta Correta: B\nExplicação: A solução atende a dois requisitos, mas falha criticamente no requisito de minimizar os custos. O uso do Azure Service Bus é perfeitamente adequado para garantir o tamanho menor que 80 GB e é a escolha mandatória quando a entrega First-In-First-Out (FIFO) rigorosa é exigida (ao contrário do Azure Storage Queues, que não suporta FIFO nativo). No entanto, subir uma Máquina Virtual (VM) Windows operando 24x7 no Azure apenas para verificar a fila e ser ativada consome recursos onerosos e contínuos de computação (IaaS), destruindo qualquer esforço de redução e minimização de custos. A solução correta e de menor custo seria conectar a fila do Service Bus a uma solução serverless, como o Azure Functions com um plano de consumo (Consumption Plan), pagando apenas o milissegundo de execução quando as mensagens chegarem."
+    }
+]

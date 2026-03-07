@@ -1,0 +1,758 @@
+[
+  {
+    "id": "Q-EG-01",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "Event Domains no Azure Event Grid são projetados para gerenciar um grande número de tópicos para múltiplos clientes/locatários, fornecendo um único endpoint de publicação e gerenciando autenticação e autorização.",
+    "content": {
+      "statement": "A startup NovaStream está construindo um serviço de notificação em tempo real usando o Azure Event Grid para mais de 8.000 clientes e 350 tipos de eventos. Os requisitos incluem filtragem por tipo, autenticação via Microsoft Entra ID e um único endpoint de publicação. Solução Proposta: Você publica os eventos em um Event Domain e cria um custom topic para cada cliente. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-EG-02",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "Para garantir a menor latência para eventos críticos como 'sign-out', a melhor abordagem é criar tópicos e assinaturas distintos no Azure Event Grid. Isso isola o fluxo de eventos e evita a concorrência com eventos de menor prioridade.",
+    "content": {
+      "statement": "Você está construindo um serviço que consome eventos do Azure Event Grid para avaliar atividades de autenticação de usuários. Você deve garantir que todos os eventos de autenticação sejam processados, mas que os eventos de sign-out sejam tratados com a menor latência possível. O que você deve fazer?",
+      "options": [
+        { "id": "A", "text": "Adicionar um prefixo de assunto aos eventos de sign-out e configurar uma assinatura do Event Grid que use o filtro subjectBeginsWith." },
+        { "id": "B", "text": "Implantar Azure Functions separadas com gatilhos dedicados do Event Grid para eventos de sign-in e sign-out." },
+        { "id": "C", "text": "Criar uma única assinatura do Event Grid para todos os eventos de autenticação e processar os sign-outs no mesmo manipulador." },
+        { "id": "D", "text": "Criar tópicos e assinaturas (topics and subscriptions) do Azure Event Grid distintos para eventos de sign-in e de sign-out." }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-EG-03",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Difícil",
+    "explanation": "O Azure Blob Storage é a fonte do evento (upload de arquivo). O Azure Event Grid atua como o roteador de eventos, e o Azure Logic App é o manipulador que executa o fluxo de trabalho de transformação e carga.",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução para coletar dados de inventário de milhares de lojas. A solução deve iniciar o processamento quando os arquivos são gravados no storage, filtrar por metadados e invocar um fluxo de trabalho para transformar e carregar os dados no Cosmos DB, com retentativas de até 24 horas. Associe os recursos do Azure aos seus papéis.",
+      "text": "Event Source (Origem do Evento) = {{0}}<br>Event Receiver (Receptor/Roteador do Evento) = {{1}}<br>Event Handler (Manipulador do Evento) = {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Blob Storage" },
+            { "id": "C", "text": "Azure Logic App" },
+            { "id": "D", "text": "Azure Event Grid" },
+            { "id": "E", "text": "Azure Event Hub" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Blob Storage" },
+            { "id": "C", "text": "Azure Logic App" },
+            { "id": "D", "text": "Azure Event Grid" },
+            { "id": "E", "text": "Azure Event Hub" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Blob Storage" },
+            { "id": "C", "text": "Azure Logic App" },
+            { "id": "D", "text": "Azure Event Grid" },
+            { "id": "E", "text": "Azure Event Hub" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "D", "C"]
+  },
+  {
+    "id": "Q-EG-04",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "O `endpointType` deve ser `WebHook` para enviar a um endpoint de aplicação. `subjectBeginsWith` filtra pelo contêiner. `Microsoft.Storage.BlobCreated` é o tipo de evento para novos blobs.",
+    "content": {
+      "statement": "Você precisa implementar uma política de Logs que reaja a arquivos de auditoria usando uma assinatura do Event Grid. A inscrição só deve disparar quando um novo blob for criado no contêiner 'logdrop' e encaminhar o payload para sua aplicação. Complete o JSON.",
+      "text": "```json\n\"destination\": { \"endpointType\": \"{{0}}\" },\n\"filter\": { \"{{1}}\": \"/blobServices/default/containers/logdrop/\", \"includedEventTypes\": [ \"{{2}}\" ] }\n```",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "`All`" },
+            { "id": "B", "text": "`WebHook`" },
+            { "id": "C", "text": "`EventHub`" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "`subjectEndsWith`" },
+            { "id": "B", "text": "`Microsoft.Storage`" },
+            { "id": "C", "text": "`subjectBeginsWith`" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "`All`" },
+            { "id": "B", "text": "`Microsoft.Storage.BlobCreated`" },
+            { "id": "C", "text": "`EventHub`" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "C", "B"]
+  },
+  {
+    "id": "Q-EG-05",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Difícil",
+    "explanation": "Um 'event domain' é usado para um sistema de terceiros enviar eventos para um único endpoint. Uma 'event subscription' é usada para filtrar e rotear esses eventos para um manipulador, como uma Azure Function.",
+    "content": {
+      "statement": "Você desenvolve aplicativos com Azure Functions para processar documentos JSON de um sistema de terceiros que publica centenas de tipos de eventos no Event Grid. Os requisitos são: um único endpoint para o terceiro, filtragem por tipo e controle de autorização para particionar locatários. Que tipo de recurso você deve atribuir a cada papel?",
+      "text": "Endpoint do sistema de terceiros para o qual enviar eventos: {{0}}<br>Endpoint do aplicativo Azure Functions para lidar com os eventos filtrados: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "system topic" },
+            { "id": "B", "text": "custom topic" },
+            { "id": "C", "text": "event domain" },
+            { "id": "D", "text": "event subscription" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "system topic" },
+            { "id": "B", "text": "custom topic" },
+            { "id": "C", "text": "event domain" },
+            { "id": "D", "text": "event subscription" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "D"]
+  },
+  {
+    "id": "Q-EG-06",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "Uma fila do Azure Service Bus é ideal para o padrão de nivelamento de carga baseado em fila, pois atua como um buffer com garantia de entrega transacional, e o Event Grid pode rotear eventos diretamente para ela.",
+    "content": {
+      "statement": "Sua arquitetura de microsserviços usa o Event Grid para receber milhões de notificações de eventos. Para evitar a sobrecarga do sistema de back-end durante picos, o Event Grid deve usar um mecanismo de 'nivelamento de carga baseado em fila' com garantia de entrega. O que você deve configurar como o manipulador de destino no Event Grid?",
+      "options": [
+        { "id": "A", "text": "Um tópico personalizado (custom topic) do Azure Event Grid." },
+        { "id": "B", "text": "Um tópico (topic) do Azure Service Bus." },
+        { "id": "C", "text": "Uma fila (queue) do Azure Service Bus." },
+        { "id": "D", "text": "Uma fila (queue) do Azure Storage." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-EG-07",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Difícil",
+    "explanation": "O Event Grid tem um limite de tamanho de evento de 1 MB. Para ingestão de dados volumosos (2 MB por operação), a solução correta é usar o Azure Event Hubs ou o Azure IoT Hub.",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução para coletar dados de dispositivos de ponto de venda de 2.000 lojas. Cada dispositivo produz cerca de 2 MB de dados por operação. Você precisa implementar um serviço de ingestão. Solução Proposta: Você provisiona o Azure Event Grid e configura o filtro de eventos para avaliar o ID do dispositivo. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EG-08",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "Para entrega de eventos a um WebHook, o Event Grid exige um 'ValidationCode handshake'. Para publicação de eventos em um tópico, a autenticação é gerenciada por 'SAS tokens'.",
+    "content": {
+      "statement": "Você está criando um aplicativo que usa o Event Grid para integrar serviços. Os eventos serão enviados para uma Azure Function de terceiros via WebHook e você também publica eventos em um tópico próprio. Associe os cenários aos mecanismos de validação/autenticação exigidos.",
+      "text": "WebHook event delivery (Entrega de evento para um WebHook) = {{0}}<br>Topic publishing (Publicação de eventos em um Tópico) = {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "SAS tokens" },
+            { "id": "B", "text": "ValidationCode handshake" },
+            { "id": "C", "text": "Management Access Control" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "SAS tokens" },
+            { "id": "B", "text": "ValidationCode handshake" },
+            { "id": "C", "text": "Management Access Control" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A"]
+  },
+  {
+    "id": "Q-EG-09",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Difícil",
+    "explanation": "A integração do Service Bus com o Event Grid para emitir notificações de eventos é um recurso exclusivo do nível 'Premium'. A identidade que cria a assinatura precisa de permissões de 'Contributor' no namespace do Service Bus.",
+    "content": {
+      "statement": "Você desenvolve uma solução de mensagens com filas do Service Bus e decide criar uma assinatura do Event Grid para o namespace do Service Bus para otimizar o processamento em uma Azure Function, eliminando a necessidade de long-polling. Selecione as opções de configuração corretas.",
+      "text": "Service Bus Tier (Camada de Preço): {{0}}<br>Nível de Controle de Acesso (IAM) exigido no namespace: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Basic" },
+            { "id": "B", "text": "Standard" },
+            { "id": "C", "text": "Premium" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Contributor" },
+            { "id": "B", "text": "Data Receiver" },
+            { "id": "C", "text": "Data Sender" },
+            { "id": "D", "text": "Data Owner" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "A"]
+  },
+  {
+    "id": "Q-EG-10",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "Filtros avançados no Event Grid permitem a criação de expressões booleanas complexas que avaliam campos dentro do payload de dados do evento, o que é ideal para filtragem dinâmica baseada em atributos de negócios.",
+    "content": {
+      "statement": "Você está construindo uma solução que consome eventos de um microsserviço de inventário via Event Grid. É necessário configurar um filtro dinâmico que possa avaliar um grande número de propriedades do corpo do JSON, como a flutuação de demanda sazonal. Qual filtro de assinatura de evento você deve implementar?",
+      "options": [
+        { "id": "A", "text": "Um filtro de prefixo (prefix filter) no campo eventType que corresponde estaticamente ao nome da estação ativa (ex: Inverno)." },
+        { "id": "B", "text": "Um filtro estático de assunto (static subject filter) que seleciona eventos cujo subject termina com o diretório /promo/seasonal_stock." },
+        { "id": "C", "text": "Um filtro avançado (advanced filter) que aplica uma expressão booleana através de vários campos de dados de evento (data fields), incluindo um atributo de estação (season attribute)." },
+        { "id": "D", "text": "Um filtro baseado em rótulo (label based filter) que roteia apenas eventos que possuem tags de promoções sazonais." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-EG-11",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "O Azure Service Bus e o Azure Event Grid suportam o padrão publish-subscribe com um modelo de entrega baseado em push, eliminando a necessidade de polling constante por parte dos consumidores.",
+    "content": {
+      "statement": "Sua empresa está implementando um componente de mensagens Publish-Subscribe (Pub/Sub). O principal requisito é que a solução deve eliminar a necessidade de 'polling' constante pelos aplicativos consumidores, usando um modelo de entrega baseado em 'push'. Quais duas tecnologias do Azure você deve considerar? (Escolha duas)",
+      "options": [
+        { "id": "A", "text": "Azure Storage Queue" },
+        { "id": "B", "text": "Azure Event Hub" },
+        { "id": "C", "text": "Azure Service Bus" },
+        { "id": "D", "text": "Azure Event Grid" }
+      ]
+    },
+    "correct_answer": ["C", "D"]
+  },
+  {
+    "id": "Q-EG-12",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "Partner Topics são para provedores de SaaS enviarem eventos para as assinaturas de seus clientes. Para publicar eventos do seu próprio aplicativo para milhares de clientes com um único endpoint, a solução correta é usar um Event Domain.",
+    "content": {
+      "statement": "Você está implementando um aplicativo que usa o Event Grid para enviar informações em tempo real a milhares de clientes, com centenas de tipos de eventos, filtragem e autenticação via Entra ID. Solução Proposta: Você publica os eventos em um Partner Topic e cria uma assinatura de evento para cada cliente. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EG-13",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Difícil",
+    "explanation": "Para validar o sucesso de uma operação de recurso, verifique se `data.status` é `Succeeded`. Para filtrar por uma operação de criação/atualização de Web App, verifique se `data.operationName` é `Microsoft.Web/sites/write`.",
+    "content": {
+      "statement": "Você escreve um código ASP.NET Core para processar eventos do Event Grid de um Grupo de Recursos. A política só deve ser aplicada quando a criação ou atualização de um Web App for concluída com sucesso. Arraste os fragmentos de código corretos para completar a lógica de validação.",
+      "text": "```csharp\nif ( @event[\"data\"][\"{{0}}\"].ToString() == \"{{1}}\" && @event[\"data\"][\"{{2}}\"].ToString() == \"Microsoft.Web/sites/write\" ) { ... }\n```",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "`topic`" },
+            { "id": "B", "text": "`status`" },
+            { "id": "C", "text": "`eventType`" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "`Succeeded`" },
+            { "id": "B", "text": "`operationName`" },
+            { "id": "C", "text": "`resourceProvider`" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "`topic`" },
+            { "id": "B", "text": "`status`" },
+            { "id": "C", "text": "`operationName`" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A", "C"]
+  },
+  {
+    "id": "Q-EG-14",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "O comando para criar uma assinatura no Event Grid é `az eventgrid event-subscription create`. O tipo de endpoint para uma fila do Service Bus é `servicebusqueue`.",
+    "content": {
+      "statement": "Sua empresa tem um namespace do Service Bus e você precisa configurar a integração com o Event Grid via CLI para criar uma assinatura de evento que reaja a métricas do namespace e roteie para uma fila em outro namespace. Complete o comando CLI.",
+      "text": "```bash\naz {{0}} {{1}} create \\\n  --name es-to-queue \\\n  ...<br>  --endpoint-type {{2}} \\\n  ...\n```",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "`servicebus`" },
+            { "id": "B", "text": "`eventgrid`" },
+            { "id": "C", "text": "`monitor`" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "`event-subscription`" },
+            { "id": "B", "text": "`topic`" },
+            { "id": "C", "text": "`queue`" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "`eventhub`" },
+            { "id": "B", "text": "`webhook`" },
+            { "id": "C", "text": "`servicebusqueue`" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A", "C"]
+  },
+  {
+    "id": "Q-EG-15",
+    "type": "multiple_choice",
+    "category": "Azure Blob Storage",
+    "difficulty": "Média",
+    "explanation": "O Change Feed do Blob Storage é um log transacional ordenado, ideal para auditoria e processamento assíncrono que requer garantia de ordem e retenção de histórico.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo que usa o Azure Blob Storage. A segurança exige a auditoria e o processamento dos logs de transação de todas as alterações nos blobs, com a restrição de que as alterações devem ser processadas na mesma ordem em que ocorreram e os logs retidos para histórico. O que você deve fazer?",
+      "options": [
+        { "id": "A", "text": "Processar todos os eventos do Blob Storage usando o Azure Event Grid associado a um manipulador de Azure Function." },
+        { "id": "B", "text": "Processar os dados ativando o recurso Change Feed do Azure Blob Storage usando uma Azure Function." },
+        { "id": "C", "text": "Usar o Azure Monitor Alerts acoplado a um Action Group que despacha um WebHook." },
+        { "id": "D", "text": "Enviar métricas customizadas de eventos do Blob Storage para uma instância de cache do Azure Redis." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EG-16",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "Para evitar a perda de eventos que não podem ser entregues, configure um contêiner no Azure Blob Storage como um destino de mensagens mortas (dead-letter destination) na assinatura do evento.",
+    "content": {
+      "statement": "Você está configurando um tópico personalizado no Event Grid que roteia eventos para um WebHook on-premises. O servidor local às vezes fica inoperante por mais de 24 horas. Você precisa garantir que os eventos falhos não sejam descartados após o esgotamento da política de retentativas. O que você deve configurar?",
+      "options": [
+        { "id": "A", "text": "Configurar uma assinatura do Event Grid para usar a camada Premium do Service Bus e ativar o Duplicate Detection." },
+        { "id": "B", "text": "Configurar um contêiner no Azure Blob Storage e defini-lo como o destino de mensagens mortas (Dead-letter destination) na assinatura do evento." },
+        { "id": "C", "text": "Habilitar o recurso Event Hubs Capture na origem do Tópico." },
+        { "id": "D", "text": "Adicionar uma política de repetição assíncrona (Async request-reply pattern) usando Azure Durable Functions." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EG-17",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "System Topics são para eventos de serviços nativos do Azure. Para publicar eventos do seu próprio aplicativo para milhares de clientes com um único endpoint e particionamento, a solução correta é um Event Domain.",
+    "content": {
+      "statement": "Você está implementando um aplicativo que usa o Event Grid para enviar informações em tempo real a milhares de clientes, com centenas de tipos de eventos, filtragem e autenticação via Entra ID. Solução Proposta: Você publica os eventos em um System Topic e cria uma assinatura de evento para cada cliente. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EG-18",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Difícil",
+    "explanation": "Para evitar a latência do BlobTrigger, use um 'EventGridTrigger'. A função então usa um binding do 'Azure Cosmos DB' com direção 'Output' para gravar os dados.",
+    "content": {
+      "statement": "Você precisa desenvolver uma Azure Function que reaja imediatamente ao upload de arquivos no Blob Storage e atualize registros no Cosmos DB, evitando a latência do BlobTrigger no plano de Consumo. Associe os recursos aos componentes da configuração da Function.",
+      "text": "Trigger (Gatilho da Azure Function) = {{0}}<br>Binding (Serviço Integrado na Função) = {{1}}<br>Binding Direction (Direção da conexão da Etapa 2) = {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "HTTP" },
+            { "id": "B", "text": "Azure Cosmos DB" },
+            { "id": "C", "text": "Azure Event Grid" },
+            { "id": "D", "text": "Azure Blob Storage" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "HTTP" },
+            { "id": "B", "text": "Azure Cosmos DB" },
+            { "id": "C", "text": "Azure Event Grid" },
+            { "id": "D", "text": "Azure Blob Storage" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Input" },
+            { "id": "B", "text": "Output" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "B", "B"]
+  },
+  {
+    "id": "Q-EG-19",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "O esquema padrão do Event Grid exige as propriedades `id`, `eventType`, e `dataVersion` no objeto de evento.",
+    "content": {
+      "statement": "Você desenvolve um serviço em C# que processa eventos do Event Grid. Para desserializar o JSON para um objeto fortemente tipado, você precisa construir a classe `LoginEvent` respeitando as propriedades padrão do Event Grid Schema. Selecione as propriedades corretas.",
+      "text": "```csharp\npublic class LoginEvent <br>{\n    public string {{0}} { get; set; }\n    public string {{1}} { get; set; }\n    public string {{2}} { get; set; }\n    ...\n}\n```",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "`id`" },
+            { "id": "B", "text": "`eventType`" },
+            { "id": "C", "text": "`dataVersion`" },
+            { "id": "D", "text": "`metadataVersion`" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "`id`" },
+            { "id": "B", "text": "`eventType`" },
+            { "id": "C", "text": "`dataVersion`" },
+            { "id": "D", "text": "`metadataVersion`" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "`id`" },
+            { "id": "B", "text": "`eventType`" },
+            { "id": "C", "text": "`dataVersion`" },
+            { "id": "D", "text": "`metadataVersion`" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B", "C"]
+  },
+  {
+    "id": "Q-EG-20",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "Para latência inferior a um minuto, a melhor solução é usar o Event Grid para reagir instantaneamente à criação de blobs e acionar uma Azure Function para o processamento.",
+    "content": {
+      "statement": "Sua empresa desenvolve um SaaS de gerenciamento de fotografias. Após o upload de uma foto no Blob Storage, o sistema deve gerar uma versão otimizada em menos de um minuto. Qual modelo de integração de eventos você deve usar?",
+      "options": [
+        { "id": "A", "text": "Configurar uma Azure Function hospedada no plano de Consumo utilizando um BlobTrigger (Gatilho de Blob)." },
+        { "id": "B", "text": "Ativar o Change Feed na conta do Azure Blob Storage e configurar um trabalho de plano de fundo que faz a leitura do feed a cada intervalo fixo." },
+        { "id": "C", "text": "Inscrever uma Azure Function diretamente aos eventos da Conta de Armazenamento utilizando o Azure Event Grid." },
+        { "id": "D", "text": "Utilizar um Azure Logic App associado a um conector com recorrência configurada para verificar alterações de tags de índice de blobs a cada 60 segundos." }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-EG-21",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "O evento para envio de imagem ao ACR é `ImagePushed`. O repositório está em `data.target.repository`, e o nome do registro pai está em `topic`.",
+    "content": {
+      "statement": "Você está implementando uma solução para validar imagens de contêiner. Toda vez que uma nova imagem Docker for enviada para o ACR, testes de validação devem ser disparados. Complete o código Javascript do seu manipulador de eventos do Event Grid.",
+      "text": "```javascript\nif (event.eventType === '{{0}}'<br>    && event.data.target.{{1}} === 'contentanalysisservice'<br>    && event.{{2}}.contains('contosoimages')) { ... }\n```",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "`ImagePushed`" },
+            { "id": "B", "text": "`RepositoryItem`" },
+            { "id": "C", "text": "`ImageDeployed`" },
+            { "id": "D", "text": "`RepositoryUpdated`" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "`aci`" },
+            { "id": "B", "text": "`image`" },
+            { "id": "C", "text": "`service`" },
+            { "id": "D", "text": "`repository`" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "`topic`" },
+            { "id": "B", "text": "`service`" },
+            { "id": "C", "text": "`repository`" },
+            { "id": "D", "text": "`imageCollection`" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "D", "A"]
+  },
+  {
+    "id": "Q-EG-22",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Application Insights",
+    "difficulty": "Difícil",
+    "explanation": "Para enriquecer todos os itens de telemetria, implemente a interface `ITelemetryInitializer` com o método `Initialize`. Adicione a propriedade personalizada ao dicionário `telemetry.Context`.",
+    "content": {
+      "statement": "Você desenvolve um aplicativo ASP.NET Core que processa eventos do Event Grid. Você precisa incluir o 'Event ID' em toda a telemetria enviada para o Application Insights. Associe os segmentos de código corretos para completar a classe e enriquecer a telemetria.",
+      "text": "```csharp\npublic class IncludeEventId : {{0}} \n{\n    public void {{1}} (ITelemetry telemetry)\n    {\n        {{2}}.Properties[\"EventId\"] = {{3}};\n    }\n}\n```",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "`ITelemetryProcessor`" },
+            { "id": "B", "text": "`ITelemetryInitializer`" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "`Process`" },
+            { "id": "B", "text": "`Initialize`" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "`telemetry.Context`" },
+            { "id": "B", "text": "`((EventTelemetry)telemetry).Properties[\"EventId\"]`" }
+          ]
+        },
+        {
+          "index": 3,
+          "options": [
+            { "id": "A", "text": "`EventGridController.EventId.Value`" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "B", "A", "A"]
+  },
+  {
+    "id": "Q-EG-23",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "O Change Feed do Blob Storage pode ter atrasos de vários minutos. Para latência inferior a um minuto, a solução correta é usar o Event Grid, que reage em tempo quase real.",
+    "content": {
+      "statement": "Você desenvolve um SaaS de gerenciamento de fotografias. Após o upload de uma foto no Blob Storage, uma versão otimizada deve ser gerada em menos de um minuto. Solução Proposta: Você utiliza o Azure Blob Storage Change Feed para acionar o processo. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EG-24",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Difícil",
+    "explanation": "Um Custom Topic tem um limite de 500 assinaturas. Para milhares de clientes, com um único endpoint e particionamento de segurança, a arquitetura correta é um Event Domain.",
+    "content": {
+      "statement": "Você está implementando um aplicativo que usa o Event Grid para enviar informações a milhares de clientes. Os requisitos incluem filtragem, particionamento de locatários e um único endpoint de publicação. Solução Proposta: Você publica os eventos em um Custom Topic central e cria uma assinatura de evento para cada cliente. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EG-25",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "A melhor solução é usar o Event Grid para reagir ao evento de criação de blob e rotear a notificação para uma Azure Function que executa o cmdlet de cópia.",
+    "content": {
+      "statement": "Uma equipe operacional faz upload de grandes arquivos de vídeo para o Blob Storage. Cada vez que um vídeo é carregado, ele deve ser copiado assincronamente e automaticamente para um segundo contêiner para processamento, de forma imediata. O que você deve fazer?",
+      "options": [
+        { "id": "A", "text": "Configurar uma Azure Logic App com um Timer Trigger configurado a cada 1 minuto e usar o Start-AzureStorageBlobCopy." },
+        { "id": "B", "text": "Criar uma assinatura no Azure Event Grid baseada no evento de criação de blob, roteando para uma Azure Function que executa o Start-AzureStorageBlobCopy." },
+        { "id": "C", "text": "Criar uma Azure Function acionada por um Gatilho HTTP e forçar os operadores a executar a chamada HTTP manualmente a cada upload." },
+        { "id": "D", "text": "Habilitar a replicação GRS e deixar que o Storage faça a cópia subjacente nativamente." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EG-26",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "Para ser notificado 30 dias antes da expiração de uma chave, configure uma 'Key rotation policy' na chave. Isso fará com que o Key Vault emita um evento para o Event Grid, que pode então acionar um Logic App.",
+    "content": {
+      "statement": "Você gerencia um Key Vault. Por conformidade, um Logic App deve ser disparado 30 dias antes da expiração de qualquer chave para notificar a equipe. Quais duas ações você deve configurar em conjunto?",
+      "options": [
+        { "id": "A", "text": "Habilitar o recurso de Change Feed na conta do Azure Storage vinculada ao Key Vault." },
+        { "id": "B", "text": "Criar uma assinatura do Azure Event Grid escutada pelo seu Logic App." },
+        { "id": "C", "text": "Configurar uma política de rotação de chaves (Key rotation policy) durante a criação da chave." },
+        { "id": "D", "text": "Criar uma regra de processamento de alertas no Azure Monitor com uma métrica customizada." }
+      ]
+    },
+    "correct_answer": ["B", "C"]
+  },
+  {
+    "id": "Q-EG-27",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "A integração com o Event Grid não está disponível para contas de armazenamento 'Storage (general purpose v1)'. É necessário atualizar a conta para 'StorageV2 (general purpose v2)'.",
+    "content": {
+      "statement": "Você precisa criar uma arquitetura reativa para disparar uma Azure Function quando um novo blob for adicionado a uma conta de armazenamento. No portal, a opção de Event Grid não está disponível para a conta. Identifique a causa raiz e a ação corretiva.",
+      "text": "Causa do problema (Tipo de conta atual): {{0}}<br>Ação corretiva necessária: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Storage (general purpose v1)" },
+            { "id": "B", "text": "StorageV2 (general purpose v2)" },
+            { "id": "C", "text": "FileStorage" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Habilitar o Blob Versioning" },
+            { "id": "B", "text": "Atualizar a conta para StorageV2" },
+            { "id": "C", "text": "Alterar o nível de acesso para Hot" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-EG-28",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Grid",
+    "difficulty": "Difícil",
+    "explanation": "Service Bus para transações ordenadas, Event Grid para reações a mudanças de estado, e Event Hubs para ingestão de telemetria de alto volume.",
+    "content": {
+      "statement": "Você está projetando os backplanes de comunicação para três soluções de microsserviços. Associe os cenários arquitetônicos ao serviço de integração do Azure mais adequado.",
+      "text": "Processamento de transações financeiras de e-commerce que exigem entrega rigorosamente ordenada (FIFO), atomicidade e detecção de duplicatas = {{0}}<br>Reação imediata a mudanças de estado em recursos da nuvem (ex: uma máquina virtual foi criada), utilizando um modelo de push de notificações leves = {{1}}<br>Ingestão contínua de fluxos de telemetria de alto volume provenientes de milhões de sensores IoT para análise de big data = {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Event Hubs" },
+            { "id": "C", "text": "Azure Event Grid" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Event Hubs" },
+            { "id": "C", "text": "Azure Event Grid" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Event Hubs" },
+            { "id": "C", "text": "Azure Event Grid" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "C", "B"]
+  },
+  {
+    "id": "Q-EG-29",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Média",
+    "explanation": "O Event Grid exige um 'ValidationCode handshake' ou 'ValidationURL handshake' para validar a propriedade de um endpoint WebHook. Simplesmente retornar um HTTP 200 OK não é suficiente.",
+    "content": {
+      "statement": "Sua equipe desenvolveu um WebHook on-premises. Você está configurando o Event Grid para rotear eventos para ele. Para proteger contra spam, o Event Grid exige a validação do endpoint. Solução Proposta: Você orienta os desenvolvedores a configurar o WebHook para retornar incondicionalmente um HTTP 200 OK. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EG-30",
+    "type": "multiple_choice",
+    "category": "Azure Event Grid",
+    "difficulty": "Fácil",
+    "explanation": "Um Custom Topic no Azure Event Grid suporta um máximo de 500 assinaturas de eventos. Para escalar para milhares, a arquitetura correta é usar um Event Domain.",
+    "content": {
+      "statement": "Você está implementando um aplicativo que usa o Event Grid para enviar informações a parceiros B2B. Você usa um único Custom Topic e cria uma assinatura de evento para cada parceiro. Sua base de clientes expandirá para mais de 3.000 parceiros. Qual é o número máximo de assinaturas que você pode criar em um único Custom Topic antes de precisar mudar para um Event Domain?",
+      "options": [
+        { "id": "A", "text": "100" },
+        { "id": "B", "text": "500" },
+        { "id": "C", "text": "2.000" },
+        { "id": "D", "text": "10.000" }
+      ]
+    },
+    "correct_answer": ["B"]
+  }
+]

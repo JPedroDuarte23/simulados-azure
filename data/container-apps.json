@@ -38,11 +38,11 @@
     "content": {
       "statement": "Ao definir a regra de escala personalizada KEDA, quais dois campos você deve obrigatoriamente fornecer?",
       "options": [
-        { "id": "A", "text": "metadata" },
-        { "id": "B", "text": "metricType" },
-        { "id": "C", "text": "authenticationRef" },
-        { "id": "D", "text": "type" },
-        { "id": "E", "text": "name" }
+        { "id": "A", "text": "`metadata`" },
+        { "id": "B", "text": "`metricType`" },
+        { "id": "C", "text": "`authenticationRef`" },
+        { "id": "D", "text": "`type`" },
+        { "id": "E", "text": "`name`" }
       ]
     },
     "correct_answer": ["A", "D"]
@@ -118,7 +118,7 @@
     "official_doc_link": "https://learn.microsoft.com/en-us/cli/azure/containerapp/ingress/traffic?view=azure-cli-latest#az-containerapp-ingress-traffic-set",
     "content": {
       "statement": "Uma empresa usa o Azure Container Apps. Um aplicativo de contêiner chamado App1 reside em um grupo de recursos chamado RG1. A empresa exige testes de atualizações (A/B testing) contínuos para o App1. Você habilita o modo de revisão múltipla (multiple revision mode) no aplicativo. Agora, você precisa usar a linha de comando (Azure CLI) para garantir que o tráfego de rede recebido seja dividido: 80% das requisições devem ir para a <REVISION_1> e 20% para a <REVISION_2>. <br> Como você deve completar o comando da Azure CLI?",
-      "text": "az {{0}} {{1}} traffic set \\ <br>   --name App1 \\ <br>   --resource-group RG1 \\ <br>   --revision-weight <REVISION_1>=80 <REVISION_2>=20",
+      "text": "```bash\naz {{0}} {{1}} traffic set \\\n  --name App1 \\\n  --resource-group RG1 \\\n  --revision-weight <REVISION_1>=80 <REVISION_2>=20\n```",
       "dropdowns": [
         {
           "index": 0,
@@ -411,7 +411,7 @@
     "type": "multiple_choice",
     "category": "Azure Container Apps / Security",
     "difficulty": "Média",
-    "explanation": "A Identidade Gerenciada é a solução de identidade nativa do Azure que elimina a necessidade de os desenvolvedores gerenciarem credenciais. Ao habilitar uma identidade gerenciada atribuída ao sistema no Container App e conceder a ela a função AcrPull no ACR, o aplicativo pode se autenticar de forma segura usando sua própria identidade gerenciada pelo Azure.",
+    "explanation": "A Identidade Gerenciada é a solução de identidade nativa do Azure que elimina a necessidade de os desenvolvedores gerenciarem credenciais. Ao habilitar uma identidade gerenciada atribuída ao sistema no Container App e conceder a ela a função `AcrPull` no ACR, o aplicativo pode se autenticar de forma segura usando sua própria identidade gerenciada pelo Azure.",
     "official_doc_link": "https://learn.microsoft.com/en-us/azure/container-apps/managed-identity",
     "content": {
       "statement": "Você configurou um Azure Container Apps que precisa extrair (pull) imagens privadas de um Azure Container Registry (ACR). A equipe de segurança exige que o princípio do menor privilégio seja adotado... Qual é a maneira recomendada e nativa do Azure de conceder o acesso necessário para o Container App?",
@@ -465,8 +465,8 @@
     "content": {
       "statement": "Sua equipe está desenvolvendo uma arquitetura de microsserviços no Azure Container Apps... Você precisa habilitar e configurar o componente de gerenciamento de estado do Dapr em seu Ambiente de Container Apps para que um de seus microsserviços possa usá-lo. Em qual ordem você deve executar as quatro ações a seguir?",
       "items_to_drag": [
-        { "id": "A", "text": "Criar um arquivo YAML contendo o esquema do componente Dapr (kind: Component, type: state.redis)." },
-        { "id": "B", "text": "Habilitar o Dapr nas configurações do Container App específico e definir um ID de aplicativo (app-id)." },
+        { "id": "A", "text": "Criar um arquivo YAML contendo o esquema do componente Dapr (`kind: Component`, `type: state.redis`)." },
+        { "id": "B", "text": "Habilitar o Dapr nas configurações do Container App específico e definir um ID de aplicativo (`app-id`)." },
         { "id": "C", "text": "Adicionar o arquivo de componente Dapr criado no nível do Ambiente do Azure Container Apps (Container Apps Environment)." },
         { "id": "D", "text": "Provisionar o recurso de armazenamento de backend no Azure (ex: criar a instância do Azure Cache for Redis)." }
       ]

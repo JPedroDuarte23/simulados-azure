@@ -106,7 +106,7 @@
     "type": "case_study",
     "category": "Estudo de Caso: City Power & Light",
     "difficulty": "Alta",
-    "explanation": "Para filtragem customizada de telemetria no Application Insights via código, é necessário criar um processador de telemetria customizado implementando ITelemetryProcessor (A) e, dentro dele, adicionar a lógica para inspecionar e descartar itens específicos (D).",
+    "explanation": "Para filtragem customizada de telemetria no Application Insights via código, é necessário criar um processador de telemetria customizado implementando `ITelemetryProcessor` (A) e, dentro dele, adicionar a lógica para inspecionar e descartar itens específicos (D).",
     "content": {
       "tabs": [
         {
@@ -127,10 +127,10 @@
       ],
       "statement": "Selecione as duas etapas para coletar telemetria no Application Insights, mas descartando ações que não sejam iniciadas por usuários.",
       "options": [
-        { "id": "A", "text": "Implementar a interface ITelemetryProcessor em uma classe personalizada." },
+        { "id": "A", "text": "Implementar a interface `ITelemetryProcessor` em uma classe personalizada." },
         { "id": "B", "text": "Habilitar a funcionalidade de Amostragem Adaptativa (Adaptive Sampling)." },
         { "id": "C", "text": "Usar a ferramenta Application Insights Profiler diretamente no portal do Azure." },
-        { "id": "D", "text": "Escrever uma lógica no método Process da classe personalizada que determine a origem e, se não for usuário, retorne sem chamar o próximo processador." }
+        { "id": "D", "text": "Escrever uma lógica no método `Process` da classe personalizada que determine a origem e, se não for usuário, retorne sem chamar o próximo processador." }
       ]
     },
     "correct_answer": ["A", "D"]
@@ -457,7 +457,7 @@
         {
           "id": "tab-tecnico-litware",
           "title": "Requisitos Técnicos",
-          "content": "Hospedagem e Arquitetura: Migrar o aplicativo web frontend para o Azure App Service. A arquitetura deve ser desacoplada, separando o recebimento de pedidos do processamento de faturamento. <br> Segurança e Gestão de Segredos: As strings de conexão de banco de dados e as chaves de API não devem, sob nenhuma hipótese, ser armazenadas em texto simples no código-fonte ou em arquivos de configuração da aplicação. <br> Armazenamento de Dados: Documentos de pedidos gerados em PDF devem ser salvos no Azure Blob Storage. Documentos com mais de 180 dias sem modificação devem ser movidos automaticamente para a camada de acesso \"Archive\" (Arquivo). <br> Monitoramento e Telemetria: O aplicativo deve registrar métricas personalizadas e eventos de negócios críticos no Application Insights sempre que um pedido for processado com sucesso."
+          "content": "Hospedagem e Arquitetura: Migrar o aplicativo web frontend para o Azure App Service. A arquitetura deve ser desacoplada, separando o recebimento de pedidos do processamento de faturamento. <br> Segurança e Gestão de Segredos: As strings de conexão de banco de dados e as chaves de API não devem, sob nenhuma hipótese, ser armazenadas em texto simples no código-fonte ou em arquivos de configuração locais. <br> Armazenamento de Dados: Documentos de pedidos gerados em PDF devem ser salvos no Azure Blob Storage. Documentos com mais de 180 dias sem modificação devem ser movidos automaticamente para a camada de acesso \"Archive\" (Arquivo). <br> Monitoramento e Telemetria: O aplicativo deve registrar métricas personalizadas e eventos de negócios críticos no Application Insights sempre que um pedido for processado com sucesso."
         },
         {
           "id": "tab-ambiente-litware",

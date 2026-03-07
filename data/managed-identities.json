@@ -20,27 +20,27 @@
     "type": "dropdown_fill_in_blank",
     "category": "Managed Identities",
     "difficulty": "Média",
-    "explanation": "'AddAzureAppConfiguration' é o método para carregar configurações do serviço. 'ManagedIdentityCredential' é usado para forçar o uso exclusivo da identidade gerenciada, sem fallback para outras credenciais.",
+    "explanation": "`AddAzureAppConfiguration` é o método para carregar configurações do serviço. `ManagedIdentityCredential` é usado para forçar o uso exclusivo da identidade gerenciada, sem fallback para outras credenciais.",
     "content": {
       "statement": "Você é um desenvolvedor construindo um site usando um Azure Web App. O site armazena dados de configuração no Azure App Configuration. O acesso ao Azure App Configuration foi configurado para usar a identidade do web app para autenticação. Os requisitos de segurança especificam de forma estrita que nenhum outro sistema de autenticação deve ser usado (sem fallback para outras credenciais, como Azure CLI ou Visual Studio). Como você deve completar o código?",
-      "text": "config.{{0}}(options =>\n    options.Connect(new Uri(settings[\"AppConfig:Endpoint\"]),\n    new {{1}}()));",
+      "text": "```csharp\nconfig.{{0}}(options =>\n    options.Connect(new Uri(settings[\"AppConfig:Endpoint\"]),\n    new {{1}}());\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "AddAzureKeyVault" },
-            { "id": "B", "text": "DefaultAzureCredential" },
-            { "id": "C", "text": "ManagedIdentityCredential" },
-            { "id": "D", "text": "AddAzureAppConfiguration" }
+            { "id": "A", "text": "`AddAzureKeyVault`" },
+            { "id": "B", "text": "`DefaultAzureCredential`" },
+            { "id": "C", "text": "`ManagedIdentityCredential`" },
+            { "id": "D", "text": "`AddAzureAppConfiguration`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "AddAzureKeyVault" },
-            { "id": "B", "text": "DefaultAzureCredential" },
-            { "id": "C", "text": "ChainedTokenCredential" },
-            { "id": "D", "text": "ManagedIdentityCredential" }
+            { "id": "A", "text": "`AddAzureKeyVault`" },
+            { "id": "B", "text": "`DefaultAzureCredential`" },
+            { "id": "C", "text": "`ChainedTokenCredential`" },
+            { "id": "D", "text": "`ManagedIdentityCredential`" }
           ]
         }
       ]
@@ -67,25 +67,25 @@
     "type": "dropdown_fill_in_blank",
     "category": "Managed Identities",
     "difficulty": "Média",
-    "explanation": "Para habilitar uma identidade atribuída pelo sistema em uma VM via PowerShell, use o parâmetro '-IdentityType' com o valor 'SystemAssigned'.",
+    "explanation": "Para habilitar uma identidade atribuída pelo sistema em uma VM via PowerShell, use o parâmetro `-IdentityType` com o valor `SystemAssigned`.",
     "content": {
       "statement": "Você está desenvolvendo um aplicativo que precisa de acesso a uma máquina virtual (VM) do Azure. O ciclo de vida do acesso para o aplicativo deve estar associado à instância do serviço da VM. Você precisa habilitar a identidade gerenciada correta para a VM. Como você deve concluir o segmento de script em PowerShell?",
-      "text": "Update-AzVM -ResourceGroupName \"ContosoRG\" -VM $vm {{0}} {{1}}",
+      "text": "```powershell\nUpdate-AzVM -ResourceGroupName \"ContosoRG\" -VM $vm {{0}} {{1}}\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "-AssignIdentity" },
-            { "id": "B", "text": "-IdentityId" },
-            { "id": "C", "text": "-IdentityType" }
+            { "id": "A", "text": "`-AssignIdentity`" },
+            { "id": "B", "text": "`-IdentityId`" },
+            { "id": "C", "text": "`-IdentityType`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "$SystemAssigned" },
-            { "id": "B", "text": "$UserAssigned" },
-            { "id": "C", "text": "SystemAssigned" }
+            { "id": "A", "text": "`$SystemAssigned`" },
+            { "id": "B", "text": "`$UserAssigned`" },
+            { "id": "C", "text": "`SystemAssigned`" }
           ]
         }
       ]
@@ -131,27 +131,27 @@
     "type": "dropdown_fill_in_blank",
     "category": "Managed Identities",
     "difficulty": "Difícil",
-    "explanation": "O endpoint do IMDS é 'http://169.254.169.254/metadata/identity/oauth2/token'. A resposta é um JSON, que deve ser desserializado para extrair o token de acesso.",
+    "explanation": "O endpoint do IMDS é `http://169.254.169.254/metadata/identity/oauth2/token`. A resposta é um JSON, que deve ser desserializado para extrair o token de acesso.",
     "content": {
       "statement": "Você está desenvolvendo um serviço da Web que será executado em Máquinas Virtuais (VMs) do Azure. O serviço precisa interagir com o Azure Storage. Todas as VMs foram configuradas para usar identidades gerenciadas. Os requisitos de segurança estipulam que:\n- Mecanismos de autenticação baseados em segredos ou chaves não são permitidos.\n- O código deve interagir estritamente com os endpoints do Azure Instance Metadata Service (IMDS) locais da VM para buscar o token.\nComplete o código em C# para recuperar e processar o token de acesso.",
-      "text": "var url = \"{{0}}\";\n... \nreturn {{1}};",
+      "text": "```csharp\nvar url = \"{{0}}\";\n... \nreturn {{1}};\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "http://localhost:50342/oauth2/token" },
-            { "id": "B", "text": "http://169.254.169.254:50432/oauth2/token" },
-            { "id": "C", "text": "http://localhost/metadata/identity/oauth2/token" },
-            { "id": "D", "text": "http://169.254.169.254/metadata/identity/oauth2/token" }
+            { "id": "A", "text": "`http://localhost:50342/oauth2/token`" },
+            { "id": "B", "text": "`http://169.254.169.254:50432/oauth2/token`" },
+            { "id": "C", "text": "`http://localhost/metadata/identity/oauth2/token`" },
+            { "id": "D", "text": "`http://169.254.169.254/metadata/identity/oauth2/token`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "XDocument.Parse(payload);" },
-            { "id": "B", "text": "new MultipartContent(payload);" },
-            { "id": "C", "text": "new NetworkCredential(\"Azure\", payload);" },
-            { "id": "D", "text": "JsonConvert.DeserializeObject<Dictionary<string, string>>(payload);" }
+            { "id": "A", "text": "`XDocument.Parse(payload);`" },
+            { "id": "B", "text": "`new MultipartContent(payload);`" },
+            { "id": "C", "text": "`new NetworkCredential(\"Azure\", payload);`" },
+            { "id": "D", "text": "`JsonConvert.DeserializeObject<Dictionary<string, string>>(payload);`" }
           ]
         }
       ]
@@ -180,15 +180,15 @@
     "type": "multiple_choice",
     "category": "Managed Identities",
     "difficulty": "Média",
-    "explanation": "Os cmdlets 'Get-AzVM' e 'Get-AzResource' podem ser usados para inspecionar as propriedades de um recurso do Azure, incluindo o 'PrincipalId' da sua identidade gerenciada atribuída pelo sistema.",
+    "explanation": "Os cmdlets `Get-AzVM` e `Get-AzResource` podem ser usados para inspecionar as propriedades de um recurso do Azure, incluindo o `PrincipalId` da sua identidade gerenciada atribuída pelo sistema.",
     "content": {
-      "statement": "O seu grupo de operações é responsável por gerenciar 120 máquinas virtuais (VMs) do Azure que possuem identidades gerenciadas atribuídas pelo sistema (system-assigned) habilitadas. Você precisa construir um script para auditar essas máquinas e obter o valor do objectId (Identificador do Objeto/Principal) de cada identidade gerenciada anexada a essas VMs. Quais dois comandos PowerShell retornam a propriedade necessária para obter essas informações? (Escolha 2)",
+      "statement": "O seu grupo de operações é responsável por gerenciar 120 máquinas virtuais (VMs) do Azure que possuem identidades gerenciadas atribuídas pelo sistema (system-assigned) habilitadas. Você precisa construir um script para auditar essas máquinas e obter o valor do `objectId` (Identificador do Objeto/Principal) de cada identidade gerenciada anexada a essas VMs. Quais dois comandos PowerShell retornam a propriedade necessária para obter essas informações? (Escolha 2)",
       "options": [
-        { "id": "A", "text": "Get-AzADServicePrincipal" },
-        { "id": "B", "text": "Get-AzVM" },
-        { "id": "C", "text": "Get-AzADUser" },
-        { "id": "D", "text": "Get-AzRoleAssignment" },
-        { "id": "E", "text": "Get-AzResource" }
+        { "id": "A", "text": "`Get-AzADServicePrincipal`" },
+        { "id": "B", "text": "`Get-AzVM`" },
+        { "id": "C", "text": "`Get-AzADUser`" },
+        { "id": "D", "text": "`Get-AzRoleAssignment`" },
+        { "id": "E", "text": "`Get-AzResource`" }
       ]
     },
     "correct_answer": ["B", "E"]
@@ -232,25 +232,25 @@
     "type": "dropdown_fill_in_blank",
     "category": "Managed Identities",
     "difficulty": "Difícil",
-    "explanation": "No SDK legado, a classe 'AzureServiceTokenProvider' é usada para obter tokens de identidade gerenciada, e o método para isso é 'GetAccessTokenAsync'.",
+    "explanation": "No SDK legado, a classe `AzureServiceTokenProvider` é usada para obter tokens de identidade gerenciada, e o método para isso é `GetAccessTokenAsync`.",
     "content": {
       "statement": "Você está desenvolvendo um aplicativo em C# usando uma biblioteca mais antiga/legada para se conectar a serviços do Azure a partir de uma Máquina Virtual habilitada para Identidade Gerenciada. Sua equipe ainda não migrou para o pacote moderno Azure.Identity e precisa solicitar o token programaticamente usando a biblioteca nativa compatível no ambiente. Como você deve completar o trecho de código para recuperar o token de acesso do Azure Resource Manager via Managed Identity?",
-      "text": "var provider = new {{0}}();<br>string accessToken = await provider.{{1}}(\"https://management.azure.com/\");",
+      "text": "```csharp\nvar provider = new {{0}}();\nstring accessToken = await provider.{{1}}(\"https://management.azure.com/\");\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "AzureServiceTokenProvider" },
-            { "id": "B", "text": "ChainedTokenCredential" },
-            { "id": "C", "text": "ManagedIdentityCredential" }
+            { "id": "A", "text": "`AzureServiceTokenProvider`" },
+            { "id": "B", "text": "`ChainedTokenCredential`" },
+            { "id": "C", "text": "`ManagedIdentityCredential`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "GetTokenAsync" },
-            { "id": "B", "text": "AcquireTokenSilentAsync" },
-            { "id": "C", "text": "GetAccessTokenAsync" }
+            { "id": "A", "text": "`GetTokenAsync`" },
+            { "id": "B", "text": "`AcquireTokenSilentAsync`" },
+            { "id": "C", "text": "`GetAccessTokenAsync`" }
           ]
         }
       ]

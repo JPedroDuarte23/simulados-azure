@@ -496,16 +496,29 @@ document.addEventListener('DOMContentLoaded', () => {
     function formatText(text) {
         if (!text) return '';
 
-        // Regex to find ```, optionally a language, then any whitespace including <br>, then content, then ```
-        const regex = /```(?:\w*)?\s*(?:<br>)?\s*([\s\S]*?)\s*(?:<br>)?\s*```/g;
-        
-        return text.replace(regex, (match, code) => {
-            // Inside the code block, convert <br> back to \n
+        const codeBlockPlaceholder = '___CODE_BLOCK___';
+        const codeBlocks = [];
+
+        // 1. First, isolate and process the triple-backtick code blocks
+        let processedText = text.replace(/```([\s\S]*?)```/g, (match, code) => {
+            // Inside the code block, convert <br> back to \n and escape HTML
             const codeWithNewlines = code.replace(/<br\s*\/?>/gi, '\n');
-            // Escape HTML characters to prevent rendering them
             const escapedCode = codeWithNewlines.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            return `<pre class="code-block">${escapedCode.trim()}</pre>`;
+            codeBlocks.push(`<pre class="code-block">${escapedCode.trim()}</pre>`);
+            return codeBlockPlaceholder;
         });
+        
+        // 2. Now, process single-backtick inline code in the remaining text
+        processedText = processedText.replace(/`([^`]+)`/g, (match, inlineCode) => {
+            return `<code class="inline-code">${inlineCode}</code>`;
+        });
+
+        // 3. Re-insert the full code blocks
+        codeBlocks.forEach(block => {
+            processedText = processedText.replace(codeBlockPlaceholder, block);
+        });
+
+        return processedText;
     }
 
     function handleDragStart(e) { e.target.classList.add('dragging'); }

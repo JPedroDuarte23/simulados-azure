@@ -32,5 +32,634 @@
         },
         "correct_answer": ["C"],
         "explanation": "O cenário exige explicitamente que o sistema processe mensagens 'estritamente na ordem exata em que foram geradas (First-In, First-Out)'. O Azure Service Bus é o serviço de mensageria corporativa do Azure que oferece suporte a garantias FIFO por meio do uso de Sessões de Mensagens (Message Sessions). O Azure Storage Queues, embora lide com mensagens, não garante a ordem FIFO estrita."
+    },
+    {
+        "id": "Q-SB-03",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está desenvolvendo um aplicativo de serviço do Azure que processa dados de fila ao receber mensagens de um aplicativo móvel. As mensagens podem não ser enviadas ao serviço de forma consistente. Você possui os seguintes requisitos:\nO tamanho da fila não deve ultrapassar 80 gigabytes (GB).\nDeve-se usar a ordenação First-In-First-Out (FIFO) para as mensagens.\nOs custos do Azure devem ser minimizados.\nQual solução de mensageria você deve implementar?",
+            "options": [
+                { "id": "A", "text": "Azure Storage Queue" },
+                { "id": "B", "text": "Azure Service Bus Queue" },
+                { "id": "C", "text": "Azure Event Hub" },
+                { "id": "D", "text": "Azure Event Grid" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "O Azure Service Bus Queue é a escolha correta porque suporta ordenação garantida FIFO (por meio do uso de Sessões de Mensagens) e permite configurar o tamanho da fila para até 80 GB. O Azure Storage Queue não garante a entrega FIFO, enquanto o Event Hub e Event Grid não são adequados para o padrão tradicional de fila de comandos com essas restrições."
+    },
+    {
+        "id": "Q-SB-04",
+        "type": "drag_and_drop",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você desenvolve soluções de software para um serviço de entrega móvel. Você está criando um aplicativo que os usuários podem usar para fazer pedidos em restaurantes da região. O aplicativo utiliza o seguinte fluxo:\nUm motorista seleciona os restaurantes para os quais fará entregas.\nOs pedidos são enviados a todos os motoristas disponíveis na área.\nApenas pedidos dos restaurantes selecionados aparecerão para o motorista.\nO primeiro motorista a aceitar o pedido o remove da lista de pedidos disponíveis.\nVocê precisa implementar a solução usando Azure Service Bus. Ações disponíveis:\n- Criar uma assinatura (subscription) do Service Bus para cada restaurante.\n- Criar um único Tópico (Topic) do Service Bus.\n- Criar uma única assinatura (subscription) do Service Bus.\n- Criar um Namespace do Service Bus para cada restaurante.\n- Criar um Tópico (Topic) do Service Bus para cada restaurante.\n- Criar um único Namespace do Service Bus.\nSelecione e ordene as três ações corretas em sequência:",
+            "items_to_drag": [
+                { "id": "1", "text": "Criar uma assinatura (subscription) do Service Bus para cada restaurante." },
+                { "id": "2", "text": "Criar um único Tópico (Topic) do Service Bus." },
+                { "id": "3", "text": "Criar uma única assinatura (subscription) do Service Bus." },
+                { "id": "4", "text": "Criar um Namespace do Service Bus para cada restaurante." },
+                { "id": "5", "text": "Criar um Tópico (Topic) do Service Bus para cada restaurante." },
+                { "id": "6", "text": "Criar um único Namespace do Service Bus." }
+            ]
+        },
+        "correct_answer": ["6", "2", "1"],
+        "explanation": "Para esse cenário de Publish/Subscribe, você deve primeiro criar o contêiner base, que é um Namespace único. Em seguida, você cria um Tópico único para receber todos os pedidos de forma centralizada. Por fim, você cria uma assinatura (subscription) por restaurante; assim, cada assinante (motorista) pode aplicar filtros baseados no restaurante escolhido, e o padrão de concorrência garantirá que o primeiro motorista a aceitar o pedido o bloqueie/remova da fila (padrão Competing Consumer)."
+    },
+    {
+        "id": "Q-SB-05",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Uma empresa está desenvolvendo uma solução que permite que geladeiras inteligentes enviem informações de temperatura para um local central. A solução deve receber e armazenar as mensagens até que possam ser processadas. Você já criou uma instância (Namespace) do Azure Service Bus fornecendo o nome, tier de preço, assinatura, resource group e localização. Você precisa completar a configuração para que ele possa armazenar as mensagens.",
+            "text": "```bash\n{{0}} --resource-group fridge-rg --namespace-name fridge-ns --name fridge-q\n```",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "`az group create`" },
+                        { "id": "B", "text": "`New-AzureRmServiceBusQueue`" },
+                        { "id": "C", "text": "`az servicebus queue create`" },
+                        { "id": "D", "text": "`az servicebus namespace create`" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["C"],
+        "explanation": "O enunciado afirma explicitamente que a instância do Service Bus (o Namespace) já foi criada. O próximo passo lógico e necessário para receber e armazenar mensagens em um modelo ponto-a-ponto é criar uma fila (Queue). O comando válido na Azure CLI para isso, utilizando os parâmetros de resource group, namespace e name, é o `az servicebus queue create`."
+    },
+    {
+        "id": "Q-SB-06",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está desenvolvendo uma solução que utiliza várias filas do Azure Service Bus. Você precisa criar uma assinatura do Azure Event Grid para o namespace do Service Bus, utilizando o Azure Functions como assinante para processar as mensagens. Você precisa emitir eventos para o Azure Event Grid a partir das filas. Você deve usar o princípio do menor privilégio e minimizar custos.",
+            "text": "Tier (Camada de Preço do Service Bus): {{0}}\nAccess control (Nível IAM): {{1}}",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "Basic" },
+                        { "id": "B", "text": "Standard" },
+                        { "id": "C", "text": "Premium" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "Contributor" },
+                        { "id": "B", "text": "Data Receiver" },
+                        { "id": "C", "text": "Data Sender" },
+                        { "id": "D", "text": "Data Owner" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["C", "A"],
+        "explanation": "A integração nativa do Azure Service Bus para emitir eventos diretamente para o Azure Event Grid é um recurso suportado apenas no nível Premium. Além disso, para criar e gerenciar a assinatura do Event Grid associada ao namespace do Service Bus, sua conta ou a identidade gerenciada executando a ação precisa de permissões de nível Contributor (Colaborador) no escopo do namespace do Service Bus."
+    },
+    {
+        "id": "Q-SB-07",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está desenvolvendo uma solução que utilizará os serviços de mensageria do Azure. Você precisa garantir que a solução use um modelo de publicação-assinatura (publish-subscribe) e elimine a necessidade de polling constante (verificação contínua). Quais duas tecnologias atenderão aos requisitos? (Cada resposta correta apresenta uma solução completa).",
+            "options": [
+                { "id": "A", "text": "Azure Service Bus" },
+                { "id": "B", "text": "Azure Event Hub" },
+                { "id": "C", "text": "Azure Event Grid" },
+                { "id": "D", "text": "Azure Queue Storage" }
+            ]
+        },
+        "correct_answer": ["A", "C"],
+        "explanation": "O Azure Service Bus (utilizando Tópicos e Assinaturas) e o Azure Event Grid são arquiteturas construídas especificamente para o padrão publish-subscribe que podem enviar notificações via push, eliminando o long-polling ou verificação constante manual na origem. O Azure Event Hub depende fortemente de polling (por meio do Event Processor Host / receptores que leem o stream ativamente) e o Azure Queue Storage não suporta o modelo pub/sub."
+    },
+    {
+        "id": "Q-SB-08",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está desenvolvendo um Azure App Service de back-end que processa tarefas assíncronas. Você deseja configurar uma regra de dimensionamento automático (Autoscale) para adicionar mais instâncias do App Service com base na carga de trabalho de uma fila do Azure Service Bus. Você precisa garantir que o aplicativo seja dimensionado corretamente considerando apenas as mensagens que estão aguardando processamento ativo (ignorando mensagens mortas ou agendadas para o futuro).",
+            "text": "Metric source (Origem da métrica): {{0}}\nMetric name (Nome da métrica): {{1}}",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "Storage queue" },
+                        { "id": "B", "text": "Service Bus queue" },
+                        { "id": "C", "text": "Current resource" },
+                        { "id": "D", "text": "Storage queue (classic)" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "Message Count" },
+                        { "id": "B", "text": "Active Message Count" },
+                        { "id": "C", "text": "Dead-letter Message Count" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["B", "B"],
+        "explanation": "Para dimensionar dinamicamente os recursos com base em uma fila do Service Bus, a origem da métrica deve ser configurada especificamente para o Service Bus queue. O Active Message Count (Contagem de Mensagens Ativas) é a métrica correta, pois conta apenas as mensagens que estão na fila em estado ativo e prontas para entrega. O Message Count contaria todas as mensagens, incluindo as que estão na fila de mensagens mortas (dead-letter) ou agendadas (que ainda não podem ser processadas), o que causaria um dimensionamento falso positivo."
+    },
+    {
+        "id": "Q-SB-09",
+        "type": "drag_and_drop",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está implementando um sistema de processamento de pedidos. Um aplicativo de Ponto de Venda (PDV) publica os pedidos em um Tópico do Azure Service Bus. O sistema possui as seguintes assinaturas (subscriptions) e requisitos para os assinantes:\n- HighQuantityOrders: Lida apenas com pedidos onde a quantidade (Quantity) é superior a 100 unidades.\n- InternationalOrders: Lida com pedidos onde o país/região (Country) não é os Estados Unidos.\n- AllOrders: Usada para fins de auditoria. Deve receber absolutamente todos os pedidos publicados no tópico.\nVocê precisa implementar a filtragem maximizando o throughput (taxa de transferência) e o desempenho do Service Bus.\nAssocie o tipo de filtro correto para cada assinatura:",
+            "text": "A - SQLFilter<br>B - CorrelationFilter<br>C - No Filter (TrueFilter)",
+            "items_to_drag": [
+                { "id": "A", "text": "HighQuantityOrders" },
+                { "id": "B", "text": "InternationalOrders" },
+                { "id": "C", "text": "AllOrders" }
+            ]
+        },
+        "correct_answer": ["A-1", "B-1", "C-3"],
+        "explanation": "O Azure Service Bus suporta três tipos principais de filtros. O SQLFilter suporta expressões lógicas complexas (como >, <, !=) baseadas nas propriedades das mensagens. Portanto, para verificar se Quantity > 100 ou se Country != 'US', você obrigatoriamente precisa de um SQLFilter. O No Filter (representado na API como um TrueFilter, que é um tipo de SQLFilter que sempre retorna verdadeiro) é a melhor escolha para a assinatura AllOrders, pois roteará todas as mensagens para a fila de auditoria sem custo de processamento condicional. (Nota: O CorrelationFilter é o mais rápido, mas suporta apenas comparações de igualdade exata contra propriedades do sistema ou de usuário, não servindo para as regras acima)."
+    },
+    {
+        "id": "Q-SB-10",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Sua empresa está implementando um componente de mensagens Publish/Subscribe usando o Azure Service Bus. Você está desenvolvendo o aplicativo para a primeira assinatura (subscription). No portal do Azure, você observa que as mensagens estão sendo enviadas com sucesso para o Tópico e chegando na Assinatura. No código C# (.NET), você cria e inicializa o objeto do cliente da assinatura fornecendo a string de conexão e os nomes corretos, mas o aplicativo não está consumindo as mensagens. Você precisa garantir que o cliente comece a processar as mensagens. Qual segmento de código você deve adicionar?",
+            "options": [
+                { "id": "A", "text": "await subscriptionClient.AddRuleAsync(new RuleDescription(RuleDescription.DefaultRuleName, new TrueFilter()));" },
+                { "id": "B", "text": "subscriptionClient = new SubscriptionClient(ServiceBusConnectionString, TopicName, SubscriptionName);" },
+                { "id": "C", "text": "await subscriptionClient.CloseAsync();" },
+                { "id": "D", "text": "subscriptionClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);" }
+            ]
+        },
+        "correct_answer": ["D"],
+        "explanation": "A inicialização do cliente (Opção B) já foi concluída com sucesso de acordo com o enunciado. Para que um aplicativo atue como um consumidor de forma assíncrona orientada a eventos usando as bibliotecas tradicionais (ou CreateProcessor na SDK mais recente), você deve registrar o Message Handler. O RegisterMessageHandler é a instrução que inicia o recebimento contínuo ('message pump'), invocando o método delegado (ex: ProcessMessagesAsync) cada vez que uma nova mensagem entra na assinatura."
+    },
+    {
+        "id": "Q-SB-11",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está desenvolvendo uma solução de comércio eletrônico (e-commerce) que usa uma arquitetura de microsserviços. Você precisa projetar um backplane de comunicação para transmitir mensagens transacionais entre as várias partes da solução. É um requisito estrito que as mensagens sejam processadas na ordem exata em que foram produzidas, ou seja, First-In-First-Out (FIFO). Qual tecnologia você deve utilizar?",
+            "options": [
+                { "id": "A", "text": "Azure Storage Queue" },
+                { "id": "B", "text": "Azure Event Hub" },
+                { "id": "C", "text": "Azure Service Bus" },
+                { "id": "D", "text": "Azure Event Grid" }
+            ]
+        },
+        "correct_answer": ["C"],
+        "explanation": "O Azure Service Bus suporta sessões de mensagens (Message Sessions), que garantem de forma nativa o processamento rigoroso de mensagens na ordem FIFO (First-In-First-Out), além de suportar transações atômicas e detecção de duplicatas (ideal para fluxos transacionais como e-commerce). O Azure Storage Queue e o Azure Event Grid não garantem a ordem FIFO das mensagens de forma nativa."
+    },
+    {
+        "id": "Q-SB-12",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está criando um sistema de notificação de perigos que possui um servidor central que dispara alarmes. Você implementou o Azure Service Bus para publicar os eventos de alarme. Os controladores de alarme recebem os sinais usando o Service Bus. Para fins de auditoria, os eventos de alarme processados devem enviar uma resposta de confirmação transacional. O registro deve formar uma trilha de auditoria de resposta (reply trail auditing), correlacionando o alarme enviado com a resposta recebida. Quais duas ações você deve executar no código para implementar esse padrão de correlação? (Cada resposta correta apresenta parte da solução).",
+            "options": [
+                { "id": "A", "text": "Atribuir o valor da propriedade SessionID da mensagem de perigo original para a propriedade ReplyToSessionId da mensagem de resposta." },
+                { "id": "B", "text": "Atribuir o valor da propriedade SequenceNumber da mensagem de perigo original para a propriedade CorrelationId da mensagem de resposta." },
+                { "id": "C", "text": "Atribuir o valor da propriedade ReplyToSessionId da mensagem de perigo original para a propriedade SessionID da mensagem de resposta." },
+                { "id": "D", "text": "Atribuir o valor da propriedade MessageId da mensagem de perigo original para a propriedade CorrelationId da mensagem de resposta." }
+            ]
+        },
+        "correct_answer": ["A", "D"],
+        "explanation": "O padrão Request/Reply (Solicitação/Resposta) no Azure Service Bus exige que o remetente original saiba qual reposta pertence a qual solicitação. Para implementar a trilha de correlação:\nO receptor copia o `MessageId` da mensagem original e o define como o `CorrelationId` da mensagem de resposta (Ação D).\nO receptor copia o `SessionId` original e o define como o `ReplyToSessionId` (Ação A). Dessa forma, o remetente original – que pode estar escutando a fila de respostas – consegue parear perfeitamente o contexto transacional do alarme."
+    },
+    {
+        "id": "Q-SB-13",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está desenvolvendo uma solução de mensageria corporativa no Azure. Você precisa garantir que a solução atenda aos seguintes requisitos estritos:\n- Fornecer suporte transacional (operações atômicas).\n- Fornecer detecção nativa de mensagens duplicadas.\n- Armazenar as mensagens por um longo período de tempo até que sejam processadas.\nQuais duas tecnologias atenderão aos requisitos? (Cada resposta correta apresenta uma solução completa).",
+            "options": [
+                { "id": "A", "text": "Azure Service Bus Topic" },
+                { "id": "B", "text": "Azure Storage Queue" },
+                { "id": "C", "text": "Azure Event Hub" },
+                { "id": "D", "text": "Azure Service Bus Queue" }
+            ]
+        },
+        "correct_answer": ["A", "D"],
+        "explanation": "O Azure Service Bus (tanto na forma de Filas quanto de Tópicos) é o único serviço de mensageria no Azure que oferece recursos corporativos avançados, como suporte a transações (permitindo agrupar operações contra o broker) e detecção nativa de duplicatas (baseada no `MessageId`). O Azure Storage Queue não suporta transações nem detecção de duplicatas, e o Event Hub é focado em streaming de eventos (telemetria), não fornecendo detecção nativa de duplicatas por mensagem."
+    },
+    {
+        "id": "Q-SB-14",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você precisa configurar a integração nativa entre o Azure Service Bus e o Azure Event Grid. O objetivo é que o Service Bus emita eventos para o Event Grid quando houver mensagens em uma fila, eliminando a necessidade de os consumidores fazerem long-polling constantemente. Como você deve completar a instrução da CLI do Azure para criar essa assinatura?",
+            "text": "```bash\naz {{0}} {{1}} create --name es2 \\\n  --source-resource-id /subscriptions/{SubID}/.../namespaces/ns1 \\\n  --endpoint-type {{2}} \\\n  --endpoint /subscriptions/{SubID}/.../queues/queue1\n```",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "`eventgrid`" },
+                        { "id": "B", "text": "`servicebus`" },
+                        { "id": "C", "text": "`network`" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "`event-subscription`" },
+                        { "id": "B", "text": "`app`" },
+                        { "id": "C", "text": "`connection`" }
+                    ]
+                },
+                {
+                    "index": 2,
+                    "options": [
+                        { "id": "A", "text": "`servicebusqueue`" },
+                        { "id": "B", "text": "`webhook`" },
+                        { "id": "C", "text": "`eventhub`" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["A", "A", "A"],
+        "explanation": "Para rotear eventos usando a CLI, você está operando dentro do domínio do Event Grid. Portanto, o comando raiz é `az eventgrid`. A entidade que você está criando é uma assinatura de evento (`event-subscription`). O tipo de destino (endpoint) que receberá o tráfego do Event Grid neste cenário é explicitamente a fila do Service Bus, definida pelo parâmetro `--endpoint-type servicebusqueue`."
+    },
+    {
+        "id": "Q-SB-15",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você desenvolve soluções para o Azure usando C#. Um aplicativo .NET precisa receber uma mensagem cada vez que uma máquina virtual do Azure termina de processar determinados dados. Há um requisito de segurança e otimização: as mensagens NÃO devem persistir na origem após serem processadas pelo aplicativo receptor.\nVocê precisa implementar o objeto da biblioteca do Azure SDK que receberá as mensagens. Qual objeto você deve usar?",
+            "options": [
+                { "id": "A", "text": "QueueClient" },
+                { "id": "B", "text": "SubscriptionClient" },
+                { "id": "C", "text": "TopicClient" },
+                { "id": "D", "text": "CloudQueueClient" }
+            ]
+        },
+        "correct_answer": ["A"],
+        "explanation": "O `QueueClient` (usado nativamente no SDK de mensageria do Azure) permite configurar a recepção de mensagens usando o modo `ReceiveMode.ReceiveAndDelete`. Nesse modo, assim que o cliente recebe a mensagem, ela é imediatamente marcada como consumida e removida da fila, garantindo que não persista no broker. O `CloudQueueClient` é uma classe legada da antiga biblioteca de Storage Queues (v11), que não é a opção moderna recomendada. `TopicClient` é usado apenas para envio (publicação)."
+    },
+    {
+        "id": "Q-SB-16",
+        "type": "drag_and_drop",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Uma empresa possui dezenas de armazéns. Cada armazém contém dispositivos IoT de temperatura que enviam dados periodicamente para uma fila do Azure Service Bus. Você precisa usar um fluxo de trabalho visual sem código (Azure Logic Apps) para enviar alertas por e-mail aos supervisores imediatamente se a temperatura em um armazém ficar acima ou abaixo dos limites permitidos.\nVocê precisa ordenar as ações corretas para construir esse fluxo.",
+            "items_to_drag": [
+                { "id": "1", "text": "Adicionar um gatilho (trigger) de Logic App que é acionado quando uma ou mais mensagens chegam na fila." },
+                { "id": "2", "text": "Adicionar uma ação de Logic App que é disparada quando uma ou mais mensagens chegam na fila." },
+                { "id": "3", "text": "Adicionar um gatilho que lê dados de temperatura IoT de um Tópico do Service Bus." },
+                { "id": "4", "text": "Adicionar uma ação que envia um e-mail para o pessoal especificado se a temperatura estiver fora dos limites." },
+                { "id": "5", "text": "Adicionar uma condição que compara a temperatura com os limites superior e inferior." }
+            ]
+        },
+        "correct_answer": ["1", "5", "4"],
+        "explanation": "Todo fluxo no Logic Apps deve obrigatoriamente começar com um Trigger (Gatilho). O gatilho correto escuta a Fila do Service Bus (conforme especificado no cenário). Em seguida, você usa um bloco lógico de Condição para avaliar o payload da mensagem (a temperatura). Por fim, dentro do ramo 'Verdadeiro' da condição, você anexa a Ação de enviar o e-mail."
+    },
+    {
+        "id": "Q-SB-17",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está criando um aplicativo complexo que usa o Azure Event Grid para rotear eventos de sistema. Os eventos do Event Grid devem ser entregues a um serviço de destino que possui limitações de processamento. Você precisa implementar o padrão de Nivelamento de carga baseado em fila (Queue-based load leveling). Os eventos devem ser roteados diretamente para o buffer (para que os consumidores processem as mensagens em seu próprio ritmo). O sistema deve garantir que todas as mensagens sejam entregues sem perda.\nQual recurso você deve utilizar como o manipulador (endpoint/handler) do Event Grid para satisfazer esse padrão?",
+            "options": [
+                { "id": "A", "text": "Azure Event Grid topic" },
+                { "id": "B", "text": "Azure Service Bus topic" },
+                { "id": "C", "text": "Azure Service Bus queue" },
+                { "id": "D", "text": "Azure Storage queue" }
+            ]
+        },
+        "correct_answer": ["C"],
+        "explanation": "Para o padrão de nivelamento de carga (Load Leveling), onde você tem picos de tráfego e deseja que os consumidores leiam no próprio ritmo, as filas são a estrutura arquitetônica ideal. O Event Grid suporta nativamente o Azure Service Bus Queue como um manipulador (handler) de destino direto. Os eventos chegam no Event Grid, são empurrados de forma confiável para a Fila do Service Bus, e os workers processam os itens da fila sem ficarem sobrecarregados."
+    },
+    {
+        "id": "Q-SB-18",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está desenvolvendo um serviço que processa dados de uma fila assim que recebe uma mensagem de um aplicativo móvel. As mensagens são geradas esporadicamente e não são enviadas de forma consistente. Você possui os seguintes requisitos de projeto:\n- O tamanho da fila não deve ultrapassar 80 gigabytes (GB).\n- É necessário garantir a ordem First-In-First-Out (FIFO) exata das mensagens.\n- Os custos mensais no Azure devem ser estritamente minimizados.\nSolução Proposta: Você usa a API .NET para enviar as mensagens do aplicativo móvel para uma fila do Azure Service Bus. Em seguida, você provisiona uma Máquina Virtual (VM) do Windows no Azure que fica continuamente escutando e sendo acionada pelos eventos dessa fila.\nA solução atende a todos os objetivos?",
+            "options": [
+                { "id": "A", "text": "Sim" },
+                { "id": "B", "text": "Não" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "Embora a fila do Azure Service Bus seja perfeitamente adequada para garantir a entrega ordenada (FIFO) e suporte filas de até 80 GB, a criação de uma Máquina Virtual (VM) tradicional que executa 24 horas por dia, 7 dias por semana para escutar mensagens que chegam esporadicamente não minimiza os custos. A abordagem correta e mais barata seria utilizar uma arquitetura Serverless, como o Azure Functions com um Service Bus Queue Trigger rodando no Plano de Consumo, que cobra apenas quando há mensagens sendo processadas."
+    },
+    {
+        "id": "Q-SB-19",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "A sua equipe de desenvolvimento está recebendo mensagens de erro de autenticação ao tentar debugar e interagir localmente com o código do Azure Service Bus. Para corrigir o problema, você precisa conceder as permissões adequadas usando o Microsoft Entra ID (Azure AD). O princípio do privilégio mínimo deve ser considerado, mas os desenvolvedores precisam ter direitos totais aos dados em tempo de execução para enviar, receber, ler (peek) e gerenciar o fluxo de mensagens nas diversas filas e tópicos que estão desenvolvendo no projeto.\nComo você deve configurar a segurança?",
+            "text": "Nível de Controle de Acesso (Role): {{0}}\nEscopo da Atribuição (Scope): {{1}}",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "Contributor" },
+                        { "id": "B", "text": "Azure Service Bus Data Owner" },
+                        { "id": "C", "text": "Azure Service Bus Data Sender" },
+                        { "id": "D", "text": "Owner" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "Fila (Queue)" },
+                        { "id": "B", "text": "Namespace" },
+                        { "id": "C", "text": "Resource Group" },
+                        { "id": "D", "text": "Subscription" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["B", "B"],
+        "explanation": "As funções Owner ou Contributor tradicionais concedem direitos apenas no plano de controle (criar ou excluir os recursos do Service Bus no portal), mas não concedem acesso aos dados (enviar/receber mensagens). Para interagir com as mensagens com controle total (necessário para debug), o papel correto é o `Azure Service Bus Data Owner`. O escopo ideal para abranger todas as filas e tópicos criados para o barramento daquele projeto em específico é o Namespace."
+    },
+    {
+        "id": "Q-SB-20",
+        "type": "drag_and_drop",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Sua empresa está migrando um sistema de notificações para o padrão Publish/Subscribe usando a Azure CLI. Você precisa provisionar os recursos necessários do Azure Service Bus do zero. O cenário exige que uma única mensagem enviada pela 'API de Vendas' seja recebida de forma independente pelas aplicações de 'Estoque' e 'Faturamento'.\nSelecione as quatro (4) ações da CLI necessárias na ordem exata de execução:",
+            "items_to_drag": [
+                { "id": "1", "text": "`az servicebus topic subscription create`" },
+                { "id": "2", "text": "`az servicebus queue create`" },
+                { "id": "3", "text": "`az servicebus namespace create`" },
+                { "id": "4", "text": "`az servicebus topic create`" },
+                { "id": "5", "text": "`az group create`" }
+            ]
+        },
+        "correct_answer": ["5", "3", "4", "1"],
+        "explanation": "Todo recurso no Azure precisa de um Resource Group (1). Dentro dele, criamos o contêiner base de mensageria, que é o Namespace (2). Como o cenário exige roteamento do tipo Publish/Subscribe (uma mensagem para vários receptores independentes), você deve usar Tópicos em vez de Filas. Portanto, cria-se o Tópico (3) e, em seguida, as Assinaturas (Subscriptions) anexadas a ele (4), representando o 'Estoque' e o 'Faturamento'. O comando `az servicebus queue create` não é usado aqui, pois trata-se de um padrão Ponto a Ponto."
+    },
+    {
+        "id": "Q-SB-21",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está configurando um sistema crítico de processamento de pagamentos usando as filas do Azure Service Bus. Há situações raras em que o aplicativo consumidor não consegue processar uma mensagem corretamente devido a um payload malformado, o que faz com que o código lance exceções seguidamente. Você precisa garantir nativamente que, após 10 tentativas de entrega sem sucesso, a mensagem seja movida automaticamente para um local isolado para análise da equipe de suporte, sem bloquear o restante da fila.\nQual recurso nativo do Azure Service Bus você deve utilizar?",
+            "options": [
+                { "id": "A", "text": "Time-to-Live (TTL) expiration" },
+                { "id": "B", "text": "Event Grid routing" },
+                { "id": "C", "text": "Dead-letter queue (DLQ)" },
+                { "id": "D", "text": "Auto-forwarding" }
+            ]
+        },
+        "correct_answer": ["C"],
+        "explanation": "O Azure Service Bus possui uma sub-fila embutida chamada Dead-letter queue (Fila de mensagens mortas). Seu propósito é manter mensagens que não podem ser entregues a nenhum receptor ou mensagens que não puderam ser processadas de forma bem-sucedida após um número máximo de tentativas de entrega configurado na propriedade `MaxDeliveryCount`. TTL apenas descarta mensagens antigas, enquanto DLQ as armazena de forma segura para análise de erros de negócio (poison messages)."
+    },
+    {
+        "id": "Q-SB-22",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está escrevendo uma aplicação C# .NET que irá consumir mensagens do Azure Service Bus de maneira assíncrona orientada a eventos, usando a biblioteca moderna Azure.Messaging.ServiceBus. Você precisa completar o código para instanciar as ferramentas corretas e iniciar o fluxo contínuo de recebimento das mensagens.",
+            "text": "```csharp\n// 1. Instancia o cliente principal de conexão\nvar client = new {{0}}(connectionString);\n\n// 2. Cria o processador contínuo para a fila específica\nvar processor = client.{{1}}(queueName);\n\n// 3. Define os manipuladores de evento\nprocessor.ProcessMessageAsync += MessageHandler;\nprocessor.ProcessErrorAsync += ErrorHandler;\n\n// 4. Inicia o consumo em background\nawait processor.{{2}}();\n```",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "`ServiceBusClient`" },
+                        { "id": "B", "text": "`QueueClient`" },
+                        { "id": "C", "text": "`SubscriptionClient`" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "`CreateSender`" },
+                        { "id": "B", "text": "`CreateReceiver`" },
+                        { "id": "C", "text": "`CreateProcessor`" }
+                    ]
+                },
+                {
+                    "index": 2,
+                    "options": [
+                        { "id": "A", "text": "`ReceiveMessagesAsync`" },
+                        { "id": "B", "text": "`RegisterMessageHandler`" },
+                        { "id": "C", "text": "`StartProcessingAsync`" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["A", "C", "C"],
+        "explanation": "No Azure SDK mais atual (versão v7+ em `.Azure.Messaging.ServiceBus`), todos os clientes antigos (`QueueClient`, `SubscriptionClient`) foram descontinuados a favor de um cliente unificado chamado `ServiceBusClient`. Para consumir mensagens continuamente orientadas a eventos (lidando com pump de mensagens e renovação automática de locks de forma gerenciada), você chama `CreateProcessor()`, que devolve um `ServiceBusProcessor`. Após associar os delegados aos eventos de sucesso e erro, você inicia o consumo chamando a função `StartProcessingAsync()`. O método `CreateReceiver()` até existe, mas é usado principalmente para ler batches pontuais, e não como um processador contínuo com handlers."
+    },
+    {
+        "id": "Q-SB-23",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você trabalha como desenvolvedor em um projeto e seu aplicativo consome mensagens de um sistema externo usando uma fila do Azure Service Bus, contando com vários workers (consumidores) paralelos processando essas mensagens. Recentemente, um problema raro fez com que algumas mensagens fossem processadas duas vezes porque um worker concluiu o trabalho de forma bem-sucedida, mas sofreu uma falha crítica (crash) antes que pudesse remover a mensagem da fila. A gerência exige que o sistema evite o processamento duplicado estritamente, mesmo que isso signifique que algumas mensagens possam ser perdidas em caso de falhas.\nComo você deve alterar o código de consumo do Service Bus para atender a esse novo requisito?",
+            "options": [
+                { "id": "A", "text": "Usar as sessões de mensagens (Message Sessions) do Service Bus para garantir o processamento único por worker." },
+                { "id": "B", "text": "Alterar o modo de recebimento do cliente do Service Bus para usar a semântica 'no máximo uma vez' (ReceiveAndDelete)." },
+                { "id": "C", "text": "Registrar cada identificador de mensagem em uma tabela de banco de dados e fazer os workers verificarem essa tabela antes do processamento." },
+                { "id": "D", "text": "Habilitar a configuração de 'Detecção de Duplicatas' (Duplicate Detection) diretamente na Fila do Service Bus." }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "O Azure Service Bus suporta dois modos de recebimento: `PeekLock` (padrão, semântica 'pelo menos uma vez', onde a mensagem é bloqueada e depois excluída de forma explícita após o sucesso) e `ReceiveAndDelete` (semântica 'no máximo uma vez', onde o broker exclui a mensagem instantaneamente assim que a envia ao consumidor). Se o consumidor falhar ao usar `ReceiveAndDelete`, a mensagem é perdida, mas garante-se que nenhum outro consumidor a processará, evitando a duplicação indesejada exigida pela gerência. A 'Detecção de Duplicatas' (Opção D) atua contra envios duplicados do Publisher, não resolve problemas de consumo."
+    },
+    {
+        "id": "Q-SB-24",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está desenvolvendo uma solução do Azure para coletar dados de dispositivos de Ponto de Venda (PDV) de 2.000 lojas localizadas em todo o mundo. Um único dispositivo pode produzir até 2 megabytes (MB) de dados a cada 24 horas. Cada loja tem de um a cinco dispositivos enviando dados continuamente. Você deve armazenar os dados dos dispositivos no Azure Blob Storage e eles devem ser correlacionados com base em um identificador de dispositivo. Abertura de lojas adicionais é esperada para o futuro.\nVocê precisa implementar um serviço de ingestão para receber esses dados. Solução Proposta: Você provisiona um Namespace do Azure Service Bus. Você configura um Tópico (Topic) para receber os dados do dispositivo e utiliza um filtro de correlação para roteá-los.\nA solução proposta atende ao objetivo técnico e arquitetônico?",
+            "options": [
+                { "id": "A", "text": "Sim" },
+                { "id": "B", "text": "Não" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "O Azure Service Bus é projetado para mensageria transacional de alto valor corporativo (ex: processamento de pagamentos, transferências financeiras), e não é otimizado para o fluxo massivo de ingestão de telemetria bruta com destino primário para um Storage. Para ingerir grandes fluxos de dados de milhares de dispositivos e despejá-los (salvá-los) diretamente e de forma otimizada no Azure Blob Storage, a solução arquitetônica correta da Microsoft seria usar o Azure Event Hubs, habilitando o recurso Event Hubs Capture. Além disso, as mensagens de telemetria excederiam rapidamente as finalidades estruturais de um barramento de serviço tradicional."
+    },
+    {
+        "id": "Q-SB-25",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está projetando um sistema de fila na nuvem e possui os seguintes requisitos de mensageria:\n- O tamanho da fila não deve ultrapassar a capacidade máxima de 80 gigabytes (GB).\n- Deve-se garantir de forma absoluta a ordenação First-In-First-Out (FIFO) das mensagens no processamento.\n- Os custos mensais no Azure devem ser minimizados ao máximo.\nVocê precisa implementar a infraestrutura corretas.",
+            "text": "Ação 1 (Onde gravar as mensagens): Adicionar as mensagens da aplicação web para um(a) {{0}}\nAção 2 (Onde processar as mensagens): Criar um(a) {{1}} acionado(a) por um gatilho (trigger) anexado a este recurso.",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "Azure Storage Queue" },
+                        { "id": "B", "text": "Azure Service Bus Queue" },
+                        { "id": "C", "text": "Azure Event Grid" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "Azure Virtual Machine" },
+                        { "id": "B", "text": "Azure Function App" },
+                        { "id": "C", "text": "App Service Environment" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["B", "B"],
+        "explanation": "Para suportar ordem rigorosa FIFO, você deve usar o Azure Service Bus Queue (utilizando Message Sessions). O Azure Storage Queue não suporta garantias FIFO e o Event Grid não é uma fila. O Service Bus também suporta filas de até 80 GB na camada Premium.\nPara minimizar estritamente os custos, utilizar uma Azure Function App rodando em um plano de Consumo (Consumption Plan) é a abordagem Serverless ideal, pois você paga apenas pelas frações de segundo em que o código executa processando a mensagem. Provisionar uma VM tradicional 24/7 seria muito mais caro."
+    },
+    {
+        "id": "Q-SB-26",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Um desenvolvedor criou uma Azure Function acionada por HTTP (HTTP Trigger) que faz o download, manipula e reescreve arquivos grandes (blobs) no Azure Storage. Devido ao processamento pesado, a função ultrapassa seguidamente a marca de 230 segundos, resultando em um erro 500/502 de Timeout no Azure Load Balancer que atende o cliente chamador. No entanto, o sistema não pode perder o processamento dos dados.\nSolução Proposta: Você altera o design: a função HTTP agora apenas recebe os dados iniciais, coloca o payload (carga útil) em uma fila do Azure Service Bus e imediatamente retorna uma resposta de sucesso ao cliente (HTTP 202 Accepted). Uma segunda Azure Function, acionada por um Service Bus Queue Trigger, pegará essa mensagem em background e fará o processamento longo no Blob.\nEssa abordagem resolve o problema de limite de tempo (timeout) e atende ao objetivo?",
+            "options": [
+                { "id": "A", "text": "Sim" },
+                { "id": "B", "text": "Não" }
+            ]
+        },
+        "correct_answer": ["A"],
+        "explanation": "Sim, atende perfeitamente. Esse é um padrão de projeto conhecido como Asynchronous Request-Reply ou Nivelamento de Carga (Load Leveling). Como as invocações de API da web (HTTP) no Azure possuem um timeout rígido no Load Balancer (aproximadamente 230 segundos), transferir a responsabilidade de execução demorada para uma fila do Azure Service Bus libera o cliente rapidamente, e permite que o worker processador (a Function acionada pela fila) realize o trabalho demorado em segundo plano de forma confiável, com controle automático de falhas e re-tentativas (retries)."
+    },
+    {
+        "id": "Q-SB-27",
+        "type": "drag_and_drop",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Sua empresa está implementando o envio de mensagens usando o padrão 'Solicitação/Resposta' (Request/Reply) nativo do Azure Service Bus. O componente remetente ('Client') envia um comando para a fila de comandos, e o processador ('Server') deve enviar uma resposta assíncrona com os resultados transacionais de volta para uma fila de respostas (Reply Queue).\nPara que o remetente saiba exatamente qual resposta pertence à sua solicitação original, você precisa configurar os identificadores da mensagem na hora em que o 'Server' montar a resposta.\nAssocie o Valor de Origem correto que deve ser atribuído às propriedades da Mensagem de Resposta na Área de Destino: <br> O valor de _____ deve ser atribuído à propriedade CorrelationId da Mensagem de Resposta. <br> O valor de _____ deve ser atribuído à propriedade ReplyToSessionId da Mensagem de Resposta.",
+            "items_to_drag": [
+                { "id": "A", "text": "MessageId" },
+                { "id": "B", "text": "SessionId" },
+                { "id": "C", "text": "ReplyTo" }
+            ]
+        },
+        "correct_answer": ["A-1", "B-2"],
+        "explanation": "A implementação correta de uma trilha de auditoria e resposta no Service Bus exige correlação. Quando o consumidor recebe a solicitação e deseja responder, ele pega o ID único da mensagem recebida (`MessageId`) e o define como o ID de Correlação (`CorrelationId`) da nova mensagem que ele vai despachar. Além disso, se o contexto for baseada em sessões, ele deve pegar o `SessionId` da origem e defini-lo como `ReplyToSessionId` no retorno, permitindo que a aplicação requisitante retome o bloqueio e processe a transação adequadamente."
+    },
+    {
+        "id": "Q-SB-28",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Nota: Esta questão faz parte de uma série de questões que apresentam o mesmo cenário. Cada questão da série contém uma solução única. Determine se a solução atende aos objetivos declarados.\nVocê está desenvolvendo um aplicativo de serviço do Azure que processa dados de fila ao receber mensagens de um aplicativo móvel. As mensagens podem não ser enviadas ao serviço de forma consistente. Você possui os seguintes requisitos:\n- O tamanho da fila não deve ultrapassar 80 gigabytes (GB).\n- Deve-se usar a ordenação First-In-First-Out (FIFO) para as mensagens.\n- Os custos do Azure devem ser minimizados.\nVocê precisa implementar a solução de mensageria. Solução Proposta: Você usa a API .NET para adicionar uma mensagem a uma fila do Azure Storage Queue a partir do aplicativo móvel. Em seguida, você cria um Azure Function App que usa um gatilho (trigger) do Azure Storage Queue para processar as mensagens.\nA solução atende aos objetivos?",
+            "options": [
+                { "id": "A", "text": "Sim" },
+                { "id": "B", "text": "Não" }
+            ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "O Azure Storage Queue não suporta garantias nativas de ordenação First-In-First-Out (FIFO). Embora atenda ao requisito de tamanho (suporta filas de até 500 TB) e o uso do Azure Functions minimize os custos, a falta de ordenação rigorosa invalida a solução proposta."
+    },
+    {
+        "id": "Q-SB-29",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Nota: Esta questão faz parte da mesma série da questão anterior. Determine se esta nova solução atende aos objetivos declarados.\nVocê está desenvolvendo um aplicativo de serviço do Azure que processa dados de fila ao receber mensagens de um aplicativo móvel. As mensagens podem não ser enviadas ao serviço de forma consistente. Você possui os seguintes requisitos:\n- O tamanho da fila não deve ultrapassar 80 gigabytes (GB).\n- Deve-se usar a ordenação First-In-First-Out (FIFO) para as mensagens.\n- Os custos do Azure devem ser minimizados.\nVocê precisa implementar a solução de mensageria. Solução Proposta: Você usa a API .NET para adicionar uma mensagem a uma fila do Azure Service Bus Queue a partir do aplicativo móvel. Em seguida, você cria um Azure Function App (no plano de Consumo) que usa um gatilho (trigger) do Azure Service Bus Queue para processar as mensagens.\nA solução atende aos objetivos?",
+            "options": [
+                { "id": "A", "text": "Sim" },
+                { "id": "B", "text": "Não" }
+            ]
+        },
+        "correct_answer": ["A"],
+        "explanation": "Esta é a arquitetura ideal. O Azure Service Bus Queue suporta a entrega ordenada e rigorosa FIFO (por meio de Message Sessions) e, na camada Premium, pode ser dimensionado para suportar até 80 GB. O uso do Azure Function App como consumidor atende à exigência de minimizar os custos, pois você pagará apenas pelo tempo de computação usado durante o processamento das mensagens (arquitetura Serverless)."
+    },
+    {
+        "id": "Q-SB-30",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está desenvolvendo um aplicativo do Azure Functions que consome mensagens de uma fila. Todas as funções no aplicativo devem atender aos seguintes requisitos de resiliência para lidar com falhas de processamento:\n- A função deve executar até obter sucesso ou até que ocorram 10 tentativas (attempts) de execução.\n- Deve-se garantir que haja pelo menos 20 segundos de intervalo entre as tentativas, crescendo progressivamente até um máximo de 15 minutos.\nVocê precisa configurar o arquivo host.json. Como você deve completar o segmento de código?",
+            "text": "```json\n{\n  \"{{0}}\": {\n    \"strategy\": \"{{1}}\",\n    \"{{2}}\": 10,\n    \"minimumInterval\": \"00:00:20\",\n    \"maximumInterval\": \"00:15:00\"\n  }\n}\n```",
+            "dropdowns": [
+                {
+                    "index": 0,
+                    "options": [
+                        { "id": "A", "text": "`retry`" },
+                        { "id": "B", "text": "`healthMonitor`" },
+                        { "id": "C", "text": "`singleton`" }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "options": [
+                        { "id": "A", "text": "`exponentialBackoff`" },
+                        { "id": "B", "text": "`counterThreshold`" },
+                        { "id": "C", "text": "`fixedDelay`" }
+                    ]
+                },
+                {
+                    "index": 2,
+                    "options": [
+                        { "id": "A", "text": "`maxRetryCount`" },
+                        { "id": "B", "text": "`healthCheckInterval`" },
+                        { "id": "C", "text": "`healthCheckThreshold`" }
+                    ]
+                }
+            ]
+        },
+        "correct_answer": ["A", "A", "A"],
+        "explanation": "O Azure Functions permite configurar políticas de repetição (retry policies) diretamente no arquivo `host.json` usando o bloco 'retry'. Como o requisito exige um intervalo que começa em 20 segundos e vai crescendo progressivamente (até 15 minutos), a estratégia correta é o recuo exponencial ('exponentialBackoff'). O limite de 10 tentativas é definido pela propriedade `maxRetryCount`."
+    },
+    {
+        "id": "Q-SB-31",
+        "type": "drag_and_drop",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você atua como Arquiteto de Soluções e Desenvolvedor para uma grande empresa. Você precisa selecionar o serviço de integração, mensageria ou eventos correto do Azure para diferentes microserviços e requisitos do seu projeto.",
+            "text": "A - Azure Service Bus Queue<br>B - Azure Storage Queue<br>C - Azure Event Hubs<br>D - Azure Event Grid",
+            "items_to_drag": [
+                { "id": "A", "text": "Requisito A: Fornecer suporte transacional (Atomicidade) e detecção nativa de duplicatas de mensagens financeiras." },
+                { "id": "B", "text": "Requisito B: Armazenar de forma simples e barata mais de 100 GB de mensagens, sem necessidade de ordem estrita (apenas semântica 'pelo menos uma vez')." },
+                { "id": "C", "text": "Requisito C: Ingerir milhões de eventos de telemetria por segundo vindos de dispositivos IoT ou cliques de usuários." },
+                { "id": "D", "text": "Requisito D: Reagir a alterações de estado de recursos do Azure (ex: ser notificado via Push imediatamente quando um novo arquivo Blob for criado)." }
+            ]
+        },
+        "correct_answer": ["A-1", "B-2", "C-3", "D-4"],
+        "explanation": "Este é o resumo de ouro para o AZ-204 sobre quando usar cada serviço:\n- Service Bus Queue: Ideal para mensagens de alto valor corporativo (transações de negócios, finanças, pedidos) que exigem garantias complexas como FIFO, detecção de duplicatas e dead-lettering.\n- Storage Queue: Ideal para buffers simples e massivos que ultrapassam o limite de 80 GB do Service Bus, onde a ordem das mensagens não é crítica.\n- Event Hubs: Focado em Big Data e streaming contínuo; projetado especificamente para ingerir milhões de eventos de telemetria por segundo com baixa latência.\n- Event Grid: Um roteador de eventos nativo (modelo Push / Pub-Sub) ideal para arquiteturas reativas a eventos de infraestrutura (como criação de blobs ou recursos)."
+    },
+    {
+        "id": "Q-SB-32",
+        "type": "multiple_choice",
+        "category": "Azure Service Bus",
+        "difficulty": "Média",
+        "content": {
+            "statement": "Você está criando um aplicativo que usa o Azure Event Grid para rotear eventos do sistema para um serviço backend de terceiros. Ocasionalmente, o serviço de destino sofre instabilidades e não consegue processar o volume de eventos empurrados (pushed) pelo Event Grid, causando perda de informações críticas. Você precisa garantir o padrão arquitetônico de nivelamento de carga (Load Leveling), assegurando que todas as mensagens do Azure Event Grid sejam retidas e processadas de forma segura e assíncrona, mesmo que o serviço final fique temporariamente offline.\nQual recurso nativo você deve configurar como o endpoint de destino (Handler) da sua assinatura do Event Grid?",
+            "options": [
+                { "id": "A", "text": "Azure Event Grid topic" },
+                { "id": "B", "text": "Azure Service Bus topic" },
+                { "id": "C", "text": "Azure Service Bus queue" },
+                { "id": "D", "text": "Azure Logic App custom connector" }
+            ]
+        },
+        "correct_answer": ["C"],
+        "explanation": "Para implementar um padrão de nivelamento de carga baseado em fila (queue-based load leveling) absorvendo o tráfego do Event Grid, você deve usar o `Azure Service Bus queue`. O Event Grid pode encaminhar eventos diretamente para as filas do Service Bus, permitindo que as mensagens fiquem em buffer. Assim, o aplicativo backend pode consumir (fazer o pull) dessas mensagens no seu próprio ritmo, sem sobrecarregar o sistema e com garantia de não perder dados em caso de falhas."
     }
 ]

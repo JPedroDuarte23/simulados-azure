@@ -1,0 +1,712 @@
+[
+  {
+    "id": "Q-EH-01",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Difícil",
+    "explanation": "A solução falha porque usar o Device ID como chave de partição para 10.000 dispositivos excederia o limite de partições do Event Hubs, além de ser um padrão de baixo rendimento inadequado para o serviço.",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução para coletar dados de 10.000 dispositivos de POS. Cada dispositivo produz 2 MB de dados a cada 24 horas. Solução Proposta: Você provisiona um Azure Event Hub, configura o Device ID como a chave de partição e habilita o Event Hubs Capture. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EH-02",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "Para maximizar a taxa de transferência e garantir a ordem, o número de partições deve ser alinhado com as fontes de dados (6 rodovias), e a chave de partição deve ser 'Highway' para agrupar os dados de cada rodovia.",
+    "content": {
+      "statement": "Você está construindo um sistema de monitoramento de tráfego para 6 rodovias. Os dados são armazenados no Azure Event Hub e consumidos por 4 departamentos. Você precisa maximizar a taxa de transferência e minimizar a latência. Selecione as opções corretas para as configurações de partição.",
+      "text": "Number of partitions (Número de partições): {{0}}<br>Partition Key (Chave de Partição): {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "3" },
+            { "id": "B", "text": "4" },
+            { "id": "C", "text": "6" },
+            { "id": "D", "text": "12" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Highway" },
+            { "id": "B", "text": "Department" },
+            { "id": "C", "text": "Timestamp" },
+            { "id": "D", "text": "VM name" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "A"]
+  },
+  {
+    "id": "Q-EH-03",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "O 'Checkpointing' é o processo de marcar a posição atual em um armazenamento durável para que outro processador possa continuar do mesmo ponto em caso de falha.",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução com o EventProcessorClient do SDK do Event Hubs. Você precisa que a carga seja balanceada dinamicamente e que, em caso de falha, outro processador continue de onde o anterior parou. Selecione a funcionalidade correta do SDK.",
+      "text": "Requirement 1: Garantir que os clientes processem e marquem a posição atual dentro da sequência de eventos. = {{0}}<br>Requirement 2: Marcar a posição do cliente processador de eventos de forma durável (no Azure Storage) para que outro retome a partição. = {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Offset" },
+            { "id": "B", "text": "Checkpoint" },
+            { "id": "C", "text": "Namespace" },
+            { "id": "D", "text": "Capture" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Offset" },
+            { "id": "B", "text": "Checkpoint" },
+            { "id": "C", "text": "Namespace" },
+            { "id": "D", "text": "Capture" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "B"]
+  },
+  {
+    "id": "Q-EH-04",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Difícil",
+    "explanation": "Os 'Application Groups', disponíveis nas camadas Premium e Dedicated, permitem aplicar políticas de throttling por cliente, evitando que um cliente com alto tráfego prejudique os outros.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo de rastreamento de pedágios que envia eventos para o Azure Event Hubs (camada Premium). A arquitetura exige que cada cliente rodoviário tenha uma política de throttling independente. O que você deve configurar?",
+      "options": [
+        { "id": "A", "text": "Definir cotas de Throughput Units (TUs) no nível do namespace por rodovia." },
+        { "id": "B", "text": "Habilitar a configuração de particionamento e atribuir o limite a partições individuais." },
+        { "id": "C", "text": "Usar Shared Access Policies (Políticas SAS) parametrizadas com restrições HTTP." },
+        { "id": "D", "text": "Criar Application Groups (Grupos de Aplicativos) lógicos para cada rodovia." }
+      ]
+    },
+    "correct_answer": ["D"]
+  },
+  {
+    "id": "Q-EH-05",
+    "type": "drag_and_drop",
+    "category": "Azure Event Hubs",
+    "difficulty": "Difícil",
+    "explanation": "A sequência correta é: 1. Instanciar um `BlobContainerClient` para os checkpoints. 2. Instanciar o `EventProcessorClient`. 3. Registrar os manipuladores de eventos. 4. Chamar `StartProcessingAsync()`.",
+    "content": {
+      "statement": "Você está desenvolvendo um serviço de back-end em C# para ler eventos do Event Hubs e armazenar o estado do processamento no Blob Storage, permitindo o escalonamento dinâmico. Ordene as ações para configurar um consumidor altamente disponível.",
+      "items_to_drag": [
+        { "id": "A", "text": "Instanciar um `BlobContainerClient`" },
+        { "id": "B", "text": "Instanciar um `EventProcessorClient`" },
+        { "id": "C", "text": "Registrar manipuladores de eventos (`ProcessEventAsync` / `ProcessErrorAsync`)" },
+        { "id": "D", "text": "Chamar `StartProcessingAsync()`" }
+      ]
+    },
+    "correct_answer": ["A", "B", "C", "D"]
+  },
+  {
+    "id": "Q-EH-06",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "As 'Publisher policies' permitem definir controle de acesso granular para cada publicador, garantindo que eles só possam registrar vendas para si mesmos e permitindo a revogação de acesso individual.",
+    "content": {
+      "statement": "Você está construindo um programa de fidelidade. As transações de venda de 100 varejistas são enviadas como eventos para o Event Hub. Os varejistas devem poder ser adicionados ou removidos e só devem ter permissão para registrar vendas para si mesmos. O que você deve fazer para garantir que os varejistas possam registrar as vendas de forma segura?",
+      "options": [
+        { "id": "A", "text": "Definir um namespace (espaço de nomes) separado para cada varejista." },
+        { "id": "B", "text": "Usar políticas de publicador (publisher policies) para os varejistas." },
+        { "id": "C", "text": "Criar um Consumer Group exclusivo para cada varejista." },
+        { "id": "D", "text": "Criar uma partição dedicada para cada varejista." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EH-07",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "O 'Consumption plan' minimiza os custos, o gatilho 'Azure Event Hubs binding' é ideal para telemetria de IoT, e o 'SendGrid binding' facilita o envio de e-mails.",
+    "content": {
+      "statement": "Você está construindo uma aplicação para rastreamento logístico. Dispositivos IoT enviam dados para o Azure. Você precisa criar uma Azure Function que seja acionada quando novas informações são recebidas e envie uma notificação por e-mail, mantendo os custos de computação o mais baixos possível. Selecione as opções de configuração corretas.",
+      "text": "Plano de Hospedagem da Function: {{0}}<br>Gatilho de Entrada da Function (Trigger): {{1}}<br>Ação de Saída da Function (Output): {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Premium plan" },
+            { "id": "B", "text": "App Service plan" },
+            { "id": "C", "text": "Consumption plan" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure Event Hubs binding" },
+            { "id": "B", "text": "Azure Cosmos DB trigger" },
+            { "id": "C", "text": "Azure Blob Storage trigger" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "SendGrid binding" },
+            { "id": "B", "text": "Azure Logic App" },
+            { "id": "C", "text": "Azure Service Bus topic" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "A", "A"]
+  },
+  {
+    "id": "Q-EH-08",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Fácil",
+    "explanation": "O Azure Event Hub é a plataforma de ingestão de big data capaz de processar milhões de eventos por segundo. O recurso 'Capture' garante que os dados não sejam perdidos, arquivando-os no Blob Storage.",
+    "content": {
+      "statement": "Você trabalha para a Contoso, Ltd. e precisa projetar a arquitetura de armazenamento para os 'acordos de usuários' gerados pelo aplicativo da empresa. As respostas dos usuários não devem ser perdidas e a volumetria projetada é de milhões de acordos por hora. Onde você deve ingerir os acordos de usuário?",
+      "options": [
+        { "id": "A", "text": "Azure Event Grid topic" },
+        { "id": "B", "text": "Azure Storage queue" },
+        { "id": "C", "text": "Azure Event Hub" },
+        { "id": "D", "text": "Azure Service Bus topic" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-EH-09",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Difícil",
+    "explanation": "O Event Grid elimina o polling com push. O Event Hubs é um buffer de streaming lido por offset. O Service Bus garante a entrega ordenada (FIFO) para transações.",
+    "content": {
+      "statement": "Você está integrando múltiplos back-ends do Azure e precisa escolher o serviço de 'Mensagens' ou 'Eventos' correto com base nos padrões arquitetônicos. Associe os cenários aos serviços apropriados.",
+      "text": "Um modelo que elimina a necessidade de polling, fazendo o push de eventos de mudança de estado em tempo real usando publish-subscribe = {{0}}<br>Um buffer para fluxos contínuos de dados de telemetria, onde os dados são lidos marcando o avanço com um offset = {{1}}<br>Uma arquitetura de sistema financeiro que exige entrega ordenada First-In-First-Out (FIFO) e detecção de duplicatas = {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Event Hubs" },
+            { "id": "C", "text": "Azure Event Grid" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Event Hubs" },
+            { "id": "C", "text": "Azure Event Grid" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Event Hubs" },
+            { "id": "C", "text": "Azure Event Grid" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "B", "A"]
+  },
+  {
+    "id": "Q-EH-10",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "No KEDA, para configurar um gatilho do Event Hub, os campos obrigatórios são `type` (para especificar o tipo de gatilho, ex: 'azure-eventhub') e `metadata` (para fornecer os detalhes da conexão).",
+    "content": {
+      "statement": "Você desenvolve microsserviços no Azure Container Apps que devem escalar com base na carga de um gatilho do Event Hubs, usando KEDA. Ao provisionar o gatilho, quais dois campos são obrigatórios?",
+      "options": [
+        { "id": "A", "text": "`type`" },
+        { "id": "B", "text": "`metricType`" },
+        { "id": "C", "text": "`authenticationRef`" },
+        { "id": "D", "text": "`metadata`" },
+        { "id": "E", "text": "`name`" }
+      ]
+    },
+    "correct_answer": ["A", "D"]
+  },
+  {
+    "id": "Q-EH-11",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Fácil",
+    "explanation": "O Event Hubs com a chave de partição definida como o Device ID e o recurso Capture habilitado é a solução ideal para ingestão de telemetria, correlação de dados e armazenamento automático no Blob Storage.",
+    "content": {
+      "statement": "Você está coletando telemetria de dispositivos de POS. Os dados devem ser armazenados no Blob Storage, correlacionados por Device ID, e o armazenamento deve ser automático. Solução Proposta: Você provisiona um Azure Event Hub, configura o Device ID como a chave de partição e habilita o Event Hubs Capture. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-EH-12",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Fácil",
+    "explanation": "Os 'Consumer Groups' permitem que múltiplos aplicativos leiam o mesmo fluxo de eventos de forma independente, cada um com seu próprio estado de leitura.",
+    "content": {
+      "statement": "Você tem telemetria de sensores IoT sendo ingerida por um Event Hub. Três aplicativos de back-end (Alertas, Faturamento, Arquivamento) precisam ler o mesmo fluxo completo de eventos de forma independente. O que você deve criar no Event Hub?",
+      "options": [
+        { "id": "A", "text": "Uma partição (Partition) dedicada para cada um dos três aplicativos." },
+        { "id": "B", "text": "Um Consumer Group (Grupo de Consumidores) dedicado para cada um dos três aplicativos." },
+        { "id": "C", "text": "Uma regra de Autorização (SAS Token) exclusiva para cada aplicativo." },
+        { "id": "D", "text": "Um Event Domain para ramificar as rotas de conexão." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EH-13",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "O 'Checkpointing' é o processo de gravar o progresso em um armazenamento durável. O 'Offset' é o marcador específico que define a posição exata de um evento na partição.",
+    "content": {
+      "statement": "Você está usando o SDK do Event Hubs. Você precisa garantir que, em caso de falha, o próximo cliente saiba de onde continuar a leitura. Selecione a terminologia correta.",
+      "text": "Garantir que os clientes do processador de eventos gravem e confirmem ativamente seu progresso em um armazenamento durável: {{0}}<br>O marcador específico que define a posição exata de um evento na sequência da partição: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Offset" },
+            { "id": "B", "text": "Checkpoint" },
+            { "id": "C", "text": "Namespace" },
+            { "id": "D", "text": "Capture" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Offset" },
+            { "id": "B", "text": "Checkpoint" },
+            { "id": "C", "text": "Namespace" },
+            { "id": "D", "text": "Capture" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "A"]
+  },
+  {
+    "id": "Q-EH-14",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "'Throughput Units (TUs) / Processing Units (PUs)' para escalabilidade, 'AMQP 1.0' como protocolo nativo, e 'Apache Kafka' para compatibilidade sem alteração de código.",
+    "content": {
+      "statement": "Você está integrando plataformas de mensageria e precisa corresponder os conceitos arquitetônicos do Event Hub com suas descrições. Associe os conceitos às suas respectivas descrições.",
+      "text": "O recurso de escalabilidade usado para aumentar o limite máximo de megabytes por segundo = {{0}}<br>O protocolo nativo de rede amplamente utilizado pelo Event Hubs = {{1}}<br>O recurso que permite que clientes de código aberto existentes enviem telemetria sem alteração no código = {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "AMQP 1.0" },
+            { "id": "B", "text": "Apache Kafka" },
+            { "id": "C", "text": "Throughput Units (TUs) / Processing Units (PUs)" },
+            { "id": "D", "text": "Capture" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "AMQP 1.0" },
+            { "id": "B", "text": "Apache Kafka" },
+            { "id": "C", "text": "Throughput Units (TUs) / Processing Units (PUs)" },
+            { "id": "D", "text": "Capture" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "AMQP 1.0" },
+            { "id": "B", "text": "Apache Kafka" },
+            { "id": "C", "text": "Throughput Units (TUs) / Processing Units (PUs)" },
+            { "id": "D", "text": "Capture" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "A", "B"]
+  },
+  {
+    "id": "Q-EH-15",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "Para limitar o número máximo de eventos processados por lote em uma Azure Function, configure a propriedade 'maxBatchSize' no arquivo 'host.json'.",
+    "content": {
+      "statement": "Você tem uma Azure Function com um gatilho do Event Hubs. Durante picos de telemetria, a função fica sem memória ao processar grandes lotes de eventos. Você precisa limitar a quantidade máxima de eventos por lote sem alterar o código. Onde você deve configurar essa restrição?",
+      "options": [
+        { "id": "A", "text": "No arquivo function.json, adicionando o parâmetro batchSize." },
+        { "id": "B", "text": "No arquivo host.json, configurando a propriedade maxBatchSize dentro do objeto de extensão do eventHubs." },
+        { "id": "C", "text": "No portal do Azure, alterando a escala do Throughput Units (TUs) do namespace do Event Hubs." },
+        { "id": "D", "text": "Adicionando uma variável de ambiente EventHubs_MaxDequeueCount = 50 nas configurações do aplicativo." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EH-16",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "O Event Hubs opera em um modelo de streaming baseado em pull/polling, onde os consumidores leem ativamente as partições, ao contrário do modelo push do Event Grid e Service Bus.",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução de integração que deve usar um modelo Publish-Subscribe e eliminar a necessidade de polling constante. Qual dos seguintes serviços você NÃO deve escolher, pois seu modelo de consumo é inerentemente baseado em 'pull/polling'?",
+      "options": [
+        { "id": "A", "text": "Azure Service Bus Topic" },
+        { "id": "B", "text": "Azure Event Grid" },
+        { "id": "C", "text": "Azure Event Hubs" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-EH-17",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Fácil",
+    "explanation": "A solução atende aos objetivos. O uso da chave de partição garante a correlação dos dados, e o recurso 'Capture' automatiza o armazenamento no Blob Storage sem código adicional.",
+    "content": {
+      "statement": "Você está coletando telemetria de dispositivos de POS. Os dados devem ser armazenados permanentemente no Blob Storage, correlacionados por Device ID, e o armazenamento deve ser automático. Solução Proposta: Você provisiona um Event Hub, usa o Device ID como chave de partição e habilita o Event Hubs Capture. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["A"]
+  },
+  {
+    "id": "Q-EH-18",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Difícil",
+    "explanation": "Event Grid para notificações leves, Event Hubs para ingestão de streaming massivo, e Service Bus para mensageria corporativa com transações e FIFO.",
+    "content": {
+      "statement": "Sua empresa está migrando uma arquitetura baseada em eventos e mensagens. Associe a descrição da arquitetura ao serviço do Azure mais adequado.",
+      "text": "Atua como um serviço de roteamento focado em ações reativas e notificações leves = {{0}}<br>Atua como uma plataforma de streaming para ingestão massiva e telemetria = {{1}}<br>Atua como um message broker corporativo para transações de alto valor com FIFO = {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Event Hubs" },
+            { "id": "C", "text": "Azure Event Grid" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Event Hubs" },
+            { "id": "C", "text": "Azure Event Grid" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Azure Service Bus" },
+            { "id": "B", "text": "Azure Event Hubs" },
+            { "id": "C", "text": "Azure Event Grid" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["C", "B", "A"]
+  },
+  {
+    "id": "Q-EH-19",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "O recurso 'Event Hubs Capture' é a funcionalidade nativa para arquivar automaticamente o fluxo de telemetria para armazenamento de longo prazo, como o 'Azure Blob Storage & Data Lake Storage'.",
+    "content": {
+      "statement": "Você desenvolve um back-end que coleta milhões de eventos por segundo no Event Hub. A auditoria exige que 100% da telemetria seja armazenada por no mínimo 7 anos. Você decide configurar a funcionalidade nativa para arquivar os fluxos de dados automaticamente. Selecione as opções corretas.",
+      "text": "Funcionalidade do Event Hub a ser ativada: {{0}}<br>Destino de Armazenamento Suportado por essa funcionalidade: {{1}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Namespace Routing" },
+            { "id": "B", "text": "Event Hubs Capture" },
+            { "id": "C", "text": "Kafka Compatibility" },
+            { "id": "D", "text": "Event Grid Integration" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Azure Cosmos DB & Azure SQL" },
+            { "id": "B", "text": "Azure Blob Storage & Data Lake Storage" },
+            { "id": "C", "text": "Azure Cache for Redis" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "B"]
+  },
+  {
+    "id": "Q-EH-20",
+    "type": "multiple_choice",
+    "category": "Azure Service Bus",
+    "difficulty": "Média",
+    "explanation": "O Azure Service Bus é o único serviço que oferece suporte estrito a transações, detecção de duplicatas e armazenamento por tempo ilimitado, características essenciais para um sistema bancário.",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução de mensagens para um sistema bancário legado com os seguintes requisitos: suporte a transações, detecção de duplicatas e armazenamento ilimitado. Qual tecnologia atende a todos esses requisitos?",
+      "options": [
+        { "id": "A", "text": "Azure Event Hubs" },
+        { "id": "B", "text": "Azure Service Bus" },
+        { "id": "C", "text": "Azure Event Grid" },
+        { "id": "D", "text": "Azure Storage Queue" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EH-21",
+    "type": "multiple_choice",
+    "category": "Azure Service Bus",
+    "difficulty": "Fácil",
+    "explanation": "Para mensagens transacionais que exigem ordem estrita (FIFO), o Azure Service Bus é a escolha correta, pois suporta sessões de mensagens para garantir a ordem.",
+    "content": {
+      "statement": "Você está desenvolvendo uma solução de e-commerce e precisa de um backplane de comunicação para trafegar mensagens transacionais entre microsserviços. As mensagens devem ser comunicadas em ordem estrita de chegada (FIFO) e com suporte a transações. O que você deve usar?",
+      "options": [
+        { "id": "A", "text": "Azure Storage Queue" },
+        { "id": "B", "text": "Azure Event Hub" },
+        { "id": "C", "text": "Azure Service Bus" },
+        { "id": "D", "text": "Azure Event Grid" }
+      ]
+    },
+    "correct_answer": ["C"]
+  },
+  {
+    "id": "Q-EH-22",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "No KEDA, para configurar um gatilho do Event Hub, os campos obrigatórios são `type` (para especificar o tipo de gatilho, ex: 'azure-eventhub') e `metadata` (para fornecer os detalhes da conexão).",
+    "content": {
+      "statement": "Você desenvolve microsserviços no Azure Container Apps que devem escalar com base na carga de um gatilho do Event Hubs, usando KEDA. Ao provisionar o gatilho, quais dois campos são obrigatórios?",
+      "options": [
+        { "id": "A", "text": "`metadata`" },
+        { "id": "B", "text": "`type`" },
+        { "id": "C", "text": "`authenticationRef`" },
+        { "id": "D", "text": "`name`" },
+        { "id": "E", "text": "`metricType`" }
+      ]
+    },
+    "correct_answer": ["A", "B"]
+  },
+  {
+    "id": "Q-EH-23",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Fácil",
+    "explanation": "O Azure Notification Hubs é para enviar notificações push para dispositivos móveis, não para ingerir telemetria. A solução correta seria usar o Azure Event Hubs ou o IoT Hub.",
+    "content": {
+      "statement": "Você está ingerindo telemetria de 2.500 lojas. Os dados devem ser armazenados no Blob Storage e correlacionados por ID do dispositivo. Solução Proposta: Você provisiona um Azure Notification Hub e registra os dispositivos. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EH-24",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Difícil",
+    "explanation": "'Publisher Policies' para controle de remetentes individuais, 'Application Groups' para throttling, e 'Consumer Groups' para permitir múltiplos leitores independentes.",
+    "content": {
+      "statement": "Você administra um namespace do Event Hub Premium e precisa implementar controles de limitação e segurança. Associe o recurso nativo do Event Hub com seu caso de uso.",
+      "text": "Atribuir um identificador único para os varejistas remetentes e controlar suas credenciais = {{0}}<br>Aplicar limites de restrição de tráfego (throttling policies) e cotas isoladas por aplicativos = {{1}}<br>Permitir que múltiplos aplicativos de backend leiam o mesmo fluxo de eventos simultaneamente = {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Consumer Groups" },
+            { "id": "B", "text": "Publisher Policies" },
+            { "id": "C", "text": "Application Groups" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Consumer Groups" },
+            { "id": "B", "text": "Publisher Policies" },
+            { "id": "C", "text": "Application Groups" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Consumer Groups" },
+            { "id": "B", "text": "Publisher Policies" },
+            { "id": "C", "text": "Application Groups" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["B", "C", "A"]
+  },
+  {
+    "id": "Q-EH-25",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "O Service Bus e o Event Grid suportam o modelo Pub/Sub com entrega baseada em push, eliminando a necessidade de polling. O Event Hub opera em um modelo de streaming baseado em pull.",
+    "content": {
+      "statement": "Você está configurando uma solução de integração com os requisitos de usar um modelo Publish-Subscribe e eliminar a necessidade de polling constante. Quais duas tecnologias você deve utilizar? (Escolha duas)",
+      "options": [
+        { "id": "A", "text": "Azure Service Bus" },
+        { "id": "B", "text": "Azure Event Hub" },
+        { "id": "C", "text": "Azure Event Grid" },
+        { "id": "D", "text": "Azure Storage Queue" }
+      ]
+    },
+    "correct_answer": ["A", "C"]
+  },
+  {
+    "id": "Q-EH-26",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Fácil",
+    "explanation": "Usar uma Azure Function para processar milhões de eventos por segundo seria caro e ineficiente. A solução nativa e de baixo custo é habilitar o recurso 'Azure Event Hubs Capture'.",
+    "content": {
+      "statement": "Você ingere milhões de eventos de telemetria por segundo no Event Hubs e precisa armazenar 100% dos dados no Data Lake Storage Gen2 para retenção de longo prazo, minimizando custos e evitando código personalizado. Solução Proposta: Você cria uma Azure Function com um gatilho do Event Hubs para gravar os dados no Data Lake. A solução atende ao objetivo?",
+      "options": [
+        { "id": "A", "text": "Sim" },
+        { "id": "B", "text": "Não" }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EH-27",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "O `EventProcessorClient` usa os manipuladores de eventos `ProcessEventAsync` e `ProcessErrorAsync`, e o método `StartProcessingAsync` para iniciar o consumo.",
+    "content": {
+      "statement": "Você está desenvolvendo um aplicativo de console em C# que consome eventos do Event Hubs de forma resiliente usando o `EventProcessorClient`. Selecione os métodos/eventos corretos para completar o código.",
+      "text": "```csharp\nprocessor.{{0}} += ProcessEventHandler;\nprocessor.{{1}} += ProcessErrorHandler;\n\nawait processor.{{2}}();\n```",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "`ProcessEventAsync`" },
+            { "id": "B", "text": "`ReceiveAsync`" },
+            { "id": "C", "text": "`ReadEventAsync`" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "`CatchErrorAsync`" },
+            { "id": "B", "text": "`HandleErrorAsync`" },
+            { "id": "C", "text": "`ProcessErrorAsync`" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "`StartProcessingAsync`" },
+            { "id": "B", "text": "`RunAsync`" },
+            { "id": "C", "text": "`BeginConsumeAsync`" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "C", "A"]
+  },
+  {
+    "id": "Q-EH-28",
+    "type": "dropdown_fill_in_blank",
+    "category": "Azure Event Hubs",
+    "difficulty": "Difícil",
+    "explanation": "'Consumer Group' para múltiplos leitores independentes, 'Partition Key' para garantir a ordem, e 'Partition' para escalar o consumo paralelo.",
+    "content": {
+      "statement": "Você está documentando a arquitetura de ingestão de um sistema de jogos online que usa o Event Hubs. Associe os componentes estruturais do Event Hub com suas respectivas funções.",
+      "text": "Um mecanismo que permite múltiplos aplicativos consumidores lerem o fluxo de eventos de forma independente = {{0}}<br>Um identificador que garante que eventos relacionados sejam mantidos na mesma ordem = {{1}}<br>Um contêiner lógico que promove a escala paralela de downstream = {{2}}",
+      "dropdowns": [
+        {
+          "index": 0,
+          "options": [
+            { "id": "A", "text": "Consumer Group" },
+            { "id": "B", "text": "Partition" },
+            { "id": "C", "text": "Partition Key" }
+          ]
+        },
+        {
+          "index": 1,
+          "options": [
+            { "id": "A", "text": "Consumer Group" },
+            { "id": "B", "text": "Partition" },
+            { "id": "C", "text": "Partition Key" }
+          ]
+        },
+        {
+          "index": 2,
+          "options": [
+            { "id": "A", "text": "Consumer Group" },
+            { "id": "B", "text": "Partition" },
+            { "id": "C", "text": "Partition Key" }
+          ]
+        }
+      ]
+    },
+    "correct_answer": ["A", "C", "B"]
+  },
+  {
+    "id": "Q-EH-29",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Média",
+    "explanation": "O recurso 'Auto-inflate' do namespace do Event Hubs (camada Standard) dimensiona automaticamente as Throughput Units (TUs) para lidar com picos de tráfego, evitando erros 'ServerBusyException'.",
+    "content": {
+      "statement": "Você tem um namespace do Event Hubs na camada Standard. Durante picos de acesso, o volume de eventos esgota as Throughput Units (TUs), e o aplicativo publicador começa a receber erros 'ServerBusyException'. Você precisa que o Event Hubs aumente automaticamente sua capacidade. O que você deve habilitar?",
+      "options": [
+        { "id": "A", "text": "O recurso de Event Hubs Capture." },
+        { "id": "B", "text": "O recurso de Auto-inflate (Inflação automática)." },
+        { "id": "C", "text": "O Geographic Disaster Recovery (Geo-DR)." },
+        { "id": "D", "text": "O escalonamento via Kubernetes Event-driven Autoscaling (KEDA)." }
+      ]
+    },
+    "correct_answer": ["B"]
+  },
+  {
+    "id": "Q-EH-30",
+    "type": "multiple_choice",
+    "category": "Azure Event Hubs",
+    "difficulty": "Fácil",
+    "explanation": "Para ingerir milhões de eventos por hora, o Azure Event Hubs é a plataforma de streaming de dados projetada para essa escala, garantindo que os dados não sejam perdidos e permitindo o consumo independente.",
+    "content": {
+      "statement": "Você trabalha para a Contoso, Ltd. e precisa construir o back-end para gerenciar 'acordos de usuários' em um novo aplicativo de grande escala. As respostas dos usuários não devem ser perdidas e o volume projetado é de milhões de acordos por hora. Onde você deve armazenar e ingerir os acordos?",
+      "options": [
+        { "id": "A", "text": "Azure Storage Queue" },
+        { "id": "B", "text": "Azure Event Grid topic" },
+        { "id": "C", "text": "Azure Service Bus topic" },
+        { "id": "D", "text": "Azure Event Hub" }
+      ]
+    },
+    "correct_answer": ["D"]
+  }
+]

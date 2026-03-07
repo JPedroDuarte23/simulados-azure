@@ -27,7 +27,7 @@ Toda questão, independentemente do tipo, deve compartilhar a seguinte estrutura
 - **`difficulty`**: O nível de dificuldade.
 - **`explanation`**: O texto que será exibido para o aluno após a resposta, explicando a lógica da resposta correta.
 - **`official_doc_link`**: (Opcional) Um link para a documentação oficial da Microsoft sobre o assunto.
-- **`content`**: Um objeto que contém os textos e elementos específicos da questão. A estrutura deste objeto varia conforme o `type`.
+- **`content`**: Um objeto que contém os textos e elementos específicos da questão. A estrutura deste objeto varia conforme o `type`. O uso da tag `<br>` é o método padrão para quebras de linha em todos os campos de texto.
 - **`correct_answer`**: Uma array contendo o(s) `id`(s) da(s) resposta(s) correta(s).
 
 ---

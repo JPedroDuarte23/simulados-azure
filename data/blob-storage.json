@@ -8,11 +8,11 @@
     "content": {
       "statement": "Você tem um aplicativo em C# (.NET) que utiliza o Azure Blob Storage. Você precisa atualizar os metadados de um blob existente programaticamente utilizando a SDK. <br> Em qual ordem você deve utilizar os três métodos a seguir para desenvolver a solução com sucesso? (Escolha 3 opções da lista abaixo e ordene-as do 1º ao 3º passo)",
       "items_to_drag": [
-        { "id": "A", "text": "Metadata.Add" },
-        { "id": "B", "text": "SetMetadataAsync" },
-        { "id": "C", "text": "FetchAttributesAsync" },
-        { "id": "D", "text": "UploadFileStream" },
-        { "id": "E", "text": "SetPropertiesAsync" }
+        { "id": "A", "text": "`Metadata.Add`" },
+        { "id": "B", "text": "`SetMetadataAsync`" },
+        { "id": "C", "text": "`FetchAttributesAsync`" },
+        { "id": "D", "text": "`UploadFileStream`" },
+        { "id": "E", "text": "`SetPropertiesAsync`" }
       ]
     },
     "correct_answer": ["C", "A", "B"]
@@ -25,7 +25,7 @@
     "explanation": "Para excluir apenas os snapshots de um blob sem afetar o blob base, você deve usar o método `Delete` do `BlobClient` e passar `Azure.Storage.Blobs.Models.DeleteSnapshotsOption.OnlySnapshots` como parâmetro. Isso garante que apenas as cópias pontuais do blob sejam removidas, preservando o blob principal.",
     "content": {
       "statement": "Uma organização implanta uma conta de armazenamento de blobs. Os usuários criam vários snapshots (instantâneos) de um blob ao longo do tempo. Você precisa escrever um código em C# para excluir todos os snapshots associados ao blob, mas você não deve excluir o blob original em si. <br> Como você deve completar o trecho de código abaixo? (Escolha a opção correta para cada lacuna)",
-      "text": "blobClient.Delete(Azure.Storage.Blobs.Models.{{0}}.{{1}});",
+      "text": "```csharp\nblobClient.Delete(Azure.Storage.Blobs.Models.{{0}}.{{1}});\n```",
       "dropdowns": [
         {
           "index": 0,
@@ -39,9 +39,9 @@
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "IncludeSnapshots" },
-            { "id": "B", "text": "None" },
-            { "id": "C", "text": "OnlySnapshots" }
+            { "id": "A", "text": "`IncludeSnapshots`" },
+            { "id": "B", "text": "`None`" },
+            { "id": "C", "text": "`OnlySnapshots`" }
           ]
         }
       ]
@@ -57,9 +57,9 @@
     "content": {
       "statement": "Você desenvolve um aplicativo que permite aos usuários fazer upload de fotos e vídeos para a sua conta de armazenamento do Azure. O aplicativo usa a API REST de armazenamento para carregar a mídia em uma conta de armazenamento chamada Account1. Você tem contêineres chamados Container1 e Container2. O upload de vídeos ocorre de forma irregular (sem um padrão de tempo fixo). Você precisa copiar blobs específicos do Container1 para o Container2 sempre que um novo vídeo for carregado. <br> O que você deve fazer para implementar isso de forma nativa e eficiente?",
       "options": [
-        { "id": "A", "text": "Copiar os blobs para o Container2 usando a operação Put Blob da API REST do serviço Blob." },
-        { "id": "B", "text": "Criar uma assinatura do Azure Event Grid (Event Grid topic) que aciona uma rotina usando o cmdlet Start-AzureStorageBlobCopy." },
-        { "id": "C", "text": "Executar o utilitário AzCopy com o parâmetro Snapshot para copiar os blobs para o Container2." },
+        { "id": "A", "text": "Copiar os blobs para o Container2 usando a operação `Put Blob` da API REST do serviço Blob." },
+        { "id": "B", "text": "Criar uma assinatura do Azure Event Grid (Event Grid topic) que aciona uma rotina usando o cmdlet `Start-AzureStorageBlobCopy`." },
+        { "id": "C", "text": "Executar o utilitário AzCopy com o parâmetro `Snapshot` para copiar os blobs para o Container2." },
         { "id": "D", "text": "Baixar o blob para uma máquina virtual do Azure e, em seguida, fazer o upload do blob para o Container2." }
       ]
     },
@@ -391,23 +391,23 @@
     "explanation": "Para ler o change feed de forma paginada e com rastreamento de progresso, a SDK do .NET utiliza `GetChanges(x).AsPages()` onde `x` é o `continuationToken` para a próxima página. O `ContinuationToken` é o valor que permite retomar a leitura do feed de alterações de onde parou.",
     "content": {
       "statement": "Você está desenvolvendo um aplicativo em C# (.NET) que monitora dados adicionados a uma conta do Azure Blob Storage. Você ativou o recurso de Change Feed (Feed de Alterações) na conta de armazenamento para obter um log durável e ordenado das operações. O aplicativo deve processar as alterações utilizando paginação e ser capaz de rastrear de onde parou caso seja reiniciado. <br> Como você deve completar o segmento de código para ler o change feed? (Escolha a opção correta para cada lacuna)",
-      "text": "var changeFeedClient = new BlobServiceClient('...').GetChangeFeedClient(); <br> var x = default(string); <br>  <br> while (true) <br> { <br>     var changeFeed = changeFeedClient.{{0}}; <br>      <br>     foreach (var c in changeFeed) <br>     { <br>         x = c.{{1}}; <br>         ProcessChanges(c.Values); <br>     } <br> }",
+      "text": "```csharp\nvar changeFeedClient = new BlobServiceClient('...').GetChangeFeedClient(); <br> var x = default(string); <br>  <br> while (true) <br> { <br>     var changeFeed = changeFeedClient.{{0}}; <br>      <br>     foreach (var c in changeFeed) <br>     { <br>         x = c.{{1}}; <br>         ProcessChanges(c.Values); <br>     } <br> }\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "GetChanges()" },
-            { "id": "B", "text": "GetChangesAsync()" },
-            { "id": "C", "text": "GetChanges(x).AsPages()" },
-            { "id": "D", "text": "GetChanges(x).GetEnumerator()" }
+            { "id": "A", "text": "`GetChanges()`" },
+            { "id": "B", "text": "`GetChangesAsync()`" },
+            { "id": "C", "text": "`GetChanges(x).AsPages()`" },
+            { "id": "D", "text": "`GetChanges(x).GetEnumerator()`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "ContinuationToken" },
-            { "id": "B", "text": "GetRawResponse().ReasonPhrase" },
-            { "id": "C", "text": "Values.Max(v => v.EventTime).ToString()" }
+            { "id": "A", "text": "`ContinuationToken`" },
+            { "id": "B", "text": "`GetRawResponse().ReasonPhrase`" },
+            { "id": "C", "text": "`Values.Max(v => v.EventTime).ToString()`" }
           ]
         }
       ]
@@ -551,30 +551,30 @@
     "explanation": "Para configurar a criptografia com chaves fornecidas pelo cliente (Customer-Provided Keys) usando a SDK do .NET, você deve criar uma instância de `CustomerProvidedKey(key)` e atribuí-la à propriedade `CustomerProvidedKey` dentro de `BlobClientOptions`. A condição para verificar se a chave foi definida corretamente é geralmente através da verificação de que o objeto CustomerProvidedKey não é nulo ou que suas propriedades estão corretas.",
     "content": {
       "statement": "Você está construindo um aplicativo em C# que armazena dados confidenciais de clientes no Azure Blob Storage. Os dados de cada cliente devem ser criptografados de forma transparente com uma chave exclusiva fornecida pelo próprio cliente (Customer-Provided Key). Você precisa escrever o código que configura as opções do BlobClient para passar essa chave. <br> Como você deve completar o segmento de código para atender a essa exigência de segurança? (Escolha a opção correta para cada lacuna)",
-      "text": "Uri blobUri = ... ; TokenCredential c = ... ; <br> byte[] key = ... ; string verify = ... ; <br>  <br> var x = new {{0}}; <br>  <br> if ( {{1}} ) { <br>     var o = new BlobClientOptions() <br>     { <br>         {{2}} = x <br>     }; <br>     var blobClient = new BlobClient(blobUri, c, o); <br> }",
+      "text": "```csharp\nUri blobUri = ... ; TokenCredential c = ... ; <br> byte[] key = ... ; string verify = ... ; <br>  <br> var x = new {{0}}; <br>  <br> if ( {{1}} ) { <br>     var o = new BlobClientOptions() <br>     { <br>         {{2}} = x <br>     }; <br>     var blobClient = new BlobClient(blobUri, c, o); <br> }\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "AesManaged(key)" },
-            { "id": "B", "text": "CustomerProvidedKey(key)" },
-            { "id": "C", "text": "BlobContainerEncryptionScopeOptions" }
+            { "id": "A", "text": "`AesManaged(key)`" },
+            { "id": "B", "text": "`CustomerProvidedKey(key)`" },
+            { "id": "C", "text": "`BlobContainerEncryptionScopeOptions`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "x.IV == verify" },
-            { "id": "B", "text": "x.Encryption == verify" },
-            { "id": "C", "text": "x.PreventEncryptionScopeOverride == verify" }
+            { "id": "A", "text": "`x.IV == verify`" },
+            { "id": "B", "text": "`x.Encryption == verify`" },
+            { "id": "C", "text": "`x.PreventEncryptionScopeOverride == verify`" }
           ]
         },
         {
           "index": 2,
           "options": [
-            { "id": "A", "text": "Version" },
-            { "id": "B", "text": "Transport" },
-            { "id": "C", "text": "CustomerProvidedKey" }
+            { "id": "A", "text": "`Version`" },
+            { "id": "B", "text": "`Transport`" },
+            { "id": "C", "text": "`CustomerProvidedKey`" }
           ]
         }
       ]
@@ -607,23 +607,23 @@
     "difficulty": "Média",
     "explanation": "Para o trigger de fila, usa-se `%input_queue%` para referenciar dinamicamente uma App Setting. Para o nome do blob de saída, `/{queueTrigger}` pega o nome do blob da mensagem da fila. Se o nome da fila for a *saída*, aí sim se usaria o `{input_queue}/{id}` (onde id seria uma propriedade da mensagem).",
     "content": {
-      "statement": "Você planeja implementar um aplicativo Azure Functions para processar dados de forma assíncrona. O aplicativo possui os seguintes requisitos: <br> Deve ser acionado (Trigger) por uma mensagem de texto colocada em uma fila do Azure Storage. <br> O nome da fila monitorada deve ser puxado dinamicamente de uma configuração de aplicativo (App Setting) chamada input_queue. <br> A função deve gerar na saída um arquivo no Azure Blob Storage cujo nome do blob seja exatamente igual ao conteúdo (texto) da mensagem da fila que a acionou. <br> Como você deve referenciar esses nomes no arquivo function.json nas propriedades de Trigger e Output? (Escolha a opção correta para cada lacuna)",
+      "statement": "Você planeja implementar um aplicativo Azure Functions para processar dados de forma assíncrona. O aplicativo possui os seguintes requisitos: <br> Deve ser acionado (Trigger) por uma mensagem de texto colocada em uma fila do Azure Storage. <br> O nome da fila monitorada deve ser puxado dinamicamente de uma configuração de aplicativo (App Setting) chamada `input_queue`. <br> A função deve gerar na saída um arquivo no Azure Blob Storage cujo nome do blob seja exatamente igual ao conteúdo (texto) da mensagem da fila que a acionou. <br> Como você deve referenciar esses nomes no arquivo `function.json` nas propriedades de Trigger e Output? (Escolha a opção correta para cada lacuna)",
       "text": "Queue name (Nome da fila monitorada): {{0}} <br> Blob name (Nome do blob gerado): {{1}}",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "input_queue" },
-            { "id": "B", "text": "{input_queue}" },
-            { "id": "C", "text": "%input_queue%" }
+            { "id": "A", "text": "`input_queue`" },
+            { "id": "B", "text": "`{input_queue}`" },
+            { "id": "C", "text": "`%input_queue%`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "{queueTrigger}" },
-            { "id": "B", "text": "{input_queue}/{id}" },
-            { "id": "C", "text": "%input_queue%/{filename}" }
+            { "id": "A", "text": "`{queueTrigger}`" },
+            { "id": "B", "text": "`{input_queue}/{id}`" },
+            { "id": "C", "text": "`%input_queue%/{filename}`" }
           ]
         }
       ]
@@ -673,15 +673,15 @@
     "explanation": "Para excluir apenas os snapshots de um blob usando a SDK do Python, você deve usar o parâmetro `delete_snapshots='only'` no método `delete_blob()`. Isso garante que o blob base original seja preservado e apenas os instantâneos associados sejam removidos.",
     "content": {
       "statement": "A sua organização mantém uma conta de armazenamento de blobs em produção. Uma rotina de backup cria múltiplos instantâneos (snapshots) dos blobs ao longos dos meses. Você está escrevendo um script de manutenção em Python usando a biblioteca oficial do Azure (azure-storage-blob). Você precisa excluir todos os snapshots atrelados a um blob específico, mas é estritamente proibido excluir o blob original (base blob). <br> Como você deve completar o comando em Python para garantir que apenas os instantâneos sejam removidos? (Escolha a opção correta para cada lacuna)",
-      "text": "blob_client.delete_blob( {{0}} = {{1}} )",
+      "text": "```python\nblob_client.delete_blob( {{0}} = {{1}} )\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "delete_container" },
-            { "id": "B", "text": "delete_snapshots" },
-            { "id": "C", "text": "snapshot_blob" },
-            { "id": "D", "text": "snapshots_present" }
+            { "id": "A", "text": "`delete_container`" },
+            { "id": "B", "text": "`delete_snapshots`" },
+            { "id": "C", "text": "`snapshot_blob`" },
+            { "id": "D", "text": "`snapshots_present`" }
           ]
         },
         {
@@ -705,7 +705,7 @@
     "explanation": "No Azure Blob Storage, quando se adquire uma concessão (lease) em um blob, passar `null` como parâmetro para o método `AcquireLeaseAsync` na SDK do .NET resulta na criação de uma concessão de duração infinita. Isso significa que o bloqueio permanece até ser explicitamente liberado ou quebrado.",
     "content": {
       "scenario": "Você está desenvolvendo uma solução que usa a biblioteca de cliente do Azure Storage para .NET (C#) para copiar arquivos internamente. Você se depara com o seguinte bloco de código: <br> ```csharp <br> CloudBlockBlob src = container.ListBlobs().OfType<CloudBlockBlob>().FirstOrDefault(); <br> var id = await src.AcquireLeaseAsync(null); <br> var dst = container.GetBlockBlobReference(src.Name + \"_copy\"); <br> string cpId = await dst.StartCopyAsync(src); <br>  <br> // ... catch block omitted ... <br> finally  <br> { <br>     if (src.Properties.LeaseState != LeaseState.Available) <br>         await src.BreakLeaseAsync(new TimeSpan(0)); <br> } <br> ``` <br> Para cada uma das três afirmações a seguir referentes a esse código, defina se ela é Verdadeira (Yes) ou Falsa (No).",
-      "statement": "I. O parâmetro null no comando AcquireLeaseAsync cria uma concessão/bloqueio infinito (infinite lease) no blob de origem.",
+      "statement": "I. O parâmetro null no comando `AcquireLeaseAsync` cria uma concessão/bloqueio infinito (infinite lease) no blob de origem.",
       "options": [
         { "id": "A", "text": "Verdadeira (Yes)" },
         { "id": "B", "text": "Falsa (No)" }

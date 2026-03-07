@@ -8,11 +8,11 @@
     "content": {
       "statement": "Você precisa criar o documento Dockerfile para o ContosoApp. Em qual ordem você deve organizar os 5 comandos abaixo?",
       "items_to_drag": [
-        { "id": "A", "text": "CMD [\"dotnet\", \"ContosoApp.dll\"]" },
-        { "id": "B", "text": "WORKDIR /apps/ContosoApp" },
-        { "id": "C", "text": "RUN powershell ./setupScript.ps1" },
-        { "id": "D", "text": "FROM microsoft/aspnetcore:latest" },
-        { "id": "E", "text": "COPY ./ ." }
+        { "id": "A", "text": "`CMD [\"dotnet\", \"ContosoApp.dll\"]`" },
+        { "id": "B", "text": "`WORKDIR /apps/ContosoApp`" },
+        { "id": "C", "text": "`RUN powershell ./setupScript.ps1`" },
+        { "id": "D", "text": "`FROM microsoft/aspnetcore:latest`" },
+        { "id": "E", "text": "`COPY ./ .`" }
       ]
     },
     "correct_answer": ["D", "B", "E", "C", "A"]
@@ -57,10 +57,10 @@
     "content": {
       "statement": "Você precisa investigar a saída do log do servidor HTTP em tempo real em um ACI. Qual comando da CLI do Azure você deve usar PRIMEIRO?",
       "options": [
-        { "id": "A", "text": "az webapp log" },
-        { "id": "B", "text": "az ams live-output" },
-        { "id": "C", "text": "az monitor activity-log" },
-        { "id": "D", "text": "az container attach" }
+        { "id": "A", "text": "`az webapp log`" },
+        { "id": "B", "text": "`az ams live-output`" },
+        { "id": "C", "text": "`az monitor activity-log`" },
+        { "id": "D", "text": "`az container attach`" }
       ]
     },
     "correct_answer": ["D"]
@@ -182,10 +182,10 @@
     "type": "dropdown_fill_in_blank",
     "category": "Azure Container Instances / Segurança",
     "difficulty": "Alta",
-    "explanation": "Para variáveis de ambiente sensíveis no YAML, usa-se a propriedade `secureValue`. O valor passado nela ficará oculto em comandos de inspeção (como az container show).",
+    "explanation": "Para variáveis de ambiente sensíveis no YAML, usa-se a propriedade `secureValue`. O valor passado nela ficará oculto em comandos de inspeção (como `az container show`).",
     "content": {
       "statement": "Como declarar a variável de ambiente no YAML para que o valor fique oculto na inspeção?",
-      "text": "environmentVariables: <br>   - name: \"API_KEY\" <br>     {{0}}: {{1}}",
+      "text": "```yaml\nenvironmentVariables: \n   - name: \"API_KEY\" \n     {{0}}: {{1}}\n```",
       "dropdowns": [
         {
           "index": 0,
@@ -217,7 +217,7 @@
     "explanation": "Para injetar arquivos confidenciais, usa-se `volumeMounts` no contêiner para definir o caminho e `volumes` no grupo para definir o tipo do volume como `secret`.",
     "content": {
       "statement": "Como preencher o manifesto YAML para montar um volume secreto?",
-      "text": "containers: <br> - name: mycontainer <br>   properties: <br>     {{0}}: <br>     - name: secretvolume <br>       mountPath: /mnt/secrets <br> {{1}}: <br> - name: secretvolume <br>   {{2}}: <br>     mysecretkey: <base64-encoded-secret>",
+      "text": "```yaml\ncontainers: \n - name: mycontainer \n   properties: \n     {{0}}: \n     - name: secretvolume \n       mountPath: /mnt/secrets \n {{1}}: \n - name: secretvolume \n   {{2}}: \n     mysecretkey: <base64-encoded-secret>\n```",
       "dropdowns": [
         {
           "index": 0,
@@ -256,8 +256,8 @@
     "content": {
       "statement": "Você precisa investigar um travamento na inicialização do ACI. Em qual ordem executar os comandos?",
       "items_to_drag": [
-        { "id": "A", "text": "az container attach --resource-group RG1 --name mycontainer" },
-        { "id": "C", "text": "az container logs --resource-group RG1 --name mycontainer" }
+        { "id": "A", "text": "`az container attach --resource-group RG1 --name mycontainer`" },
+        { "id": "C", "text": "`az container logs --resource-group RG1 --name mycontainer`" }
       ]
     },
     "correct_answer": ["C", "A"]
@@ -270,7 +270,7 @@
     "explanation": "O comando `az container exec` permite executar um comando interativo em um contêiner. O parâmetro `--name` refere-se ao nome do grupo de contêineres e `--exec-command` ao comando do shell (ex: `/bin/bash`).",
     "content": {
       "statement": "Você precisa abrir uma sessão de shell interativa. Como completar o comando?",
-      "text": "az container {{0}} \\ <br>   --resource-group RG-Producao \\ <br>   --name {{1}} \\ <br>   --container-name app-web \\ <br>   --exec-command {{2}}",
+      "text": "```bash\naz container {{0}} \\\n  --resource-group RG-Producao \\\n  --name {{1}} \\\n  --container-name app-web \\\n  --exec-command {{2}}\n```",
       "dropdowns": [
         {
           "index": 0,
@@ -333,8 +333,7 @@
       ]
     },
     "correct_answer": ["B"]
-  }
-,
+  },
   {
     "id": "Q-ACI-31",
     "type": "dropdown_fill_in_blank",
@@ -422,10 +421,10 @@
     "content": {
       "statement": "Usuários do seu aplicativo de contêiner ContentUploadService relatam que ocasionalmente veem respostas HTTP 502 em páginas específicas. Você precisa investigar a saída de log do servidor HTTP em tempo real (standard out e standard error) diretamente do contêiner para resolver o problema. Qual comando da CLI do Azure você deve usar primeiro?",
       "options": [
-        { "id": "A", "text": "az webapp log" },
-        { "id": "B", "text": "az ams live-output" },
-        { "id": "C", "text": "az monitor activity-log" },
-        { "id": "D", "text": "az container attach" }
+        { "id": "A", "text": "`az webapp log`" },
+        { "id": "B", "text": "`az ams live-output`" },
+        { "id": "C", "text": "`az monitor activity-log`" },
+        { "id": "D", "text": "`az container attach`" }
       ]
     },
     "correct_answer": ["D"]
@@ -942,7 +941,7 @@
     "type": "multiple_choice",
     "category": "Azure Container Instances",
     "difficulty": "Média",
-    "explanation": "A implantação de um grupo de contêineres ACI em uma VNet é suportada apenas para contêineres Linux.",
+    "explanation": "A implantação de um grupo de contêineres ACI em uma VNet é suportada atualmente apenas para contêineres Linux.",
     "content": {
       "statement": "Você está projetando uma arquitetura de rede restrita que exige a implantação de um grupo de contêineres do Azure Container Instances (ACI) diretamente em uma Rede Virtual (VNet) do Azure. Qual afirmação sobre o suporte a sistemas operacionais para implantação em VNet no ACI é verdadeira?",
       "options": [
@@ -1056,25 +1055,25 @@
     "type": "dropdown_fill_in_blank",
     "category": "Azure Container Instances",
     "difficulty": "Fácil",
-    "explanation": "Para visualizar o histórico de logs de um contêiner, use o comando 'az container logs'.",
+    "explanation": "Para visualizar o histórico de logs de um contêiner, use o comando `az container logs`.",
     "content": {
       "statement": "Você implantou um grupo de contêineres chamado MeuContainerApp em um grupo de recursos chamado MeuRG. O contêiner parou de responder corretamente. Você quer baixar/visualizar o histórico de logs do contêiner (a saída padrão anterior, sem ser o streaming em tempo real) para descobrir o motivo da falha.\nSelecione as opções corretas para completar o comando da CLI do Azure:",
-      "text": "az {{0}} {{1}} --resource-group MeuRG --name MeuContainerApp",
+      "text": "`az {{0}} {{1}} --resource-group MeuRG --name MeuContainerApp`",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "container" },
-            { "id": "B", "text": "webapp" },
-            { "id": "C", "text": "acr" }
+            { "id": "A", "text": "`container`" },
+            { "id": "B", "text": "`webapp`" },
+            { "id": "C", "text": "`acr`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "attach" },
-            { "id": "B", "text": "logs" },
-            { "id": "C", "text": "show" }
+            { "id": "A", "text": "`attach`" },
+            { "id": "B", "text": "`logs`" },
+            { "id": "C", "text": "`show`" }
           ]
         }
       ]
@@ -1141,8 +1140,8 @@
       "statement": "Você implantou um grupo de contêineres no Azure Container Instances. O contêiner contém um script em Python de processamento de imagens (lote) que leva cerca de 2 horas para rodar e, ao terminar, o script encerra a sua execução (processo concluído com sucesso). Você acessa o portal do Azure no dia seguinte e percebe que os custos estão altíssimos porque o contêiner ficou reiniciando e rodando o mesmo script em loop infinito o tempo todo.\nComo você deve alterar a configuração do grupo de contêineres no ACI para garantir que ele rode apenas uma vez e pare?",
       "options": [
         { "id": "A", "text": "Configurar uma Liveness Probe para matar o contêiner assim que o script terminar." },
-        { "id": "B", "text": "Alterar a política de reinicialização (restart policy) de Never para Always." },
-        { "id": "C", "text": "Alterar a política de reinicialização (restart policy) de Always para OnFailure ou Never." },
+        { "id": "B", "text": "Alterar a política de reinicialização (restart policy) de `Never` para `Always`." },
+        { "id": "C", "text": "Alterar a política de reinicialização (restart policy) de `Always` para `OnFailure` ou `Never`." },
         { "id": "D", "text": "Utilizar uma Managed Identity para revogar os acessos após a primeira execução." }
       ]
     },

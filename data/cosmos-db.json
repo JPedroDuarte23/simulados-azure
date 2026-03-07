@@ -4,7 +4,7 @@
     "type": "drag_and_drop",
     "category": "Azure Cosmos DB / Change Feed Processor",
     "difficulty": "Média",
-    "explanation": "O Change Feed Processor possui 4 componentes principais: (1) Monitored container - armazena os dados e contém o feed de alterações; (2) Lease container - coordena o processamento entre múltiplos workers através de leases (concessões); (3) Delegate - função de callback que processa cada lote de alterações; (4) Host - inicia e gerencia o processador. Compreender esses componentes é essencial para implementar processamento escalável de alterações no Cosmos DB.",
+    "explanation": "O Change Feed Processor possui 4 componentes principais: (1) `Monitored container` - armazena os dados e contém o feed de alterações; (2) `Lease container` - coordena o processamento entre múltiplos workers através de leases (concessões); (3) `Delegate` - função de callback que processa cada lote de alterações; (4) `Host` - inicia e gerencia o processador. Compreender esses componentes é essencial para implementar processamento escalável de alterações no Cosmos DB.",
     "official_doc_link": "https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/change-feed-processor",
     "content": {
       "statement": "Você desenvolve uma solução no Azure que usa o Cosmos DB. O contêiner Cosmos DB atual deve ser replicado e deve usar uma chave de partição que seja otimizada para consultas. Você precisa implementar uma solução usando o Change Feed Processor. <br>  <br> Relacione os componentes do processador do change feed com os seus respectivos requisitos: <br> Componentes Disponíveis: [A] Host [B] Delegate [C] Lease container [D] Monitored container <br>  <br> Requisitos (Indique a letra do componente correspondente para cada número): <br> 1. Armazenar os dados a partir dos quais o feed de alterações (change feed) é gerado. <br> 2. Coordenar o processamento do feed de alterações entre vários workers (trabalhadores). <br> 3. Usar o change feed processor para escutar e monitorar as alterações. <br> 4. Lidar com cada lote de alterações processadas.",
@@ -13,6 +13,10 @@
         { "id": "B", "text": "Delegate" },
         { "id": "C", "text": "Lease container" },
         { "id": "D", "text": "Monitored container" }
+      ],
+      "targets": [
+        { "id": "1", "text": "App1 (Pull model)" },
+        { "id": "2", "text": "App2 (Push model)" }
       ]
     },
     "correct_answer": ["D", "C", "A", "B"]
@@ -290,8 +294,8 @@
     "explanation": "Para otimizar uma consulta SQL com uma cláusula ORDER BY em múltiplos campos (com ordens mistas como ASC e DESC), é necessário um índice composto ('compositeIndexes'). A estrutura do índice composto deve espelhar a ordem da consulta. Para 'ORDER BY p.name, p.city DESC', o caminho '/name' deve ter a ordem 'ascending' (padrão) e o caminho '/city' deve ter a ordem 'descending'.",
     "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/index-policy#composite-indexes",
     "content": {
-      "statement": "Você está desenvolvendo uma nova página para um site que usa o Azure Cosmos DB (API for NoSQL). Você deve exibir os dados para a nova página em uma ordem específica. Você cria a seguinte consulta SQL: <br> `SELECT * FROM People p ORDER BY p.name, p.city DESC` <br> Você precisa configurar a Indexing Policy do Cosmos DB para dar suporte a esta consulta. Preencha a estrutura JSON.",
-      "text": "\"excludedPaths\": [], <br> \"{{0}}\": [ <br>     [ <br>         {\"path\": \"/name\", \"order\": \"{{1}}\"}, <br>         {\"path\": \"/city\", \"order\": \"{{2}}\"} <br>     ] <br> ]",
+      "statement": "Você está desenvolvendo uma nova página para um site que usa o Azure Cosmos DB (API for NoSQL). Você deve exibir os dados para a nova página em uma ordem específica. Você cria a seguinte consulta SQL: <br> ```sql\nSELECT * FROM People p ORDER BY p.name, p.city DESC\n``` <br> Você precisa configurar a Indexing Policy do Cosmos DB para dar suporte a esta consulta. Preencha a estrutura JSON.",
+      "text": "```json\n\"excludedPaths\": [], \n \"{{0}}\": [ \n     [ \n         {\"path\": \"/name\", \"order\": \"{{1}}\"}, \n         {\"path\": \"/city\", \"order\": \"{{2}}\"} \n     ] \n ]\n```",
       "dropdowns": [
         {
           "index": 0,
@@ -349,9 +353,13 @@
       "items_to_drag": [
         { "id": "C", "text": "Continuation token" },
         { "id": "A", "text": "Lease container" }
+      ],
+      "targets": [
+        { "id": "1", "text": "App1 (Pull model)" },
+        { "id": "2", "text": "App2 (Push model)" }
       ]
     },
-    "correct_answer": ["C", "A"]
+    "correct_answer": ["C-1", "A-2"]
   },
   {
     "id": "Q-CDB-18",
@@ -365,8 +373,8 @@
       "options": [
         { "id": "A", "text": "Data Management Gateway" },
         { "id": "B", "text": "Azure Storage Explorer" },
-        { "id": "C", "text": "mongorestore" },
-        { "id": "D", "text": "AzCopy" }
+        { "id": "C", "text": "`mongorestore`" },
+        { "id": "D", "text": "`AzCopy`" }
       ]
     },
     "correct_answer": ["C"]
@@ -468,7 +476,7 @@
     "explanation": "A afirmação é falsa. A linha `CreateDatabaseIfNotExistsAsync` garante que o banco de dados 'SalesOrders' exista. As linhas seguintes criam dois contêineres físicos ('Container1' e 'Container2'). Contêineres lógicos são uma abstração dentro de um contêiner físico, definidos pela chave de partição, e não são criados dessa forma. Portanto, o código cria dois contêineres físicos, não lógicos.",
     "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/partitioning-overview#logical-partitions",
     "content": {
-      "statement": "Você avalia o seguinte trecho de código: <br> `21 using (await client.GetDatabase(\"SalesOrders\").DeleteAsync()) { }` <br> `22 database = await client.CreateDatabaseIfNotExistsAsync(\"SalesOrders\");` <br> `23 Container container1 = await database.CreateContainerAsync(id: \"Container1\", partitionKeyPath: \"/AccountNumber\");` <br> `24 Container container2 = await database.CreateContainerAsync(id: \"Container2\", partitionKeyPath: \"/AccountNumber\");` <br> `25-30 ...` <br>  <br> Afirmação: O código criará com sucesso um banco de dados chamado SalesOrders e ele incluirá dois contêineres lógicos. A afirmação é verdadeira?",
+      "statement": "Você avalia o seguinte trecho de código: <br> ```csharp\n21 using (await client.GetDatabase(\"SalesOrders\").DeleteAsync()) { } \n22 database = await client.CreateDatabaseIfNotExistsAsync(\"SalesOrders\");\n23 Container container1 = await database.CreateContainerAsync(id: \"Container1\", partitionKeyPath: \"/AccountNumber\");\n24 Container container2 = await database.CreateContainerAsync(id: \"Container2\", partitionKeyPath: \"/AccountNumber\");\n25-30 ...\n``` <br>  <br> Afirmação: O código criará com sucesso um banco de dados chamado SalesOrders e ele incluirá dois contêineres lógicos. A afirmação é verdadeira?",
       "options": [
         { "id": "A", "text": "Sim" },
         { "id": "B", "text": "Não" }
@@ -484,7 +492,7 @@
     "explanation": "A afirmação é verdadeira. As linhas 26 e 28 executam a operação `CreateItemAsync` duas vezes no objeto `container1`, inserindo os itens `salesOrder1` e `salesOrder2`. Portanto, ao final da execução, o 'Container1' conterá exatamente dois itens.",
     "official_doc_link": "https://learn.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.createitemasync",
     "content": {
-      "statement": "Você avalia o seguinte trecho de código: <br> `...` <br> `25 SalesOrder salesOrder1 = new SalesOrder() { AccountNumber = \"123456\" };` <br> `26 await container1.CreateItemAsync(salesOrder1, new PartitionKey(salesOrder1.AccountNumber));` <br> `27 SalesOrder salesOrder2 = new SalesOrder() { AccountNumber = \"654321\" };` <br> `28 await container1.CreateItemAsync(salesOrder2, new PartitionKey(salesOrder2.AccountNumber));` <br> `...` <br>  <br> Afirmação: O Container1 conterá dois itens no final da execução. A afirmação é verdadeira?",
+      "statement": "Você avalia o seguinte trecho de código: <br> ```csharp\n...\n25 SalesOrder salesOrder1 = new SalesOrder() { AccountNumber = \"123456\" };\n26 await container1.CreateItemAsync(salesOrder1, new PartitionKey(salesOrder1.AccountNumber));\n27 SalesOrder salesOrder2 = new SalesOrder() { AccountNumber = \"654321\" };\n28 await container1.CreateItemAsync(salesOrder2, new PartitionKey(salesOrder2.AccountNumber));\n...\n``` <br>  <br> Afirmação: O Container1 conterá dois itens no final da execução. A afirmação é verdadeira?",
       "options": [
         { "id": "A", "text": "Sim" },
         { "id": "B", "text": "Não" }
@@ -500,7 +508,7 @@
     "explanation": "A afirmação é verdadeira. A linha 30 executa a operação `CreateItemAsync` uma vez no objeto `container2`, inserindo o item `salesOrder3`. Portanto, ao final da execução, o 'Container2' conterá exatamente um item.",
     "official_doc_link": "https://learn.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.createitemasync",
     "content": {
-      "statement": "Você avalia o seguinte trecho de código: <br> `...` <br> `29 SalesOrder salesOrder3 = new SalesOrder() { AccountNumber = \"109876\" };` <br> `30 await container2.CreateItemAsync(salesOrder3, new PartitionKey(salesOrder3.AccountNumber));` <br>  <br> Afirmação: O Container2 conterá um item no final da execução. A afirmação é verdadeira?",
+      "statement": "Você avalia o seguinte trecho de código: <br> ```csharp\n...\n29 SalesOrder salesOrder3 = new SalesOrder() { AccountNumber = \"109876\" };\n30 await container2.CreateItemAsync(salesOrder3, new PartitionKey(salesOrder3.AccountNumber));\n``` <br>  <br> Afirmação: O Container2 conterá um item no final da execução. A afirmação é verdadeira?",
       "options": [
         { "id": "A", "text": "Sim" },
         { "id": "B", "text": "Não" }
@@ -517,7 +525,7 @@
     "official_doc_link": "https://learn.microsoft.com/cli/azure/cosmosdb?view=azure-cli-latest#az-cosmosdb-create",
     "content": {
       "statement": "Você precisa provisionar uma conta do Cosmos DB via Azure CLI que aceite reservas durante falhas (failover) e permita leituras com uma defasagem máxima de 5 segundos, mantendo a ordem. Preencha as lacunas do comando.",
-      "text": "az cosmosdb create \\ <br>   --name $accountName \\ <br>   --resource-group airlineResourceGroup \\ <br>   --default-consistency-level {{0}} \\ <br>   --max-interval {{1}} \\ <br>   --enable-automatic-failover {{2}} \\ <br>   --locations \"South Central US\"=0",
+      "text": "```bash\naz cosmosdb create \\\n  --name $accountName \\\n  --resource-group airlineResourceGroup \\\n  --default-consistency-level {{0}} \\\n  --max-interval {{1}} \\\n  --enable-automatic-failover {{2}} \\\n  --locations \"South Central US\"=0\n```",
       "dropdowns": [
         {
           "index": 0,
@@ -575,9 +583,13 @@
       "items_to_drag": [
         { "id": "A", "text": "Dead-letter queue" },
         { "id": "B", "text": "Life-cycle notifications" }
+      ],
+      "targets": [
+        { "id": "1", "text": "Salvar um documento que falhou para evitar o bloqueio do lote." },
+        { "id": "2", "text": "Detectar falhas na instância do processador do change feed." }
       ]
     },
-    "correct_answer": ["A", "B"]
+    "correct_answer": ["A-1", "B-2"]
   },
   {
     "id": "Q-CDB-30",
@@ -689,20 +701,20 @@
     "official_doc_link": "https://learn.microsoft.com/azure/cosmos-db/nosql/query/datetimebin",
     "content": {
       "statement": "Você precisa escrever uma consulta SQL no Cosmos DB que conte o número de vendas e as agrupe em janelas exatas de 2 dias, usando a propriedade `whenFinished`. Preencha as lacunas da consulta.",
-      "text": "SELECT <br>     {{0}} <br> FROM c <br> GROUP BY <br>     {{1}}",
+      "text": "```sql\nSELECT \n     {{0}} \n FROM c \n GROUP BY \n     {{1}}\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "count(c.whenFinished)" },
-            { "id": "B", "text": "sum(c.whenFinished)" }
+            { "id": "A", "text": "`count(c.whenFinished)`" },
+            { "id": "B", "text": "`sum(c.whenFinished)`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "C", "text": "DateTimeBin(c.whenFinished, 'day', 2)" },
-            { "id": "D", "text": "DateTimePart(c.whenFinished, 'day', 2)" }
+            { "id": "C", "text": "`DateTimeBin(c.whenFinished, 'day', 2)`" },
+            { "id": "D", "text": "`DateTimePart(c.whenFinished, 'day', 2)`" }
           ]
         }
       ]

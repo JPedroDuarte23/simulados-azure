@@ -3,8 +3,7 @@
       "id": "Q-101",
       "type": "multiple_choice",
       "category": "Azure App Service",
-      "difficulty": "Medium",
-      "allow_backtrack": true,
+      "difficulty": "Média",
       "content": {
         "statement": "Você está desenvolvendo um App Service que precisa acessar o Azure Key Vault usando Managed Identity. O código a seguir é usado para obter um segredo: <br> ```csharp <br> var client = new SecretClient(new Uri(\"https://my-key-vault.vault.azure.net/\"), new DefaultAzureCredential()); <br> var secret = await client.GetSecretAsync(\"MySecret\"); <br> ``` <br> Qual configuração é necessária no App Service para que este código funcione sem armazenar credenciais?",
         "options": [
@@ -15,7 +14,7 @@
         ]
       },
       "correct_answer": ["a"],
-      "explanation": "A classe DefaultAzureCredential tenta vários métodos de autenticação, incluindo a Managed Identity. Quando o código roda em um App Service com Managed Identity habilitada (e com permissão no Key Vault), ele se autentica automaticamente sem precisar de segredos no código ou configuração.",
+      "explanation": "A classe `DefaultAzureCredential` tenta vários métodos de autenticação, incluindo a Managed Identity. Quando o código roda em um App Service com Managed Identity habilitada (e com permissão no Key Vault), ele se autentica automaticamente sem precisar de segredos no código ou configuração.",
       "official_doc_link": "https://learn.microsoft.com/en-us/azure/app-service/overview-managed-identity"
     },
     {
@@ -26,10 +25,10 @@
       "content": {
         "statement": "Você é um desenvolvedor na empresa Nimbus Digital. Você implantou um aplicativo web no Azure App Service e precisa monitorar o comportamento da aplicação em tempo real para fins de depuração de um erro intermitente que está ocorrendo em produção. <br> Qual comando da Azure CLI você deve executar para transmitir (stream) o arquivo de log do aplicativo em tempo real?",
         "options": [
-          { "id": "A", "text": "az webapp download" },
-          { "id": "B", "text": "Get-AzAppServiceLog" },
-          { "id": "C", "text": "az webapp log -all" },
-          { "id": "D", "text": "az webapp log tail" }
+          { "id": "A", "text": "`az webapp download`" },
+          { "id": "B", "text": "`Get-AzAppServiceLog`" },
+          { "id": "C", "text": "`az webapp log -all`" },
+          { "id": "D", "text": "`az webapp log tail`" }
         ]
       },
       "correct_answer": ["D"],
@@ -43,10 +42,10 @@
       "content": {
         "statement": "Sua equipe está configurando um novo ambiente no Azure usando o PowerShell. O objetivo é criar um Grupo de Recursos, um Plano do App Service e um Web App, além de um slot de implantação (Deployment Slot) específico para testes. <br> Você deve utilizar os cmdlets do módulo Az do PowerShell. <br> Organize as 4 ações abaixo na ordem cronológica correta em que devem ser executadas.",
         "items_to_drag": [
-          { "id": "A", "text": "New-AzWebApp" },
-          { "id": "B", "text": "New-AzAppServicePlan" },
-          { "id": "C", "text": "New-AzResourceGroup" },
-          { "id": "D", "text": "New-AzWebAppSlot" }
+          { "id": "A", "text": "`New-AzWebApp`" },
+          { "id": "B", "text": "`New-AzAppServicePlan`" },
+          { "id": "C", "text": "`New-AzResourceGroup`" },
+          { "id": "D", "text": "`New-AzWebAppSlot`" }
         ]
       },
       "correct_answer": ["C", "B", "A", "D"],
@@ -90,7 +89,7 @@
       "category": "Azure App Service",
       "difficulty": "Alta",
       "content": {
-        "statement": "Você implantou uma API no Azure App Service em um slot de implantação hospedado em Windows chamado DevEnv e adicionou dois slots extras chamados QA e Live. <br> Você habilita a funcionalidade de auto swap (troca automática) no slot Live. Você precisa garantir que os scripts de inicialização sejam executados e que os recursos dependentes estejam prontos antes que a troca (swap) ocorra efetivamente. <br>  <br> **Solução proposta:** Você adiciona um novo endpoint chamado /warmupCheck ao aplicativo para executar os scripts e, em seguida, atualiza as configurações do aplicativo (App Settings) definindo WEBSITE_SWAP_WARMUP_PING_PATH e WEBSITE_SWAP_WARMUP_PING_STATUSES com o caminho para esse endpoint e os códigos de resposta HTTP esperados. <br>  <br> Essa solução atende ao requisito?",
+        "statement": "Você implantou uma API no Azure App Service em um slot de implantação hospedado em Windows chamado DevEnv e adicionou dois slots extras chamados QA e Live. <br> Você habilita a funcionalidade de auto swap (troca automática) no slot Live. Você precisa garantir que os scripts de inicialização sejam executados e que os recursos dependentes estejam prontos antes que a troca (swap) ocorra efetivamente. <br>  <br> **Solução proposta:** Você adiciona um novo endpoint chamado `/warmupCheck` ao aplicativo para executar os scripts e, em seguida, atualiza as configurações do aplicativo (App Settings) definindo `WEBSITE_SWAP_WARMUP_PING_PATH` e `WEBSITE_SWAP_WARMUP_PING_STATUSES` com o caminho para esse endpoint e os códigos de resposta HTTP esperados. <br>  <br> Essa solução atende ao requisito?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -192,18 +191,18 @@
           {
             "index": 0,
             "options": [
-              { "id": "A", "text": "LOCALAPPDATA" },
-              { "id": "B", "text": "WEBSITE_LOCALCACHE_ENABLED" },
-              { "id": "C", "text": "WEBSITES_ENABLE_APP_SERVICE_STORAGE" }
+              { "id": "A", "text": "`LOCALAPPDATA`" },
+              { "id": "B", "text": "`WEBSITE_LOCALCACHE_ENABLED`" },
+              { "id": "C", "text": "`WEBSITES_ENABLE_APP_SERVICE_STORAGE`" }
             ]
           },
           {
             "index": 1,
             "options": [
-              { "id": "A", "text": "/home" },
-              { "id": "B", "text": "/local" },
-              { "id": "C", "text": "D:\\home" },
-              { "id": "D", "text": "D:\\local" }
+              { "id": "A", "text": "`/home`" },
+              { "id": "B", "text": "`/local`" },
+              { "id": "C", "text": "`D:\\home`" },
+              { "id": "D", "text": "`D:\\local`" }
             ]
           }
         ]
@@ -227,7 +226,7 @@
         ]
       },
       "correct_answer": ["C", "D", "E"],
-      "explanation": "Para rodar o Profiler (D) e capturar a call stack, o App Service exige o nível Premium (C) e a configuração Always On (E) ativada."
+      "explanation": "Para rodar o Profiler (D) e capturar a call stack, o App Service exige o nível Premium (C) e a configuração `Always On` (E) ativada."
     },
     {
       "id": "Q-AS-11",
@@ -254,10 +253,10 @@
       "content": {
         "statement": "Cenário: Migração de um app ASP.NET Core em Docker para o Azure App Service (Linux). O Resource Group e o App Service Plan já existem. Você precisa provisionar o Web App, configurar a imagem e o domínio personalizado. <br>  <br> Tarefa: Ordene os comandos da Azure CLI para a execução correta.",
         "items_to_drag": [
-          { "id": "A", "text": "az webapp config container set ..." },
-          { "id": "B", "text": "az webapp config hostname add ..." },
-          { "id": "C", "text": "az webapp create ..." },
-          { "id": "D", "text": "#!/bin/bash (Script de inicialização)" }
+          { "id": "A", "text": "`az webapp config container set ...`" },
+          { "id": "B", "text": "`az webapp config hostname add ...`" },
+          { "id": "C", "text": "`az webapp create ...`" },
+          { "id": "D", "text": "`#!/bin/bash` (Script de inicialização)" }
         ]
       },
       "correct_answer": ["D", "C", "A", "B"],
@@ -299,14 +298,14 @@
       "category": "Azure App Service",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você usa slots de Development, Testing e Production com Auto Swap habilitado para o slot Production. Você precisa garantir que scripts de inicialização rodem com sucesso ANTES da troca de slots. <br>  <br> Solução proposta: Desabilitar o auto swap. Atualizar o app com um método statuscheck via applicationInitialization no web.config/settings. Reabilitar o auto swap e implantar. <br>  <br> Pergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você usa slots de Development, Testing e Production com Auto Swap habilitado para o slot Production. Você precisa garantir que scripts de inicialização rodem com sucesso ANTES da troca de slots. <br>  <br> Solução proposta: Desabilitar o auto swap. Atualizar o app com um método statuscheck via `applicationInitialization` no web.config/settings. Reabilitar o auto swap e implantar. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
         ]
       },
       "correct_answer": ["A"],
-      "explanation": "O recurso applicationInitialization permite que o Azure aguarde um caminho específico retornar '200 OK' antes de considerar a instância 'quente' para realizar o swap."
+      "explanation": "O recurso `applicationInitialization` permite que o Azure aguarde um caminho específico retornar '200 OK' antes de considerar a instância 'quente' para realizar o swap."
     },
     {
       "id": "Q-AS-15",
@@ -398,11 +397,11 @@
       "content": {
         "statement": "Cenário: Automatizar via Azure CLI a criação de um Web App Java, um slot de staging e realizar o deploy a partir de um repositório GitHub. <br>  <br> Tarefa: Ordene as 5 ações cronologicamente.",
         "items_to_drag": [
-          { "id": "A", "text": "az webapp create ..." },
-          { "id": "B", "text": "az webapp deployment slot create ... --slot staging" },
-          { "id": "C", "text": "az group create ..." },
-          { "id": "D", "text": "az appservice plan create ... --sku S3" },
-          { "id": "E", "text": "az webapp deployment source config ... --slot staging ..." }
+          { "id": "A", "text": "`az webapp create ...`" },
+          { "id": "B", "text": "`az webapp deployment slot create ... --slot staging`" },
+          { "id": "C", "text": "`az group create ...`" },
+          { "id": "D", "text": "`az appservice plan create ... --sku S3`" },
+          { "id": "E", "text": "`az webapp deployment source config ... --slot staging ...`" }
         ]
       },
       "correct_answer": ["C", "D", "A", "B", "E"],
@@ -418,7 +417,7 @@
         "options": [
           { "id": "A", "text": "Nas configurações HTTP, definir 'Override backend path' para contoso22.azurewebsites.net." },
           { "id": "B", "text": "Nas configurações HTTP, habilitar a configuração 'Use for App service'." },
-          { "id": "C", "text": "Adicione um certificado de autenticação para contoso.azurewebsites.net ao Azure Application Gateway." },
+          { "id": "C", "text": "Adicione um certificado de autenticação para `contoso.azurewebsites.net` ao Azure Application Gateway." },
           { "id": "D", "text": "Converta o web app para ser executado em um Azure App Service Environment (ASE)." }
         ]
       },
@@ -482,9 +481,9 @@
       "content": {
         "statement": "Cenário: Desenvolver app em Go (Docker) no App Service on Linux. Você precisa criar um novo Grupo de Recursos em uma região suportada, o Plano e o Web App, minimizando o número de grupos. <br>  <br> Tarefa: Selecione três (3) comandos e ordene-os cronologicamente para a implantação inicial.",
         "items_to_drag": [
-          { "id": "B", "text": "az webapp create" },
-          { "id": "D", "text": "az appservice plan create" },
-          { "id": "E", "text": "az group create" }
+          { "id": "B", "text": "`az webapp create`" },
+          { "id": "D", "text": "`az appservice plan create`" },
+          { "id": "E", "text": "`az group create`" }
         ]
       },
       "correct_answer": ["E", "D", "B"],
@@ -497,14 +496,14 @@
       "difficulty": "Alta",
       "content": {
         "statement": "Cenário: Automação de Web App Linux usando imagem Docker de um ACR privado. Requisito: Imutabilidade (versão v1.0.0). <br>  <br> Tarefa: Selecione a opção correta para cada área.",
-        "text": "Área 1: Criação do App Service Plan <br> `az appservice plan create ... {{0}}` <br>  <br> Área 2: Criação do Web App especificando a imagem <br> `az webapp create ... {{1}}` <br>  <br> Área 3: Configuração das credenciais do ACR no Web App <br> `az webapp config container set ... {{2}}`",
+        "text": "Área 1: Criação do App Service Plan <br> ```bash\naz appservice plan create ... {{0}}\n``` <br>  <br> Área 2: Criação do Web App especificando a imagem <br> ```bash\naz webapp create ... {{1}}\n``` <br>  <br> Área 3: Configuração das credenciais do ACR no Web App <br> ```bash\naz webapp config container set ... {{2}}\n```",
         "dropdowns": [
           {
             "index": 0,
             "options": [
-              { "id": "A", "text": "--sku B1 --is-linux" },
-              { "id": "B", "text": "--sku F1" },
-              { "id": "C", "text": "--sku S1 --is-windows" }
+              { "id": "A", "text": "--sku B1 --hyper-v" },
+              { "id": "B", "text": "--sku B1 --is-linux" },
+              { "id": "C", "text": "--sku SHARED" }
             ]
           },
           {
@@ -534,7 +533,7 @@
       "category": "Azure App Service / Segurança",
       "difficulty": "Alta",
       "content": {
-        "statement": "Cenário: Você desenvolve um Web App com autenticação via Microsoft Entra ID. Você precisa de três níveis de permissão (admin, normal, reader) baseados na associação de grupo do usuário. <br>  <br> Solução proposta: Registrar o app no Entra ID, adicionar App Roles ao manifesto, atribuir grupos às funções e configurar o Web App para ler a roles claim do token JWT. <br>  <br> Pergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você desenvolve um Web App com autenticação via Microsoft Entra ID. Você precisa de três níveis de permissão (admin, normal, reader) baseados na associação de grupo do usuário. <br>  <br> Solução proposta: Registrar o app no Entra ID, adicionar App Roles ao manifesto, atribuir grupos às funções e configurar o Web App para ler a `roles` claim do token JWT. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -551,9 +550,9 @@
       "content": {
         "statement": "Cenário: Aplicativo ASP.NET Core no App Service usando Azure App Configuration. Requisitos: Autenticação, Autorização e Feature Flags dinâmicas. <br>  <br> Tarefa: Selecione os métodos na ordem exata e obrigatória em que devem aparecer no método `Configure` do pipeline HTTP.",
         "items_to_drag": [
-          { "id": "A", "text": "UseAuthorization()" },
-          { "id": "B", "text": "UseAuthentication()" },
-          { "id": "C", "text": "UseAzureAppConfiguration()" }
+          { "id": "A", "text": "`UseAuthorization()`" },
+          { "id": "B", "text": "`UseAuthentication()`" },
+          { "id": "C", "text": "`UseAzureAppConfiguration()`" }
         ]
       },
       "correct_answer": ["C", "B", "A"],
@@ -615,7 +614,7 @@
       "category": "Azure App Service",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você usa slots de Development, Testing e Production com Auto Swap habilitado para o slot Production. Você precisa garantir que scripts de inicialização rodem com sucesso antes que a troca (swap) ocorra. <br>  <br> Solução Proposta: Atualizar o arquivo web.config da aplicação para incluir o elemento de configuração applicationInitialization e especificar as ações personalizadas. <br>  <br> Pergunta: A solução atende ao objetivo?",
+        "statement": "Cenário: Você usa slots de Development, Testing e Production com Auto Swap habilitado para o slot Production. Você precisa garantir que scripts de inicialização rodem com sucesso antes que a troca (swap) ocorra. <br>  <br> Solução proposta: Atualizar o arquivo `web.config` da aplicação para incluir o elemento de configuração `applicationInitialization` e especificar as ações personalizadas. <br>  <br> Pergunta: A solução atende ao objetivo?",
         "options": [
           { "id": "A", "text": "Sim" },
           { "id": "B", "text": "Não" }
@@ -677,7 +676,7 @@
       "explanation": "Para Web Apps on Linux, a flag `--is-linux` é obrigatória. Para imutabilidade, usa-se a tag fixa `v1.0.0`. No Passo 3, o login server do ACR deve incluir as credenciais admin.",
       "content": {
         "statement": "Complete os comandos para provisionar um Web App for Containers com imagem fixa de um ACR privado.",
-        "text": "Passo 1: az appservice plan create --name websitePlan {{0}} <br> Passo 2: az webapp create --plan websitePlan {{1}} --name meussite <br> Passo 3: az webapp config container set {{2}} --name meussite",
+        "text": "Passo 1: `az appservice plan create --name websitePlan {{0}}` <br> Passo 2: `az webapp create --plan websitePlan {{1}} --name meussite` <br> Passo 3: `az webapp config container set {{2}} --name meussite`",
         "dropdowns": [
           {
             "index": 0,
@@ -714,10 +713,10 @@
       "content": {
         "statement": "Ordene os comandos da CLI do Azure para provisionar o Web App e mapear o domínio.",
         "items_to_drag": [
-          { "id": "A", "text": "az webapp config hostname add --webapp-name $appName --resource-group $rg --hostname $fqdn" },
-          { "id": "B", "text": "az webapp config container set --docker-custom-image-name $dockerHubContainerPath --name $appName --resource-group $rg" },
-          { "id": "C", "text": "az webapp create --name $appName --plan AppServiceLinuxDockerPlan --resource-group $rg" },
-          { "id": "D", "text": "#!/bin/bash (e variáveis)" }
+          { "id": "A", "text": "`az webapp config hostname add --webapp-name $appName --resource-group $rg --hostname $fqdn`" },
+          { "id": "B", "text": "`az webapp config container set --docker-custom-image-name $dockerHubContainerPath --name $appName --resource-group $rg`" },
+          { "id": "C", "text": "`az webapp create --name $appName --plan AppServiceLinuxDockerPlan --resource-group $rg`" },
+          { "id": "D", "text": "`#!/bin/bash` (e variáveis)" }
         ]
       },
       "correct_answer": ["D", "C", "B", "A"]
@@ -762,8 +761,8 @@
         "statement": "Ordene os eventos do fluxo de Implantação Contínua entre Web App e ACR.",
         "items_to_drag": [
           { "id": "A", "text": "Habilitar a opção \"Continuous Deployment\" no Web App." },
-          { "id": "B", "text": "O desenvolvedor executa o comando docker push." },
-          { "id": "C", "text": "O Web App faz o docker pull da nova imagem e reinicia." },
+          { "id": "B", "text": "O desenvolvedor executa o comando `docker push`." },
+          { "id": "C", "text": "O Web App faz o `docker pull` da nova imagem e reinicia." },
           { "id": "D", "text": "O ACR dispara uma notificação (Webhook) para o Web App." },
           { "id": "E", "text": "O Azure cria automaticamente um Webhook no ACR." }
         ]

@@ -4,26 +4,26 @@
     "type": "dropdown_fill_in_blank",
     "category": "MSAL & Graph API",
     "difficulty": "Difícil",
-    "explanation": "'ConfidentialClientApplicationBuilder' é usado para criar um cliente confidencial, e 'scopes' é passado para 'AcquireTokenForClient' para especificar as permissões.",
+    "explanation": "`ConfidentialClientApplicationBuilder` é usado para criar um cliente confidencial, e `scopes` é passado para `AcquireTokenForClient` para especificar as permissões.",
     "content": {
       "statement": "Você está desenvolvendo um aplicativo web que faz chamadas para a API do Microsoft Graph. O aplicativo lê as configurações de um arquivo appsettings.json e usa um certificado X.509 válido. Você precisa implementar o código que adquire um token usando esse certificado.",
-      "text": "var app = {{0}}<br>            .Create(config.ClientId)<br>            .WithCertificate(certificate)<br>            .WithAuthority(new Uri(config.Authority))<br>            .Build();<br><br>string[] scopes = new string[] { $\"{config.ApiUrl}.default\" };<br>AuthenticationResult result = await app.AcquireTokenForClient({{1}}).ExecuteAsync();",
+      "text": "```csharp\nvar app = {{0}}\n            .Create(config.ClientId)\n            .WithCertificate(certificate)\n            .WithAuthority(new Uri(config.Authority))\n            .Build();\n\nstring[] scopes = new string[] { $\"{config.ApiUrl}.default\" };\nAuthenticationResult result = await app.AcquireTokenForClient({{1}}).ExecuteAsync();\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "ConfidentialClientApplicationBuilder" },
-            { "id": "B", "text": "GetAccountAsync()" },
-            { "id": "C", "text": "GetAccountsAsync()" },
-            { "id": "D", "text": "ConfidentialClientApplication" }
+            { "id": "A", "text": "`ConfidentialClientApplicationBuilder`" },
+            { "id": "B", "text": "`GetAccountAsync()`" },
+            { "id": "C", "text": "`GetAccountsAsync()`" },
+            { "id": "D", "text": "`ConfidentialClientApplication`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "scopes" },
-            { "id": "B", "text": "app" },
-            { "id": "C", "text": "config" }
+            { "id": "A", "text": "`scopes`" },
+            { "id": "B", "text": "`app`" },
+            { "id": "C", "text": "`config`" }
           ]
         }
       ]
@@ -105,23 +105,22 @@
     "explanation": "O endpoint '/v1.0/me' retorna os dados do usuário logado, e a permissão delegada 'User.Read' é necessária para ler o perfil básico.",
     "content": {
       "statement": "Como parte dos requisitos de um portal corporativo, você precisa exibir a foto do perfil e o e-mail da equipe interna no site assim que eles se autenticarem usando o Microsoft Entra ID. Qual configuração do Microsoft Graph você deve usar na sua requisição HTTP REST para buscar os dados básicos do usuário logado?",
-      "text": "Endpoint: {{0}}<br>Permissão Delegada (Permission): {{1}}",
+      "text": "Endpoint: {{0}}<br>Permissão (Permission): {{1}}",
       "dropdowns": [
         {
           "index": 0,
           "options": [
             { "id": "A", "text": "/v1.0/me" },
-            { "id": "B", "text": "/v1.0/me/people/?$search=me" },
-            { "id": "C", "text": "/v1.0/users?$select=profilePhoto,mail" }
+            { "id": "B", "text": "/v1.0/users?$select=profilePhoto,mail" },
+            { "id": "C", "text": "/v1.0/me/people/?$search=me" }
           ]
         },
         {
           "index": 1,
           "options": [
             { "id": "A", "text": "User.Read" },
-            { "id": "B", "text": "User.Export.All" },
-            { "id": "C", "text": "User.ReadWrite" },
-            { "id": "D", "text": "User.ManageIdentities.All" }
+            { "id": "B", "text": "User.ReadWrite" },
+            { "id": "C", "text": "User.Export.All" }
           ]
         }
       ]
@@ -151,12 +150,12 @@
     "type": "drag_and_drop",
     "category": "MSAL & Graph API",
     "difficulty": "Difícil",
-    "explanation": "A sequência é: Registrar o aplicativo, construir um cliente, criar um provedor de autenticação, criar uma instância do GraphServiceClient e invocar a solicitação.",
+    "explanation": "A sequência correta de codificação é: Registrar o aplicativo, construir o cliente, criar o provedor de autenticação, criar o GraphServiceClient e, por fim, invocar a solicitação.",
     "content": {
-      "statement": "Você está desenvolvendo um aplicativo corporativo para recuperar informações de perfil de usuário. O aplicativo usará o Microsoft Graph SDK para as chamadas em código. O aplicativo deve recuperar as informações por meio de uma chamada à API do Microsoft Graph.",
+      "statement": "Você está desenvolvendo um aplicativo corporativo em C# para recuperar informações de perfil de usuário. O código do aplicativo usará o Microsoft Graph SDK. Você precisa configurar o código para chamar a API do Microsoft Graph corretamente.",
       "items_to_drag": [
         { "id": "A", "text": "Registrar o aplicativo na plataforma de identidade da Microsoft (Register the application)." },
-        { "id": "B", "text": "Construir um cliente usando o ID do aplicativo cliente (Build a client by using the client app ID)." },
+        { "id": "B", "text": "Construir um aplicativo cliente usando o ID do aplicativo cliente (Build a client by using the client app ID)." },
         { "id": "C", "text": "Criar um provedor de autenticação (Create an authentication provider)." },
         { "id": "D", "text": "Criar uma nova instância do GraphServiceClient." },
         { "id": "E", "text": "Invocar a solicitação para a API do Microsoft Graph (Invoke the request)." }
@@ -169,32 +168,32 @@
     "type": "dropdown_fill_in_blank",
     "category": "MSAL & Graph API",
     "difficulty": "Difícil",
-    "explanation": "A consulta OData usa '$filter' para filtrar, a expressão 'groupTypes/any(c:c eq 'Unified')' para encontrar grupos unificados, e '$consistencyLevel=eventual' para garantir que a consulta avançada funcione.",
+    "explanation": "A consulta OData usa `$filter` para filtrar, a expressão `groupTypes/any(c:c eq 'Unified')` para encontrar grupos unificados, e `$consistencyLevel=eventual` para garantir que a consulta avançada funcione.",
     "content": {
       "statement": "Você desenvolve um aplicativo web que interage com grupos do Microsoft Entra ID (Azure AD) usando a API do Microsoft Graph. Você precisa construir uma página da web que mostre todos os grupos que NÃO são do tipo 'Unified'. Você decide construir a consulta OData (query) diretamente na URI do Microsoft Graph.",
-      "text": "https://graph.microsoft.com/v1.0/groups?{{0}}=NOT {{1}}&{{2}}",
+      "text": "`https://graph.microsoft.com/v1.0/groups?{{0}}=NOT {{1}}&{{2}}`",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "$filter" },
-            { "id": "B", "text": "$search" },
-            { "id": "C", "text": "$contain" }
+            { "id": "A", "text": "`$filter`" },
+            { "id": "B", "text": "`$search`" },
+            { "id": "C", "text": "`$contain`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "groupTypes/any(c:c eq 'Unified')" },
-            { "id": "B", "text": "groupTypes/contains('Unified')" }
+            { "id": "A", "text": "`groupTypes/any(c:c eq 'Unified')`" },
+            { "id": "B", "text": "`groupTypes/contains('Unified')`" }
           ]
         },
         {
           "index": 2,
           "options": [
-            { "id": "A", "text": "$count=true" },
-            { "id": "B", "text": "$top=true" },
-            { "id": "C", "text": "$consistencyLevel=eventual" }
+            { "id": "A", "text": "`$count=true`" },
+            { "id": "B", "text": "`$top=true`" },
+            { "id": "C", "text": "`$consistencyLevel=eventual`" }
           ]
         }
       ]
@@ -301,32 +300,32 @@
     "type": "dropdown_fill_in_blank",
     "category": "MSAL & Graph API",
     "difficulty": "Difícil",
-    "explanation": "Use '$filter' para filtrar, 'groupTypes/any(c:c eq 'Unified')' para encontrar grupos unificados, e '$consistencyLevel=eventual' para consultas avançadas.",
+    "explanation": "Use `$filter` para filtrar, `groupTypes/any(c:c eq 'Unified')` para encontrar grupos unificados, e `$consistencyLevel=eventual` para consultas avançadas.",
     "content": {
       "statement": "Você desenvolve um aplicativo web de página única (SPA) que interage com grupos do Microsoft Entra ID usando a API REST do Microsoft Graph. Você precisa construir uma consulta que mostre todos os grupos que NÃO são do tipo 'Unified'. Como você deve formatar os parâmetros da URI OData do Microsoft Graph?",
-      "text": "https://graph.microsoft.com/v1.0/groups?{{0}}=NOT {{1}}&{{2}}",
+      "text": "`https://graph.microsoft.com/v1.0/groups?{{0}}=NOT {{1}}&{{2}}`",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "$filter" },
-            { "id": "B", "text": "$search" },
-            { "id": "C", "text": "$contain" }
+            { "id": "A", "text": "`$filter`" },
+            { "id": "B", "text": "`$search`" },
+            { "id": "C", "text": "`$contain`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "groupTypes/any(c:c eq 'Unified')" },
-            { "id": "B", "text": "groupTypes/contains('Unified')" }
+            { "id": "A", "text": "`groupTypes/any(c:c eq 'Unified')`" },
+            { "id": "B", "text": "`groupTypes/contains('Unified')`" }
           ]
         },
         {
           "index": 2,
           "options": [
-            { "id": "A", "text": "$count=true" },
-            { "id": "B", "text": "$top=true" },
-            { "id": "C", "text": "$consistencyLevel=eventual" }
+            { "id": "A", "text": "`$count=true`" },
+            { "id": "B", "text": "`$top=true`" },
+            { "id": "C", "text": "`$consistencyLevel=eventual`" }
           ]
         }
       ]
@@ -338,26 +337,26 @@
     "type": "dropdown_fill_in_blank",
     "category": "MSAL & Graph API",
     "difficulty": "Difícil",
-    "explanation": "'ConfidentialClientApplicationBuilder' para criar o cliente e 'scopes' para adquirir o token.",
+    "explanation": "`ConfidentialClientApplicationBuilder` para criar o cliente e `scopes` para adquirir o token.",
     "content": {
       "statement": "Você está desenvolvendo um serviço de daemon (processo em segundo plano) que faz chamadas para a API do Microsoft Graph sem a interação do usuário. O aplicativo usa um certificado X.509 válido carregado no registro do aplicativo para autenticação. Você precisa implementar o código usando MSAL para adquirir o token usando o fluxo de credenciais de cliente (client credentials flow).",
-      "text": "var app = {{0}}.Create(config.ClientId)<br>            .WithCertificate(certificate)<br>            .WithAuthority(new Uri(config.Authority))<br>            .Build();<br><br>string[] scopes = new string[] { $\"{config.ApiUrl}.default\" };<br>AuthenticationResult result = await app.AcquireTokenForClient({{1}}).ExecuteAsync();",
+      "text": "```csharp\nvar app = {{0}}.Create(config.ClientId)\n            .WithCertificate(certificate)\n            .WithAuthority(new Uri(config.Authority))\n            .Build();\n\nstring[] scopes = new string[] { $\"{config.ApiUrl}.default\" };\nAuthenticationResult result = await app.AcquireTokenForClient({{1}}).ExecuteAsync();\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "ConfidentialClientApplicationBuilder" },
-            { "id": "B", "text": "PublicClientApplicationBuilder" },
-            { "id": "C", "text": "GetAccountAsync()" },
-            { "id": "D", "text": "ConfidentialClientApplication" }
+            { "id": "A", "text": "`ConfidentialClientApplicationBuilder`" },
+            { "id": "B", "text": "`PublicClientApplicationBuilder`" },
+            { "id": "C", "text": "`GetAccountAsync()`" },
+            { "id": "D", "text": "`ConfidentialClientApplication`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "scopes" },
-            { "id": "B", "text": "app" },
-            { "id": "C", "text": "config" }
+            { "id": "A", "text": "`scopes`" },
+            { "id": "B", "text": "`app`" },
+            { "id": "C", "text": "`config`" }
           ]
         }
       ]
@@ -416,25 +415,25 @@
     "type": "dropdown_fill_in_blank",
     "category": "MSAL & Graph API",
     "difficulty": "Difícil",
-    "explanation": "O cabeçalho 'Prefer' com o valor 'include-unknown-enum-members' é usado para suportar enumerações evolutivas no Microsoft Graph.",
+    "explanation": "O cabeçalho `Prefer` com o valor `include-unknown-enum-members` é usado para suportar enumerações evolutivas no Microsoft Graph.",
     "content": {
       "statement": "Você está desenvolvendo um aplicativo integrado ao Microsoft Entra ID (usando MSAL) que interage profundamente com o Microsoft Graph. A API do Microsoft Graph está em constante evolução. Você deve permitir que as operações GET do seu código recebam membros desconhecidos que possam vir a ser definidos no futuro (novas propriedades retornadas pela API). Você planeja incluir suporte para enumerações evolutivas (evolvable enumerations) no aplicativo.",
-      "text": "{{0}}: {{1}}",
+      "text": "`{{0}}: {{1}}`",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "Prefer" },
-            { "id": "B", "text": "Accept" },
-            { "id": "C", "text": "OData-MaxVersion" }
+            { "id": "A", "text": "`Prefer`" },
+            { "id": "B", "text": "`Accept`" },
+            { "id": "C", "text": "`OData-MaxVersion`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "include-unknown-enum-members" },
-            { "id": "B", "text": "return=representation" },
-            { "id": "C", "text": "application/json;odata.metadata=minimal" }
+            { "id": "A", "text": "`include-unknown-enum-members`" },
+            { "id": "B", "text": "`return=representation`" },
+            { "id": "C", "text": "`application/json;odata.metadata=minimal`" }
           ]
         }
       ]

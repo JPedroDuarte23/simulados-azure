@@ -4,39 +4,39 @@
     "type": "dropdown_fill_in_blank",
     "category": "Microsoft Entra ID",
     "difficulty": "Média",
-    "explanation": "Para definir uma App Role, 'allowedMemberTypes' especifica quem pode ser atribuído (User, Application), e 'value' é o valor da role que aparecerá no token.",
+    "explanation": "Para definir uma App Role, `allowedMemberTypes` especifica quem pode ser atribuído (User, Application), e `value` é o valor da role que aparecerá no token.",
     "content": {
       "statement": "Você está desenvolvendo um aplicativo web corporativo e precisa criar uma função de aplicativo (App Role) personalizada chamada ContentReviewer. Os usuários deverão ser atribuídos a essa função para revisar o conteúdo. Você precisa adicionar a marcação correta no arquivo JSON do manifesto do aplicativo (Application Manifest) no Microsoft Entra ID.",
-      "text": "\"appRoles\": [<br>  {<br>    \"{{0}}\": [<br>      \"{{1}}\"<br>    ],<br>    \"displayName\": \"ContentReviewer\",<br>    \"id\": \"e1c2ade8-98f8-45fd-aa4a-6d24b512c22a\",<br>    \"isEnabled\": true,<br>    \"{{2}}\": \"ContentReviewer\"<br>  }<br>]",
+      "text": "```json\n\"appRoles\": [\n  {\n    \"{{0}}\": [\n      \"{{1}}\"\n    ],\n    \"displayName\": \"ContentReviewer\",\n    \"id\": \"e1c2ade8-98f8-45fd-aa4a-6d24b512c22a\",\n    \"isEnabled\": true,\n    \"{{2}}\": \"ContentReviewer\"\n  }\n]\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "allowedMemberTypes" },
-            { "id": "B", "text": "User" },
-            { "id": "C", "text": "value" },
-            { "id": "D", "text": "role" },
-            { "id": "E", "text": "Application" }
+            { "id": "A", "text": "`allowedMemberTypes`" },
+            { "id": "B", "text": "`User`" },
+            { "id": "C", "text": "`value`" },
+            { "id": "D", "text": "`role`" },
+            { "id": "E", "text": "`Application`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "allowedMemberTypes" },
-            { "id": "B", "text": "User" },
-            { "id": "C", "text": "value" },
-            { "id": "D", "text": "role" },
-            { "id": "E", "text": "Application" }
+            { "id": "A", "text": "`allowedMemberTypes`" },
+            { "id": "B", "text": "`User`" },
+            { "id": "C", "text": "`value`" },
+            { "id": "D", "text": "`role`" },
+            { "id": "E", "text": "`Application`" }
           ]
         },
         {
           "index": 2,
           "options": [
-            { "id": "A", "text": "allowedMemberTypes" },
-            { "id": "B", "text": "User" },
-            { "id": "C", "text": "value" },
-            { "id": "D", "text": "role" },
-            { "id": "E", "text": "Application" }
+            { "id": "A", "text": "`allowedMemberTypes`" },
+            { "id": "B", "text": "`User`" },
+            { "id": "C", "text": "`value`" },
+            { "id": "D", "text": "`role`" },
+            { "id": "E", "text": "`Application`" }
           ]
         }
       ]
@@ -292,7 +292,7 @@
     "type": "dropdown_fill_in_blank",
     "category": "Microsoft Entra ID",
     "difficulty": "Média",
-    "explanation": "A política de Acesso Condicional deve ser aplicada a 'All users', para o aplicativo 'Microsoft Azure Management', e a ação a ser concedida é 'Require multi-factor authentication'.",
+    "explanation": "A política de Acesso Condicional deve ser aplicada a `All users`, para o aplicativo `Microsoft Azure Management`, e a ação a ser concedida é `Require multi-factor authentication`.",
     "content": {
       "statement": "Você está configurando uma política de Acesso Condicional (Conditional Access Policy) no Microsoft Entra ID para um aplicativo de nível corporativo. O requisito estrito de segurança determina que a política deve exigir a Autenticação Multifator (MFA) para todos os usuários, mas apenas quando eles tentarem acessar o Portal de Gerenciamento do Azure (Azure Portal).",
       "text": "Assignments > Users and groups: {{0}}<br>Assignments > Cloud apps or actions: {{1}}<br>Access controls > Grant: {{2}}",
@@ -330,14 +330,14 @@
     "type": "multiple_choice",
     "category": "Microsoft Entra ID",
     "difficulty": "Alta",
-    "explanation": "O parâmetro 'resetRedemption' na Graph API é usado para redefinir o método de autenticação de um usuário convidado, permitindo que ele mude de OTP para federação.",
+    "explanation": "O parâmetro `resetRedemption` na Graph API é usado para redefinir o método de autenticação de um usuário convidado, permitindo que ele mude de OTP para federação.",
     "content": {
       "statement": "Você está construindo um aplicativo web B2B (Business-to-Business) que usa a colaboração do Azure B2B para autenticação. Os clientes pagantes se autenticam usando federação. O aplicativo também permite que usuários comuns se inscrevam em contas de teste usando qualquer endereço de e-mail (usando senhas de uso único / One-Time Passcodes). Quando um usuário converte da versão de teste para cliente pagante, os dados associados ao teste devem ser mantidos, mas o usuário deve passar a se autenticar usando federação. Você precisa atualizar o usuário no Microsoft Entra ID (Azure AD) via Graph API quando ele se converter em cliente pagante.",
       "options": [
-        { "id": "A", "text": "userFlowType" },
-        { "id": "B", "text": "resetRedemption" },
-        { "id": "C", "text": "Status" },
-        { "id": "D", "text": "invitedUser" }
+        { "id": "A", "text": "`userFlowType`" },
+        { "id": "B", "text": "`resetRedemption`" },
+        { "id": "C", "text": "`Status`" },
+        { "id": "D", "text": "`invitedUser`" }
       ]
     },
     "correct_answer": ["B"]
@@ -347,25 +347,25 @@
     "type": "dropdown_fill_in_blank",
     "category": "Microsoft Entra ID",
     "difficulty": "Difícil",
-    "explanation": "A URL do IMDS é 'http://169.254.169.254/metadata/identity/oauth2/token'. Para desserializar a resposta JSON em um dicionário, use 'JsonConvert.DeserializeObject'.",
+    "explanation": "A URL do IMDS é `http://169.254.169.254/metadata/identity/oauth2/token`. Para desserializar a resposta JSON em um dicionário, use `JsonConvert.DeserializeObject`.",
     "content": {
       "statement": "Você está desenvolvendo um serviço web em C# (.NET) que será executado em Máquinas Virtuais (VMs) do Azure. O código fará chamadas ao Azure Storage. Você configurou todas as VMs para usarem Identidades Gerenciadas atribuídas pelo sistema (System-assigned Managed Identities). Os requisitos de segurança ditam que:\nMecanismos de autenticação baseados em segredos não são permitidos.\nO código deve obter o token chamando diretamente e exclusivamente o endpoint local do Azure Instance Metadata Service (IMDS).",
-      "text": "var url = \"{{0}}?api-version=2018-02-01&resource=https%3A%2F%2Fstorage.azure.com%2F\";<br>// ...<br>var token = {{1}};",
+      "text": "```csharp\nvar url = \"{{0}}?api-version=2018-02-01&resource=https%3A%2F%2Fstorage.azure.com%2F\";\n// ...\nvar token = {{1}};\n```",
       "dropdowns": [
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "http://localhost:50342/oauth2/token" },
-            { "id": "B", "text": "http://169.254.169.254/metadata/identity/oauth2/token" },
-            { "id": "C", "text": "http://10.0.0.1/metadata/identity/oauth2/token" }
+            { "id": "A", "text": "`http://localhost:50342/oauth2/token`" },
+            { "id": "B", "text": "`http://169.254.169.254/metadata/identity/oauth2/token`" },
+            { "id": "C", "text": "`http://10.0.0.1/metadata/identity/oauth2/token`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "XDocument.Parse(payload)" },
-            { "id": "B", "text": "new MultipartContent(payload)" },
-            { "id": "C", "text": "JsonConvert.DeserializeObject<Dictionary<string, string>>(payload)" }
+            { "id": "A", "text": "`XDocument.Parse(payload)`" },
+            { "id": "B", "text": "`new MultipartContent(payload)`" },
+            { "id": "C", "text": "`JsonConvert.DeserializeObject<Dictionary<string, string>>(payload)`" }
           ]
         }
       ]
@@ -392,7 +392,7 @@
     "type": "dropdown_fill_in_blank",
     "category": "Microsoft Entra ID",
     "difficulty": "Difícil",
-    "explanation": "Para o Azure Storage, a permissão delegada é 'user_impersonation'. Para o Microsoft Graph, a permissão delegada para ler o perfil do usuário é 'User.Read'.",
+    "explanation": "Para o Azure Storage, a permissão delegada é `user_impersonation`. Para o Microsoft Graph, a permissão delegada para ler o perfil do usuário é `User.Read`.",
     "content": {
       "statement": "Você está desenvolvendo um site ASP.NET Core que gerencia fotografias armazenadas em contêineres do Azure Blob Storage. Os usuários do site se autenticam usando as credenciais do Microsoft Entra ID. Você precisa configurar as permissões (Permissions) e o tipo de escopo (Type) corretos nas configurações de Registro de Aplicativo (App Registration) para que a aplicação possa agir em nome do usuário conectado.",
       "text": "Azure Storage: {{0}}<br>Microsoft Graph: {{1}}",
@@ -400,19 +400,19 @@
         {
           "index": 0,
           "options": [
-            { "id": "A", "text": "user_impersonation / delegated" },
-            { "id": "B", "text": "User.Read / delegated" },
-            { "id": "C", "text": "application / application" },
-            { "id": "D", "text": "profile / application" }
+            { "id": "A", "text": "`user_impersonation / delegated`" },
+            { "id": "B", "text": "`User.Read / delegated`" },
+            { "id": "C", "text": "`application / application`" },
+            { "id": "D", "text": "`profile / application`" }
           ]
         },
         {
           "index": 1,
           "options": [
-            { "id": "A", "text": "user_impersonation / delegated" },
-            { "id": "B", "text": "User.Read / delegated" },
-            { "id": "C", "text": "application / application" },
-            { "id": "D", "text": "profile / application" }
+            { "id": "A", "text": "`user_impersonation / delegated`" },
+            { "id": "B", "text": "`User.Read / delegated`" },
+            { "id": "C", "text": "`application / application`" },
+            { "id": "D", "text": "`profile / application`" }
           ]
         }
       ]
