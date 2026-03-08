@@ -139,6 +139,12 @@
             "title": "6. Monitoramento e Otimização",
             "categories": [
                 {
+                    "id": "app-insights",
+                    "name": "Azure Application Insights",
+                    "file": "data/application-insights.json",
+                    "count": 25
+                },
+                {
                     "id": "cache-redis",
                     "name": "Azure Cache for Redis",
                     "file": "data/cache-redis.json",

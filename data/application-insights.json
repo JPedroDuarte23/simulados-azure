@@ -1,0 +1,522 @@
+[
+    {
+      "id": "Q-APPINSIGHTS-01",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua equipe possui uma biblioteca compartilhada chamada PolicyLib que contém funcionalidades comuns a todos os serviços web em ASP.NET Core da empresa. A biblioteca possui um requisito estrito: você deve excluir ações não relacionadas a usuários (ex: verificações de integridade) da telemetria do Application Insights. As requisições de integridade são feitas no caminho de URL /health.<br>Você precisa implementar a classe de filtro preenchendo o código corretamente.",
+        "text": "public class Filter : {{0}}<br>{<br>    private readonly {{1}} _next;<br>    public Filter({{2}} next) <br>    {<br>        _next = next;<br>    }<br>    <br>    public void Process(ITelemetry item)<br>    {<br>        var x = item as {{3}};<br>        if (x != null && x.Url.AbsolutePath == \"{{4}}\") <br>        { <br>            return; <br>        }<br>        _next.Process(item);<br>    }<br>}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "ITelemetryProcessor"}, {"id": "B", "text": "ITelemetryInitializer"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "ITelemetryProcessor"}, {"id": "B", "text": "ITelemetryInitializer"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "ITelemetryProcessor"}, {"id": "B", "text": "ITelemetryInitializer"}]
+          },
+          {
+            "index": 3,
+            "options": [{"id": "A", "text": "RequestTelemetry"}, {"id": "B", "text": "PageViewTelemetry"}]
+          },
+          {
+            "index": 4,
+            "options": [{"id": "A", "text": "/health"}, {"id": "B", "text": "/status"}]
+          }
+        ]
+      },
+      "correct_answer": ["A", "A", "A", "A", "A"],
+      "explanation": "Para filtrar ou descartar itens de telemetria de forma programática antes que sejam enviados para o serviço do Application Insights, você deve implementar a interface ITelemetryProcessor. O objeto de telemetria recebido deve ser convertido para RequestTelemetry (pois você está inspecionando uma requisição HTTP). O caminho que deve acionar o descarte da telemetria, de acordo com o cenário, é o /health."
+    },
+    {
+      "id": "Q-APPINSIGHTS-02",
+      "type": "drag_and_drop",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua organização possui vários aplicativos da web hospedados no Azure. A organização deseja rastrear eventos e dados de telemetria em todos os aplicativos da web usando o Application Insights. Você precisa configurar os aplicativos web para que consigam enviar dados para o Application Insights.<br>Ordene as ações abaixo na sequência correta (apenas 3 ações são necessárias):",
+        "items_to_drag": [
+          {"id": "1", "text": "Configure the Azure App Service SDK for the app (Configurar o SDK do App Service no aplicativo)"},
+          {"id": "2", "text": "Configure the Application Insights SDK in the app (Configurar o SDK do Application Insights no aplicativo)"},
+          {"id": "3", "text": "Copy the connection string (Copiar a string de conexão)"},
+          {"id": "4", "text": "Create an Azure Machine Learning workspace (Criar um workspace do Machine Learning)"},
+          {"id": "5", "text": "Create an Application Insights resource (Criar um recurso do Application Insights)"}
+        ]
+      },
+      "correct_answer": ["5", "3", "2"],
+      "explanation": "Para conectar um aplicativo ao Application Insights, primeiro você deve provisionar (\"Create\") o recurso no painel do Azure. Em seguida, você deve obter o identificador único para o roteamento correto dos dados, que é \"Copy the connection string\" (ou a chave de instrumentação). Por último, você \"Configure the Application Insights SDK\" no próprio código da aplicação para que ela comece a emitir a telemetria."
+    },
+    {
+      "id": "Q-APPINSIGHTS-03",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você desenvolve e implanta um aplicativo Java no Azure. A aplicação foi instrumentada com o SDK do Application Insights. Você precisa modificar os dados de telemetria antes que eles sejam enviados para o serviço na nuvem, mas cada modificação tem um propósito diferente.<br>Relacione o recurso correto do Application Insights com o requisito correspondente:",
+        "text": "Reduzir o volume de tráfego de telemetria sem afetar a precisão das estatísticas do sistema: {{0}}<br>Enriquecer a telemetria com propriedades adicionais (ou sobrescrever uma existente): {{1}}<br>Substituir completamente ou descartar um item de telemetria específico: {{2}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "Sampling (Amostragem)"}, {"id": "B", "text": "Telemetry Initializer (Inicializador de telemetria)"}, {"id": "C", "text": "Telemetry Processor (Processador de telemetria)"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "Sampling (Amostragem)"}, {"id": "B", "text": "Telemetry Initializer (Inicializador de telemetria)"}, {"id": "C", "text": "Telemetry Processor (Processador de telemetria)"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "Sampling (Amostragem)"}, {"id": "B", "text": "Telemetry Initializer (Inicializador de telemetria)"}, {"id": "C", "text": "Telemetry Processor (Processador de telemetria)"}]
+          }
+        ]
+      },
+      "correct_answer": ["A", "B", "C"],
+      "explanation": "O Sampling (Amostragem) ajuda a reduzir os custos operacionais e o volume de log descartando requisições proporcionalmente, mas extrapolando e mantendo as estatísticas corretas. O Telemetry Initializer é usado se você deseja adicionar (enriquecer) propriedades ou dados de contexto em todos os eventos (como um carimbo de ID do ambiente). O Telemetry Processor atua como um filtro rigoroso permitindo descartar itens completamente ou substituí-los antes da transmissão."
+    },
+    {
+      "id": "Q-APPINSIGHTS-04",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você tem um aplicativo Web do Azure App Service associado a uma instância do Application Insights. Você configurou um Teste da Web (Web Test) de disponibilidade global e um alerta correspondente. Atualmente, cada alerta dispara o envio de um e-mail para sua caixa de entrada avisando quando a aplicação não está respondendo.<br>Você precisa garantir que cada vez que esse alerta for disparado, ele também invoque automaticamente a execução de um aplicativo Azure Functions chamado Function1. O que você deve configurar para atingir esse objetivo?",
+        "options": [
+          {"id": "A", "text": "Configurar um Application Insights Funnel."},
+          {"id": "B", "text": "Configurar o recurso Smart Detection no Application Insights."},
+          {"id": "C", "text": "Configurar um Action Group (Grupo de Ações) no Azure Monitor."},
+          {"id": "D", "text": "Habilitar o recurso de Snapshot Debugger."}
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "No Azure, a roteirização da resposta a um alerta detectado por ferramentas como testes de disponibilidade do Application Insights é feita centralmente através de um Action Group no Azure Monitor. Um Action Group permite invocar automaticamente webhooks, Azure Logic Apps, Azure Functions ou enviar SMS/E-mails. Soluções como o Funnel são para mapear tendências de conversão de usuários, enquanto o Smart Detection e Snapshot Debugger são focados na emissão de avisos automáticos sobre anomalias de performance e captura de estado de erros."
+    },
+    {
+      "id": "Q-APPINSIGHTS-05",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Uma equipe de desenvolvimento está instrumentando um serviço web do Azure com o Application Insights para coletar telemetria. Eles precisam visualizar a arquitetura para identificar com precisão e rapidez quais chamadas de requisição externas (ex: conexões a APIs de parceiros e bancos de dados) estão introduzindo lentidão e gargalos de desempenho na solução.<br>Qual recurso do Application Insights ajuda a evidenciar as requisições lentas e os componentes dependentes que as causam de forma mais visual?",
+        "options": [
+          {"id": "A", "text": "Application Map"},
+          {"id": "B", "text": "Live Metrics Stream"},
+          {"id": "C", "text": "Performance Counters"},
+          {"id": "D", "text": "Analytics Query"}
+        ]
+      },
+      "correct_answer": ["A"],
+      "explanation": "O Application Map apresenta uma visão de topologia, destacando nós e conexões com o intuito de localizar, visualmente, hotspots e componentes dependentes que estão causando falhas ou latência na arquitetura (os famigerados gargalos). O Live Metrics Stream, embora útil, serve para visualizar contagens de falha e latência quase em tempo real, e não mapeia a topologia e dependência para diagnóstico abrangente de gargalos externos."
+    },
+    {
+      "id": "Q-APPINSIGHTS-06",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você implanta um aplicativo web ASP.NET no Azure App Service e precisa configurá-lo para que o Application Insights capture automaticamente comportamentos avançados e erros.<br>Você precisa relacionar o recurso de monitoramento correto para cada requisito listado abaixo.",
+        "text": "Avisar automaticamente sobre possíveis problemas de desempenho e anomalias de falha contínua no aplicativo web: {{0}}<br>Coletar automaticamente o estado do código-fonte e o valor das variáveis no exato momento em que uma exceção é lançada no aplicativo web: {{1}}<br>Capturar rastreamentos de desempenho (performance traces) do aplicativo web sem afetar negativamente a usabilidade dos usuários: {{2}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "Smart Detection"}, {"id": "B", "text": "Snapshot Debugger"}, {"id": "C", "text": "Profiler"}, {"id": "D", "text": "Multi-step test"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "Smart Detection"}, {"id": "B", "text": "Snapshot Debugger"}, {"id": "C", "text": "Profiler"}, {"id": "D", "text": "Multi-step test"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "Smart Detection"}, {"id": "B", "text": "Snapshot Debugger"}, {"id": "C", "text": "Profiler"}, {"id": "D", "text": "Multi-step test"}]
+          }
+        ]
+      },
+      "correct_answer": ["A", "B", "C"],
+      "explanation": "O Smart Detection executa uma análise proativa usando machine learning da telemetria enviada para avisar automaticamente sobre falhas ou lentidão incomuns. O Snapshot Debugger permite capturar uma \"foto\" da pilha de chamadas e das variáveis locais assim que a exceção ocorre, essencial para diagnóstico. O Application Insights Profiler fornece os rastreamentos (traces) de desempenho de aplicações que rodam no Azure de forma automática e em escala, tendo sido desenhado para não prejudicar (ou causar latência) para o usuário final."
+    },
+    {
+      "id": "Q-APPINSIGHTS-07",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você desenvolve um aplicativo ASP.NET Core MVC de e-commerce e o configura para rastrear páginas da web e eventos personalizados no Application Insights. A área de marketing pediu para você identificar tendências e montar relatórios baseados no comportamento e navegação do usuário.<br>Você deve arrastar a ferramenta de Análise de Uso (Usage Analysis) correta para cada uma das perguntas de negócios.",
+        "text": "Quais páginas de visualização de produto mais frequentemente levam (correlacionam) à conversão da compra?: {{0}}<br>Como o tempo de carregamento (load time) da página de exibição afeta a decisão do usuário em comprar um produto?: {{1}}<br>Quais eventos ou atributos mais influenciam a decisão de um usuário de continuar voltando a usar o aplicativo a longo prazo?: {{2}}<br>Existem caminhos ou locais específicos no aplicativo onde os usuários frequentemente se perdem e realizam ações repetitivas?: {{3}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "Users"}, {"id": "B", "text": "Funnels"}, {"id": "C", "text": "Impact"}, {"id": "D", "text": "Retention"}, {"id": "E", "text": "User Flows"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "Users"}, {"id": "B", "text": "Funnels"}, {"id": "C", "text": "Impact"}, {"id": "D", "text": "Retention"}, {"id": "E", "text": "User Flows"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "Users"}, {"id": "B", "text": "Funnels"}, {"id": "C", "text": "Impact"}, {"id": "D", "text": "Retention"}, {"id": "E", "text": "User Flows"}]
+          },
+          {
+            "index": 3,
+            "options": [{"id": "A", "text": "Users"}, {"id": "B", "text": "Funnels"}, {"id": "C", "text": "Impact"}, {"id": "D", "text": "Retention"}, {"id": "E", "text": "User Flows"}]
+          }
+        ]
+      },
+      "correct_answer": ["B", "C", "D", "E"],
+      "explanation": "A ferramenta Funnels monitora taxas de conversão passo a passo (como a relação de navegar em uma página até comprar). A ferramenta Impact analisa especificamente como propriedades como tempo de carregamento ou velocidade influenciam decisões ou o uso de determinada parte do aplicativo. A Retention (Retenção) analisa quantos usuários retornam à sua aplicação e quais eventos ditam esse retorno. Os User Flows visualizam as etapas e permitem ver ações repetitivas ou locais onde os usuários ficam \"presos\" durante a navegação."
+    },
+    {
+      "id": "Q-APPINSIGHTS-08",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua organização está desenvolvendo um serviço ASP.NET Core Web API para logísticas. A API coleta telemetria via Application Insights. Esse serviço frequentemente lê e grava dados em um banco de dados de terceiros hospedado fora do Azure, que não é suportado por padrão no monitoramento automático de SQL. Você precisa customizar o código para garantir que todas as chamadas de saída para esse banco de dados externo sejam rastreadas nativamente como dependências e, mais importante, que essas interações sejam integradas corretamente com o fluxo (end-to-end tracing) de cada transação de pedido.<br>Quais duas propriedades de telemetria de dependência você DEVE definir para garantir a correlação? (Escolha 2)",
+        "options": [
+          {"id": "A", "text": "Telemetry.Context.Cloud.RoleInstance"},
+          {"id": "B", "text": "Telemetry.Id"},
+          {"id": "C", "text": "Telemetry.Name"},
+          {"id": "D", "text": "Telemetry.Context.Operation.Id"},
+          {"id": "E", "text": "Telemetry.Context.Session.Id"}
+        ]
+      },
+      "correct_answer": ["B", "D"],
+      "explanation": "Para monitorar aplicativos complexos e garantir a rastreabilidade abrangente quando existem dependências customizadas, o Telemetry.Id é crucial para identificar unicamente cada requisição de telemetria em si, enquanto o Telemetry.Context.Operation.Id estabelece a identidade da operação de forma global. O Operation.Id funciona como o elo de agrupamento (Correlation ID), garantindo que a chamada ao banco de dados seja amarrada visualmente à transação pai no Application Insights."
+    },
+    {
+      "id": "Q-APPINSIGHTS-09",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você implantou um aplicativo da web voltado para o cliente no Azure App Service utilizando o nível (tier) Basic, implantado em uma única região. Alguns usuários reportaram que o site está muito lento. Você foi encarregado de capturar pilhas de chamadas (call stacks) completas, correlacionadas entre instâncias, para diagnosticar com precisão os gargalos de desempenho do código-fonte. Tudo isso deve ser feito reduzindo o impacto em quem está navegando e minimizando totalmente o custo de hospedagem.<br>O que você deve fazer para coletar essa telemetria exigida? (Escolha 3)",
+        "options": [
+          {"id": "A", "text": "Habilitar o Always On (Sempre ativado) no Azure App Service."},
+          {"id": "B", "text": "Fazer upgrade do plano do App Service para o Premium."},
+          {"id": "C", "text": "Habilitar o Profiler."},
+          {"id": "D", "text": "Reiniciar todas as instâncias do aplicativo."},
+          {"id": "E", "text": "Instalar e habilitar a Application Insights site extension (extensão do site)."},
+          {"id": "F", "text": "Habilitar o Snapshot Debugger."}
+        ]
+      },
+      "correct_answer": ["C", "E", "F"],
+      "explanation": "A forma de menor impacto para começar a usar os dados detalhados em aplicativos web do Azure é por meio da Application Insights site extension (Extensão de Site). Esta extensão cria a ponte de telemetria sem compilação extra. O Profiler será o principal responsável por encontrar o gargalo capturando a execução de operações lentas e seus respectivos rastreamentos, ao passo que o Snapshot Debugger vai capturar pilhas de chamadas detalhadas da hora exata em que ocorre a falha/exceção. Você não deve fazer o \"Upgrade para Premium\", pois contraria o requisito explícito de manter os \"custos ao mínimo\"."
+    },
+    {
+      "id": "Q-APPINSIGHTS-10",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você faz parte da equipe de uma fazenda (\"Munson’s Pickles and Preserves Farm\") fornecendo APIs. Seu sistema de parceiros distribuidores chama essas APIs em taxas altíssimas em uma pequena fração de tempo. A diretoria exige que você mapeie e acompanhe valores de telemetria, mantendo uma análise estaticamente correta de chamadas a API sem inundar o sistema de faturamento do monitoramento de rede, reduzindo custos de armazenamento e dados para o Application Insights.<br>Você precisa agregar em lote esses pontos de dados na fonte e enviá-los, de uma vez, como um agregado de valores estatísticos pelo SDK. Qual método da API customizada do Application Insights você deve usar no código da sua aplicação?",
+        "options": [
+          {"id": "A", "text": "TrackEvent"},
+          {"id": "B", "text": "TrackDependency"},
+          {"id": "C", "text": "TrackMetric"},
+          {"id": "D", "text": "TrackException"},
+          {"id": "E", "text": "TrackTrace"}
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "O método TrackMetric suporta enviar métricas pré-agregadas (como máximo, mínimo, contagem e desvio padrão em um intervalo de tempo). Isso atende ao requisito rigoroso de diminuir custos e tráfego na rede aglutinando \"muitas métricas de curto período\" e enviando apenas um resumo estatisticamente válido ao servidor, o que minimiza drasticamente a quantidade de logs injetados no Azure em relação ao uso de um evento individual por requisição (como no TrackEvent)."
+    },
+    {
+      "id": "Q-APPINSIGHTS-11",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua empresa possui uma biblioteca compartilhada que fornece funcionalidades comuns a todos os aplicativos ASP.NET Core da corporação. Você foi encarregado de garantir que todos os itens de telemetria enviados para o Application Insights incluam automaticamente uma propriedade customizada chamada EventID. Diferente de filtrar dados (que descartaria requisições), você precisa enriquecer a telemetria existente antes que ela seja enviada.<br>Preencha o código corretamente para implementar essa funcionalidade.",
+        "text": "public class IncludeEventId : {{0}}<br>{<br>    public void {{1}} (ITelemetry telemetry)<br>    {<br>        // Adiciona a propriedade customizada a todos os eventos<br>        {{2}}.Properties[\"EventID\"] = EventGridController.EventId.Value;<br>    }<br>}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "ITelemetryProcessor"}, {"id": "B", "text": "ITelemetryInitializer"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "Process"}, {"id": "B", "text": "Initialize"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "telemetry.Context"}, {"id": "B", "text": "telemetry.Data"}]
+          }
+        ]
+      },
+      "correct_answer": ["B", "B", "A"],
+      "explanation": "Para adicionar propriedades ou modificar dados contextuais de todos os itens de telemetria globalmente (como adicionar um EventID), você deve implementar a interface ITelemetryInitializer. A interface exige a implementação do método Initialize. As propriedades globais do item de telemetria são acessadas através do objeto telemetry.Context.Properties. (Nota: O ITelemetryProcessor com o método Process seria usado se você quisesse filtrar/descartar telemetria, não enriquecê-la)."
+    },
+    {
+      "id": "Q-APPINSIGHTS-12",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você implantou um site corporativo no Azure App Service e configurou o Application Insights. A diretoria exige que você teste e monitore proativamente a disponibilidade do site a partir de várias localizações ao redor do mundo. Os requisitos de teste determinam que você deve validar a validade do certificado SSL e também realizar a verificação de valores de cabeçalhos (headers) customizados HTTP na resposta.<br>Quais dois tipos de teste de disponibilidade você pode usar para atender a esses requisitos específicos? (Escolha 2)",
+        "options": [
+          {"id": "A", "text": "Teste de Ping de URL (URL ping test)"},
+          {"id": "B", "text": "Teste Padrão (Standard test)"},
+          {"id": "C", "text": "Teste de várias etapas (Multi-step test)"},
+          {"id": "D", "text": "Testes personalizados (Custom testing) usando o método de API TrackAvailability()"}
+        ]
+      },
+      "correct_answer": ["B", "D"],
+      "explanation": "O Teste Padrão (Standard test) no Application Insights permite opções avançadas em relação ao Ping de URL simples, incluindo a verificação proativa de validade do certificado SSL, respostas e cabeçalhos HTTP. Os Testes Personalizados (Custom TrackAvailability) permitem que você crie sua própria lógica em código (executada em uma Azure Function, por exemplo) para checar a disponibilidade corporativa de forma irrestrita e envie os resultados usando o método TrackAvailability(). (Nota: O teste Multi-step test foi descontinuado/retirado pela Microsoft para novos recursos)."
+    },
+    {
+      "id": "Q-APPINSIGHTS-13",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: A sua equipe está instrumentando manualmente um serviço web customizado usando a API do Application Insights no código (SDK). O Application Insights possui modelos de dados específicos para rastrear diferentes comportamentos em sua aplicação.<br>Você precisa mapear os requisitos da equipe de arquitetura com o Modelo de Dados (Data Model) correto que deve ser instanciado no código.",
+        "text": "Registrar dados e mensagens de diagnóstico contínuas utilizando uma estrutura de instrumentação familiar (como Log4Net ou System.Diagnostics): {{0}}<br>Relatar medições escalares periódicas (ex: uso de CPU ou tamanho de fila) para que o sistema possa escalar automaticamente com base nesses valores: {{1}}<br>Capturar a interação do usuário final com uma funcionalidade específica para analisar os padrões de uso (ex: \"Botão Comprar Clicado\"): {{2}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "Event (Evento)"}, {"id": "B", "text": "Trace (Rastreio)"}, {"id": "C", "text": "Metric (Métrica)"}, {"id": "D", "text": "Dependency (Dependência)"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "Event (Evento)"}, {"id": "B", "text": "Trace (Rastreio)"}, {"id": "C", "text": "Metric (Métrica)"}, {"id": "D", "text": "Dependency (Dependência)"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "Event (Evento)"}, {"id": "B", "text": "Trace (Rastreio)"}, {"id": "C", "text": "Metric (Métrica)"}, {"id": "D", "text": "Dependency (Dependência)"}]
+          }
+        ]
+      },
+      "correct_answer": ["B", "C", "A"],
+      "explanation": "O Application Insights possui extensões exatas para cada uso. Trace é focado em logs de diagnóstico tradicional e textos de log. Metric envia valores numéricos pontuais e estatísticos, sendo o modelo fundamental para criar regras de auto-escala (autoscaling) e alarmes de desempenho. Event é explicitamente usado para capturar interações customizadas de negócio dos usuários."
+    },
+    {
+      "id": "Q-APPINSIGHTS-14",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está desenvolvendo uma Azure Function e a testando em um ambiente de desenvolvimento conectado a uma instância do Application Insights. Ao acionar o gatilho HTTP, a API retorna frequentemente o erro \"400 Bad Request\". Para solucionar o erro, você precisa investigar as mensagens subjacentes, exceções e contagens de falhas quase em tempo real nesse ambiente, sem atrasos de ingestão. O projeto já está instrumentado.<br>Qual ferramenta você deve usar?",
+        "options": [
+          {"id": "A", "text": "Atualizar a Azure Function para usar métodos de extensão do Microsoft.Extensions.Logging."},
+          {"id": "B", "text": "Criar um novo workspace do Azure Log Analytics."},
+          {"id": "C", "text": "Conectar o recurso Live Metrics Stream do Application Insights à Azure Function e filtrar as métricas."},
+          {"id": "D", "text": "Configurar um Application Insights Profiler."}
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "Para observar comportamentos, tráfego, contagens de falha e logs quase em tempo real (latência de ~1 segundo), a ferramenta apropriada é o Live Metrics Stream. Durante a fase de desenvolvimento ou durante incidentes críticos, essa ferramenta permite inspecionar a saúde da aplicação sem sofrer os atrasos comuns do pipeline de ingestão analítica convencional de logs."
+    },
+    {
+      "id": "Q-APPINSIGHTS-15",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua organização possui um aplicativo .NET rodando no Azure que utiliza o SDK do Application Insights. Durante os períodos de pico de uso (busy periods), os desenvolvedores relatam que a quantidade de logs emitidos pela função é extremamente alta, resultando na perda de mensagens de log por estourar a capacidade do fluxo. A arquitetura de negócios e auditoria possui um requisito rígido: O Application Insights deve obrigatoriamente conter TODAS as mensagens de log (nenhum dado de log deve ser omitido).<br>Como você deve resolver o problema de perda de capacidade de log sem violar o requisito do negócio?",
+        "options": [
+          {"id": "A", "text": "Implementar o recurso Application Insights Sampling (Amostragem)."},
+          {"id": "B", "text": "Alterar o nível de log mínimo (minimum log level) no arquivo host.json do aplicativo."},
+          {"id": "C", "text": "Aumentar o TTL (Time-to-Live) de expiração do cache da aplicação."},
+          {"id": "D", "text": "Criar um Filtro de Telemetria do Application Insights."}
+        ]
+      },
+      "correct_answer": ["B"],
+      "explanation": "Esta é uma pegadinha clássica do exame. Normalmente, a solução recomendada para alta taxa de telemetria é implementar o Sampling (opção A). Porém, o cenário dita uma restrição rígida: \"O Application Insights deve conter todas as mensagens\". O Sampling e o Filtro (Filter) descartam ou ignoram requisições para criar amostras. Para evitar a perda por afogamento da rede e ainda manter todo o registro exigido (sem perdas algorítmicas), a solução é simplesmente elevar a severidade de captura através do log level no host.json, para que a própria aplicação emita nativamente uma quantidade de logs mais restrita e direcionada (ex: gravando apenas Warning ou Error), o que mitigará o problema de capacidade."
+    },
+    {
+      "id": "Q-APPINSIGHTS-16",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você desenvolve uma aplicação ASP.NET Core e integra o SDK do Application Insights. Durante os testes de carga, você percebe que a aplicação envia uma taxa extremamente alta de telemetria em um curto intervalo de tempo. Você observa uma redução no número de eventos e métricas sendo gravados e um aumento nas taxas de erro para ingestão de telemetria (throttling). Diferente de um cenário de auditoria rígida, a diretoria concorda que você precisa reduzir o tráfego de telemetria, os custos de dados e os custos de armazenamento, mas com a condição absoluta de preservar uma análise estatisticamente correta dos dados da aplicação.<br>O que você deve fazer?",
+        "options": [
+          {"id": "A", "text": "Criar um Filtro de Telemetria do Application Insights (Telemetry Filter)."},
+          {"id": "B", "text": "Alterar o nível de log mínimo no arquivo host.json."},
+          {"id": "C", "text": "Implementar o recurso de Amostragem (Sampling) do Application Insights."},
+          {"id": "D", "text": "Definir um LogCategoryFilter durante a inicialização."}
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "O Sampling (Amostragem) é a funcionalidade recomendada nativamente pelo Application Insights para reduzir o tráfego e os custos sem distorcer as estatísticas do painel. Ele descarta dados (reduzindo o custo de ingestão de logs), mas o algoritmo envia informações de compensação aos servidores do Azure Monitor para garantir que cálculos como \"taxa de conversão\" ou \"taxa de falha\" continuem estatisticamente corretos. Os filtros (Telemetry Filter) descartam logs inteiramente sem extrapolação estatística, o que distorceria a análise de volume."
+    },
+    {
+      "id": "Q-APPINSIGHTS-17",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua aplicação web faz requisições HTTP para serviços externos de parceiros como parte de suas operações normais. A aplicação web é instrumentada com o Application Insights, e os serviços externos são compatíveis com OpenTelemetry. Você precisa garantir que o ID do cliente (Customer ID) do usuário autenticado seja correlacionado e associado a todas as operações e requisições ao longo de todo o sistema distribuído (rastreamento de ponta a ponta).<br>Você precisa preencher o código / a ação correta. Qual objeto você deve atualizar na aplicação web?",
+        "text": "Ação: Adicionar o ID do cliente autenticado ao {{0}}.",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [
+              {"id": "A", "text": "SpanContext usando a propriedade TraceId"},
+              {"id": "B", "text": "Ocp-Apim-Trace no cabeçalho (Header)"},
+              {"id": "C", "text": "CorrelationContext da aplicação web"},
+              {"id": "D", "text": "SpanContext usando a propriedade TraceFlags"}
+            ]
+          }
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "Para repassar dados de contexto customizados (como um Customer ID) através de diferentes limites de serviço que suportam o padrão OpenTelemetry e Application Insights, você deve adicionar esses valores ao CorrelationContext. Esse contexto flui (propaga) automaticamente junto com os cabeçalhos de requisição HTTP entre os serviços. O TraceId é um identificador único de rastreio de operação gerado pelo sistema e não deve ser sobrescrito para armazenar IDs de usuários."
+    },
+    {
+      "id": "Q-APPINSIGHTS-18",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você desenvolve e implanta um aplicativo web no Azure App Service em um ambiente de produção. Você dimensiona o aplicativo web para executar quatro instâncias. Você deve monitorar o aplicativo web de acordo com os seguintes requisitos da equipe de infraestrutura:<br>- Aumentar a disponibilidade roteando automaticamente as requisições para longe de instâncias que estejam retornando códigos de status de erro (ex: 500) e substituir instâncias automaticamente se elas permanecerem em estado de erro por muito tempo.<br>- Enviar logs do servidor da web, logs do aplicativo e saídas padrão (stdout/stderr) diretamente para uma conta de armazenamento de Blobs do Azure.<br>Arraste o recurso de configuração do Azure App Service correto para atender cada um dos requisitos.",
+        "text": "Aumentar a disponibilidade (isolando e trocando instâncias com falha): {{0}}<br>Enviar logs: {{1}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "Autoscale rule (Regra de dimensionamento automático)"}, {"id": "B", "text": "Health check (Verificação de integridade)"}, {"id": "C", "text": "Diagnostic setting (Configuração de diagnóstico)"}, {"id": "D", "text": "Deployment slot (Slot de implantação)"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "Autoscale rule (Regra de dimensionamento automático)"}, {"id": "B", "text": "Health check (Verificação de integridade)"}, {"id": "C", "text": "Diagnostic setting (Configuração de diagnóstico)"}, {"id": "D", "text": "Deployment slot (Slot de implantação)"}]
+          }
+        ]
+      },
+      "correct_answer": ["B", "C"],
+      "explanation": "No Azure App Service, o recurso de Health Check (Verificação de Integridade) serve especificamente para testar continuamente as instâncias por baixo dos panos. Se uma das instâncias começar a falhar (como estourar a memória e retornar erro 500), o load balancer para de enviar tráfego para ela e a reinicia/substitui se não se recuperar. Já o Diagnostic setting (Configuração de diagnóstico) é o local padrão do Azure Monitor para rotear logs do servidor e do app service de forma contínua para destinos como Log Analytics, Event Hubs ou Storage Accounts (Blob)."
+    },
+    {
+      "id": "Q-APPINSIGHTS-19",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você implanta um aplicativo Web do Azure App Service globalmente. O aplicativo está implantado em várias regiões geográficas para evitar latência, e todo o tráfego mundial é distribuído pelo Azure Traffic Manager. O Application Insights está habilitado no aplicativo. A diretoria solicitou que você construa um painel histórico. Você precisa analisar com precisão a porcentagem de tempo de atividade (uptime) contínuo do aplicativo mês a mês (SLA Report).<br>Quais duas soluções você deve usar para coletar/analisar e atender esse objetivo? (Escolha 2)",
+        "options": [
+          {"id": "A", "text": "Application Insights web tests"},
+          {"id": "B", "text": "Application Insights alerts"},
+          {"id": "C", "text": "Azure Monitor logs"},
+          {"id": "D", "text": "Snapshot Debugger"}
+        ]
+      },
+      "correct_answer": ["A", "C"],
+      "explanation": "Para provar se o sistema global, atrás de um Traffic Manager, está respondendo nos SLAs definidos (Uptime SLA), você precisa configurar os Application Insights web tests (testes de disponibilidade) disparando chamadas ativas contínuas aos servidores em várias partes do mundo. Os resultados dessas verificações (se a aplicação esteve \"Up\" ou \"Down\") são gravados nativamente em forma de telemetria nos Azure Monitor logs, os quais você consultará (usando KQL) para montar o relatório mês a mês (ex: 99.9% de uptime). Alertas servem para avisar sobre falhas no momento em que ocorrem, não para análises históricas retroativas de tempo de atividade."
+    },
+    {
+      "id": "Q-APPINSIGHTS-20",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua organização possui várias APIs hospedadas via Azure Functions. Elas foram desenvolvidas em C# e são utilizadas no back-end. A autenticação exige validação de um header estrito e os pontos de extremidade (endpoints) são protegidos com SSL (HTTPS). Você precisa criar uma rotina para monitorar a disponibilidade e a capacidade de resposta exata dessas funções, verificando se a lógica de negócio retorna os dados esperados em tempo hábil. Testes de ping baseados em URL simples não conseguem enviar a carga de autorização avançada necessária.<br>Como você deve testar a disponibilidade de forma segura para interagir no Application Insights?",
+        "options": [
+          {"id": "A", "text": "Adicionar uma nova configuração de diagnóstico para habilitar a opção FunctionAppLogs."},
+          {"id": "B", "text": "Criar uma função disparada por temporizador (timer triggered function) que executa a carga de requisição, valida o código, chama a API TrackAvailability() e envia os resultados ao Application Insights."},
+          {"id": "C", "text": "Utilizar a detecção inteligente (Smart Detection) padrão baseada nas métricas passivas dos usuários."},
+          {"id": "D", "text": "Criar um teste multi-step (multi-etapas) a partir do portal do Azure."}
+        ]
+      },
+      "correct_answer": ["B"],
+      "explanation": "Como o cenário envolve regras estritas (validação complexa de payload/auth que muitas vezes não é suportada por pings globais de URL simples e o multi-step da Microsoft está sendo aposentado para testes complexos HTTP puros), a abordagem oficial recomendada em nuvem corporativa (Custom Availability Test) é você desenvolver sua própria lógica isolada executada de tempos em tempos. Exemplo: Uma Azure Function (Timer Trigger) que faz toda a validação complexa autenticada contra a sua API. Se ela responder corretamente, a Function dispara internamente o método TrackAvailability() informando Success=True, alimentando o painel de disponibilidade do Application Insights."
+    },
+    {
+      "id": "Q-APPINSIGHTS-21",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você gerencia uma assinatura do Azure que contém 100 aplicativos web do Azure App Service. Cada aplicativo web está associado a uma instância individual do Application Insights. Você precisa fazer uma limpeza e planeja remover todos os testes de disponibilidade clássicos (Classic availability tests) baseados em URL simples (ping) de todas as instâncias do Application Insights que possuem essa funcionalidade configurada.<br>Você criou a seguinte instrução do Azure PowerShell:<br>Get-AzApplicationInsightsWebTest | Where-Object { {{0}} -eq \"{{1}}\" } | Remove-AzApplicationInsightsWebTest<br>Você precisa definir os valores da condição para filtrar corretamente os testes. Quais valores você deve usar para completar o código?",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "$_.Type"}, {"id": "B", "text": "$_.WebTestKind"}, {"id": "C", "text": "$_.Category"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "ping"}, {"id": "B", "text": "standard"}, {"id": "C", "text": "multistep"}]
+          }
+        ]
+      },
+      "correct_answer": ["B", "A"],
+      "explanation": "Para interagir com objetos de testes de disponibilidade do Application Insights via PowerShell, a propriedade que define o tipo do teste é WebTestKind. Os testes clássicos de URL simples que estão sendo descontinuados em favor dos testes padrão (Standard) são categorizados com o valor ping. Portanto, o filtro correto é $_.WebTestKind -eq \"ping\"."
+    },
+    {
+      "id": "Q-APPINSIGHTS-22",
+      "type": "multiple_choice",
+      "category": "Azure Application Insights",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: A equipe de desenvolvimento de software da sua empresa está construindo uma API REST hospedada em uma Azure Function. Você precisa rastrear eventos de negócios customizados (ex: \"Pedido Processado\" ou \"Carrinho Abandonado\") e enviar mensagens de rastreamento (traces) que sejam profundamente correlacionadas com a telemetria HTTP nativa coletada no Application Insights.<br>Qual abordagem você deve adotar para enviar esses eventos de negócios e mensagens de rastreamento customizadas?",
+        "options": [
+          {"id": "A", "text": "Passar um parâmetro ILogger para o método da Azure Function e escrever logs estruturados usando essa interface."},
+          {"id": "B", "text": "Persistir arquivos de log de tempo de execução em um contêiner do Azure Blob Storage para inspeção posterior por um serviço de terceiros."},
+          {"id": "C", "text": "Usar Console.WriteLine para emitir instruções de log direto do código da Azure Function."},
+          {"id": "D", "text": "Configurar o SDK do Application Insights e instanciar um objeto TelemetryClient para enviar eventos personalizados e mensagens de rastreamento de forma programática."}
+        ]
+      },
+      "correct_answer": ["D"],
+      "explanation": "Para enviar métricas ou eventos de negócios customizados que não são coletados nativamente (como regras de negócios específicas), você deve usar o SDK do Application Insights e invocar a classe TelemetryClient. Métodos como TrackEvent(), TrackTrace() ou TrackMetric() garantem que a carga customizada trafegue correlacionada (com a mesma ID de operação e sessão) junto com a requisição principal da Azure Function."
+    },
+    {
+        "id": "Q-APPINSIGHTS-23",
+        "type": "drag_and_drop",
+        "category": "Azure Application Insights",
+        "difficulty": "Média",
+        "content": {
+          "statement": "Cenário: Você planeja implantar um aplicativo web no Azure App Service on Linux. Você cria um App Service Plan e também cria e envia uma imagem customizada do Docker contendo seu aplicativo web para o Azure Container Registry. O aplicativo falha ao iniciar e não emite telemetria para o Application Insights. Você precisa acessar e transmitir os logs do console (saída padrão) gerados de dentro do contêiner quase em tempo real (real-time) na sua máquina local para fins de diagnóstico rápido.<br>Ordene os três comandos do Azure CLI que você deve executar na sequência correta para acessar esses logs:",
+          "items_to_drag": [
+            {"id": "1", "text": "az webapp log download --name AppName --resource-group AppRG"},
+            {"id": "2", "text": "az webapp log tail --name AppName --resource-group AppRG"},
+            {"id": "3", "text": "az webapp log config --name AppName --resource-group AppRG --docker-container-logging filesystem"},
+            {"id": "4", "text": "az container attach --name AppName --resource-group AppRG"}
+          ]
+        },
+        "correct_answer": ["3", "2"],
+        "explanation": "Para capturar logs de contêineres sendo executados no App Service no Linux em tempo real, o primeiro passo obrigatório é habilitar a captura do log no sistema de arquivos usando o comando de configuração (log config --docker-container-logging filesystem). Feito isso, para visualizar o streaming do log contínuo (em tempo real) em seu terminal, você utiliza o comando log tail."
+      },
+      {
+        "id": "Q-APPINSIGHTS-24",
+        "type": "multiple_choice",
+        "category": "Azure Application Insights",
+        "difficulty": "Média",
+        "content": {
+          "statement": "Cenário: Você desenvolve e implanta um aplicativo da web ASP.NET no Azure App Service. Você usa a telemetria do Application Insights para monitorar o aplicativo. Você precisa testar o aplicativo para garantir que ele esteja disponível e respondendo a partir de vários locais ao redor do mundo em intervalos regulares. Uma exigência crítica do negócio dita que a ferramenta de teste verifique se os recursos dependentes (como imagens, arquivos CSS e scripts JavaScript) estão carregando corretamente durante a requisição de avaliação.<br>Que tipo de teste você deve criar no Application Insights para atender especificamente à carga das requisições dependentes?",
+          "options": [
+            {"id": "A", "text": "Teste de ping de URL (URL ping test)."},
+            {"id": "B", "text": "Teste web de várias etapas (Multi-step web test / Standard test)."},
+            {"id": "C", "text": "Teste do Snapshot Debugger."},
+            {"id": "D", "text": "Teste de detecção inteligente (Smart Detection)."}
+          ]
+        },
+        "correct_answer": ["B"],
+        "explanation": "Embora o \"URL ping test\" seja simples e verifique se a URL principal responde com HTTP 200, ele não avalia a carga de recursos dependentes atrelados à página (imagens, CSS, JS). Para renderizar a página verificando a saúde dos artefatos estáticos subordinados a ela (dependent requests), você deve usar o Teste Web de Várias Etapas (Multi-step) ou o novo Standard Test, dependendo da versão exigida na prova, pois eles avaliam o carregamento completo do DOM e seus dependentes."
+      },
+      {
+        "id": "Q-APPINSIGHTS-25",
+        "type": "dropdown_fill_in_blank",
+        "category": "Azure Application Insights",
+        "difficulty": "Média",
+        "content": {
+          "statement": "Cenário: Você está desenvolvendo um aplicativo de apontamento de horas em ASP.NET Core que roda em um Azure Web App. O aplicativo ocasionalmente encontra erros de servidor porque chama uma API de terceiros instável para validação de dados. Você precisa configurar um alerta do Azure Monitor via modelo ARM (Azure Resource Manager) que identifique picos anormais de erros internos no servidor (erros 500) do seu App Service. Você precisa minimizar alertas de falsos positivos, ajustando automaticamente o alarme com base em padrões de uso normais do passado (usando aprendizado de máquina em vez de um limite numérico estático absoluto).<br>Complete as linhas críticas do modelo ARM escolhendo as opções corretas.",
+          "text": "\"criteria\": {<br>    \"odata.type\": \"...\",<br>    \"allOf\": [<br>        {<br>            \"criterionType\": \"{{0}}\",<br>            \"metricName\": \"{{1}}\",<br>            \"alertSensitivity\": \"{{2}}\"<br>        }<br>    ]<br>}",
+          "dropdowns": [
+            {
+              "index": 0,
+              "options": [{"id": "A", "text": "DynamicThresholdCriterion"}, {"id": "B", "text": "StaticThresholdCriterion"}, {"id": "C", "text": "SingleResourceMultipleMetricCriteria"}]
+            },
+            {
+              "index": 1,
+              "options": [{"id": "A", "text": "Http4xx"}, {"id": "B", "text": "Http5xx"}, {"id": "C", "text": "Requests"}]
+            },
+            {
+              "index": 2,
+              "options": [{"id": "A", "text": "Low"}, {"id": "B", "text": "Medium"}, {"id": "C", "text": "High"}]
+            }
+          ]
+        },
+        "correct_answer": ["A", "B", "A"],
+        "explanation": "O segredo desta questão de exame é o requisito de \"minimizar alertas falsos positivos\" ajustando automaticamente baseado em padrões passados. Isso requer limites dinâmicos (DynamicThresholdCriterion). A sensibilidade desse modelo de aprendizado de máquina deve ser definida como Baixa (Low) para ser menos rigorosa e reduzir ao máximo a emissão de falsos positivos para erros intermitentes. O cenário diz \"erros de servidor\", o que semanticamente mapeia para as métricas da família Http5xx (já que a família 4xx são erros do cliente, como 'Não Encontrado')."
+      }
+]

@@ -28,5 +28,619 @@
       },
       "correct_answer": ["B"],
       "explanation": "Embora funcione, a autenticação básica não é considerada o método 'mais seguro' para integração de back-end no APIM. A recomendação da prova AZ-204 geralmente foca em Certificados de Cliente (Mutual TLS) ou Identidades Gerenciadas/OAuth2, que oferecem maior proteção do que credenciais estáticas de usuário/senha."
+    },
+    {
+      "id": "Q-APIM-03",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: A empresa Contoso, Ltd. fornece uma API para parceiros usando o Azure API Management (APIM). A API autoriza os usuários por meio de um token JWT. Você precisa implementar o cache de respostas (response caching) para o gateway do APIM.<br>O mecanismo de cache deve detectar a identidade (ID) do usuário do cliente que acessa os dados e armazenar a resposta em cache especificamente para aquele ID de usuário de forma isolada. Para isso, você deve adicionar as seguintes políticas no arquivo de definição XML da API:<br>Uma política set-variable para extrair e armazenar a identidade do usuário.<br>Uma política cache-lookup-value.<br>Uma política cache-store-value.<br>Tarefa: Associe as políticas abaixo à seção correta do arquivo de políticas (&lt;inbound&gt;, &lt;outbound&gt; ou &lt;backend&gt;) onde elas devem ser declaradas.",
+        "text": "set-variable -&gt; {{0}}<br>cache-lookup-value -&gt; {{1}}<br>cache-store-value -&gt; {{2}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "Inbound"}, {"id": "B", "text": "Outbound"}, {"id": "C", "text": "Backend"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "Inbound"}, {"id": "B", "text": "Outbound"}, {"id": "C", "text": "Backend"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "Inbound"}, {"id": "B", "text": "Outbound"}, {"id": "C", "text": "Backend"}]
+          }
+        ]
+      },
+      "correct_answer": ["A", "A", "B"],
+      "explanation": "Para implementar um cache baseado em chave customizada (como o ID do usuário extraído do JWT), as validações iniciais devem ocorrer antes da requisição ser enviada ao back-end. Portanto, a política set-variable (que resolve a chave) e a cache-lookup-value (que verifica se o cache já existe) devem ser colocadas na seção <inbound>. A política cache-store-value, responsável por gravar a resposta processada no cache para uso futuro, opera na resposta que retorna do back-end, devendo obrigatoriamente estar na seção <outbound>."
+    },
+    {
+      "id": "Q-APIM-04",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está desenvolvendo uma nova API que será hospedada no Azure API Management (APIM). O serviço de back-end que implementará de fato a lógica da API ainda não está pronto e não foi concluído.<br>Você precisa permitir que os desenvolvedores de front-end continuem com a implementação e os testes das integrações no APIM imediatamente, enquanto a equipe conclui o back-end.<br>Tarefa: Você precisa configurar uma resposta de teste simulada na API. Selecione os valores de configuração apropriados para preencher as opções abaixo.",
+        "text": "Policy: {{0}}<br>Policy section: {{1}}<br>HTTP response code: {{2}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "proxy"}, {"id": "B", "text": "set-status"}, {"id": "C", "text": "mock-response"}, {"id": "D", "text": "forward-request"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "inbound"}, {"id": "B", "text": "backend"}, {"id": "C", "text": "on-error"}, {"id": "D", "text": "outbound"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "200"}, {"id": "B", "text": "400"}, {"id": "C", "text": "500"}, {"id": "D", "text": "501"}]
+          }
+        ]
+      },
+      "correct_answer": ["C", "A", "A"],
+      "explanation": "A política mock-response foi projetada exatamente para retornar simulações (mocks) diretamente do gateway do API Management. Essa abordagem contorna completamente o back-end (já que ele não existe ou não está pronto) e devolve a resposta de exemplo ao chamador, devendo sempre ser inserida na seção de <inbound>. O código HTTP 200 (OK) é o apropriado para simular o retorno bem-sucedido de uma requisição teste aos desenvolvedores de front-end."
+    },
+    {
+      "id": "Q-APIM-05",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está desenvolvendo várias APIs que serão publicadas através do Azure API Management (APIM). As APIs têm os seguintes requisitos de negócios estritos:<br>- Exigir uma chave de assinatura (subscription key) de todos os chamadores.<br>- Incluir Termos de Uso legais que os assinantes devem concordar/aceitar antes de usar as APIs.<br>- Os administradores devem revisar manualmente e aceitar ou rejeitar cada tentativa de assinatura.<br>- Limitar a quantidade de múltiplas assinaturas simultâneas por desenvolvedor.<br>Tarefa: O que você deve fazer para implementar essas regras para as APIs?",
+        "options": [
+          {"id": "A", "text": "Adicionar uma nova Revisão (Revision) a todas as APIs com as configurações de segurança."},
+          {"id": "B", "text": "Criar e publicar um Produto (Product) no APIM e vincular as APIs a ele."},
+          {"id": "C", "text": "Configurar o versionamento baseado em cabeçalho (header-based versioning) nas APIs."},
+          {"id": "D", "text": "Configurar a política de restrição de chamador (Restrict caller IPs) nas configurações globais."}
+        ]
+      },
+      "correct_answer": ["B"],
+      "explanation": "No Azure API Management, a entidade \"Product\" (Produto) é o bloco de construção arquitetural projetado para empacotar uma ou mais APIs e oferecê-las aos consumidores. Apenas no nível do Produto é possível aplicar Termos de Uso (que exigem aceite explícito do desenvolvedor), habilitar o requisito de aprovação manual por um administrador, limitar a quantidade de assinaturas (subscriptions) ativas simultâneas e forçar a utilização de subscription keys para acesso."
+    },
+    {
+      "id": "Q-APIM-06",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua equipe implanta várias APIs no Azure API Management (APIM). Para fins de solução de problemas (troubleshooting), você precisa inspecionar o processamento de requisições dessas APIs efetuando chamadas a partir de um cliente REST.<br>A inspeção deve extrair dados detalhados que incluam:<br>- A requisição exata que o APIM enviou ao back-end e a resposta que recebeu.<br>- As políticas aplicadas à solicitação e à resposta.<br>- Os erros ocorridos durante o processamento.<br>Tarefa: Quais três (3) ações conjuntas você precisa realizar para habilitar essa inspeção detalhada via cliente REST? (Selecione três opções)",
+        "options": [
+          {"id": "A", "text": "Habilitar a configuração \"Allow tracing\" (Permitir rastreamento) para a assinatura (subscription) usada na inspeção."},
+          {"id": "B", "text": "Criar e configurar uma política XML customizada aplicada na seção <inbound> com escopo global."},
+          {"id": "C", "text": "Adicionar o cabeçalho Ocp-Apim-Trace à chamada HTTP com o valor definido como true."},
+          {"id": "D", "text": "Adicionar o cabeçalho Ocp-Apim-Subscription-Key com o valor de uma chave de assinatura válida da API."},
+          {"id": "E", "text": "Habilitar a política forward-request com a opção \"verbose\"."}
+        ]
+      },
+      "correct_answer": ["A", "C", "D"],
+      "explanation": "A ferramenta nativa \"API Inspector\" do Azure APIM coleta os traços completos de roteamento, falhas e execução de políticas de forma nativa. Para que o rastreamento por cliente REST funcione por motivos de segurança, você precisa obrigatoriamente: 1) habilitar a permissão de rastreamento \"Allow tracing\" na chave de assinatura do portal; 2) passar o cabeçalho secreto Ocp-Apim-Subscription-Key autenticando o direito de chamada; e 3) acionar a gravação enviando o cabeçalho explícito Ocp-Apim-Trace: true. A implementação de uma política global customizada não é necessária para este recurso nativo de diagnóstico."
+    },
+    {
+      "id": "Q-APIM-07",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você é um desenvolvedor de API para uma empresa de tecnologia financeira e possui uma instância do Azure API Management (APIM) de nível Standard configurada com um gateway gerenciado.<br>Você usará esse APIM para expor uma API chamada TransactionAPI. Essa API interage com um banco de dados de back-end legado que consegue suportar apenas um volume muito limitado de consultas por minuto devido a restrições de infraestrutura.<br>Para evitar uma degradação severa no desempenho e queda do banco de dados, você deve aplicar uma política na TransactionAPI que limite e estrangule o número máximo de chamadas originadas a partir do endereço IP de um cliente individual.<br>Tarefa: Qual política de APIM você deve identificar e implementar para atender a esse requisito?",
+        "options": [
+          {"id": "A", "text": "quota-by-key"},
+          {"id": "B", "text": "validate-jwt"},
+          {"id": "C", "text": "check-header"},
+          {"id": "D", "text": "rate-limit-by-key"}
+        ]
+      },
+      "correct_answer": ["D"],
+      "explanation": "A política rate-limit-by-key impede picos súbitos de utilização de API por chamador estrangulando (throttling) a taxa de requisições enviadas ao back-end. Ela avalia e impõe limites em tempo real por um intervalo de tempo especificado baseando-se em uma chave predeterminada (neste caso, o endereço IP do remetente obtido do contexto da requisição). Isso garante a utilização justa e protege sistemas legados ou de baixa escalabilidade contra indisponibilidades."
+    },
+    {
+      "id": "Q-APIM-08",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você é responsável pelo gerenciamento de várias APIs hospedadas no Azure API Management (APIM) para a sua organização. Uma de suas APIs exige alterações menores e não interruptivas (non-breaking changes). Essas atualizações devem obrigatoriamente aderir às seguintes condições:<br>- Os consumidores existentes não devem sofrer interrupções e as chamadas não devem quebrar.<br>- Deve haver um mecanismo de reversão (rollback) rápido caso surjam problemas.<br>- As modificações devem ser documentadas para informar os desenvolvedores sobre as novidades.<br>- As alterações devem ser amplamente testadas no próprio APIM antes de se tornarem públicas.<br>Tarefa: Qual é a abordagem mais eficaz para atualizar a API garantindo a conformidade com essas condições?",
+        "options": [
+          {"id": "A", "text": "Configurar e aplicar o versionamento baseado em cabeçalho (header-based versioning)."},
+          {"id": "B", "text": "Criar e publicar um novo Produto (Product)."},
+          {"id": "C", "text": "Adicionar uma nova Revisão (Revision) à API, testar, torná-la atual e adicionar uma entrada no change log."},
+          {"id": "D", "text": "Configurar e aplicar o versionamento baseado em query string."}
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "O Azure API Management suporta o recurso de Revisões (Revisions), que permite aos desenvolvedores introduzir alterações seguras e não interruptivas em APIs sem afetar os consumidores existentes. Ao criar uma nova revisão, você pode testar as modificações isoladamente via URL de teste. Após a validação, a revisão é promovida (tornando-se a Current Revision), o que substitui a lógica publicamente acessível de forma transparente. Se algo der errado, é extremamente simples reverter o tráfego de volta para a revisão anterior. O versionamento (A e D) implicaria em criar contratos diferentes obrigando os clientes a atualizarem seus aplicativos (breaking changes)."
+    },
+    {
+      "id": "Q-APIM-09",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você possui um aplicativo que fornece dados de previsão do tempo para parceiros externos. Você usa o Azure API Management para expor as APIs de previsão. Para aprimorar a arquitetura e simplificar a comunicação com o serviço de back-end, você deve modificar o comportamento da API no gateway do APIM atendendo aos seguintes requisitos exatos:<br>1. Suportar parâmetros de entrada alternativos vindos de clientes legados e convertê-los no formato aceito pelo back-end.<br>2. Remover textos de formatação ou elementos sensíveis das respostas antes de enviá-las ao cliente.<br>3. Fornecer informações de contexto adicionais (como chaves de roteamento baseadas no cabeçalho original) para os serviços de back-end.<br>Tarefa: Quais seções de política (escopos de execução) você deve implementar para cada requisito? Associe os tipos abaixo na ordem correspondente aos itens 1, 2 e 3.",
+        "text": "Suportar parâmetros de entrada alternativos: {{0}}<br>Remover texto de formatação das respostas: {{1}}<br>Fornecer contexto adicional aos serviços de back-end: {{2}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "inbound"}, {"id": "B", "text": "outbound"}, {"id": "C", "text": "backend"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "inbound"}, {"id": "B", "text": "outbound"}, {"id": "C", "text": "backend"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "inbound"}, {"id": "B", "text": "outbound"}, {"id": "C", "text": "backend"}]
+          }
+        ]
+      },
+      "correct_answer": ["A", "B", "A"],
+      "explanation": "A transformação de requisições enviadas por clientes (como manipulação de query parameters, headers ou payload) antes mesmo de acessar o back-end deve ser feita na seção <inbound>. A remoção de informações de formatação e limpeza da resposta entregue pelo back-end precisa ser processada na interceptação de retorno, logo, usa a seção <outbound>. Por fim, fornecer contextos adicionais (como enviar a identidade ou propriedades dinâmicas atreladas à requisição que o gateway interceptou) deve ser definido na configuração antes da chamada ser encaminhada (também na seção <inbound>)."
+    },
+    {
+      "id": "Q-APIM-10",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você desenvolveu um serviço de upload de imagens que é exposto usando o Azure API Management. As imagens são analisadas após o upload para realizar o tagging automático. Visando economia, imagens com tamanho superior a 500 KB deverão ser processadas por um serviço de back-end diferente que oferece um nível de serviço inferior a um custo menor.<br>O serviço inferior é acionado caso a solicitação possua um cabeçalho específico chamado x-large-request. Imagens acima de 500 KB nunca devem chegar ao back-end padrão de imagens menores.<br>Tarefa: Complete a política &lt;inbound&gt; para atender à lógica condicional abaixo, selecionando as opções corretas nas lacunas:",
+        "text": "&lt;inbound&gt;<br>  &lt;base/&gt;<br>  &lt;set-variable name=\"imageSize\" value=\"@(context.Request.Headers[\"Content-Length\"])\"/&gt;<br>  &lt;choose&gt;<br>    &lt;when condition=\"@(int.Parse(context.Variables.GetValueOrDefault&lt;string&gt;(\"imageSize\"))&gt;500000)\"&gt;<br>        &lt;set-header name=\"x-large-request\" exists-action=\"{{0}}\"&gt;<br>            &lt;value&gt;true&lt;/value&gt;<br>        &lt;/set-header&gt;<br>        &lt;{{1}} base-url=\"{{large-image-host}}\" /&gt;<br>    &lt;/when&gt;<br>    &lt;otherwise&gt;<br>       &lt;!-- back-end padrão --&gt;<br>    &lt;/otherwise&gt;<br>  &lt;/choose&gt;<br>&lt;/inbound&gt;",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "skip"}, {"id": "B", "text": "append"}, {"id": "C", "text": "delete"}, {"id": "D", "text": "override"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "set-body"}, {"id": "B", "text": "forward-request"}, {"id": "C", "text": "set-backend-service"}, {"id": "D", "text": "set-query-parameter"}]
+          }
+        ]
+      },
+      "correct_answer": ["D", "C"],
+      "explanation": "A primeira lacuna configura o cabeçalho usando o atributo exists-action. Para forçar que o cabeçalho x-large-request esteja presente (independentemente de o cliente ter enviado algo ou não e evitar bypasses indesejados), a ação garantida é override (sobrepor qualquer valor existente com \"true\"). Na segunda lacuna, para redirecionar internamente o tráfego da requisição em tempo real para outra URL (a API dedicada a imagens pesadas) utiliza-se a política <set-backend-service>."
+    },
+    {
+      "id": "Q-APIM-11",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está projetando uma API segura que hospeda recursos internos corporativos utilizando o Azure. Essa API chama vários outros serviços críticos da plataforma Azure em segundo plano, como Key Vault e Cosmos DB. Você tem requisitos rigorosos de segurança a serem implementados:<br>- Todas as chamadas que a própria API faz a outros recursos do Azure devem ser devidamente autenticadas.<br>- Nenhum tipo de credencial (como senhas, segredos ou connection strings) pode ser armazenado explicitamente no código ou na configuração enviada à API.<br>Tarefa: Qual mecanismo de autenticação atende simultaneamente aos requisitos descritos?",
+        "options": [
+          {"id": "A", "text": "Autenticação Básica (Basic Authentication)"},
+          {"id": "B", "text": "Chaves Baseadas em Certificado Cliente (Client certificate)"},
+          {"id": "C", "text": "Identidades Gerenciadas (Managed identity for Azure resources)"},
+          {"id": "D", "text": "Service Principal com segredo compartilhado (App Registration Secret)"}
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "O recurso de \"Managed Identity\" (Identidade Gerenciada) é especificamente projetado para resolver o problema de gerenciar senhas e segredos para a comunicação entre serviços na nuvem. Ao habilitar uma identidade gerenciada em um serviço do Azure (como App Service, Functions ou API Management), o Azure Active Directory se encarrega automaticamente de gerar, rotacionar e fornecer os tokens de autenticação sob demanda, removendo inteiramente a necessidade de injetar e expor qualquer credencial, chave ou segredo no código do desenvolvedor."
+    },
+    {
+      "id": "Q-APIM-12",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está desenvolvendo um serviço web REST e os clientes acessam esse serviço estritamente através do seu Azure API Management (APIM). A equipe de testes percebeu que o serviço de back-end não trata corretamente cenários de concorrência. Em vez de retornar um código de status HTTP 409 (Conflict), a API de back-end frequentemente exibe e retorna um status HTTP 500 (Internal Server Error) padrão para o APIM.<br>Enquanto os desenvolvedores do back-end corrigem essa lógica nas próximas sprints, você foi encarregado de implementar uma correção no nível do API Management. Se o back-end retornar 500 e possuir a palavra \"conflict\" na mensagem de erro nativa do APIM, você deve retornar um HTTP 409.<br>Tarefa: Preencha a política do APIM nas lacunas corretas:",
+        "text": "&lt;{{0}}&gt;<br>    &lt;base /&gt;<br>    &lt;choose&gt;<br>        &lt;when condition=\"@(context.Response.StatusCode == 500 && context.LastError.Message.Contains(\"conflict\"))\"&gt;<br>            &lt;return-response&gt;<br>                &lt;{{1}} code=\"409\" reason=\"Conflict\" /&gt;<br>            &lt;/return-response&gt;<br>        &lt;/when&gt;<br>        &lt;otherwise /&gt;<br>    &lt;/choose&gt;<br>&lt;/{{0}}&gt;",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "server"}, {"id": "B", "text": "context"}, {"id": "C", "text": "on-error"}, {"id": "D", "text": "inbound"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "set-status"}, {"id": "B", "text": "override-status"}, {"id": "C", "text": "when-error"}, {"id": "D", "text": "return-code"}]
+          }
+        ]
+      },
+      "correct_answer": ["C", "A"],
+      "explanation": "Quando ocorrem falhas ou exceções oriundas do back-end durante o processamento da requisição, a política do APIM transfere o processamento da mensagem e o contexto de erro para a seção <on-error> (Lacuna 1). Dentro dessa seção, você pode reescrever inteiramente a estrutura da resposta formatada usando o <return-response>. O comando utilizado internamente no APIM para modificar o código de status HTTP que será enviado ao chamador final é o <set-status> (Lacuna 2)."
+    },
+    {
+      "id": "Q-APIM-13",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Um serviço web fornece informações de resumo de clientes para parceiros de e-commerce. O serviço web é implementado como um aplicativo Azure Function com um gatilho HTTP. O acesso à API é fornecido por uma instância do Azure API Management (APIM).<br>A instância do APIM está configurada no nível de preço Consumption (Consumo). Todas as chamadas de API são autenticadas usando tokens OAuth. As chamadas de API devem ser armazenadas em cache para otimização de performance. No entanto, clientes rigorosamente não devem ser capazes de visualizar os dados armazenados em cache de outros clientes.<br>Tarefa: Você precisa configurar as políticas do API Management para atender a esses requisitos de cache. Preencha a declaração XML arrastando as opções corretas para as lacunas correspondentes (1, 2 e 3).",
+        "text": "&lt;policies&gt;<br>  &lt;inbound&gt;<br>    &lt;base /&gt;<br>    &lt;cache-lookup caching-type=\"{{0}}\" downstream-caching-type=\"{{1}}\"&gt;<br>      &lt;vary-by-header&gt;{{2}}&lt;/vary-by-header&gt;<br>    &lt;/cache-lookup&gt;<br>  &lt;/inbound&gt;<br>&lt;/policies&gt;",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "internal"}, {"id": "B", "text": "external"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "public"}, {"id": "B", "text": "private"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "Authorization"}, {"id": "B", "text": "Expect"}]
+          }
+        ]
+      },
+      "correct_answer": ["B", "B", "A"],
+      "explanation": "No modelo de preço Consumption (Consumo) do APIM, não há suporte para cache interno (built-in cache). Portanto, a propriedade caching-type deve obrigatoriamente ser definida como external (apontando, por exemplo, para um Azure Cache for Redis externo). Como os clientes não podem ver os dados uns dos outros, o downstream-caching-type deve ser private. Por fim, como a autenticação é via OAuth, você varia o cache isolando as respostas com base no cabeçalho de Authorization."
+    },
+    {
+      "id": "Q-APIM-14",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está publicando uma API sensível no Azure API Management. A equipe de segurança exige que a API valide rigorosamente as credenciais do usuário antes de repassar qualquer carga de trabalho (payload) para o serviço de back-end.<br>As solicitações que não possuírem um token válido gerado pelo Microsoft Entra ID (Azure AD) devem ser bloqueadas imediatamente pelo gateway do APIM, retornando uma mensagem de erro apropriada sem onerar o serviço de back-end.<br>Tarefa: Selecione as opções de configuração apropriadas para implementar a política de autenticação no API Management.",
+        "text": "Policy: {{0}}<br>Policy section: {{1}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "check-header"}, {"id": "B", "text": "restrict-caller-ips"}, {"id": "C", "text": "limit-call-rate-by-key"}, {"id": "D", "text": "validate-jwt"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "inbound"}, {"id": "B", "text": "outbound"}, {"id": "C", "text": "backend"}, {"id": "D", "text": "on-error"}]
+          }
+        ]
+      },
+      "correct_answer": ["D", "A"],
+      "explanation": "A política validate-jwt é nativamente projetada para pré-autorizar requisições no API Management verificando assinaturas, audiência (audience) e validade de um JSON Web Token (JWT) antes da requisição prosseguir. Para garantir que a requisição inválida seja bloqueada antes de atingir o back-end, essa política deve ser obrigatoriamente colocada na seção <inbound>."
+    },
+    {
+      "id": "Q-APIM-15",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você desenvolve e mantém várias APIs hospedadas no Azure API Management (APIM).<br>A equipe de segurança cibernética emitiu um novo alerta informando que as APIs estão vazando informações privadas sobre o servidor de back-end nos cabeçalhos HTTP de resposta (como X-Powered-By: ASP.NET e as versões do servidor IIS). Você deve transformar a resposta das APIs para ocultar essas informações e mascarar a pilha de tecnologia utilizada no processamento de back-end.<br>Esse requisito de segurança deve ser aplicado instantaneamente para proteger todas as APIs hospedadas na sua instância do APIM.<br>Tarefa: O que você deve fazer para implementar essa proteção de forma mais eficiente?",
+        "options": [
+          {"id": "A", "text": "Configurar e aplicar uma nova política na seção inbound com escopo de Produto (Product scope)."},
+          {"id": "B", "text": "Configurar e aplicar uma nova política na seção backend com escopo de Operação (Operation scope)."},
+          {"id": "C", "text": "Configurar e aplicar uma nova política na seção outbound com escopo Global (Global scope)."},
+          {"id": "D", "text": "Configurar e aplicar uma nova política na seção outbound com escopo de Operação (Operation scope)."}
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "Como a meta é mascarar ou remover os cabeçalhos provenientes do servidor de back-end antes que eles sejam entregues ao cliente final, a modificação deve ocorrer no caminho de retorno, exigindo uma política na seção <outbound>. Adicionalmente, como o requisito estabelece que isso deve ser aplicado a todas as APIs da instância do APIM simultaneamente, o escopo correto a ser utilizado é o Global (Global scope)."
+    },
+    {
+      "id": "Q-APIM-16",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você desenvolve e implanta várias APIs no Azure API Management. Para evitar a repetição de código e facilitar a manutenção, você extraiu uma lógica complexa de manipulação de contadores e métricas de negócios e a salvou em um \"Policy Fragment\" (Fragmento de Política) nomeado como APICounts.<br>Esse fragmento de política precisa ser reutilizado em vários escopos e APIs. Você precisa aplicar este fragmento especificamente para ser executado no exato momento em que um aplicativo chamador efetua a requisição à API (antes de chegar ao back-end).<br>Tarefa: Preencha a área do código XML selecionando os elementos corretos para cada lacuna a fim de importar e executar o fragmento com sucesso.",
+        "text": "&lt;policies&gt;<br>    &lt;{{0}}&gt;<br>        &lt;{{1}} {{2}}=\"APICounts\" /&gt;<br>        &lt;base /&gt;<br>    &lt;/{{3}}&gt;<br>&lt;/policies&gt;",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "inbound"}, {"id": "B", "text": "outbound"}, {"id": "C", "text": "backend"}, {"id": "D", "text": "on-error"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "set-variable"}, {"id": "B", "text": "include-fragment"}, {"id": "C", "text": "invoke-policy"}, {"id": "D", "text": "apply-fragment"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "name"}, {"id": "B", "text": "id"}, {"id": "C", "text": "fragment-id"}, {"id": "D", "text": "policy-name"}]
+          },
+          {
+            "index": 3,
+            "options": [{"id": "A", "text": "inbound"}, {"id": "B", "text": "outbound"}, {"id": "C", "text": "backend"}, {"id": "D", "text": "on-error"}]
+          }
+        ]
+      },
+      "correct_answer": ["A", "B", "C", "A"],
+      "explanation": "Como o processamento deve ocorrer assim que o cliente faz a requisição (antes do back-end), a tag principal que engloba a lógica é a <inbound>. Para reaproveitar a lógica modularizada no APIM, a sintaxe da política exige o uso da tag <include-fragment>. O atributo que vincula a tag ao fragmento criado previamente no portal deve ser nomeado como fragment-id."
+    },
+    {
+      "id": "Q-APIM-17",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua empresa desenvolve uma solução de gateway para uma API pública de notícias. O back-end da API de notícias é implementado como um serviço RESTful e hospedado internamente em uma instância do Azure App Service (Web App).<br>Para aumentar a segurança e restringir quem pode chamar o back-end, você deve configurar o API Management (APIM) para encaminhar as requisições autenticando-se contra o App Service usando Mutual TLS (Certificado de Cliente).<br>Tarefa: Na tela de configurações do APIM, quais valores de tipo de Destino (Target) e Credenciais de Gateway (Gateway credentials) você deve utilizar para habilitar o uso do certificado cliente para autenticação de back-end?",
+        "options": [
+          {"id": "A", "text": "Target: Azure Resource / Gateway credentials: Basic"},
+          {"id": "B", "text": "Target: HTTP(s) endpoint / Gateway credentials: Client cert"},
+          {"id": "C", "text": "Target: Azure Logic App / Gateway credentials: Client cert"},
+          {"id": "D", "text": "Target: Azure Resource / Gateway credentials: Client cert"}
+        ]
+      },
+      "correct_answer": ["B"],
+      "explanation": "Ao configurar APIs no APIM que encaminham tráfego para um back-end externo ou Azure App Service (que atua como um endpoint REST padrão via internet), o destino da interface (Target) é mapeado como HTTP(s) endpoint. Para implementar a autenticação mútua TLS (mTLS) de back-end (em que o Gateway do APIM apresenta um certificado de cliente para o App Service confiar na origem da chamada), as credenciais configuradas no painel devem ser definidas como Client cert."
+    },
+    {
+      "id": "Q-APIM-18",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você desenvolve uma solução de gateway para uma API pública de notícias. O back-end da API de notícias é implementado como um serviço RESTful e utiliza uma especificação OpenAPI (Swagger).<br>Você precisa garantir que a API de notícias seja importada e disponibilizada por meio de uma instância do Azure API Management (APIM) utilizando um script de automação.<br>Tarefa: Qual comando do Azure PowerShell você deve executar para atingir esse objetivo?",
+        "options": [
+          {"id": "A", "text": "New-AzApiManagementBackend -Url $ApiUrl"},
+          {"id": "B", "text": "Import-AzApiManagementApi -Context $ApiMgmtContext -SpecificationFormat \"Swagger\" -SpecificationPath $SwaggerPath -Path $Path"},
+          {"id": "C", "text": "New-AzApiManagement -ResourceGroupName $ResourceGroup -Name $Name"},
+          {"id": "D", "text": "New-AzApiManagementBackendProxy -Url $ApiUrl"}
+        ]
+      },
+      "correct_answer": ["B"],
+      "explanation": "Para importar uma API existente com base em uma especificação OpenAPI (Swagger) para uma instância do APIM que já está em execução, o cmdlet correto é o Import-AzApiManagementApi (anteriormente Import-AzureRmApiManagementApi). Ao importar a especificação OpenAPI, o API Management configura automaticamente os mapeamentos de operações e o serviço web de back-end. O cmdlet New-AzApiManagement cria uma nova instância inteira do serviço de gateway, e não a API em si."
+    },
+    {
+      "id": "Q-APIM-19",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você tem uma instância do Azure API Management chamada API1 que usa um gateway gerenciado. Você precisa configurar uma política de entrada (<inbound>) que adicione dinamicamente um cabeçalho HTTP personalizado chamado x-request-context-data.<br>O valor desse cabeçalho deve ser preenchido dinamicamente em tempo de execução com a região de implantação atual do gateway do APIM. A política também deve garantir explicitamente que todas as políticas configuradas em níveis superiores (como as políticas de escopo global) sejam processadas e aplicadas antes da modificação desse cabeçalho.<br>Tarefa: Preencha a política XML selecionando os valores corretos para as lacunas abaixo.",
+        "text": "&lt;policies&gt;<br>  &lt;inbound&gt;<br>    &lt;{{0}} /&gt;<br>    &lt;set-header name=\"x-request-context-data\" exists-action=\"override\"&gt;<br>      &lt;value&gt;@({{1}}.Deployment.Region)&lt;/value&gt;<br>    &lt;/set-header&gt;<br>  &lt;/inbound&gt;<br>&lt;/policies&gt;",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "base"}, {"id": "B", "text": "wait for=\"all\""}, {"id": "C", "text": "value>root</value"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "config"}, {"id": "B", "text": "context"}, {"id": "C", "text": "policy"}]
+          }
+        ]
+      },
+      "correct_answer": ["A", "B"],
+      "explanation": "A inclusão do elemento vazio <base /> (Lacuna 1) é mandatória para invocar e herdar a execução de políticas configuradas em escopos superiores (como o escopo Global ou de Produto), garantindo que elas sejam processadas primeiro de forma determinística. Para avaliar dinamicamente os valores em tempo de requisição em C# dentro das políticas, utiliza-se a variável intrínseca context (Lacuna 2), que concede acesso completo às informações da requisição, resposta e propriedades da topologia de implantação do gateway, como context.Deployment.Region."
+    },
+    {
+      "id": "Q-APIM-20",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você fornece um serviço web gerenciado pelo Azure API Management (APIM) para os seus clientes. O serviço de web de back-end original implementa HTTP Strict Transport Security (HSTS) para reforçar a segurança.<br>Você tem uma restrição arquitetural onde toda e qualquer solicitação que o APIM encaminhar para o serviço de back-end deve obrigatoriamente incluir um cabeçalho de autorização HTTP válido ou certificados adequados. Você precisa configurar o gateway com políticas nativas de autenticação.<br>Tarefa: Quais duas (2) políticas você pode utilizar para satisfazer a autenticação do APIM com o back-end? (Selecione duas)",
+        "options": [
+          {"id": "A", "text": "Authenticate with Basic (Basic Authentication)"},
+          {"id": "B", "text": "Digest Authentication"},
+          {"id": "C", "text": "Authenticate with client certificate (Certificate Authentication)"},
+          {"id": "D", "text": "OAuth Client Credential Grant"}
+        ]
+      },
+      "correct_answer": ["A", "C"],
+      "explanation": "O Azure API Management possui três políticas nativas primárias especificamente desenhadas na seção Authentication policies para fazer com que o gateway se autentique em serviços de back-end: \"Authenticate with Basic\" (que transmite credenciais em base64), \"Authenticate with client certificate\" (mTLS) e \"Authenticate with managed identity\". A política \"Digest Authentication\" não é uma política nativamente suportada pelo APIM para essa finalidade."
+    },
+    {
+      "id": "Q-APIM-21",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está desenvolvendo uma solução voltada para o público. O back-end da API foi implementado como um serviço RESTful padrão hospedado em uma instância do Azure App Service (Web App).<br>Você deve configurar a autenticação de back-end para que a instância do API Management (APIM) se comunique de forma segura com o App Service usando Mutual TLS (Certificado de cliente).<br>Solução Proposta: Na interface de configuração do APIM, você vincula a API definindo o Destino (Target) como Azure Resource e preenchendo as Credenciais de Gateway (Gateway credentials) como Client cert.<br>Tarefa: A solução atende ao objetivo de configurar a comunicação segura por certificado com o App Service?",
+        "options": [
+          {"id": "A", "text": "Sim"},
+          {"id": "B", "text": "Não"}
+        ]
+      },
+      "correct_answer": ["B"],
+      "explanation": "A solução falha devido à seleção incorreta do \"Destino\" (Target). Para encaminhar tráfego de API para um App Service operando como serviço RESTful, o destino deve ser mapeado obrigatoriamente como HTTP(s) endpoint e não como Azure Resource. A opção de \"Azure Resource\" é usada quando se vincula diretamente o gateway a recursos de fluxo de trabalho internos, como Azure Logic Apps. Configurar como \"HTTP(s) endpoint\" emparelhado com \"Client cert\" seria a solução \"Sim\"."
+    },
+    {
+      "id": "Q-APIM-22",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você gerencia a governança corporativa de dezenas de APIs expostas pelo seu Azure API Management (APIM). Você deve utilizar a capacidade do APIM de aplicar políticas em diferentes níveis de abrangência (Escopos / Scopes).<br>Você tem as seguintes regras de negócios:<br>- Regra de Cota: Aplicar um limite de 10.000 chamadas mensais para assinantes do plano \"Silver\". Esta cota deve ser compartilhada coletivamente através de 5 APIs distintas consumidas pelos usuários deste plano.<br>- Regra de Segurança de Cabeçalho: Ocultar e mascarar completamente os dados do servidor de back-end (remover cabeçalhos como X-Powered-By), garantindo que isso seja aplicado a todas as requisições de todas as APIs que entram na sua instância do APIM sem exceção.<br>- Regra de Redirecionamento de Path: Você tem uma API de \"Inventário\". Você precisa alterar a rota e manipular parâmetros apenas quando o cliente chamar o método específico GET /items/{id}, sem afetar os métodos de inclusão (POST).<br>Tarefa: Associe os requisitos ao respectivo Escopo de Política (Policy Scope) onde devem ser aplicados.",
+        "text": "Regra de Cota (Compartilhada entre APIs do mesmo plano): {{0}}<br>Regra de Segurança de Cabeçalho (Todas as APIs da instância): {{1}}<br>Regra de Redirecionamento de Path (Apenas o método GET específico): {{2}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "Global"}, {"id": "B", "text": "Product (Produto)"}, {"id": "C", "text": "Operation (Operação)"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "Global"}, {"id": "B", "text": "Product (Produto)"}, {"id": "C", "text": "Operation (Operação)"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "Global"}, {"id": "B", "text": "Product (Produto)"}, {"id": "C", "text": "Operation (Operação)"}]
+          }
+        ]
+      },
+      "correct_answer": ["B", "A", "C"],
+      "explanation": "A arquitetura de políticas do APIM segue uma hierarquia rígida de escopos.<br>Global: Afeta toda a instância do gateway e todas as APIs hospedadas nele, ideal para mascaramento de cabeçalhos institucionais exigidos pela segurança da informação.<br>Product: Como um Produto no APIM agrupa várias APIs e possui planos de assinatura, configurar políticas de cota de uso neste nível garante que o limite contemple e seja compartilhado pelo consumo de múltiplas APIs empacotadas naquele produto.<br>Operation: É o nível de resolução mais preciso e minucioso possível, afetando a execução exclusiva de uma rota e um verbo HTTP específico (como um GET num caminho exato) sem impactar o resto da API que a contém."
+    },
+    {
+      "id": "Q-APIM-23",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua equipe expõe uma API REST fundamental usando o Azure API Management (APIM). Os desenvolvedores do back-end realizaram uma refatoração significativa na API que alterou o formato do payload de resposta e removeu alguns endpoints antigos. Essa é uma mudança que quebra a compatibilidade (breaking change).<br>Você tem os seguintes requisitos de negócios:<br>- Os clientes atuais que já consomem a API não devem sofrer interrupções e devem continuar acessando a estrutura antiga.<br>- Novos clientes e aplicativos atualizados devem ser capazes de optar por usar a nova estrutura.<br>- A nova estrutura da API deve ser acessível por meio de um caminho de URL distinto, como /v2/.<br>Tarefa: Qual recurso do API Management você deve utilizar para implementar esse cenário?",
+        "options": [
+          {"id": "A", "text": "Adicionar uma nova Revisão (Revision) à API existente e torná-la a revisão atual."},
+          {"id": "B", "text": "Criar e aplicar uma política de redirecionamento baseada em cabeçalho customizado."},
+          {"id": "C", "text": "Adicionar uma nova Versão (Version) da API usando o esquema de versionamento baseado em Path (Caminho)."},
+          {"id": "D", "text": "Criar um novo Produto (Product) e atribuir regras de controle de acesso exclusivas."}
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "No Azure API Management, as Versões (Versions) são projetadas especificamente para lidar com breaking changes (mudanças que quebram a compatibilidade), pois permitem que os desenvolvedores criem instâncias paralelas e independentes do contrato da API (ex: api/v1 e api/v2). Isso permite que consumidores legados não sejam afetados enquanto consumidores novos optam pela versão mais recente. Já as Revisões (Revisions) (opção A) são usadas exclusivamente para mudanças seguras e non-breaking (como pequenas correções ou adições que não alteram a URL da API)."
+    },
+    {
+      "id": "Q-APIM-24",
+      "type": "drag_and_drop",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está configurando políticas para uma API no Azure API Management (APIM). O APIM avalia políticas em diferentes escopos (Global, Produto, API e Operação). A ordem de herança e execução é estritamente controlada pela posição do elemento XML <base />.<br>Você configurou a seção <inbound> com os seguintes fragmentos em cada escopo:<br>- Global: &lt;set-header name=\"Global-Header\" value=\"1\" /&gt;<br>- Produto: &lt;set-header name=\"Product-Header\" value=\"1\" /&gt; &lt;base /&gt;<br>- API: &lt;base /&gt; &lt;set-header name=\"API-Header\" value=\"1\" /&gt;<br>- Operação: &lt;base /&gt; &lt;set-header name=\"Operation-Header\" value=\"1\" /&gt;<br>Um cliente faz uma requisição HTTP para esta Operação.<br>Tarefa: Qual será a ordem cronológica exata em que os cabeçalhos serão adicionados à requisição pelo gateway do APIM? (Coloque do primeiro ao último a ser executado).",
+        "items_to_drag": [
+          {"id": "1", "text": "API-Header"},
+          {"id": "2", "text": "Global-Header"},
+          {"id": "3", "text": "Operation-Header"},
+          {"id": "4", "text": "Product-Header"}
+        ]
+      },
+      "correct_answer": ["4", "2", "1", "3"],
+      "explanation": "O processamento começa no escopo mais granular (Operação).<br>Na Operação, o comando <base /> aparece primeiro. O <base /> instrui o APIM a pausar o escopo atual e executar o escopo pai (API).<br>Na API, o <base /> também aparece primeiro. Ele pausa a API e chama o escopo pai (Produto).<br>No Produto, a primeira instrução não é o <base/>, mas sim o <set-header name=\"Product-Header\">. Portanto, este é o primeiro cabeçalho a ser executado. Em seguida, ele chama o <base />, que invoca o Global.<br>No escopo Global (que não tem pai), o <set-header name=\"Global-Header\"> é executado (segundo).<br>O controle retorna para a API (que estava pausada aguardando o <base/>). O fluxo continua e executa o <set-header name=\"API-Header\"> (terceiro).<br>O controle finalmente retorna para a Operação, executando sua linha abaixo do <base/>, adicionando o Operation-Header (quarto)."
+    },
+    {
+      "id": "Q-APIM-25",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está expondo uma API REST através do API Management. Essa API será consumida diretamente pelo código JavaScript de uma Aplicação de Página Única (SPA) corporativa hospedada no domínio https://app.contoso.com.<br>Como o código é executado no navegador, você precisa configurar o Cross-Origin Resource Sharing (CORS). Você deve garantir que a política atenda aos seguintes requisitos:<br>- Ser aplicada assim que a requisição atingir o gateway do APIM.<br>- Permitir apenas a origem https://app.contoso.com.<br>- Permitir estritamente apenas os métodos GET e POST.<br>- Permitir a passagem do cabeçalho explícito de Authorization.<br>Tarefa: Preencha a política XML selecionando os valores corretos para as lacunas.",
+        "text": "&lt;{{0}}&gt;<br>    &lt;cors allow-credentials=\"true\"&gt;<br>        &lt;allowed-origins&gt;<br>            &lt;origin&gt;https://app.contoso.com&lt;/origin&gt;<br>        &lt;/allowed-origins&gt;<br>        &lt;allowed-methods&gt;<br>            &lt;method&gt;GET&lt;/method&gt;<br>            &lt;method&gt;{{1}}&lt;/method&gt;<br>        &lt;/allowed-methods&gt;<br>        &lt;allowed-headers&gt;<br>            &lt;header&gt;{{2}}&lt;/header&gt;<br>        &lt;/allowed-headers&gt;<br>    &lt;/cors&gt;<br>&lt;/{{4}}&gt;",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "inbound"}, {"id": "B", "text": "outbound"}, {"id": "C", "text": "backend"}, {"id": "D", "text": "on-error"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "POST"}, {"id": "B", "text": "PUT"}, {"id": "C", "text": "DELETE"}, {"id": "D", "text": "OPTIONS"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "Authorization"}, {"id": "B", "text": "Content-Type"}, {"id": "C", "text": "X-Requested-With"}, {"id": "D", "text": "*"}]
+          },
+          {
+            "index": 3,
+            "options": [{"id": "A", "text": "inbound"}, {"id": "B", "text": "outbound"}, {"id": "C", "text": "backend"}, {"id": "D", "text": "on-error"}]
+          }
+        ]
+      },
+      "correct_answer": ["A", "A", "A", "A"],
+      "explanation": "A política de <cors> deve obrigatoriamente ser aplicada na seção de entrada <inbound>, pois o gateway do APIM precisa intervir e responder ao preflight request do navegador antes de processar ou encaminhar a requisição ao back-end. A lacuna 2 atende à exigência de aceitar o método POST, e a lacuna 3 autoriza o cabeçalho sensível Authorization explicitado no requisito."
+    },
+    {
+      "id": "Q-APIM-26",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Uma instituição financeira possui requisitos de conformidade de rede altamente restritivos. Eles exigem que você implante uma instância do Azure API Management (APIM) de nível Developer ou Premium. A instância do APIM e seu respectivo gateway:<br>- Só podem ser acessados por recursos internos que estejam contidos ou roteados pela Rede Virtual do Azure (VNet) corporativa.<br>- O tráfego da internet pública para o gateway de API deve ser categoricamente rejeitado pelo design da topologia de rede.<br>- O gateway precisará acessar serviços de back-end que estão na VNet.<br>Tarefa: Como você deve configurar a injeção do APIM na VNet para satisfazer essas restrições arquiteturais?",
+        "options": [
+          {"id": "A", "text": "Implantar o APIM no modo External VNet e usar o Network Security Group (NSG) para bloquear as portas de entrada 80/443 públicas."},
+          {"id": "B", "text": "Implantar o APIM no modo Internal VNet."},
+          {"id": "C", "text": "Implantar o APIM sem VNet e usar a configuração \"Restrict Caller IPs\" em escopo global."},
+          {"id": "D", "text": "Usar o APIM no Consumption tier (Consumo) utilizando conexões híbridas (Hybrid Connections)."}]
+      },
+      "correct_answer": ["B"],
+      "explanation": "O Azure API Management nos níveis Premium e Developer suporta integração com VNet em dois modos: External (Externo) e Internal (Interno). O modo Internal injeta o APIM de forma que tanto o gateway (as APIs expostas) quanto os portais do desenvolvedor e de administração só possuam endereços IP privados internos roteáveis pela VNet, isolando completamente o serviço da internet pública, o que atende 100% à exigência de conformidade. O modo External ainda exporia um Endereço IP Público (VIP) para acesso à internet, violando a política. A opção D é incorreta pois a camada Consumption não suporta integração nativa com VNet."
+    },
+    {
+      "id": "Q-APIM-27",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua arquitetura possui uma API de notícias gerenciada publicamente através do Azure API Management (APIM). Por motivos de restrição, o serviço de back-end (onde reside o código da API em si) exige que qualquer serviço que o chame, incluindo o APIM, apresente um certificado digital de cliente (Mutual TLS / mTLS) de validade estrita.<br>Você precisa configurar as políticas do APIM para enviar esse certificado cliente para autenticação no serviço de back-end com segurança, sem colocar o certificado em texto exposto no código XML.<br>Tarefa: Quais duas ações você deve realizar para implementar o envio do certificado no APIM? (Selecione duas)",
+        "options": [
+          {"id": "A", "text": "Fazer o upload ou referenciar (via Key Vault) o certificado de cliente no menu \"Certificates\" (Certificados) da instância do APIM."},
+          {"id": "B", "text": "Adicionar a política authentication-managed-identity na seção <inbound>."},
+          {"id": "C", "text": "Adicionar a política authentication-certificate referenciando o ID do certificado na seção <inbound>."},
+          {"id": "D", "text": "Adicionar a política validate-client-certificate na seção <outbound>."},
+          {"id": "E", "text": "Habilitar a configuração Allow tracing na API."}
+        ]
+      },
+      "correct_answer": ["A", "C"],
+      "explanation": "Para que o gateway do API Management possa apresentar um certificado de cliente para um serviço de back-end (mTLS backend authentication), você precisa de dois passos:<br>Passo Administrativo (Opção A): Inserir o certificado na plataforma APIM (seja o arquivo .pfx protegido por senha ou referenciando um Azure Key Vault) de forma que a instância conheça o certificado a ser usado.<br>Passo de Desenvolvimento/Política (Opção C): Injetar a política de autenticação <authentication-certificate certificate-id=\"nome_do_cert\" /> na seção <inbound>. Isso avisa o gateway para anexar fisicamente o certificado no aperto de mão (handshake TLS) ao realizar o forward-request para o back-end. A política validate-client-certificate é usada para validar clientes que estão chamando o APIM, não para o APIM chamar um back-end."
+    },
+    {
+      "id": "Q-APIM-28",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você está gerenciando uma instância do Azure API Management (APIM). As políticas da sua API exigem o uso de uma chave de API sensível (secret key) para autenticar as solicitações do gateway no momento em que ele é roteado para um serviço de back-end externo.<br>Para atender a uma rigorosa norma de segurança cibernética corporativa, a chave secreta é rotacionada automaticamente a cada 30 dias no Azure Key Vault. Você precisa garantir que o APIM utilize sempre a versão mais recente da chave para acessar o back-end, mas com a exigência de que:<br>- O valor da chave jamais apareça em texto simples no código XML da política.<br>- Nenhum administrador tenha que atualizar manualmente a configuração do APIM toda vez que a chave rotacionar.<br>Tarefa: Qual a melhor abordagem arquitetural para implementar esse requisito?",
+        "options": [
+          {"id": "A", "text": "Adicionar uma política de chamadas externas (<send-request>) na seção <inbound> para bater na API do Key Vault e extrair a chave a cada requisição."},
+          {"id": "B", "text": "Criar um \"Named Value\" (Valor Nomeado) do tipo Secret diretamente no APIM e usar a política de automação do Azure Logic Apps para atualizá-lo mensalmente."},
+          {"id": "C", "text": "Criar um \"Named Value\" no APIM com o tipo de origem apontado para o Azure Key Vault, atribuir uma Identidade Gerenciada (Managed Identity) ao APIM e conceder a ela a permissão de leitura no Key Vault."},
+          {"id": "D", "text": "Embutir a biblioteca do Azure Key Vault SDK (Azure.Security.KeyVault.Secrets) diretamente no serviço de back-end para ignorar o APIM."}
+        ]
+      },
+      "correct_answer": ["C"],
+      "explanation": "No APIM, os Named Values (Valores Nomeados) podem ser vinculados diretamente a segredos hospedados em um Azure Key Vault. Ao fazer isso por meio da Identidade Gerenciada baseada no sistema (System-assigned Managed Identity) da instância do APIM, o gateway passa a ter acesso de leitura autorizado. A grande vantagem do Named Value vinculado ao Key Vault é que o APIM atualiza e atualiza periodicamente o valor em cache do segredo no gateway; se o Key Vault rotacionar a chave sob o capô, o APIM absorverá o novo valor automaticamente sem nenhuma intervenção humana, mudança de política ou interrupção."
+    },
+    {
+      "id": "Q-APIM-29",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Você expõe uma API RESTful por meio do Azure API Management. A API é restrita a usuários de um portal web integrado com o Microsoft Entra ID (Azure AD). O seu gateway deve pré-autorizar a requisição impedindo que chamadas não autenticadas ou de usuários sem o devido privilégio atinjam e consumam os recursos do seu serviço de back-end. Apenas tokens JWT que tiverem a declaração (claim) roles igual a Manager devem ser permitidos.<br>Tarefa: Preencha a política XML correta para implementar a segurança e validação das declarações do Token JWT antes do processamento.",
+        "text": "&lt;policies&gt;<br>    &lt;inbound&gt;<br>        &lt;{{0}} header-name=\"Authorization\" failed-validation-httpcode=\"401\" failed-validation-error-message=\"Acesso negado\"&gt;<br>            &lt;openid-config url=\"https://login.microsoftonline.com/contoso.onmicrosoft.com/.well-known/openid-configuration\" /&gt;<br>            &lt;required-claims&gt;<br>                &lt;claim name=\"{{1}}\" match=\"any\"&gt;<br>                    &lt;value&gt;Manager&lt;/value&gt;<br>                &lt;/claim&gt;<br>            &lt;/required-claims&gt;<br>        &lt;/{{0}}&gt;<br>        &lt;base /&gt;<br>    &lt;/inbound&gt;<br>&lt;/policies&gt;",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "validate-jwt"}, {"id": "B", "text": "check-header"}, {"id": "C", "text": "authentication-managed-identity"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "roles"}, {"id": "B", "text": "aud"}, {"id": "C", "text": "iss"}, {"id": "D", "text": "scope"}]
+          }
+        ]
+      },
+      "correct_answer": ["A", "A"],
+      "explanation": "A política correta para inspecionar, validar assinaturas baseadas em OAuth2/OpenID e verificar o interior (claims) de um JSON Web Token é a política <validate-jwt> (Lacuna 1). Para forçar a verificação de pertencimento a um grupo de privilégios conforme listado no requisito corporativo, utilizamos a tag <claim> inspecionando nativamente a chave roles (Lacuna 2) do token gerado pelo Microsoft Entra ID."
+    },
+    {
+      "id": "Q-APIM-30",
+      "type": "dropdown_fill_in_blank",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Como arquiteto de nuvem, você deve projetar e implantar diferentes instâncias do Azure API Management (APIM) para a sua empresa dependendo do cenário do ciclo de vida da aplicação e do orçamento estipulado.<br>Requisitos dos cenários:<br>- Cenário 1: Uma API que atende a microsserviços intermitentes e orientados a eventos. O tráfego costuma ser zero durante horas. Exige o menor custo possível (cobrança por execução) e escalonamento automático instântaneo a partir do zero, sem precisar de acesso à Virtual Network (VNet).<br>- Cenário 2: Um ambiente interno voltado apenas para avaliação e testes de desenvolvedores. O APIM precisa obrigatoriamente integrar-se de forma completa com a Rede Virtual (VNet) da empresa para testar a comunicação privada sem ser exposto à internet pública. Não requer alta disponibilidade e deve ter um custo mensal baixo e fixo.<br>- Cenário 3: Um ambiente de produção de missão crítica para transações bancárias. Deve fornecer isolamento completo de rede via Virtual Network (VNet), suportar implantação e distribuição do gateway entre múltiplas regiões globais (Multi-region deployment) e alto nível de SLA de disponibilidade.<br>Tarefa: Arraste os Planos (Tiers) correspondentes ao cenário descrito.",
+        "text": "Cenário 1 (Serverless, sem VNet, escala a zero): {{0}}<br>Cenário 2 (Testes, VNet completa, baixo custo não produtivo): {{1}}<br>Cenário 3 (Produção crítica, Multi-Região, VNet isolada completa): {{2}}",
+        "dropdowns": [
+          {
+            "index": 0,
+            "options": [{"id": "A", "text": "Developer"}, {"id": "B", "text": "Consumption"}, {"id": "C", "text": "Premium"}, {"id": "D", "text": "Basic"}]
+          },
+          {
+            "index": 1,
+            "options": [{"id": "A", "text": "Developer"}, {"id": "B", "text": "Consumption"}, {"id": "C", "text": "Premium"}, {"id": "D", "text": "Basic"}]
+          },
+          {
+            "index": 2,
+            "options": [{"id": "A", "text": "Developer"}, {"id": "B", "text": "Consumption"}, {"id": "C", "text": "Premium"}, {"id": "D", "text": "Basic"}]
+          }
+        ]
+      },
+      "correct_answer": ["B", "A", "C"],
+      "explanation": "Os diferentes tiers doAPIM são projetados para cargas distintas. O plano Consumption opera em um modelo estrito de Serverless/Microsserviços: cobra apenas por execução, sem instâncias fixas pré-alocadas, não possuindo suporte a VNet ou cache interno. O plano Developer oferece todos os recursos avançados de instâncias dedicadas da plataforma (incluindo integração nativa com VNets isoladas e portal do dev), mas a um preço fracionado por ser restrito a testes (sem SLA comercial). O plano Premium atende às demandas corporativas completas, sendo o único capaz de fornecer integração avançada com VNet para produção, combinada com a facilidade de configurar múltiplos nós do gateway em várias regiões globais sob a mesma instância."
+    },
+    {
+      "id": "Q-APIM-31",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: Sua organização gerencia e expõe uma API crucial hospedada em um Azure App Service (Web App). Para governança e rastreabilidade adequadas, todas as solicitações à sua API devem passar primeiro pelo Azure API Management (APIM).<br>Recentemente, a auditoria descobriu que alguns parceiros descobriram a URL base nativa do App Service (ex: https://meuapp-backend.azurewebsites.net) e começaram a contornar (fazer bypass) o gateway do APIM, quebrando as métricas e políticas de segurança, efetuando chamadas diretas ao serviço de back-end.<br>Tarefa: Quais duas (2) estratégias eficientes de arquitetura e implantação você deve adotar para proteger e \"esconder\" o Azure App Service, rejeitando chamadas que não venham exclusivamente através da instância do API Management? (Selecione duas)",
+        "options": [
+          {"id": "A", "text": "Habilitar as Access Restrictions (Restrições de Acesso IP) na rede do App Service configurando uma regra de permissão \"Allow\" vinculada diretamente ao Endereço VIP (Virtual IP Público) estático da sua instância do APIM."},
+          {"id": "B", "text": "Configurar uma política de <check-header> na seção <inbound> do APIM exigindo o cabeçalho Ocp-Apim-Subscription-Key."},
+          {"id": "C", "text": "Configurar o App Service para exigir Autenticação Mútua TLS (Certificado do Cliente / mTLS) e configurar a instância do APIM para enviar um certificado confiável no roteamento da solicitação via credenciais do gateway (Client cert)."},
+          {"id": "D", "text": "Utilizar a política global do APIM <validate-jwt> forçando os usuários a logarem via Azure AD B2C."},
+          {"id": "E", "text": "Adicionar o domínio nativo do App Service ao arquivo de exclusão no Azure Front Door."}
+        ]
+      },
+      "correct_answer": ["A", "C"],
+      "explanation": "A pergunta trata da segurança do back-end, impedindo que chamadas diretas atinjam os servidores onde o código reside, ignorando a fachada (gateway APIM). Configurar o gateway em si (como colocar chaves de assinatura no check-header (B) ou usar validate-jwt no APIM (D)) bloqueia o acesso indevido no gateway, mas não evita que terceiros que já descobriram a URL nativa por trás do pano acessem o App Service saltando a infraestrutura de nuvem intermediária. Para travar o App Service efetivamente, deve-se fechar as portas no provedor em que ele reside usando:<br>Regras de Firewall da Camada de Rede (Opção A): Rejeitando qualquer IP de entrada do mundo real exceto o endereço de saída IP fixo embutido que o Azure atribui ao seu APIM.<br>Autenticação Cliente/Servidor (Opção C): Forçando o App Service a verificar o mTLS (Certificado Cliente), onde apenas o APIM carrega o cadeado (certificado) que destravará as requisições no momento da comunicação Backend."
+    },
+    {
+      "id": "Q-APIM-32",
+      "type": "multiple_choice",
+      "category": "Azure API Management",
+      "difficulty": "Média",
+      "content": {
+        "statement": "Cenário: A Contoso Ltd. desenvolve serviços para consumidores utilizando o Azure APIM. Para o plano de vendas base, chamado de \"Plano Bronze\", há regras comerciais estritas de controle de tráfego que o pacote deve implementar com o objetivo de frear comportamentos abusivos:<br>- Regra 1: Nenhum usuário associado ao plano Bronze deve conseguir efetuar mais do que 10 requisições por segundo aos servidores back-end, visando evitar picos esporádicos (bursts).<br>- Regra 2: Ao longo do mês fiscal contínuo, a contagem somada de todas as requisições bem-sucedidas efetuadas por uma chave de inscrição não pode exceder 50.000 transações. Se atingido, o acesso do cliente é cortado imediatamente até o fechamento do faturamento.<br>Tarefa: Qual a melhor forma de aplicar a implementação da política de proteção de acesso?",
+        "options": [
+          {"id": "A", "text": "Usar a política de <quota> para 50.000 chamadas e duas instâncias combinadas da política de <check-header>."},
+          {"id": "B", "text": "Usar a política de <rate-limit> combinando ambas as regras temporais na mesma instrução XML."},
+          {"id": "C", "text": "Usar as políticas <rate-limit> configurada em 10 chamadas no período de 1 segundo (curto prazo), e a política <quota> configurada para limitar 50.000 chamadas num período de renovação mensal (longo prazo)."},
+          {"id": "D", "text": "Utilizar a política condicional <choose> avaliando as métricas de latência do back-end (context.Response.Duration)."}]
+      },
+      "correct_answer": ["C"],
+      "explanation": "Embora as políticas de rate-limit (limite de taxa) e quota (cota) sejam muitas vezes confundidas, elas atendem a propósitos arquiteturais e logísticos fundamentalmente diferentes e operam perfeitamente juntas:<br>A política rate-limit lida com prevenção a picos curtos e exaustão intencional ou acidental da infraestrutura de ponta (ataques DoS, travamentos). Ela estrangula o consumidor para um X estipulado durante uma janela minúscula de tempo (ex: limitando a no máximo 10 conexões a cada segundo).<br>A política quota é focada em negócios, precificação de monetização, acordos de SLA e volumes contínuos (tiering business model). Ela não se importa com a taxa ou velocidade na qual as transações entram, contanto que o chamador pare e receba a advertência 403 Quota Exceeded após um total acumulativo prolongado, como 50.000 chamadas ao longo de um mês de faturamento de 30 dias de renewal-period. Combinando-as, você atende perfeitamente à estabilidade momentânea de arquitetura (Regra 1) e ao limite negocial da assinatura mensal (Regra 2)."
     }
 ]
