@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.getElementById('start-general-btn').onclick = () => startQuiz('all');
+        document.getElementById('start-exam-btn').onclick = () => startQuiz('all', 50);
     }
 
     function showLoading(show) {
@@ -69,11 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // --- QUIZ FUNCTIONS ---
-    async function startQuiz(categoryId) {
+    async function startQuiz(categoryId, questionCount = null) {
         showLoading(true);
         currentQuestions = [];
 
         try {
+            let allAvailableQuestions = [];
+
             if (categoryId === 'all') {
                 // Flatten all categories from all main topics
                 const allCategories = manifestData.main_topics.flatMap(topic => topic.categories);
@@ -81,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     fetch(cat.file).then(r => r.json())
                 );
                 const results = await Promise.all(promises);
-                currentQuestions = results.flat();
+                allAvailableQuestions = results.flat();
             } else {
                 // Find the category across all main topics
                 let category = null;
@@ -95,8 +98,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (category) {
                     const response = await fetch(category.file);
-                    currentQuestions = await response.json();
+                    allAvailableQuestions = await response.json();
                 }
+            }
+
+            // Shuffle all available questions
+            allAvailableQuestions.sort(() => Math.random() - 0.5);
+
+            // If a specific count is requested, slice the array
+            if (questionCount) {
+                if (allAvailableQuestions.length < questionCount) {
+                    alert(`Não há questões suficientes para um exame de ${questionCount} perguntas. O simulado começará com as ${allAvailableQuestions.length} questões disponíveis.`);
+                    currentQuestions = allAvailableQuestions;
+                } else {
+                    currentQuestions = allAvailableQuestions.slice(0, questionCount);
+                }
+            } else {
+                currentQuestions = allAvailableQuestions;
             }
             
             if (currentQuestions.length === 0) {
@@ -105,8 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Shuffle questions
-            currentQuestions.sort(() => Math.random() - 0.5);
+            // Shuffle questions -- This is now done before slicing
+            // currentQuestions.sort(() => Math.random() - 0.5);
             
             currentIndex = 0;
             score = { correct: 0, wrong: 0 };

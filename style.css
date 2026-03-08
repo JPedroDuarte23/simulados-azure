@@ -103,6 +103,15 @@ h1 {
     cursor: pointer;
 }
 
+.exam-btn {
+    background-color: var(--success-color);
+    margin-top: 10px;
+}
+
+.exam-btn:hover {
+    background-color: #0d630d;
+}
+
 /* Question Styles */
 .question-header {
     display: flex;
