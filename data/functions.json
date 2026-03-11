@@ -517,7 +517,7 @@
   },
   {
     "id": "Q-AZF-12",
-    "type": "dropdown_fill_in_blank",
+    "type": "multiple_choice",
     "category": "Azure Functions / Application Insights",
     "difficulty": "Média",
     "explanation": "Para monitorar a disponibilidade externa e a latência de endpoints HTTP de diversas regiões, o `URL ping test` do Application Insights é a ferramenta padrão e mais adequada.",
@@ -595,7 +595,7 @@
   },
   {
     "id": "Q-AZF-14",
-    "type": "dropdown_fill_in_blank",
+    "type": "multiple_choice",
     "category": "Azure Functions / Key Vault",
     "difficulty": "Média",
     "explanation": "A sintaxe `@Microsoft.KeyVault(SecretUri=...)` é a maneira correta de referenciar segredos do Key Vault diretamente nas configurações de aplicativo do Azure.",

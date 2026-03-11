@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
     let score = { correct: 0, wrong: 0 };
     let manifestData = null;
+    const questionsCache = {}; // Cache to store fetched questions
     
     // DOM Elements
     const hubSection = document.getElementById('hub-section');
     const quizSection = document.getElementById('quiz-section');
     const resultSection = document.getElementById('result-section');
     const statusBar = document.getElementById('status-bar');
-    const hubContent = document.getElementById('hub-content');
     const questionContainer = document.getElementById('question-content');
     const feedbackArea = document.getElementById('feedback-area');
     const nextBtn = document.getElementById('next-btn');
@@ -32,36 +32,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- HUB FUNCTIONS ---
     function renderHub() {
-        hubContent.innerHTML = '';
+        const bentoGrid = document.getElementById('bento-grid');
+        bentoGrid.innerHTML = '';
+        const fragment = document.createDocumentFragment();
         
+        // 1. Add Hero Cards for General and Exam
+        const examCard = document.createElement('div');
+        examCard.className = 'bento-card hero-card span-2-cols exam-hero';
+        examCard.innerHTML = `
+            <div class="hero-content">
+                <h3>Exame Completo</h3>
+                <p>Simulação real com 50 questões sorteadas de todos os tópicos.</p>
+                <button class="bento-action-btn">Iniciar Exame</button>
+            </div>
+        `;
+        examCard.querySelector('button').onclick = () => startQuiz('exam', 50);
+        fragment.appendChild(examCard);
+
+        const generalCard = document.createElement('div');
+        generalCard.className = 'bento-card hero-card general-hero';
+        generalCard.innerHTML = `
+            <div class="hero-content">
+                <h3>Simulado Geral</h3>
+                <p>Pratique com todas as questões disponíveis.</p>
+                <button class="bento-action-btn">Iniciar Prática</button>
+            </div>
+        `;
+        generalCard.querySelector('button').onclick = () => startQuiz('all');
+        fragment.appendChild(generalCard);
+
+        // 2. Add Topic Cards
         manifestData.main_topics.forEach(topic => {
-            const topicSection = document.createElement('div');
-            topicSection.className = 'main-topic-section';
+            const topicCard = document.createElement('div');
+            topicCard.className = 'bento-card topic-card';
+            
+            // If topic has many categories, span 2 columns
+            if (topic.categories.length >= 4) {
+                topicCard.classList.add('span-2-cols');
+            }
 
             const topicTitle = document.createElement('h3');
-            topicTitle.className = 'main-topic-title';
+            topicTitle.className = 'bento-title';
             topicTitle.textContent = topic.title;
-            topicSection.appendChild(topicTitle);
+            topicCard.appendChild(topicTitle);
 
-            const grid = document.createElement('div');
-            grid.className = 'grid-container';
+            const pillsContainer = document.createElement('div');
+            pillsContainer.className = 'pills-container';
 
             topic.categories.forEach(cat => {
-                const btn = document.createElement('button');
-                btn.className = 'category-btn';
-                btn.innerHTML = `
-                    <span class="cat-name">${cat.name}</span>
-                    <span class="cat-count">${cat.count} questões</span>
+                const pill = document.createElement('button');
+                pill.className = 'category-pill';
+                pill.innerHTML = `
+                    <span class="pill-name">${cat.name}</span>
+                    <span class="pill-count">${cat.count}</span>
                 `;
-                btn.onclick = () => startQuiz(cat.id);
-                grid.appendChild(btn);
+                pill.onclick = () => startQuiz(cat.id);
+                pillsContainer.appendChild(pill);
             });
-            topicSection.appendChild(grid);
-            hubContent.appendChild(topicSection);
+            
+            topicCard.appendChild(pillsContainer);
+            fragment.appendChild(topicCard);
         });
 
-        document.getElementById('start-general-btn').onclick = () => startQuiz('all');
-        document.getElementById('start-exam-btn').onclick = () => startQuiz('all', 50);
+        // Inject all elements at once
+        bentoGrid.appendChild(fragment);
+
+        // 3. Start prefetching questions in background
+        setTimeout(prefetchQuestions, 1000);
+    }
+
+    async function prefetchQuestions() {
+        if (!manifestData) return;
+        
+        const allCategories = manifestData.main_topics.flatMap(topic => topic.categories);
+        
+        for (const cat of allCategories) {
+            if (!questionsCache[cat.id]) {
+                try {
+                    const response = await fetch(cat.file);
+                    const data = await response.json();
+                    questionsCache[cat.id] = data;
+                } catch (err) {
+                    console.error(`Error prefetching ${cat.id}:`, err);
+                }
+            }
+        }
     }
 
     function showLoading(show) {
@@ -75,46 +130,61 @@ document.addEventListener('DOMContentLoaded', () => {
         currentQuestions = [];
 
         try {
-            let allAvailableQuestions = [];
-
-            if (categoryId === 'all') {
-                // Flatten all categories from all main topics
-                const allCategories = manifestData.main_topics.flatMap(topic => topic.categories);
-                const promises = allCategories.map(cat => 
-                    fetch(cat.file).then(r => r.json())
-                );
-                const results = await Promise.all(promises);
-                allAvailableQuestions = results.flat();
+            // Smart exam generation has its own logic
+            if (categoryId === 'exam') {
+                currentQuestions = await generateSmartExam(questionCount);
             } else {
-                // Find the category across all main topics
-                let category = null;
-                for (const topic of manifestData.main_topics) {
-                    const foundCat = topic.categories.find(c => c.id === categoryId);
-                    if (foundCat) {
-                        category = foundCat;
-                        break;
+                let allAvailableQuestions = [];
+
+                if (categoryId === 'all') {
+                    // Flatten all categories from all main topics
+                    const allCategories = manifestData.main_topics.flatMap(topic => topic.categories);
+                    const promises = allCategories.map(async cat => {
+                        if (questionsCache[cat.id]) {
+                            return questionsCache[cat.id];
+                        }
+                        const response = await fetch(cat.file);
+                        const data = await response.json();
+                        questionsCache[cat.id] = data;
+                        return data;
+                    });
+                    const results = await Promise.all(promises);
+                    allAvailableQuestions = results.flat();
+                } else {
+                    if (questionsCache[categoryId]) {
+                        allAvailableQuestions = [...questionsCache[categoryId]];
+                    } else {
+                        // Find the category across all main topics
+                        let category = null;
+                        for (const topic of manifestData.main_topics) {
+                            const foundCat = topic.categories.find(c => c.id === categoryId);
+                            if (foundCat) {
+                                category = foundCat;
+                                break;
+                            }
+                        }
+                        if (category) {
+                            const response = await fetch(category.file);
+                            allAvailableQuestions = await response.json();
+                            questionsCache[categoryId] = allAvailableQuestions;
+                        }
                     }
                 }
-                
-                if (category) {
-                    const response = await fetch(category.file);
-                    allAvailableQuestions = await response.json();
-                }
-            }
 
-            // Shuffle all available questions
-            allAvailableQuestions.sort(() => Math.random() - 0.5);
+                // Shuffle all available questions
+                allAvailableQuestions.sort(() => Math.random() - 0.5);
 
-            // If a specific count is requested, slice the array
-            if (questionCount) {
-                if (allAvailableQuestions.length < questionCount) {
-                    alert(`Não há questões suficientes para um exame de ${questionCount} perguntas. O simulado começará com as ${allAvailableQuestions.length} questões disponíveis.`);
-                    currentQuestions = allAvailableQuestions;
+                // If a specific count is requested, slice the array
+                if (questionCount) {
+                    if (allAvailableQuestions.length < questionCount) {
+                        alert(`Não há questões suficientes para um exame de ${questionCount} perguntas. O simulado começará com as ${allAvailableQuestions.length} questões disponíveis.`);
+                        currentQuestions = allAvailableQuestions;
+                    } else {
+                        currentQuestions = allAvailableQuestions.slice(0, questionCount);
+                    }
                 } else {
-                    currentQuestions = allAvailableQuestions.slice(0, questionCount);
+                    currentQuestions = allAvailableQuestions;
                 }
-            } else {
-                currentQuestions = allAvailableQuestions;
             }
             
             if (currentQuestions.length === 0) {
@@ -199,6 +269,144 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- RENDERERS ---
+
+    const examBlueprint = {
+        totalQuestions: 50,
+        domains: {
+            "compute": {
+                ids: ["app-service", "functions", "acr", "aci", "aca"],
+                weight: 0.275 
+            },
+            "integration": {
+                ids: ["service-bus", "event-grid", "event-hub", "api-management", "queue-storage"],
+                weight: 0.225
+            },
+            "security": {
+                ids: ["entra-id", "msal-graph-api", "key-vault", "managed-identities", "sas-token"],
+                weight: 0.175
+            },
+            "storage": {
+                ids: ["cosmos-db", "blob-storage"],
+                weight: 0.175
+            },
+            "monitoring": {
+                ids: ["app-insights", "cache-redis", "cdn", "app-configuration"],
+                weight: 0.075
+            },
+            "case_study": {
+                ids: ["casestudy"],
+                weight: 0.075
+            }
+        }
+    };
+
+    async function generateSmartExam(totalQuestions = 50) {
+        console.log("Starting smart exam generation...");
+        let examQuestions = [];
+
+        // --- 1. Fetch and select a Case Study ---
+        let caseStudyBlock = [];
+        if (questionsCache[examBlueprint.caseStudyId]) {
+            caseStudyBlock = questionsCache[examBlueprint.caseStudyId];
+        } else {
+            const caseStudyCategory = manifestData.main_topics
+                .flatMap(t => t.categories)
+                .find(c => c.id === examBlueprint.caseStudyId);
+            
+            if(caseStudyCategory) {
+                try {
+                    const response = await fetch(caseStudyCategory.file);
+                    const caseStudyData = await response.json();
+                    questionsCache[examBlueprint.caseStudyId] = caseStudyData; // cache it
+                    caseStudyBlock = caseStudyData;
+                } catch (err) {
+                    console.error(`Failed to load case study:`, err);
+                }
+            }
+        }
+        
+        // Assuming the entire file is one case study block
+        if (caseStudyBlock.length > 0) {
+            examQuestions.push(...caseStudyBlock);
+        }
+        console.log(`Added ${caseStudyBlock.length} questions from case study.`);
+
+        // --- 2. Calculate remaining questions for each domain ---
+        const remainingQuestionsCount = totalQuestions - examQuestions.length;
+        console.log(`Need to select ${remainingQuestionsCount} more questions.`);
+        
+        const questionsToSelectByDomain = {};
+        const totalWeight = Object.values(examBlueprint.domains).reduce((sum, domain) => sum + domain.weight, 0);
+
+        for (const [domainName, domainData] of Object.entries(examBlueprint.domains)) {
+            const proportion = domainData.weight / totalWeight;
+            questionsToSelectByDomain[domainName] = Math.round(proportion * remainingQuestionsCount);
+        }
+        
+        let currentSelectionCount = Object.values(questionsToSelectByDomain).reduce((sum, count) => sum + count, 0);
+        let diff = remainingQuestionsCount - currentSelectionCount;
+        
+        if (diff !== 0) {
+            const largestDomain = Object.keys(questionsToSelectByDomain).reduce((a, b) => questionsToSelectByDomain[a] > questionsToSelectByDomain[b] ? a : b);
+            questionsToSelectByDomain[largestDomain] += diff;
+        }
+        console.log("Questions to select per domain:", questionsToSelectByDomain);
+
+        // --- 3. Fetch all questions and build pools for each domain ---
+        const questionPools = {};
+        const allCategoryIds = Object.values(examBlueprint.domains).flatMap(d => d.ids);
+        
+        for (const catId of allCategoryIds) {
+            let questions = [];
+            if (questionsCache[catId]) {
+                questions = questionsCache[catId];
+            } else {
+                 const category = manifestData.main_topics
+                    .flatMap(t => t.categories)
+                    .find(c => c.id === catId);
+                if(category) {
+                    try {
+                        const response = await fetch(category.file);
+                        const data = await response.json();
+                        questionsCache[catId] = data;
+                        questions = data;
+                    } catch (err) {
+                         console.error(`Failed to load category ${catId}:`, err);
+                    }
+                }
+            }
+            
+            for (const [domainName, domainData] of Object.entries(examBlueprint.domains)) {
+                if (domainData.ids.includes(catId)) {
+                    if (!questionPools[domainName]) {
+                        questionPools[domainName] = [];
+                    }
+                    questionPools[domainName].push(...questions);
+                    break;
+                }
+            }
+        }
+
+        // --- 4. Select questions from pools ---
+        const domainQuestions = [];
+        for (const [domainName, count] of Object.entries(questionsToSelectByDomain)) {
+            const pool = questionPools[domainName] || [];
+            if (pool.length > 0) {
+                const shuffledPool = pool.sort(() => 0.5 - Math.random());
+                const selected = shuffledPool.slice(0, count);
+                domainQuestions.push(...selected);
+            }
+        }
+        console.log(`Selected ${domainQuestions.length} questions from domains.`);
+
+        // --- 5. Assemble final exam list ---
+        const shuffledDomainQuestions = domainQuestions.sort(() => 0.5 - Math.random());
+        examQuestions.push(...shuffledDomainQuestions);
+
+        console.log(`Total exam questions assembled: ${examQuestions.length}`);
+        return examQuestions;
+    }
+
     function renderCaseStudyTabs(q) {
         const tabsContainer = document.createElement('div');
         tabsContainer.className = 'cs-tabs-container';

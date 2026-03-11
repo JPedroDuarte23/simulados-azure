@@ -6,7 +6,7 @@
       "difficulty": "Média",
       "content": {
         "statement": "Cenário: Sua equipe possui uma biblioteca compartilhada chamada PolicyLib que contém funcionalidades comuns a todos os serviços web em ASP.NET Core da empresa. A biblioteca possui um requisito estrito: você deve excluir ações não relacionadas a usuários (ex: verificações de integridade) da telemetria do Application Insights. As requisições de integridade são feitas no caminho de URL /health.<br>Você precisa implementar a classe de filtro preenchendo o código corretamente.",
-        "text": "public class Filter : {{0}}<br>{<br>    private readonly {{1}} _next;<br>    public Filter({{2}} next) <br>    {<br>        _next = next;<br>    }<br>    <br>    public void Process(ITelemetry item)<br>    {<br>        var x = item as {{3}};<br>        if (x != null && x.Url.AbsolutePath == \"{{4}}\") <br>        { <br>            return; <br>        }<br>        _next.Process(item);<br>    }<br>}",
+        "text": "```public class Filter : {{0}}<br>{<br>    private readonly {{1}} _next;<br>    public Filter({{2}} next) <br>    {<br>        _next = next;<br>    }<br>    <br>    public void Process(ITelemetry item)<br>    {<br>        var x = item as {{3}};<br>        if (x != null && x.Url.AbsolutePath == \"{{4}}\") <br>        { <br>            return; <br>        }<br>        _next.Process(item);<br>    }<br>}```",
         "dropdowns": [
           {
             "index": 0,
@@ -201,8 +201,8 @@
           {"id": "F", "text": "Habilitar o Snapshot Debugger."}
         ]
       },
-      "correct_answer": ["C", "E", "F"],
-      "explanation": "A forma de menor impacto para começar a usar os dados detalhados em aplicativos web do Azure é por meio da Application Insights site extension (Extensão de Site). Esta extensão cria a ponte de telemetria sem compilação extra. O Profiler será o principal responsável por encontrar o gargalo capturando a execução de operações lentas e seus respectivos rastreamentos, ao passo que o Snapshot Debugger vai capturar pilhas de chamadas detalhadas da hora exata em que ocorre a falha/exceção. Você não deve fazer o \"Upgrade para Premium\", pois contraria o requisito explícito de manter os \"custos ao mínimo\"."
+      "correct_answer": ["A", "C", "E"],
+      "explanation": "Para diagnosticar gargalos de desempenho (lentidão) sem alterar o código, usa-se o Application Insights Profiler (C), ativado através da Site Extension (E). Como o Profiler roda em segundo plano, ele exige que a configuração 'Always On' (A) do App Service esteja habilitada. O Snapshot Debugger (F) é incorreto pois serve para diagnosticar exceções/erros, não lentidão. O upgrade para Premium (B) é incorreto pois o Profiler é suportado a partir do nível Basic e o requisito pede para minimizar os custos."
     },
     {
       "id": "Q-APPINSIGHTS-10",
@@ -229,7 +229,7 @@
       "difficulty": "Média",
       "content": {
         "statement": "Cenário: Sua empresa possui uma biblioteca compartilhada que fornece funcionalidades comuns a todos os aplicativos ASP.NET Core da corporação. Você foi encarregado de garantir que todos os itens de telemetria enviados para o Application Insights incluam automaticamente uma propriedade customizada chamada EventID. Diferente de filtrar dados (que descartaria requisições), você precisa enriquecer a telemetria existente antes que ela seja enviada.<br>Preencha o código corretamente para implementar essa funcionalidade.",
-        "text": "public class IncludeEventId : {{0}}<br>{<br>    public void {{1}} (ITelemetry telemetry)<br>    {<br>        // Adiciona a propriedade customizada a todos os eventos<br>        {{2}}.Properties[\"EventID\"] = EventGridController.EventId.Value;<br>    }<br>}",
+        "text": "```public class IncludeEventId : {{0}}<br>{<br>    public void {{1}} (ITelemetry telemetry)<br>    {<br>        // Adiciona a propriedade customizada a todos os eventos<br>        {{2}}.Properties[\"EventID\"] = EventGridController.EventId.Value;<br>    }<br>} ```",
         "dropdowns": [
           {
             "index": 0,
@@ -427,7 +427,8 @@
       "category": "Azure Application Insights",
       "difficulty": "Média",
       "content": {
-        "statement": "Cenário: Você gerencia uma assinatura do Azure que contém 100 aplicativos web do Azure App Service. Cada aplicativo web está associado a uma instância individual do Application Insights. Você precisa fazer uma limpeza e planeja remover todos os testes de disponibilidade clássicos (Classic availability tests) baseados em URL simples (ping) de todas as instâncias do Application Insights que possuem essa funcionalidade configurada.<br>Você criou a seguinte instrução do Azure PowerShell:<br>Get-AzApplicationInsightsWebTest | Where-Object { {{0}} -eq \"{{1}}\" } | Remove-AzApplicationInsightsWebTest<br>Você precisa definir os valores da condição para filtrar corretamente os testes. Quais valores você deve usar para completar o código?",
+        "statement": "Cenário: Você gerencia uma assinatura do Azure que contém 100 aplicativos web do Azure App Service. Cada aplicativo web está associado a uma instância individual do Application Insights. Você precisa fazer uma limpeza e planeja remover todos os testes de disponibilidade clássicos (Classic availability tests) baseados em URL simples (ping) de todas as instâncias do Application Insights que possuem essa funcionalidade configurada.<br>Você criou a seguinte instrução do Azure PowerShell. Quais valores você deve usar para completar o código?",
+        "text": "```<br>Get-AzApplicationInsightsWebTest | Where-Object { {{0}} -eq \"{{1}}\" } | Remove-AzApplicationInsightsWebTest<br>Você precisa definir os valores da condição para filtrar corretamente os testes.```",
         "dropdowns": [
           {
             "index": 0,
@@ -465,7 +466,7 @@
         "category": "Azure Application Insights",
         "difficulty": "Média",
         "content": {
-          "statement": "Cenário: Você planeja implantar um aplicativo web no Azure App Service on Linux. Você cria um App Service Plan e também cria e envia uma imagem customizada do Docker contendo seu aplicativo web para o Azure Container Registry. O aplicativo falha ao iniciar e não emite telemetria para o Application Insights. Você precisa acessar e transmitir os logs do console (saída padrão) gerados de dentro do contêiner quase em tempo real (real-time) na sua máquina local para fins de diagnóstico rápido.<br>Ordene os três comandos do Azure CLI que você deve executar na sequência correta para acessar esses logs:",
+          "statement": "Cenário: Você planeja implantar um aplicativo web no Azure App Service on Linux. Você cria um App Service Plan e também cria e envia uma imagem customizada do Docker contendo seu aplicativo web para o Azure Container Registry. O aplicativo falha ao iniciar e não emite telemetria para o Application Insights. Você precisa acessar e transmitir os logs do console (saída padrão) gerados de dentro do contêiner quase em tempo real (real-time) na sua máquina local para fins de diagnóstico rápido.<br>Ordene os dois comandos do Azure CLI que você deve executar na sequência correta para acessar esses logs:",
           "items_to_drag": [
             {"id": "1", "text": "az webapp log download --name AppName --resource-group AppRG"},
             {"id": "2", "text": "az webapp log tail --name AppName --resource-group AppRG"},
@@ -500,7 +501,7 @@
         "difficulty": "Média",
         "content": {
           "statement": "Cenário: Você está desenvolvendo um aplicativo de apontamento de horas em ASP.NET Core que roda em um Azure Web App. O aplicativo ocasionalmente encontra erros de servidor porque chama uma API de terceiros instável para validação de dados. Você precisa configurar um alerta do Azure Monitor via modelo ARM (Azure Resource Manager) que identifique picos anormais de erros internos no servidor (erros 500) do seu App Service. Você precisa minimizar alertas de falsos positivos, ajustando automaticamente o alarme com base em padrões de uso normais do passado (usando aprendizado de máquina em vez de um limite numérico estático absoluto).<br>Complete as linhas críticas do modelo ARM escolhendo as opções corretas.",
-          "text": "\"criteria\": {<br>    \"odata.type\": \"...\",<br>    \"allOf\": [<br>        {<br>            \"criterionType\": \"{{0}}\",<br>            \"metricName\": \"{{1}}\",<br>            \"alertSensitivity\": \"{{2}}\"<br>        }<br>    ]<br>}",
+          "text": "```\"criteria\": {<br>    \"odata.type\": \"...\",<br>    \"allOf\": [<br>        {<br>            \"criterionType\": \"{{0}}\",<br>            \"metricName\": \"{{1}}\",<br>            \"alertSensitivity\": \"{{2}}\"<br>        }<br>    ]<br>} ```",
           "dropdowns": [
             {
               "index": 0,
